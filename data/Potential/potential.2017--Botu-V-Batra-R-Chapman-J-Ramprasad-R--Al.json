@@ -1,0 +1,61 @@
+{
+    "interatomic-potential": {
+        "key": "034937ab-302a-45c7-bd4e-05ee51b98c8d", 
+        "id": "2017--Botu-V-Batra-R-Chapman-J-Ramprasad-R--Al", 
+        "record-version": "2018-10-05", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Machine Learning Force Fields: Construction, Validation, and Outlook", 
+                "author": [
+                    {
+                        "given-name": "V.", 
+                        "surname": "Botu"
+                    }, 
+                    {
+                        "given-name": "R.", 
+                        "surname": "Batra"
+                    }, 
+                    {
+                        "given-name": "J.", 
+                        "surname": "Chapman"
+                    }, 
+                    {
+                        "given-name": "R.", 
+                        "surname": "Ramprasad"
+                    }
+                ], 
+                "publication-name": "The Journal of Physical Chemistry C", 
+                "publication-date": {
+                    "year": 2017
+                }, 
+                "volume": 121, 
+                "issue": 1, 
+                "abstract": "Force fields developed with machine learning methods in tandem with quantum mechanics are beginning to find merit, given their (i) low cost, (ii) accuracy, and (iii) versatility. Recently, we proposed one such approach, wherein, the vectorial force on an atom is computed directly from its environment. Here, we discuss the multistep workflow required for their construction, which begins with generating diverse reference atomic environments and force data, choosing a numerical representation for the atomic environments, down selecting a representative training set, and lastly the learning method itself, for the case of Al. The constructed force field is then validated by simulating complex materials phenomena such as surface melting and stress\u2013strain behavior, that truly go beyond the realm of ab initio methods, both in length and time scales. To make such force fields truly versatile an attempt to estimate the uncertainty in force predictions is put forth, allowing one to identify areas of poor performance and paving the way for their continual improvement.", 
+                "pages": "511-522", 
+                "DOI": "10.1021/acs.jpcc.6b10908", 
+                "bibtex": "@article{Botu_2016,\n abstract = {Force fields developed with machine learning methods in tandem with quantum mechanics are beginning to find merit, given their (i) low cost, (ii) accuracy, and (iii) versatility. Recently, we proposed one such approach, wherein, the vectorial force on an atom is computed directly from its environment. Here, we discuss the multistep workflow required for their construction, which begins with generating diverse reference atomic environments and force data, choosing a numerical representation for the atomic environments, down selecting a representative training set, and lastly the learning method itself, for the case of Al. The constructed force field is then validated by simulating complex materials phenomena such as surface melting and stress\u2013strain behavior, that truly go beyond the realm of ab initio methods, both in length and time scales. To make such force fields truly versatile an attempt to estimate the uncertainty in force predictions is put forth, allowing one to identify areas of poor performance and paving the way for their continual improvement.},\n author = {V. Botu and R. Batra and J. Chapman and R. Ramprasad},\n doi = {10.1021/acs.jpcc.6b10908},\n journal = {The Journal of Physical Chemistry C},\n month = {dec},\n number = {1},\n pages = {511--522},\n publisher = {American Chemical Society (ACS)},\n title = {Machine Learning Force Fields: Construction, Validation, and Outlook},\n url = {https://doi.org/10.1021%2Facs.jpcc.6b10908},\n volume = {121},\n year = {2017}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "This potential is an updated version of 2015--Botu-V-Ramprasad-R--Al. Note that the AGNI potentials are machine learning potentials designed to directly reproduce forces and therefore do not directly compute atomic energies."
+            }
+        }, 
+        "implementation": {
+            "key": "11ad98f1-b41c-4f25-8121-e4da47774756", 
+            "id": "2017--Botu-V--Al--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-10-05", 
+            "type": "LAMMPS pair_style agni", 
+            "notes": {
+                "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Botu-V-Batra-R-Chapman-J-Ramprasad-R--Al/1/Al_jpc.agni", 
+                    "link-text": "Al_jpc.agni"
+                }
+            }
+        }, 
+        "element": "Al"
+    }
+}

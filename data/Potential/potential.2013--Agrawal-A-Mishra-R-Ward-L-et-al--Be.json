@@ -1,0 +1,65 @@
+{
+    "interatomic-potential": {
+        "key": "7d0265d5-3088-44df-8b36-6a08e3799695", 
+        "id": "2013--Agrawal-A-Mishra-R-Ward-L-et-al--Be", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "An embedded atom method potential of beryllium", 
+                "author": [
+                    {
+                        "given-name": "A.", 
+                        "surname": "Agrawal"
+                    }, 
+                    {
+                        "given-name": "R.", 
+                        "surname": "Mishra"
+                    }, 
+                    {
+                        "given-name": "L.", 
+                        "surname": "Ward"
+                    }, 
+                    {
+                        "given-name": "K.M.", 
+                        "surname": "Flores"
+                    }, 
+                    {
+                        "given-name": "W.", 
+                        "surname": "Windl"
+                    }
+                ], 
+                "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                "publication-date": {
+                    "year": 2013
+                }, 
+                "volume": 21, 
+                "issue": 8, 
+                "abstract": "We present an embedded atom method (EAM) potential for hexagonal beryllium, with a pair function in the form of a Morse potential and a Johnson embedding function with exponential electron density. The cohesive energy, elastic constants, lattice parameters and relaxed vacancy formation energy were used to fit the potential. The fitted-potential was validated by a comparison to first-principles and, wherever available, experimental results for the lattice energies of various crystal structures: vacancy cluster, interstitial formation and surface. Using a large cutoff distance of 5 \u00c5, which includes interactions to approximately the eighth neighbor shell of beryllium, allows our potential to reproduce these quantities considerably better than previous EAM potentials. The accuracy obtained by our potential is similar to or in some cases even better than available modified EAM potentials, while being computationally less intensive.", 
+                "pages": 85001, 
+                "DOI": "10.1088/0965-0393/21/8/085001", 
+                "bibtex": "@article{Agrawal_2013,\n abstract = {We present an embedded atom method (EAM) potential for hexagonal beryllium, with a pair function in the form of a Morse potential and a Johnson embedding function with exponential electron density. The cohesive energy, elastic constants, lattice parameters and relaxed vacancy formation energy were used to fit the potential. The fitted-potential was validated by a comparison to first-principles and, wherever available, experimental results for the lattice energies of various crystal structures: vacancy cluster, interstitial formation and surface. Using a large cutoff distance of 5 \u00c5, which includes interactions to approximately the eighth neighbor shell of beryllium, allows our potential to reproduce these quantities considerably better than previous EAM potentials. The accuracy obtained by our potential is similar to or in some cases even better than available modified EAM potentials, while being computationally less intensive.},\n author = {Anupriya Agrawal and Rohan Mishra and Logan Ward and Katharine M Flores and Wolfgang Windl},\n doi = {10.1088/0965-0393/21/8/085001},\n journal = {Modelling and Simulation in Materials Science and Engineering},\n month = {oct},\n number = {8},\n pages = {085001},\n publisher = {IOP Publishing},\n title = {An embedded atom method potential of beryllium},\n url = {https://doi.org/10.1088%2F0965-0393%2F21%2F8%2F085001},\n volume = {21},\n year = {2013}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "There is a corrigendum for the publication located <a href=\"http://iopscience.iop.org/article/10.1088/0965-0393/23/6/069501\" class=\"external\">here</a>."
+            }
+        }, 
+        "implementation": {
+            "key": "81f0943d-7b43-433a-b114-32f3d1694459", 
+            "id": "2013--Agrawal-A--Be--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2016-08-29", 
+            "type": "LAMMPS pair_style eam/alloy", 
+            "notes": {
+                "text": "These files were sent by A. Agrawal (Washington University in St. Louis) on 29 August 2016 and posted with her permission."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Agrawal-A-Mishra-R-Ward-L-et-al--Be/1/Be_Agrawal.eam.alloy", 
+                    "link-text": "Be_Agrawal.eam.alloy"
+                }
+            }
+        }, 
+        "element": "Be"
+    }
+}

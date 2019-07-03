@@ -1,0 +1,31 @@
+{
+    "interatomic-potential": {
+        "key": "ac43c16b-b5fd-43e0-a886-2cb833d38ff9", 
+        "id": "1986--Tersoff-J--Si", 
+        "record-version": "2018-10-10", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "New empirical model for the structural properties of silicon", 
+                "author": {
+                    "given-name": "J.", 
+                    "surname": "Tersoff"
+                }, 
+                "publication-name": "Physical Review Letters", 
+                "publication-date": {
+                    "year": 1986
+                }, 
+                "volume": 56, 
+                "issue": 6, 
+                "abstract": "An empirical interatomic potential for covalent systems is proposed, incorporating bond order in an intuitive way. The potential has the form of a Morse pair potential, but with the bond-strength parameter depending upon local environment. A model for Si accurately describes bonding and geometry for may structures, including highly rebonded surfaces.", 
+                "pages": "632-635", 
+                "DOI": "10.1103/physrevlett.56.632", 
+                "bibtex": "@article{Tersoff_1986,\n abstract = {An empirical interatomic potential for covalent systems is proposed, incorporating bond order in an intuitive way. The potential has the form of a Morse pair potential, but with the bond-strength parameter depending upon local environment. A model for Si accurately describes bonding and geometry for may structures, including highly rebonded surfaces.},\n author = {J. Tersoff},\n doi = {10.1103/physrevlett.56.632},\n journal = {Physical Review Letters},\n month = {feb},\n number = {6},\n pages = {632--635},\n publisher = {American Physical Society (APS)},\n title = {New empirical model for the structural properties of silicon},\n url = {https://doi.org/10.1103%2Fphysrevlett.56.632},\n volume = {56},\n year = {1986}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "This is Tersoff's Si(A) potential, which used a slightly different functional form than the commonly known \"Tersoff\" potential form. It failed to predict diamond cubic as the ground state structure."
+            }
+        }, 
+        "element": "Si"
+    }
+}

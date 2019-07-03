@@ -1,0 +1,83 @@
+{
+    "interatomic-potential": {
+        "key": "8ae19224-1890-4eb8-ae50-67c5cf76af98", 
+        "id": "2011--Smirnova-D-E-Starikov-S-V-Stegailov-V-V--U", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": [
+                {
+                    "document-type": "journal", 
+                    "title": "Interatomic potential for uranium in a wide range of pressures and temperatures", 
+                    "author": [
+                        {
+                            "given-name": "D.E.", 
+                            "surname": "Smirnova"
+                        }, 
+                        {
+                            "given-name": "S.V.", 
+                            "surname": "Starikov"
+                        }, 
+                        {
+                            "given-name": "V.V.", 
+                            "surname": "Stegailov"
+                        }
+                    ], 
+                    "publication-name": "Journal of Physics: Condensed Matter", 
+                    "publication-date": {
+                        "year": 2011
+                    }, 
+                    "volume": 24, 
+                    "issue": 1, 
+                    "abstract": "Using the force-matching method we develop an interatomic potential that allows us to study the structure and properties of \u03b1-U, \u03b3-U and liquid uranium. The potential is fitted to the forces, energies and stresses obtained from ab initio calculations. The model gives a good comparison with the experimental and ab initio data for the lattice constants of \u03b1-U and \u03b3-U, the elastic constants, the room-temperature isotherm, the normal density isochore, the bond-angle distribution functions and the vacancy formation energies. The calculated melting line of uranium at pressures up to 80 GPa and the temperature of the \u03b1-\u03b3 transition at 3 GPa agree well with the experimental phase diagram of uranium.", 
+                    "pages": 15702, 
+                    "DOI": "10.1088/0953-8984/24/1/015702", 
+                    "bibtex": "@article{Smirnova_2011,\n abstract = {Using the force-matching method we develop an interatomic potential that allows us to study the structure and properties of \u03b1-U, \u03b3-U and liquid uranium. The potential is fitted to the forces, energies and stresses obtained from ab initio calculations. The model gives a good comparison with the experimental and ab initio data for the lattice constants of \u03b1-U and \u03b3-U, the elastic constants, the room-temperature isotherm, the normal density isochore, the bond-angle distribution functions and the vacancy formation energies. The calculated melting line of uranium at pressures up to 80 GPa and the temperature of the \u03b1-\u03b3 transition at 3 GPa agree well with the experimental phase diagram of uranium.},\n author = {D E Smirnova and S V Starikov and V V Stegailov},\n doi = {10.1088/0953-8984/24/1/015702},\n journal = {Journal of Physics: Condensed Matter},\n month = {dec},\n number = {1},\n pages = {015702},\n publisher = {IOP Publishing},\n title = {Interatomic potential for uranium in a wide range of pressures and temperatures},\n url = {https://doi.org/10.1088%2F0953-8984%2F24%2F1%2F015702},\n volume = {24},\n year = {2011}\n}\n\n"
+                }, 
+                {
+                    "document-type": "journal", 
+                    "title": "Interatomic potential for uranium in a wide range of pressures and temperatures", 
+                    "author": [
+                        {
+                            "given-name": "D.E.", 
+                            "surname": "Smirnova"
+                        }, 
+                        {
+                            "given-name": "S.V.", 
+                            "surname": "Starikov"
+                        }, 
+                        {
+                            "given-name": "V.V.", 
+                            "surname": "Stegailov"
+                        }
+                    ], 
+                    "publication-name": "Journal of Physics: Condensed Matter", 
+                    "publication-date": {
+                        "year": 2012
+                    }, 
+                    "volume": 24, 
+                    "issue": 14, 
+                    "pages": 149501, 
+                    "DOI": "10.1088/0953-8984/24/14/149501", 
+                    "bibtex": "@article{Smirnova_2012,\n author = {D E Smirnova and S V Starikov and V V Stegailov},\n doi = {10.1088/0953-8984/24/14/149501},\n journal = {Journal of Physics: Condensed Matter},\n month = {mar},\n number = {14},\n pages = {149501},\n publisher = {IOP Publishing},\n title = {Interatomic potential for uranium in a wide range of pressures and temperatures},\n url = {https://doi.org/10.1088%2F0953-8984%2F24%2F14%2F149501},\n volume = {24},\n year = {2012}\n}\n\n"
+                }
+            ]
+        }, 
+        "implementation": {
+            "key": "ba150dce-78d4-41c2-9b54-e187dbb7d069", 
+            "id": "2012--Smirnova-D-E--U--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2013-01-18", 
+            "type": "LAMMPS pair_style eam/alloy", 
+            "notes": {
+                "text": "This file was sent by Daria Smirnova (Joint Institute for High Temperatures, Russian Academy of Sciences) and posted on 18 Jan. 2013 with her permission."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Smirnova-D-E-Starikov-S-V-Stegailov-V-V--U/1/U.eam.sss2012.alloy", 
+                    "link-text": "U.eam.sss2012.alloy"
+                }
+            }
+        }, 
+        "element": "U"
+    }
+}

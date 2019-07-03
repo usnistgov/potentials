@@ -1,0 +1,79 @@
+{
+    "interatomic-potential": {
+        "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance", 
+        "key": "d07092e4-8c38-4cf5-bd05-bf18f8b80776", 
+        "id": "2006--Sun-D-Y-Mendelev-M-I-Becker-C-A-et-al--Mg", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Crystal-melt interfacial free energies in hcp metals: A molecular dynamics study of Mg", 
+                "author": [
+                    {
+                        "given-name": "D.Y.", 
+                        "surname": "Sun"
+                    }, 
+                    {
+                        "given-name": "M.I.", 
+                        "surname": "Mendelev"
+                    }, 
+                    {
+                        "given-name": "C.A.", 
+                        "surname": "Becker"
+                    }, 
+                    {
+                        "given-name": "K.", 
+                        "surname": "Kudin"
+                    }, 
+                    {
+                        "given-name": "T.", 
+                        "surname": "Haxhimali"
+                    }, 
+                    {
+                        "given-name": "M.", 
+                        "surname": "Asta"
+                    }, 
+                    {
+                        "given-name": "J.J.", 
+                        "surname": "Hoyt"
+                    }, 
+                    {
+                        "given-name": "A.", 
+                        "surname": "Karma"
+                    }, 
+                    {
+                        "given-name": "D.J.", 
+                        "surname": "Srolovitz"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 2006
+                }, 
+                "volume": 73, 
+                "issue": 2, 
+                "abstract": "Crystal-melt interfacial free energies (\u03b3) are computed for hcp Mg by employing equilibrium molecular-dynamics (MD) simulations and the capillary-fluctuation method (CFM). This work makes use of a newly developed embedded-atom-method (EAM) interatomic potential for Mg fit to crystal, liquid, and melting properties. We describe how the CFM, which has previously been applied to cubic systems only, can be generalized for studies of hcp metals by employing a parametrization for the orientation dependence of \u03b3 in terms of hexagonal harmonics. The method is applied in the calculation of the Turnbull coefficient (\u03b1) and crystalline anisotropies of \u03b3. We obtain a value of \u03b1=0.48, with interfacial free energies for different high-symmetry orientations differing by approximately 1%. These results are compared to those obtained in previous MD-CFM studies for cubic EAM metals as well as experimental studies of solid-liquid interfaces in hcp alloys. In addition, the implications of our results for the prediction of dendrite growth directions in hcp metals are discussed.", 
+                "pages": 24116, 
+                "DOI": "10.1103/physrevb.73.024116", 
+                "bibtex": "@article{Sun_2006,\n abstract = {Crystal-melt interfacial free energies (\u03b3) are computed for hcp Mg by employing equilibrium molecular-dynamics (MD) simulations and the capillary-fluctuation method (CFM). This work makes use of a newly developed embedded-atom-method (EAM) interatomic potential for Mg fit to crystal, liquid, and melting properties. We describe how the CFM, which has previously been applied to cubic systems only, can be generalized for studies of hcp metals by employing a parametrization for the orientation dependence of \u03b3 in terms of hexagonal harmonics. The method is applied in the calculation of the Turnbull coefficient (\u03b1) and crystalline anisotropies of \u03b3. We obtain a value of \u03b1=0.48, with interfacial free energies for different high-symmetry orientations differing by approximately 1%. These results are compared to those obtained in previous MD-CFM studies for cubic EAM metals as well as experimental studies of solid-liquid interfaces in hcp alloys. In addition, the implications of our results for the prediction of dendrite growth directions in hcp metals are discussed.},\n author = {D. Y. Sun and M. I. Mendelev and C. A. Becker and K. Kudin and Tomorr Haxhimali and M. Asta and J. J. Hoyt and A. Karma and D. J. Srolovitz},\n doi = {10.1103/physrevb.73.024116},\n journal = {Physical Review B},\n month = {jan},\n number = {2},\n numpages = {12},\n pages = {024116},\n publisher = {American Physical Society (APS)},\n title = {Crystal-melt interfacial free energies in hcp metals: A molecular dynamics study of Mg},\n url = {https://doi.org/10.1103%2Fphysrevb.73.024116},\n volume = {73},\n year = {2006}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "097bb56d-f57a-49c2-a28b-0703121bf3fe", 
+            "id": "2006--Sun-D-Y--Mg--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2007-06-10", 
+            "type": "LAMMPS pair_style eam/fs", 
+            "notes": {
+                "text": "This file was provided by Mikhail Mendelev.  Except for comments, this file is identical to \"Mg_mm.eam.fs\" in the August 22, 2018 LAMMPS distribution."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Sun-D-Y-Mendelev-M-I-Becker-C-A-et-al--Mg/1/Mg.eam.fs", 
+                    "link-text": "Mg.eam.fs"
+                }
+            }
+        }, 
+        "element": "Mg"
+    }
+}

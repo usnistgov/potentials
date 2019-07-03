@@ -1,0 +1,66 @@
+{
+    "interatomic-potential": {
+        "key": "48b64765-29eb-426e-b8ca-5f359640f5f6", 
+        "id": "2014--Zhou-X-W-Foster-M-E-van-Swol-F-B-et-al--Cd-Te-Se", 
+        "record-version": "2018-10-12", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Analytical Bond-Order Potential for the Cd-Te-Se Ternary System", 
+                "author": [
+                    {
+                        "given-name": "X.W.", 
+                        "surname": "Zhou"
+                    }, 
+                    {
+                        "given-name": "M.E.", 
+                        "surname": "Foster"
+                    }, 
+                    {
+                        "given-name": "F.B.", 
+                        "surname": "van Swol"
+                    }, 
+                    {
+                        "given-name": "J.E.", 
+                        "surname": "Martin"
+                    }, 
+                    {
+                        "given-name": "B.M.", 
+                        "surname": "Wong"
+                    }
+                ], 
+                "publication-name": "The Journal of Physical Chemistry C", 
+                "publication-date": {
+                    "year": 2014
+                }, 
+                "volume": 118, 
+                "issue": 35, 
+                "abstract": "CdTe/CdSe core/shell structured quantum dots do not suffer from the defects typically seen in lattice-mismatched films and can therefore lead to improved solid-state lighting devices as compared to the multilayered structures (e.g., In<sub>x</sub>Ga<sub>1\u2013x</sub>N/GaN). To achieve these devices, however, the quantum dots must be optimized with respect to the structural details at an atomistic level. Molecular dynamics simulations are effective for exploring nano structures at a resolution unattainable by experimental techniques. To enable accurate molecular dynamics simulations of CdTe/CdSe core/shell structures, we have developed a full Cd\u2013Te\u2013Se ternary bond-order potential based on the analytical formalisms derived from quantum mechanical theories by Pettifor et al. A variety of elemental and compound configurations (with coordination varying from 1 to 12) including small clusters, bulk lattices, defects, and surfaces are explicitly considered during potential parametrization. More importantly, enormous iterations are performed to strictly ensure that our potential can simulate the correct crystalline growth of the ground-state structures for Cd, Te, and Se elements as well as CdTe, CdSe, and CdTe<sub>1\u2013x</sub>Se<sub>x</sub> compounds during molecular dynamics vapor deposition simulations. Extensive test simulation results clearly indicate that our new Cd\u2013Te\u2013Se potential has unique advantages over the existing literature potential involving Cd, Te, and Se elements.", 
+                "pages": "20661-20679", 
+                "DOI": "10.1021/jp505915u", 
+                "bibtex": "@article{Zhou_2014,\n abstract = {CdTe/CdSe core/shell structured quantum dots do not suffer from the defects typically seen in lattice-mismatched films and can therefore lead to improved solid-state lighting devices as compared to the multilayered structures (e.g., In<sub>x</sub>Ga<sub>1\u2013x</sub>N/GaN). To achieve these devices, however, the quantum dots must be optimized with respect to the structural details at an atomistic level. Molecular dynamics simulations are effective for exploring nano structures at a resolution unattainable by experimental techniques. To enable accurate molecular dynamics simulations of CdTe/CdSe core/shell structures, we have developed a full Cd\u2013Te\u2013Se ternary bond-order potential based on the analytical formalisms derived from quantum mechanical theories by Pettifor et al. A variety of elemental and compound configurations (with coordination varying from 1 to 12) including small clusters, bulk lattices, defects, and surfaces are explicitly considered during potential parametrization. More importantly, enormous iterations are performed to strictly ensure that our potential can simulate the correct crystalline growth of the ground-state structures for Cd, Te, and Se elements as well as CdTe, CdSe, and CdTe<sub>1\u2013x</sub>Se<sub>x</sub> compounds during molecular dynamics vapor deposition simulations. Extensive test simulation results clearly indicate that our new Cd\u2013Te\u2013Se potential has unique advantages over the existing literature potential involving Cd, Te, and Se elements.},\n author = {X. W. Zhou and M. E. Foster and F. B. van Swol and J. E. Martin and Bryan M. Wong},\n doi = {10.1021/jp505915u},\n journal = {The Journal of Physical Chemistry C},\n month = {aug},\n number = {35},\n pages = {20661--20679},\n publisher = {American Chemical Society (ACS)},\n title = {Analytical Bond-Order Potential for the Cd-Te-Se Ternary System},\n url = {https://doi.org/10.1021%2Fjp505915u},\n volume = {118},\n year = {2014}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "9f4a24af-9e1e-4272-8bbe-df62f01a8a09", 
+            "id": "2014--Zhou-X-W--Cd-Te-Se--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-10-12", 
+            "type": "LAMMPS pair_style bop", 
+            "notes": {
+                "text": "This file was taken from the August 22, 2018 LAMMPS distribution and listed as having been created by X.W. Zhou (Sandia)"
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Zhou-X-W-Foster-M-E-van-Swol-F-B-et-al--Cd-Te-Se/1/CdTeSe.bop.table", 
+                    "link-text": "CdTeSe.bop.table"
+                }
+            }
+        }, 
+        "element": [
+            "Cd", 
+            "Te", 
+            "Se"
+        ]
+    }
+}

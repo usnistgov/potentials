@@ -1,0 +1,87 @@
+{
+    "interatomic-potential": {
+        "key": "fe333ad8-fd35-4b4d-9eb2-e293806c4d02", 
+        "id": "2013--Gao-H-Otero-de-la-Roza-A-Aouadi-S-M-et-al--AgTaO3", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "An empirical model for silver tantalate", 
+                "author": [
+                    {
+                        "given-name": "H.", 
+                        "surname": "Gao"
+                    }, 
+                    {
+                        "given-name": "A.", 
+                        "surname": "Otero-de-la-Roza"
+                    }, 
+                    {
+                        "given-name": "S.M.", 
+                        "surname": "Aouadi"
+                    }, 
+                    {
+                        "given-name": "E.R.", 
+                        "surname": "Johnson"
+                    }, 
+                    {
+                        "given-name": "A.", 
+                        "surname": "Martini"
+                    }
+                ], 
+                "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                "publication-date": {
+                    "year": 2013
+                }, 
+                "volume": 21, 
+                "issue": 5, 
+                "abstract": "A set of parameters for the modified embedded atom method (MEAM) potential was developed to describe the perovskite silver tantalate (AgTaO3). First, MEAM parameters for AgO and TaO were determined based on the structural and elastic properties of the materials in a B1 reference structure predicted by density-functional theory (DFT). Then, using the fitted binary parameters, additional potential parameters were adjusted to enable the empirical potential to reproduce DFT-predicted lattice structure, elastic constants, cohesive energy and equation of state for the ternary AgTaO3. Finally, thermal expansion was predicted by a molecular dynamics (MD) simulation using the newly developed potential and compared directly to experimental values. The agreement with known experimental data for AgTaO3 is satisfactory, and confirms that the new empirical model is a good starting point for further MD studies.", 
+                "pages": 55002, 
+                "DOI": "10.1088/0965-0393/21/5/055002", 
+                "bibtex": "@article{Gao_2013,\n abstract = {A set of parameters for the modified embedded atom method (MEAM) potential was developed to describe the perovskite silver tantalate (AgTaO3). First, MEAM parameters for AgO and TaO were determined based on the structural and elastic properties of the materials in a B1 reference structure predicted by density-functional theory (DFT). Then, using the fitted binary parameters, additional potential parameters were adjusted to enable the empirical potential to reproduce DFT-predicted lattice structure, elastic constants, cohesive energy and equation of state for the ternary AgTaO3. Finally, thermal expansion was predicted by a molecular dynamics (MD) simulation using the newly developed potential and compared directly to experimental values. The agreement with known experimental data for AgTaO3 is satisfactory, and confirms that the new empirical model is a good starting point for further MD studies.},\n author = {H. Gao and A. Otero-de-la-Roza and S. M. Aouadi and E. R. Johnson and A. Martini},\n doi = {10.1088/0965-0393/21/5/055002},\n journal = {Modelling and Simulation in Materials Science and Engineering},\n month = {may},\n number = {5},\n pages = {055002},\n publisher = {IOP Publishing},\n title = {An empirical model for silver tantalate},\n url = {https://doi.org/10.1088%2F0965-0393%2F21%2F5%2F055002},\n volume = {21},\n year = {2013}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "e4c1c5f5-a2e3-4cb4-b071-7e8a47f0e4ff", 
+            "id": "2013--Gao-H--AgTaO3--LAMMPS--ipr2", 
+            "status": "active", 
+            "date": "2017-10-10", 
+            "type": "LAMMPS pair_style meam", 
+            "notes": {
+                "text": "These files were sent by Dr. Ashlie Martini (Univ. California Merced) and approved for distribution on 6 Jul. 2013. The file AgTaO3_40atoms.dat contains atomic coordinates for the 40-atom cell described in the paper. A sample LAMMPS input script to calculate the cohesive energy of that configuration is in in.AgTaO3. This potential was tested on the following versions of LAMMPS: 5Mar12, 12Apr12, 19May12, 4Jul12, 28Oct12, 21Feb13, 5Jun13, 13Jun13, 17Jun13."
+            }, 
+            "artifact": [
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Gao-H-Otero-de-la-Roza-A-Aouadi-S-M-et-al--AgTaO3/1/library_AgTaO3.meam", 
+                        "link-text": "library_AgTaO3.meam"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Gao-H-Otero-de-la-Roza-A-Aouadi-S-M-et-al--AgTaO3/1/AgTaO3.meam", 
+                        "link-text": "AgTaO3.meam"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Gao-H-Otero-de-la-Roza-A-Aouadi-S-M-et-al--AgTaO3/1/AgTaO3_40atoms.dat", 
+                        "link-text": "AgTaO3_40atoms.dat"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Gao-H-Otero-de-la-Roza-A-Aouadi-S-M-et-al--AgTaO3/1/in.AgTaO3", 
+                        "link-text": "in.AgTaO3"
+                    }
+                }
+            ]
+        }, 
+        "element": [
+            "Ag", 
+            "Ta", 
+            "O"
+        ], 
+        "other-element": "AgTaO3"
+    }
+}

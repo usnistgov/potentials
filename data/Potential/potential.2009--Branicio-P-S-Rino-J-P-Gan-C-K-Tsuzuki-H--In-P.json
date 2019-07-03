@@ -1,0 +1,61 @@
+{
+    "interatomic-potential": {
+        "key": "4976b7b8-73cb-4cf8-bcb3-7c0526c3bc98", 
+        "id": "2009--Branicio-P-S-Rino-J-P-Gan-C-K-Tsuzuki-H--In-P", 
+        "record-version": "2018-11-01", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Interaction potential for indium phosphide: a molecular dynamics and first-principles study of the elastic constants, generalized stacking fault and surface energies", 
+                "author": [
+                    {
+                        "given-name": "P.S.", 
+                        "surname": "Branicio"
+                    }, 
+                    {
+                        "given-name": "J.P.", 
+                        "surname": "Rino"
+                    }, 
+                    {
+                        "given-name": "C.K.", 
+                        "surname": "Gan"
+                    }, 
+                    {
+                        "given-name": "H.", 
+                        "surname": "Tsuzuki"
+                    }
+                ], 
+                "publication-name": "Journal of Physics: Condensed Matter", 
+                "publication-date": {
+                    "year": 2009
+                }, 
+                "volume": 21, 
+                "issue": 9, 
+                "abstract": "Indium phosphide is investigated using molecular dynamics (MD) simulations and density-functional theory calculations. MD simulations use a proposed effective interaction potential for InP fitted to a selected experimental dataset of properties. The potential consists of two- and three-body terms that represent atomic-size effects, charge\u2013charge, charge\u2013dipole and dipole\u2013dipole interactions as well as covalent bond bending and stretching. Predictions are made for the elastic constants as a function of density and temperature, the generalized stacking fault energy and the low-index surface energies.", 
+                "pages": 95002, 
+                "DOI": "10.1088/0953-8984/21/9/095002", 
+                "bibtex": "@article{Branicio_2009,\n abstract = {Indium phosphide is investigated using molecular dynamics (MD) simulations and density-functional theory calculations. MD simulations use a proposed effective interaction potential for InP fitted to a selected experimental dataset of properties. The potential consists of two- and three-body terms that represent atomic-size effects, charge\u2013charge, charge\u2013dipole and dipole\u2013dipole interactions as well as covalent bond bending and stretching. Predictions are made for the elastic constants as a function of density and temperature, the generalized stacking fault energy and the low-index surface energies.},\n author = {Paulo Sergio Branicio and Jos\u00e9 Pedro Rino and Chee Kwan Gan and H\u00e9lio Tsuzuki},\n doi = {10.1088/0953-8984/21/9/095002},\n journal = {Journal of Physics: Condensed Matter},\n month = {jan},\n number = {9},\n pages = {095002},\n publisher = {IOP Publishing},\n title = {Interaction potential for indium phosphide: a molecular dynamics and first-principles study of the elastic constants, generalized stacking fault and surface energies},\n url = {https://doi.org/10.1088%2F0953-8984%2F21%2F9%2F095002},\n volume = {21},\n year = {2009}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "725aed6f-be30-4679-bed8-7c139b4fb34b", 
+            "id": "2009--Branicio-P-S--In-P--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-11-01", 
+            "type": "LAMMPS pair_style vashishta", 
+            "notes": {
+                "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Branicio-P-S-Rino-J-P-Gan-C-K-Tsuzuki-H--In-P/1/InP.vashishta", 
+                    "link-text": "InP.vashishta"
+                }
+            }
+        }, 
+        "element": [
+            "In", 
+            "P"
+        ]
+    }
+}

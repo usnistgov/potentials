@@ -1,0 +1,47 @@
+{
+    "interatomic-potential": {
+        "key": "fc49b18c-eb42-4e83-bf2f-4f1fe334be77", 
+        "id": "1988--Tersoff-J--Si-b", 
+        "record-version": "2018-10-10", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "New empirical approach for the structure and energy of covalent systems", 
+                "author": {
+                    "given-name": "J.", 
+                    "surname": "Tersoff"
+                }, 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 1988
+                }, 
+                "volume": 37, 
+                "issue": 12, 
+                "abstract": "Empirical interatomic potentials permit the calculation of structural properties and energetics of complex systems. A new approach for constructing such potentials, by explicitly incorporating the dependence of bond order on local environment, permits an improved description of covalent materials. In particular, a new potential for silicon is presented, along with results of extensive tests which suggest that this potential provides a rather realistic description of silicon. The limitations of the potential are discussed in detail.", 
+                "pages": "6991-7000", 
+                "DOI": "10.1103/physrevb.37.6991", 
+                "bibtex": "@article{Tersoff_1988,\n abstract = {Empirical interatomic potentials permit the calculation of structural properties and energetics of complex systems. A new approach for constructing such potentials, by explicitly incorporating the dependence of bond order on local environment, permits an improved description of covalent materials. In particular, a new potential for silicon is presented, along with results of extensive tests which suggest that this potential provides a rather realistic description of silicon. The limitations of the potential are discussed in detail.},\n author = {J. Tersoff},\n doi = {10.1103/physrevb.37.6991},\n journal = {Physical Review B},\n month = {apr},\n number = {12},\n pages = {6991--7000},\n publisher = {American Physical Society (APS)},\n title = {New empirical approach for the structure and energy of covalent systems},\n url = {https://doi.org/10.1103%2Fphysrevb.37.6991},\n volume = {37},\n year = {1988}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "This is Tersoff's Si(B) potential, which is the original parameterization of silicon using what is commonly referred to as the \"Tersoff\"-potential form."
+            }
+        }, 
+        "implementation": {
+            "key": "e01d150d-054c-46cd-a438-956e754436b6", 
+            "id": "1988--Tersoff-J--Si-b--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-10-10", 
+            "type": "LAMMPS pair_style tersoff", 
+            "notes": {
+                "text": "This file was created and verified by Lucas Hale. It has identical parameter values as the Si.tersoff file in the August 22, 2018 LAMMPS distribution and the parameter file used by openKIM model MO_245095684871_001."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1988--Tersoff-J--Si-b/1/1988_Si(B).tersoff", 
+                    "link-text": "1988_Si(B).tersoff"
+                }
+            }
+        }, 
+        "element": "Si"
+    }
+}

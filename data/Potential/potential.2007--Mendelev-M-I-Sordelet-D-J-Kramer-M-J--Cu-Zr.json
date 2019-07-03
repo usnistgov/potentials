@@ -1,0 +1,60 @@
+{
+    "interatomic-potential": {
+        "key": "fbb1e782-509e-4103-a735-db0050ad7477", 
+        "id": "2007--Mendelev-M-I-Sordelet-D-J-Kramer-M-J--Cu-Zr", 
+        "record-version": "2018-10-05", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Using atomistic computer simulations to analyze x-ray diffraction data from metallic glasses", 
+                "author": [
+                    {
+                        "given-name": "M.I.", 
+                        "surname": "Mendelev"
+                    }, 
+                    {
+                        "given-name": "D.J.", 
+                        "surname": "Sordelet"
+                    }, 
+                    {
+                        "given-name": "M.J.", 
+                        "surname": "Kramer"
+                    }
+                ], 
+                "publication-name": "Journal of Applied Physics", 
+                "publication-date": {
+                    "year": 2007
+                }, 
+                "volume": 102, 
+                "issue": 4, 
+                "abstract": "We propose a method of using atomistic computer simulations to obtain partial pair correlation functions from wide angle diffraction experiments with metallic liquids and their glasses. In this method, a model is first created using a semiempirical interatomic potential and then an additional atomic force is added to improve the agreement with experimental diffraction data. To illustrate this approach, the structure of an amorphous Cu64.5Zr35.5 alloy is highlighted, where we present the results for the semiempirical many-body potential and fitting to x-ray diffraction data. While only x-ray diffraction data were used in the present work, the method can be easily adapted to the case when there are also data from neutron diffraction or even in combination. Moreover, this method can be employed in the case of multicomponent systems when the data of several diffraction experiments can be combined.", 
+                "pages": 43501, 
+                "DOI": "10.1063/1.2769157", 
+                "bibtex": "@article{Mendelev_2007,\n abstract = {We propose a method of using atomistic computer simulations to obtain partial pair correlation functions from wide angle diffraction experiments with metallic liquids and their glasses. In this method, a model is first created using a semiempirical interatomic potential and then an additional atomic force is added to improve the agreement with experimental diffraction data. To illustrate this approach, the structure of an amorphous Cu64.5Zr35.5 alloy is highlighted, where we present the results for the semiempirical many-body potential and fitting to x-ray diffraction data. While only x-ray diffraction data were used in the present work, the method can be easily adapted to the case when there are also data from neutron diffraction or even in combination. Moreover, this method can be employed in the case of multicomponent systems when the data of several diffraction experiments can be combined.},\n author = {M. I. Mendelev and D. J. Sordelet and M. J. Kramer},\n doi = {10.1063/1.2769157},\n journal = {Journal of Applied Physics},\n month = {aug},\n number = {4},\n pages = {043501},\n publisher = {AIP Publishing},\n title = {Using atomistic computer simulations to analyze x-ray diffraction data from metallic glasses},\n url = {https://doi.org/10.1063%2F1.2769157},\n volume = {102},\n year = {2007}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "Update 14 Oct. 2010: the Cu part of this potential is available separately as <a href=\"../../entry/2008--Mendelev-M-I-Kramer-M-J-Becker-C-A-Asta-M--Cu\">2008--Mendelev-M-I-Kramer-M-J-Becker-C-A-Asta-M--Cu</a>."
+            }
+        }, 
+        "implementation": {
+            "key": "ae5f9b23-95bf-4f3a-83d8-0c3daac46992", 
+            "id": "2007--Mendelev-M-I--Cu-Zr--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2007-06-10", 
+            "type": "LAMMPS pair_style eam/fs", 
+            "notes": {
+                "text": "This file was supplied by Mikhail Mendelev. Except for comments, this file is equivalent to \"CuZr_mm.eam.fs\" in the August 22, 2018 LAMMPS distribution."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2007--Mendelev-M-I-Sordelet-D-J-Kramer-M-J--Cu-Zr/1/Cu-Zr.eam.fs", 
+                    "link-text": "Cu-Zr.eam.fs"
+                }
+            }
+        }, 
+        "element": [
+            "Cu", 
+            "Zr"
+        ]
+    }
+}

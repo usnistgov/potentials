@@ -1,0 +1,83 @@
+{
+    "interatomic-potential": {
+        "key": "41f2bbbd-bc48-420e-8c2b-6bec9cf00afc", 
+        "id": "2013--Hale-L-M-Wong-B-M-Zimmerman-J-A-Zhou-X-W--Pd-Ag-H-Hybrid", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Atomistic potentials for palladium-silver hydrides", 
+                "author": [
+                    {
+                        "given-name": "L.M.", 
+                        "surname": "Hale"
+                    }, 
+                    {
+                        "given-name": "B.M.", 
+                        "surname": "Wong"
+                    }, 
+                    {
+                        "given-name": "J.A.", 
+                        "surname": "Zimmerman"
+                    }, 
+                    {
+                        "given-name": "X.W.", 
+                        "surname": "Zhou"
+                    }
+                ], 
+                "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                "publication-date": {
+                    "year": 2013
+                }, 
+                "volume": 21, 
+                "issue": 4, 
+                "abstract": "New embedded-atom method potentials for the ternary palladium\u2013silver\u2013hydrogen system are developed by extending a previously developed palladium\u2013hydrogen potential. The ternary potentials accurately capture the heat of mixing and structural properties associated with solid solution alloys of palladium\u2013silver. Stable hydrides are produced with properties that smoothly transition across the compositions. Additions of silver to palladium are predicted to alter the properties of the hydrides by decreasing the miscibility gap and increasing the likelihood of hydrogen atoms occupying tetrahedral interstitial sites over octahedral interstitial sites.", 
+                "pages": 45005, 
+                "DOI": "10.1088/0965-0393/21/4/045005", 
+                "bibtex": "@article{Hale_2013,\n abstract = {New embedded-atom method potentials for the ternary palladium\u2013silver\u2013hydrogen system are developed by extending a previously developed palladium\u2013hydrogen potential. The ternary potentials accurately capture the heat of mixing and structural properties associated with solid solution alloys of palladium\u2013silver. Stable hydrides are produced with properties that smoothly transition across the compositions. Additions of silver to palladium are predicted to alter the properties of the hydrides by decreasing the miscibility gap and increasing the likelihood of hydrogen atoms occupying tetrahedral interstitial sites over octahedral interstitial sites.},\n author = {L M Hale and B M Wong and J A Zimmerman and X W Zhou},\n doi = {10.1088/0965-0393/21/4/045005},\n journal = {Modelling and Simulation in Materials Science and Engineering},\n month = {apr},\n number = {4},\n pages = {045005},\n publisher = {IOP Publishing},\n title = {Atomistic potentials for palladium-silver hydrides},\n url = {https://doi.org/10.1088%2F0965-0393%2F21%2F4%2F045005},\n volume = {21},\n year = {2013}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "This listing is for the potential with the hybrid-style Pd-Ag interaction as described in the article."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "d4dfb98d-87dc-4647-8ab6-87378120456f", 
+                "id": "2013--Hale-L-M--Pd-Ag-H-Hybrid--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2014-04-09", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was supplied by Jonathan Zimmerman (Sandia National Laboratories) and posted with his approval on 9 April 2014. Dr. Zimmerman noted that this file is the version that used the Hybrid style for the Pd-Ag interaction. This file has also been modified to include the citation in the header information and include '.alloy' in the file name for clarity."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Hale-L-M-Wong-B-M-Zimmerman-J-A-Zhou-X-W--Pd-Ag-H-Hybrid/1/PdAgH_HybridPd3Ag.eam.alloy", 
+                        "link-text": "PdAgH_HybridPd3Ag.eam.alloy"
+                    }
+                }
+            }, 
+            {
+                "key": "MO_104806802344_000", 
+                "id": "MO_104806802344_000", 
+                "status": "active", 
+                "date": "2014-04-09", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Link to the KIM-compliant version of the Hybrid-based interatomic potential. <a href=\"https://openkim.org/projects-using-kim/\" class=\"external\">https://openkim.org/projects-using-kim/</a> provides links to instructions for the use of KIM-compliant versions of these potentials.</a> Links to the KIM-related content were provided by Prof. Ryan Elliott (U. Minnesota, KIM Editor)."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://openkim.org/cite/MO_104806802344_000", 
+                        "link-text": "https://openkim.org/cite/MO_104806802344_000"
+                    }
+                }
+            }
+        ], 
+        "element": [
+            "Pd", 
+            "Ag", 
+            "H"
+        ]
+    }
+}

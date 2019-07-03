@@ -1,0 +1,54 @@
+{
+    "interatomic-potential": {
+        "key": "c557d842-d484-415a-8ecb-fe5616a8bcd0", 
+        "id": "2015--Zhou-X-W-Ward-D-K-Foster-M-E--C", 
+        "record-version": "2018-10-12", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "An analytical bond-order potential for carbon", 
+                "author": [
+                    {
+                        "given-name": "X.W.", 
+                        "surname": "Zhou"
+                    }, 
+                    {
+                        "given-name": "D.K.", 
+                        "surname": "Ward"
+                    }, 
+                    {
+                        "given-name": "M.E.", 
+                        "surname": "Foster"
+                    }
+                ], 
+                "publication-name": "Journal of Computational Chemistry", 
+                "publication-date": {
+                    "year": 2015
+                }, 
+                "volume": 36, 
+                "issue": 23, 
+                "abstract": "Carbon is the most widely studied material today because it exhibits special properties not seen in any other materials when in nano dimensions such as nanotube and graphene. Reduction of material defects created during synthesis has become critical to realize the full potential of carbon structures. Molecular dynamics (MD) simulations, in principle, allow defect formation mechanisms to be studied with high fidelity, and can, therefore, help guide experiments for defect reduction. Such MD simulations must satisfy a set of stringent requirements. First, they must employ an interatomic potential formalism that is transferable to a variety of carbon structures. Second, the potential needs to be appropriately parameterized to capture the property trends of important carbon structures, in particular, diamond, graphite, graphene, and nanotubes. Most importantly, the potential must predict the crystalline growth of the correct phases during direct MD simulations of synthesis to achieve a predictive simulation of defect formation. Because an unlimited number of structures not included in the potential parameterization are encountered, the literature carbon potentials are often not sufficient for growth simulations. We have developed an analytical bond order potential for carbon, and have made it available through the public MD simulation package LAMMPS. We demonstrate that our potential reasonably captures the property trends of important carbon phases. Stringent MD simulations convincingly show that our potential accounts not only for the crystalline growth of graphene, graphite, and carbon nanotubes but also for the transformation of graphite to diamond at high pressure.", 
+                "pages": "1719-1735", 
+                "DOI": "10.1002/jcc.23949", 
+                "bibtex": "@article{Zhou_2015,\n abstract = {Carbon is the most widely studied material today because it exhibits special properties not seen in any other materials when in nano dimensions such as nanotube and graphene. Reduction of material defects created during synthesis has become critical to realize the full potential of carbon structures. Molecular dynamics (MD) simulations, in principle, allow defect formation mechanisms to be studied with high fidelity, and can, therefore, help guide experiments for defect reduction. Such MD simulations must satisfy a set of stringent requirements. First, they must employ an interatomic potential formalism that is transferable to a variety of carbon structures. Second, the potential needs to be appropriately parameterized to capture the property trends of important carbon structures, in particular, diamond, graphite, graphene, and nanotubes. Most importantly, the potential must predict the crystalline growth of the correct phases during direct MD simulations of synthesis to achieve a predictive simulation of defect formation. Because an unlimited number of structures not included in the potential parameterization are encountered, the literature carbon potentials are often not sufficient for growth simulations. We have developed an analytical bond order potential for carbon, and have made it available through the public MD simulation package LAMMPS. We demonstrate that our potential reasonably captures the property trends of important carbon phases. Stringent MD simulations convincingly show that our potential accounts not only for the crystalline growth of graphene, graphite, and carbon nanotubes but also for the transformation of graphite to diamond at high pressure.},\n author = {X. W. Zhou and D. K. Ward and M. E. Foster},\n doi = {10.1002/jcc.23949},\n journal = {Journal of Computational Chemistry},\n month = {may},\n number = {23},\n pages = {1719--1735},\n publisher = {Wiley},\n title = {An analytical bond-order potential for carbon},\n url = {https://doi.org/10.1002%2Fjcc.23949},\n volume = {36},\n year = {2015}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "3628d6c3-d304-4ca0-bf86-9108b26e7f77", 
+            "id": "2015--Zhou-X-W--C--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-10-12", 
+            "type": "LAMMPS pair_style bop", 
+            "notes": {
+                "text": "This file was taken from the August 22, 2018 LAMMPS distribution and listed as having been created by X.W. Zhou (Sandia)"
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Zhou-X-W-Ward-D-K-Foster-M-E--C/1/CCu_v2.bop.table", 
+                    "link-text": "CCu_v2.bop.table"
+                }
+            }
+        }, 
+        "element": "C"
+    }
+}

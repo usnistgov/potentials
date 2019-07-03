@@ -1,0 +1,40 @@
+{
+    "interatomic-potential": {
+        "key": "744c569b-17a3-479c-b4cc-515a790399b5", 
+        "id": "2015--Mendelev-M-I--fictional-W", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "unspecified", 
+                "title": "to be published", 
+                "author": {
+                    "given-name": "M.I.", 
+                    "surname": "Mendelev"
+                }, 
+                "publication-date": {
+                    "year": 2015
+                }, 
+                "bibtex": "@unpublished{2015--Mendelev-M-I--fictional-W,\n author = {M.I. Mendelev},\n note = {2015--Mendelev-M-I--fictional-W},\n title = {to be published},\n year = {2015}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "This potential is a modification of the Ackland W potential (&lt;a href=\"./Download/W-ATVF/W.eam.fs\"&gt;W.eam.fs&lt;/a&gt;). This potential was developed to study the effects of the latent heat and the liquid structure on the SLI free energy."
+            }
+        }, 
+        "implementation": {
+            "key": "bd1e29aa-ce1c-47e8-8d9e-856345bac31e", 
+            "status": "active", 
+            "date": "2015-12-07", 
+            "type": "LAMMPS pair_style eam/fs", 
+            "notes": {
+                "text": "These files were sent by M.I. Mendelev (Ames Laboratory) on 7 Dec. 2015 and posted with his permission."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Mendelev-M-I--fictional-W/1/W2.eam.fs", 
+                    "link-text": "W2.eam.fs"
+                }
+            }
+        }, 
+        "fictional-element": "W"
+    }
+}

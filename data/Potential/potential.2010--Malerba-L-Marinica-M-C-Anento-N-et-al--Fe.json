@@ -1,0 +1,127 @@
+{
+    "interatomic-potential": {
+        "key": "9155f279-c246-4108-bfe4-1db2fcf21959", 
+        "id": "2010--Malerba-L-Marinica-M-C-Anento-N-et-al--Fe", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": [
+                {
+                    "document-type": "journal", 
+                    "title": "Comparison of empirical interatomic potentials for iron applied to radiation damage studies", 
+                    "author": [
+                        {
+                            "given-name": "L.", 
+                            "surname": "Malerba"
+                        }, 
+                        {
+                            "given-name": "M.C.", 
+                            "surname": "Marinica"
+                        }, 
+                        {
+                            "given-name": "N.", 
+                            "surname": "Anento"
+                        }, 
+                        {
+                            "given-name": "C.", 
+                            "surname": "Bj\u00f6rkas"
+                        }, 
+                        {
+                            "given-name": "H.", 
+                            "surname": "Nguyen"
+                        }, 
+                        {
+                            "given-name": "C.", 
+                            "surname": "Domain"
+                        }, 
+                        {
+                            "given-name": "F.", 
+                            "surname": "Djurabekova"
+                        }, 
+                        {
+                            "given-name": "P.", 
+                            "surname": "Olsson"
+                        }, 
+                        {
+                            "given-name": "K.", 
+                            "surname": "Nordlund"
+                        }, 
+                        {
+                            "given-name": "A.", 
+                            "surname": "Serra"
+                        }, 
+                        {
+                            "given-name": "D.", 
+                            "surname": "Terentyev"
+                        }, 
+                        {
+                            "given-name": "F.", 
+                            "surname": "Willaime"
+                        }, 
+                        {
+                            "given-name": "C.S.", 
+                            "surname": "Becquart"
+                        }
+                    ], 
+                    "publication-name": "Journal of Nuclear Materials", 
+                    "publication-date": {
+                        "year": 2010
+                    }, 
+                    "volume": 406, 
+                    "issue": 1, 
+                    "abstract": "The performance of four recent semi-empirical interatomic potentials for iron, developed or used within the FP6 Perfect Project, is evaluated by comparing them between themselves and with available experimental or, more often, density functional theory data. The quantities chosen for the comparison are of specific interest for radiation damage studies, i.e. they concern mainly properties of point-defects and their clusters, as well as dislocations. For completeness, an earlier, widely used (also within the Project) iron potential is included in the comparison exercise as well. This exercise allows conclusions to be drawn about the reliability of the available potentials, while providing a snapshot of the state-of-the-art concerning fundamental properties of iron, thereby being also useful as a kind of handbook and as a framework for the validation of future semi-empirical interatomic potentials for iron. It is found that Mendelev-type potentials are currently the best choice in order to \"extend density functional theory\" to larger scales and this justifies their widespread use, also for the development of iron alloy potentials. However, a fully reliable description of self-interstitial atom clusters and dislocations with interatomic potentials remains largely an elusive objective, that calls for further effort within the concerned scientific community.", 
+                    "pages": "19-38", 
+                    "DOI": "10.1016/j.jnucmat.2010.05.017", 
+                    "bibtex": "@article{Malerba_2010,\n abstract = {The performance of four recent semi-empirical interatomic potentials for iron, developed or used within the FP6 Perfect Project, is evaluated by comparing them between themselves and with available experimental or, more often, density functional theory data. The quantities chosen for the comparison are of specific interest for radiation damage studies, i.e. they concern mainly properties of point-defects and their clusters, as well as dislocations. For completeness, an earlier, widely used (also within the Project) iron potential is included in the comparison exercise as well. This exercise allows conclusions to be drawn about the reliability of the available potentials, while providing a snapshot of the state-of-the-art concerning fundamental properties of iron, thereby being also useful as a kind of handbook and as a framework for the validation of future semi-empirical interatomic potentials for iron. It is found that Mendelev-type potentials are currently the best choice in order to \"extend density functional theory\" to larger scales and this justifies their widespread use, also for the development of iron alloy potentials. However, a fully reliable description of self-interstitial atom clusters and dislocations with interatomic potentials remains largely an elusive objective, that calls for further effort within the concerned scientific community.},\n author = {L. Malerba and M.C. Marinica and N. Anento and C. Bj\u00f6rkas and H. Nguyen and C. Domain and F. Djurabekova and P. Olsson and K. Nordlund and A. Serra and D. Terentyev and F. Willaime and C.S. Becquart},\n doi = {10.1016/j.jnucmat.2010.05.017},\n journal = {Journal of Nuclear Materials},\n month = {nov},\n number = {1},\n pages = {19--38},\n publisher = {Elsevier BV},\n title = {Comparison of empirical interatomic potentials for iron applied to radiation damage studies},\n url = {https://doi.org/10.1016%2Fj.jnucmat.2010.05.017},\n volume = {406},\n year = {2010}\n}\n\n"
+                }, 
+                {
+                    "document-type": "journal", 
+                    "title": "Irradiation-Induced Formation of Nanocrystallites with C15 Laves Phase Structure in bcc Iron", 
+                    "author": [
+                        {
+                            "given-name": "M.-C.", 
+                            "surname": "Marinica"
+                        }, 
+                        {
+                            "given-name": "F.", 
+                            "surname": "Willaime"
+                        }, 
+                        {
+                            "given-name": "J.-P.", 
+                            "surname": "Crocombette"
+                        }
+                    ], 
+                    "publication-name": "Physical Review Letters", 
+                    "publication-date": {
+                        "year": 2012
+                    }, 
+                    "volume": 108, 
+                    "issue": 2, 
+                    "abstract": "A three-dimensional periodic structure is proposed for self-interstitial clusters in body-centered-cubic metals, as opposed to the conventional two-dimensional loop morphology. The underlying crystal structure corresponds to the C15 Laves phase. Using density functional theory and interatomic potential calculations, we demonstrate that in \u03b1-iron these C15 aggregates are highly stable and immobile and that they exhibit large antiferromagnetic moments. They form directly in displacement cascades, and they can grow by capturing self-interstitials. They thus constitute an important new element to account for when predicting the microstructural evolution of iron base materials under irradiation.", 
+                    "pages": 25501, 
+                    "DOI": "10.1103/physrevlett.108.025501", 
+                    "bibtex": "@article{Marinica_2012,\n abstract = {A three-dimensional periodic structure is proposed for self-interstitial clusters in body-centered-cubic metals, as opposed to the conventional two-dimensional loop morphology. The underlying crystal structure corresponds to the C15 Laves phase. Using density functional theory and interatomic potential calculations, we demonstrate that in \u03b1-iron these C15 aggregates are highly stable and immobile and that they exhibit large antiferromagnetic moments. They form directly in displacement cascades, and they can grow by capturing self-interstitials. They thus constitute an important new element to account for when predicting the microstructural evolution of iron base materials under irradiation.},\n author = {M.-C. Marinica and F. Willaime and J.-P. Crocombette},\n doi = {10.1103/physrevlett.108.025501},\n journal = {Physical Review Letters},\n month = {jan},\n number = {2},\n pages = {025501},\n publisher = {American Physical Society (APS)},\n title = {Irradiation-Induced Formation of Nanocrystallites with C15 Laves Phase Structure in bcc Iron},\n url = {https://doi.org/10.1103%2Fphysrevlett.108.025501},\n volume = {108},\n year = {2012}\n}\n\n"
+                }
+            ], 
+            "notes": {
+                "text": "Dr. Marinica noted that this iron potential was developed by M.-C. Marinca in 2007. The potential uses EAM formalism and was fitted on a database point defect oriented. The performance of the potential is tested in the above 2010 reference. Someone using this potential should cite the above two papers."
+            }
+        }, 
+        "implementation": {
+            "key": "784d3863-5c64-4ab8-9323-3009f907bd45", 
+            "id": "2010--Malerba-L--Fe--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2017-01-10", 
+            "type": "LAMMPS pair_style eam/fs", 
+            "notes": {
+                "text": "This file was sent by M.-C. Marinica (CEA, France) on 10 January 2017 and posted with his permission."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Malerba-L-Marinica-M-C-Anento-N-et-al--Fe/1/M07_eam.fs", 
+                    "link-text": "M07_eam.fs"
+                }
+            }
+        }, 
+        "element": "Fe"
+    }
+}

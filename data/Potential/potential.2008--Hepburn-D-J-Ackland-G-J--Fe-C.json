@@ -1,0 +1,53 @@
+{
+    "interatomic-potential": {
+        "key": "88820775-7b63-43bb-8c1c-026a5264b351", 
+        "id": "2008--Hepburn-D-J-Ackland-G-J--Fe-C", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Metallic-covalent interatomic potential for carbon in iron", 
+                "author": [
+                    {
+                        "given-name": "D.J.", 
+                        "surname": "Hepburn"
+                    }, 
+                    {
+                        "given-name": "G.J.", 
+                        "surname": "Ackland"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 2008
+                }, 
+                "volume": 78, 
+                "issue": 16, 
+                "abstract": "Existing interatomic potentials for the iron-carbon system suffer from qualitative flaws in describing even the simplest of defects. In contrast to more accurate first-principles calculations, all previous potentials show strong bonding of carbon to overcoordinated defects (e.g., self-interstitials, dislocation cores) and a failure to accurately reproduce the energetics of carbon-vacancy complexes. Thus any results from their application in molecular dynamics to more complex environments are unreliable. The problem arises from a fundamental error in potential design\u2014the failure to describe short-ranged covalent bonding of the carbon p electrons. We describe a resolution to the problem and present an empirical potential based on insights from density-functional theory, showing covalent-type bonding for carbon. The potential correctly describes the interaction of carbon and iron across a wide range of defect environments. It has the embedded atom method form and hence appropriate for billion atom molecular-dynamics simulations.", 
+                "pages": 165115, 
+                "DOI": "10.1103/physrevb.78.165115", 
+                "bibtex": "@article{Hepburn_2008,\n abstract = {Existing interatomic potentials for the iron-carbon system suffer from qualitative flaws in describing even the simplest of defects. In contrast to more accurate first-principles calculations, all previous potentials show strong bonding of carbon to overcoordinated defects (e.g., self-interstitials, dislocation cores) and a failure to accurately reproduce the energetics of carbon-vacancy complexes. Thus any results from their application in molecular dynamics to more complex environments are unreliable. The problem arises from a fundamental error in potential design\u2014the failure to describe short-ranged covalent bonding of the carbon p electrons. We describe a resolution to the problem and present an empirical potential based on insights from density-functional theory, showing covalent-type bonding for carbon. The potential correctly describes the interaction of carbon and iron across a wide range of defect environments. It has the embedded atom method form and hence appropriate for billion atom molecular-dynamics simulations.},\n author = {Derek J. Hepburn and Graeme J. Ackland},\n doi = {10.1103/physrevb.78.165115},\n journal = {Physical Review B},\n month = {oct},\n number = {16},\n numpages = {6},\n pages = {165115},\n publisher = {American Physical Society (APS)},\n title = {Metallic-covalent interatomic potential for carbon in iron},\n url = {https://doi.org/10.1103%2Fphysrevb.78.165115},\n volume = {78},\n year = {2008}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "736631ad-9de2-4707-a291-de9b1358f2d5", 
+            "id": "2008--Hepburn-D-J--Fe-C--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2009-05-13", 
+            "type": "LAMMPS pair_style eam/fs", 
+            "notes": {
+                "text": "This file was implemented in the LAMMPS-compatible EAM/FS format by Sebastien Garruchet and posted with the permission of G.J. Ackland on 13 May 2009."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hepburn-D-J-Ackland-G-J--Fe-C/1/Fe-C_Hepburn_Ackland.eam.fs", 
+                    "link-text": "Fe-C_Hepburn_Ackland.eam.fs"
+                }
+            }
+        }, 
+        "element": [
+            "Fe", 
+            "C"
+        ]
+    }
+}

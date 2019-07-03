@@ -1,0 +1,71 @@
+{
+    "interatomic-potential": {
+        "key": "7fda11d2-b6e8-4ffa-9083-fdb702cc5fab", 
+        "id": "2018--Etesami-S-A-Baskes-M-I-Laradji-M-Asadi-E--Pb-Sn", 
+        "record-version": "2018-09-28", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Thermodynamics of solid Sn and Pb-Sn liquid mixtures using molecular dynamics simulations", 
+                "author": [
+                    {
+                        "given-name": "S.A.", 
+                        "surname": "Etesami"
+                    }, 
+                    {
+                        "given-name": "M.I.", 
+                        "surname": "Baskes"
+                    }, 
+                    {
+                        "given-name": "M.", 
+                        "surname": "Laradji"
+                    }, 
+                    {
+                        "given-name": "E.", 
+                        "surname": "Asadi"
+                    }
+                ], 
+                "publication-name": "Acta Materialia", 
+                "publication-date": {
+                    "year": 2018
+                }, 
+                "volume": 161, 
+                "abstract": "We present a new set of modified embedded-atom method parameters for the Pb-Sn system that describes many 0\u202fK and high temperature properties including melting point, elastic constants, and enthalpy of mixing for solid and liquid Pb-Sn alloys in agreement with experiments. Then, we calculate the phase diagram of the Sn-rich side of Pb-Sn alloys utilizing a hybrid Molecular Dynamics/Monte Carlo simulation that agrees with experimental solidus and liquidus curves as well as stability of \u03b1-Sn and \u03b2-Sn. In addition, we present structure factors of Pb-Sn liquid alloys as well as temperature-dependent thermal expansion coefficients and heat capacity. Our simulations show that the ratios of the heights of the second and third peaks over the first peak for Pb-Sn liquid mixtures are maximum at Pb-0.6Sn concentration.", 
+                "pages": "320-330", 
+                "DOI": "10.1016/j.actamat.2018.09.036", 
+                "bibtex": "@article{Etesami_2018,\n abstract = {We present a new set of modified embedded-atom method parameters for the Pb-Sn system that describes many 0\u202fK and high temperature properties including melting point, elastic constants, and enthalpy of mixing for solid and liquid Pb-Sn alloys in agreement with experiments. Then, we calculate the phase diagram of the Sn-rich side of Pb-Sn alloys utilizing a hybrid Molecular Dynamics/Monte Carlo simulation that agrees with experimental solidus and liquidus curves as well as stability of \u03b1-Sn and \u03b2-Sn. In addition, we present structure factors of Pb-Sn liquid alloys as well as temperature-dependent thermal expansion coefficients and heat capacity. Our simulations show that the ratios of the heights of the second and third peaks over the first peak for Pb-Sn liquid mixtures are maximum at Pb-0.6Sn concentration.},\n author = {Seyed Alireza Etesami and Michael I. Baskes and Mohamed Laradji and Ebrahim Asadi},\n doi = {10.1016/j.actamat.2018.09.036},\n journal = {Acta Materialia},\n month = {dec},\n pages = {320--330},\n publisher = {Elsevier BV},\n title = {Thermodynamics of solid Sn and Pb-Sn liquid mixtures using molecular dynamics simulations},\n url = {https://doi.org/10.1016%2Fj.actamat.2018.09.036},\n volume = {161},\n year = {2018}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "Update 2018-09-28: Reference information updated."
+            }
+        }, 
+        "implementation": {
+            "key": "912cd0e2-8060-4859-a1fd-be62f67d7a80", 
+            "id": "2018--Etesami-S-A--Pb-Sn--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-09-17", 
+            "type": "LAMMPS pair_style meam", 
+            "notes": {
+                "text": "This file was sent by S. A. Etesami (University of Memphis) on 17 September 2018 and posted with his permission. Update 2018-09-28: files renamed at the request of the authors. Old names were library.PbSn.meam and PbSn.meam"
+            }, 
+            "artifact": [
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Etesami-S-A-Baskes-M-I-Laradji-M-Asadi-E--Pb-Sn/1/library.PbSn.Memphis.meam", 
+                        "link-text": "library.PbSn.Memphis.meam"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Etesami-S-A-Baskes-M-I-Laradji-M-Asadi-E--Pb-Sn/1/PbSn.Memphis.meam", 
+                        "link-text": "PbSn.Memphis.meam"
+                    }
+                }
+            ]
+        }, 
+        "element": [
+            "Pb", 
+            "Sn"
+        ]
+    }
+}

@@ -1,0 +1,64 @@
+{
+    "interatomic-potential": {
+        "key": "368f8701-ba1a-45c9-a631-c145942efc59", 
+        "id": "2015--Wilson-S-R-Gunawardana-K-G-S-H-Mendelev-M-I--fictional-Na", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Solid-liquid interface free energies of pure bcc metals and B2 phases", 
+                "author": [
+                    {
+                        "given-name": "S.R.", 
+                        "surname": "Wilson"
+                    }, 
+                    {
+                        "given-name": "K.G.S.H.", 
+                        "surname": "Gunawardana"
+                    }, 
+                    {
+                        "given-name": "M.I.", 
+                        "surname": "Mendelev"
+                    }
+                ], 
+                "publication-name": "The Journal of Chemical Physics", 
+                "publication-date": {
+                    "year": 2015
+                }, 
+                "volume": 142, 
+                "issue": 13, 
+                "abstract": "The solid-liquid interface (SLI) free energy was determined from molecular dynamics (MD) simulation for several body centered cubic (bcc) metals and B2 metallic compounds (space group: Pm-3m; prototype: CsCl). In order to include a bcc metal with a low melting temperature in our study, a semi-empirical potential was developed for Na. Two additional synthetic \"Na\" potentials were also developed to explore the effect of liquid structure and latent heat on the SLI free energy. The obtained MD data were compared with the empirical Turnbull, Laird, and Ewing relations. All three relations are found to predict the general trend observed in the MD data for bcc metals obtained within the present study. However, only the Laird and Ewing relations are able to predict the trend obtained within the sequence of \"Na\" potentials. The Laird relation provides the best prediction for our MD data and other MD data for bcc metals taken from the literature. Overall, the Laird relation also agrees well with our B2 data but requires a proportionality constant that is substantially different from the bcc case. It also fails to explain a considerable difference between the SLI free energies of some B2 phases which have nearly the same melting temperature. In contrast, this difference is satisfactorily described by the Ewing relation. Moreover, the Ewing relation obtained from the bcc dataset also provides a reasonable description of the B2 data.", 
+                "pages": 134705, 
+                "DOI": "10.1063/1.4916741", 
+                "bibtex": "@article{Wilson_2015,\n abstract = {The solid-liquid interface (SLI) free energy was determined from molecular dynamics (MD) simulation for several body centered cubic (bcc) metals and B2 metallic compounds (space group: Pm-3m; prototype: CsCl). In order to include a bcc metal with a low melting temperature in our study, a semi-empirical potential was developed for Na. Two additional synthetic \"Na\" potentials were also developed to explore the effect of liquid structure and latent heat on the SLI free energy. The obtained MD data were compared with the empirical Turnbull, Laird, and Ewing relations. All three relations are found to predict the general trend observed in the MD data for bcc metals obtained within the present study. However, only the Laird and Ewing relations are able to predict the trend obtained within the sequence of \"Na\" potentials. The Laird relation provides the best prediction for our MD data and other MD data for bcc metals taken from the literature. Overall, the Laird relation also agrees well with our B2 data but requires a proportionality constant that is substantially different from the bcc case. It also fails to explain a considerable difference between the SLI free energies of some B2 phases which have nearly the same melting temperature. In contrast, this difference is satisfactorily described by the Ewing relation. Moreover, the Ewing relation obtained from the bcc dataset also provides a reasonable description of the B2 data.},\n author = {S. R. Wilson and K. G. S. H. Gunawardana and M. I. Mendelev},\n doi = {10.1063/1.4916741},\n journal = {The Journal of Chemical Physics},\n month = {apr},\n number = {13},\n pages = {134705},\n publisher = {AIP Publishing},\n title = {Solid-liquid interface free energies of pure bcc metals and B2 phases},\n url = {https://doi.org/10.1063%2F1.4916741},\n volume = {142},\n year = {2015}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "M.I. Mendelev (Ames Laboratory) noted that \"these 'Na' potentials were developed using the same fitting procedure as for a realistic Na potential (<a href=\"./Download/Na-MIM/Na_MendelevM_2014.eam.fs\">Na_MendelevM_2014.eam.fs</a>) except the fact that the latent heat of melting was purposely increased and the liquid was purposely made less ordered. The potentials were developed to study the effect of the latent heat and liquid structure on the SLI properties of bcc metals.\" Update 27 Apr. 2015: Changed the reference to update publication status."
+            }
+        }, 
+        "implementation": {
+            "key": "c8939b3e-a19d-4b4f-97b5-2b89c7309357", 
+            "status": "active", 
+            "date": "2015-01-13", 
+            "type": "LAMMPS pair_style eam/fs", 
+            "notes": {
+                "text": "These files were sent by M.I. Mendelev (Ames Laboratory) on 13 Jan. 2015 and posted with his permission."
+            }, 
+            "artifact": [
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Wilson-S-R-Gunawardana-K-G-S-H-Mendelev-M-I--fictional-Na/1/FictionalNa2_MendelevM_2015.eam.fs", 
+                        "link-text": "FictionalNa2_MendelevM_2015.eam.fs"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Wilson-S-R-Gunawardana-K-G-S-H-Mendelev-M-I--fictional-Na/1/FictionalNa3_MendelevM_2015.eam.fs", 
+                        "link-text": "FictionalNa3_MendelevM_2015.eam.fs"
+                    }
+                }
+            ]
+        }, 
+        "fictional-element": "Na"
+    }
+}

@@ -1,0 +1,57 @@
+{
+    "interatomic-potential": {
+        "key": "d0d348ef-47e3-4d59-a066-bec02d0525f7", 
+        "id": "1989--Wang-Z-Q-Stroud-D-Markworth-A-J--Cd-Te", 
+        "record-version": "2018-11-01", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Monte Carlo study of the liquid CdTe surface", 
+                "author": [
+                    {
+                        "given-name": "Z.Q.", 
+                        "surname": "Wang"
+                    }, 
+                    {
+                        "given-name": "D.", 
+                        "surname": "Stroud"
+                    }, 
+                    {
+                        "given-name": "A.J.", 
+                        "surname": "Markworth"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 1989
+                }, 
+                "volume": 40, 
+                "issue": 5, 
+                "abstract": "We study the liquid-vapor interface of CdTe by a Monte Carlo technique. The interatomic interactions are modeled by a combination of two-body and three-body potentials, using the form proposed by Stillinger and Weber, but with the parameters fitted to bulk atomization energies, lattice constants, and melting temperatures. The calculated heat of fusion and elastic constants agree well with experiments. The surface tension is calculated with a direct Monte Carlo evaluation of the free energy required to create the surface. The calculated surface tension is found to be about 220 ergs/cm<sup>2</sup>, in good agreement with experimental estimates. The surface region is found to be Cd rich, even though elemental Cd has a higher surface tension than elemental Te.", 
+                "pages": "3129-3132", 
+                "DOI": "10.1103/physrevb.40.3129", 
+                "bibtex": "@article{Wang_1989,\n abstract = {We study the liquid-vapor interface of CdTe by a Monte Carlo technique. The interatomic interactions are modeled by a combination of two-body and three-body potentials, using the form proposed by Stillinger and Weber, but with the parameters fitted to bulk atomization energies, lattice constants, and melting temperatures. The calculated heat of fusion and elastic constants agree well with experiments. The surface tension is calculated with a direct Monte Carlo evaluation of the free energy required to create the surface. The calculated surface tension is found to be about 220 ergs/cm<sup>2</sup>, in good agreement with experimental estimates. The surface region is found to be Cd rich, even though elemental Cd has a higher surface tension than elemental Te.},\n author = {Z. Q. Wang and D. Stroud and A. J. Markworth},\n doi = {10.1103/physrevb.40.3129},\n journal = {Physical Review B},\n month = {aug},\n number = {5},\n pages = {3129--3132},\n publisher = {American Physical Society (APS)},\n title = {Monte Carlo study of the liquid CdTe surface},\n url = {https://doi.org/10.1103%2Fphysrevb.40.3129},\n volume = {40},\n year = {1989}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "611dadcf-34a0-4f26-8c8e-9ecf1560c928", 
+            "id": "1989--Wang-Z-Q--Cd-Te--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-11-01", 
+            "type": "LAMMPS pair_style sw", 
+            "notes": {
+                "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1989--Wang-Z-Q-Stroud-D-Markworth-A-J--Cd-Te/1/CdTe.sw", 
+                    "link-text": "CdTe.sw"
+                }
+            }
+        }, 
+        "element": [
+            "Cd", 
+            "Te"
+        ]
+    }
+}

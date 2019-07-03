@@ -1,0 +1,71 @@
+{
+    "interatomic-potential": {
+        "key": "31a90189-5dd6-43bc-ba69-78c94fca1bd1", 
+        "id": "2013--Onat-B-Durukanoglu-S--Cu-Ni", 
+        "record-version": "2018-10-05", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "An optimized interatomic potential for Cu\u2013Ni alloys with the embedded-atom method", 
+                "author": [
+                    {
+                        "given-name": "B.", 
+                        "surname": "Onat"
+                    }, 
+                    {
+                        "given-name": "S.", 
+                        "surname": "Durukano\u011flu"
+                    }
+                ], 
+                "publication-name": "Journal of Physics: Condensed Matter", 
+                "publication-date": {
+                    "year": 2013
+                }, 
+                "volume": 26, 
+                "issue": 3, 
+                "abstract": "We have developed a semi-empirical and many-body type model potential using a modified charge density profile for Cu\u2013Ni alloys based on the embedded-atom method (EAM) formalism with an improved optimization technique. The potential is determined by fitting to experimental and first-principles data for Cu, Ni and Cu\u2013Ni binary compounds, such as lattice constants, cohesive energies, bulk modulus, elastic constants, diatomic bond lengths and bond energies. The generated potentials were tested by computing a variety of properties of pure elements and the alloy of Cu, Ni: the melting points, alloy mixing enthalpy, lattice specific heat, equilibrium lattice structures, vacancy formation and interstitial formation energies, and various diffusion barriers on the (100) and (111) surfaces of Cu and Ni.", 
+                "pages": 35404, 
+                "DOI": "10.1088/0953-8984/26/3/035404", 
+                "bibtex": "@article{Onat_2013,\n abstract = {We have developed a semi-empirical and many-body type model potential using a modified charge density profile for Cu\u2013Ni alloys based on the embedded-atom method (EAM) formalism with an improved optimization technique. The potential is determined by fitting to experimental and first-principles data for Cu, Ni and Cu\u2013Ni binary compounds, such as lattice constants, cohesive energies, bulk modulus, elastic constants, diatomic bond lengths and bond energies. The generated potentials were tested by computing a variety of properties of pure elements and the alloy of Cu, Ni: the melting points, alloy mixing enthalpy, lattice specific heat, equilibrium lattice structures, vacancy formation and interstitial formation energies, and various diffusion barriers on the (100) and (111) surfaces of Cu and Ni.},\n author = {Berk Onat and Sondan Durukano\u011flu},\n doi = {10.1088/0953-8984/26/3/035404},\n journal = {Journal of Physics: Condensed Matter},\n month = {dec},\n number = {3},\n pages = {035404},\n publisher = {IOP Publishing},\n title = {An optimized interatomic potential for Cu\u2013Ni alloys with the embedded-atom method},\n url = {https://doi.org/10.1088%2F0953-8984%2F26%2F3%2F035404},\n volume = {26},\n year = {2013}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "238d8f18-4807-482d-8502-b7ed64572f4f", 
+                "id": "2013--Onat-B--Cu-Ni--LAMMPS--ipr1", 
+                "status": "superseded", 
+                "date": "2018-10-05", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Onat-B-Durukanoglu-S--Cu-Ni/1/CuNi.eam.alloy", 
+                        "link-text": "CuNi.eam.alloy"
+                    }
+                }
+            }, 
+            {
+                "key": "ef3c968c-5e47-45bb-836c-8d8703d44edb", 
+                "id": "2013--Onat-B--Cu-Ni--LAMMPS--ipr2", 
+                "status": "active", 
+                "date": "2018-10-05", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was taken from openKIM model EAM_Dynamo_Onat_Durukanoglu_CuNi__MO_592013496703_004. It features more tabulation points and higher cutoffs for both rho and r."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Onat-B-Durukanoglu-S--Cu-Ni/2/CuNi_v2.eam.alloy", 
+                        "link-text": "CuNi_v2.eam.alloy"
+                    }
+                }
+            }
+        ], 
+        "element": [
+            "Cu", 
+            "Ni"
+        ]
+    }
+}

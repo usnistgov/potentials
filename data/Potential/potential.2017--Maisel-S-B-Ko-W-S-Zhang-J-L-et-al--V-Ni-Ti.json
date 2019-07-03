@@ -1,0 +1,74 @@
+{
+    "interatomic-potential": {
+        "key": "a24dc04d-afe4-4d8b-a2e5-8202e1c073c4", 
+        "id": "2017--Maisel-S-B-Ko-W-S-Zhang-J-L-et-al--V-Ni-Ti", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Thermomechanical response of NiTi shape-memory nanoprecipitates in TiV alloys", 
+                "author": [
+                    {
+                        "given-name": "S.B.", 
+                        "surname": "Maisel"
+                    }, 
+                    {
+                        "given-name": "W.-S.", 
+                        "surname": "Ko"
+                    }, 
+                    {
+                        "given-name": "J.-L.", 
+                        "surname": "Zhang"
+                    }, 
+                    {
+                        "given-name": "B.", 
+                        "surname": "Grabowski"
+                    }, 
+                    {
+                        "given-name": "J.", 
+                        "surname": "Neugebauer"
+                    }
+                ], 
+                "publication-name": "Physical Review Materials", 
+                "publication-date": {
+                    "year": 2017
+                }, 
+                "volume": 1, 
+                "issue": 3, 
+                "abstract": "We study the properties of NiTi shape-memory nanoparticles coherently embedded in TiV matrices using three-dimensional atomistic simulations based on the modified embedded-atom method. To this end, we develop and present a suitable NiTiV potential for our simulations. Employing this potential, we identify the conditions under which the martensitic phase transformation of such a nanoparticle is triggered\u2014specifically, how these conditions can be tuned by modifying the size of the particle, the composition of the surrounding matrix, or the temperature and strain state of the system. Using these insights, we establish how the transformation temperature of such particles can be influenced and discuss the practical implications in the context of shape-memory strengthened alloys.", 
+                "pages": 33610, 
+                "DOI": "10.1103/physrevmaterials.1.033610", 
+                "bibtex": "@article{Maisel_2017,\n abstract = {We study the properties of NiTi shape-memory nanoparticles coherently embedded in TiV matrices using three-dimensional atomistic simulations based on the modified embedded-atom method. To this end, we develop and present a suitable NiTiV potential for our simulations. Employing this potential, we identify the conditions under which the martensitic phase transformation of such a nanoparticle is triggered\u2014specifically, how these conditions can be tuned by modifying the size of the particle, the composition of the surrounding matrix, or the temperature and strain state of the system. Using these insights, we establish how the transformation temperature of such particles can be influenced and discuss the practical implications in the context of shape-memory strengthened alloys.},\n author = {S. B. Maisel and W.-S. Ko and J.-L. Zhang and B. Grabowski and J. Neugebauer},\n doi = {10.1103/physrevmaterials.1.033610},\n journal = {Physical Review Materials},\n month = {aug},\n number = {3},\n pages = {033610},\n publisher = {American Physical Society (APS)},\n title = {Thermomechanical response of NiTi shape-memory nanoprecipitates in TiV alloys},\n url = {https://doi.org/10.1103%2Fphysrevmaterials.1.033610},\n volume = {1},\n year = {2017}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "3b1fa0b6-e1bc-45a5-a7a1-97db42e5dad8", 
+            "id": "2017--Maisel-S-B--V-Ni-Ti--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-02-09", 
+            "type": "LAMMPS pair_style meam", 
+            "notes": {
+                "text": "These files were sent by Won-Seok Ko (School of Materials Science and Engineering, University of Ulsan) on 9 Feb. 2018 and posted with his permission."
+            }, 
+            "artifact": [
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Maisel-S-B-Ko-W-S-Zhang-J-L-et-al--V-Ni-Ti/1/VNiTi.meam", 
+                        "link-text": "VNiTi.meam"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Maisel-S-B-Ko-W-S-Zhang-J-L-et-al--V-Ni-Ti/1/library.meam", 
+                        "link-text": "library.meam"
+                    }
+                }
+            ]
+        }, 
+        "element": [
+            "V", 
+            "Ni", 
+            "Ti"
+        ]
+    }
+}

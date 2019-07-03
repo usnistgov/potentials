@@ -1,0 +1,58 @@
+{
+    "interatomic-potential": {
+        "key": "390be585-f40c-4e4c-ba6a-7aa0577dadee", 
+        "id": "2007--Kumagai-T-Izumi-S-Hara-S-Sakai-S--Si", 
+        "record-version": "2018-11-05", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Development of bond-order potentials that can reproduce the elastic constants and melting point of silicon for classical molecular dynamics simulation", 
+                "author": [
+                    {
+                        "given-name": "T.", 
+                        "surname": "Kumagai"
+                    }, 
+                    {
+                        "given-name": "S.", 
+                        "surname": "Izumi"
+                    }, 
+                    {
+                        "given-name": "S.", 
+                        "surname": "Hara"
+                    }, 
+                    {
+                        "given-name": "S.", 
+                        "surname": "Sakai"
+                    }
+                ], 
+                "publication-name": "Computational Materials Science", 
+                "publication-date": {
+                    "year": 2007
+                }, 
+                "volume": 39, 
+                "issue": 2, 
+                "abstract": "The Tersoff potential is one of the most widely used interatomic potentials for silicon. However, its poor description of the elastic constants and melting point of diamond silicon is well known. In this research, three bond-order type interatomic potentials have been developed: the first one is fitted to the elastic constants by employing the Tersoff potential function form, the second one is fitted to both the elastic constants and melting point by employing the Tersoff potential function form and the third one is fitted to both the elastic constants and melting point by employing the modified Tersoff potential function form in which the angular-dependent term is improved. All of developed potentials well reproduce the elastic constants of diamond silicon as well as the cohesive energies and equilibrium bond lengths of silicon polytypes. The third potential can reproduce the melting point, while the second one cannot reproduce that. The elastic constants and melting point calculated using the third potential turned out to be C<sub>11</sub> = 166.4 GPa, C<sub>12</sub> = 65.3 GPa, C<sub>44</sub> = 77.1 GPa and T<sub>m</sub> = 1681 K. It was also found that only elastic constants can be reproduced using the original Tersoff potential function, and that our proposed angular-dependent term is a key to reproducing the melting point.", 
+                "pages": "457-464", 
+                "DOI": "10.1016/j.commatsci.2006.07.013", 
+                "bibtex": "@article{Kumagai_2007,\n abstract = {The Tersoff potential is one of the most widely used interatomic potentials for silicon. However, its poor description of the elastic constants and melting point of diamond silicon is well known. In this research, three bond-order type interatomic potentials have been developed: the first one is fitted to the elastic constants by employing the Tersoff potential function form, the second one is fitted to both the elastic constants and melting point by employing the Tersoff potential function form and the third one is fitted to both the elastic constants and melting point by employing the modified Tersoff potential function form in which the angular-dependent term is improved. All of developed potentials well reproduce the elastic constants of diamond silicon as well as the cohesive energies and equilibrium bond lengths of silicon polytypes. The third potential can reproduce the melting point, while the second one cannot reproduce that. The elastic constants and melting point calculated using the third potential turned out to be C<sub>11</sub> = 166.4 GPa, C<sub>12</sub> = 65.3 GPa, C<sub>44</sub> = 77.1 GPa and T<sub>m</sub> = 1681 K. It was also found that only elastic constants can be reproduced using the original Tersoff potential function, and that our proposed angular-dependent term is a key to reproducing the melting point.},\n author = {T. Kumagai and S. Izumi and S. Hara and S. Sakai},\n doi = {10.1016/j.commatsci.2006.07.013},\n journal = {Computational Materials Science},\n month = {apr},\n number = {2},\n pages = {457--464},\n publisher = {Elsevier BV},\n title = {Development of bond-order potentials that can reproduce the elastic constants and melting point of silicon for classical molecular dynamics simulation},\n url = {https://doi.org/10.1016%2Fj.commatsci.2006.07.013},\n volume = {39},\n year = {2007}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "ee87565b-c8a9-4cc8-9f99-1e405f56d165", 
+            "id": "2007--Kumagai-T--Si--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-11-05", 
+            "type": "LAMMPS pair_style tersoff/mod", 
+            "notes": {
+                "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2007--Kumagai-T-Izumi-S-Hara-S-Sakai-S--Si/1/Si.tersoff.mod", 
+                    "link-text": "Si.tersoff.mod"
+                }
+            }
+        }, 
+        "element": "Si"
+    }
+}
