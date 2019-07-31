@@ -1,0 +1,76 @@
+{
+    "interatomic-potential": {
+        "key": "f981e581-ca81-43ba-9c24-dc5f8ef0a908", 
+        "id": "2003--Li-Y-Siegel-D-J-Adams-J-B-Liu-X-Y--Ta", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Embedded-atom-method tantalum potential developed by the force-matching method", 
+                "author": [
+                    {
+                        "given-name": "Y.", 
+                        "surname": "Li"
+                    }, 
+                    {
+                        "given-name": "D.J.", 
+                        "surname": "Siegel"
+                    }, 
+                    {
+                        "given-name": "J.B.", 
+                        "surname": "Adams"
+                    }, 
+                    {
+                        "given-name": "X.-Y.", 
+                        "surname": "Liu"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 2003
+                }, 
+                "volume": 67, 
+                "issue": 12, 
+                "abstract": "An embedded-atom-method potential for tantalum (Ta) has been carefully constructed by fitting to a combination of experimental and density-functional theory (DFT) data. The fitted data include the elastic constants, lattice constant, cohesive energy, unrelaxed vacancy formation energy, and hundreds of force data calculated by DFT for a variety of structures such as liquids, surfaces, clusters, interstitials, vacancies, and stacking faults. We also fit to the cohesive energy vs volume data from the equation of state for the body-centered-cubic (bcc) Ta and to the calculated cohesive energy using DFT for the face-centered-cubic (fcc) Ta structure. We assess the accuracy of the new potential by comparing several calculated Ta properties with those obtained from other potentials previously reported in the literature. In many cases, the new potential yields superior accuracy at a comparable or lower computational cost.", 
+                "pages": 125101, 
+                "DOI": "10.1103/physrevb.67.125101", 
+                "bibtex": "@article{Li_2003,\n abstract = {An embedded-atom-method potential for tantalum (Ta) has been carefully constructed by fitting to a combination of experimental and density-functional theory (DFT) data. The fitted data include the elastic constants, lattice constant, cohesive energy, unrelaxed vacancy formation energy, and hundreds of force data calculated by DFT for a variety of structures such as liquids, surfaces, clusters, interstitials, vacancies, and stacking faults. We also fit to the cohesive energy vs volume data from the equation of state for the body-centered-cubic (bcc) Ta and to the calculated cohesive energy using DFT for the face-centered-cubic (fcc) Ta structure. We assess the accuracy of the new potential by comparing several calculated Ta properties with those obtained from other potentials previously reported in the literature. In many cases, the new potential yields superior accuracy at a comparable or lower computational cost.},\n author = {Youhong Li and Donald J. Siegel and James B. Adams and Xiang-Yang Liu},\n doi = {10.1103/physrevb.67.125101},\n journal = {Physical Review B},\n month = {mar},\n number = {12},\n numpages = {8},\n pages = {125101},\n publisher = {American Physical Society (APS)},\n title = {Embedded-atom-method tantalum potential developed by the force-matching method},\n url = {https://doi.org/10.1103%2Fphysrevb.67.125101},\n volume = {67},\n year = {2003}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "5865b613-2d2a-4653-98f5-8e7da9098232", 
+                "id": "2003--Li-Y-H--Ta--table--ipr1", 
+                "status": "active", 
+                "date": "2010-03-09", 
+                "type": "EAM setfl", 
+                "notes": {
+                    "text": "newPP1_47-setfl.txt was sent by Don Siegel (University of Michigan) on 9 Mar. 2010 and posted with his permission."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Li-Y-Siegel-D-J-Adams-J-B-Liu-X-Y--Ta/1/newPP1_47-setfl.txt", 
+                        "link-text": "newPP1_47-setfl.txt"
+                    }
+                }
+            }, 
+            {
+                "key": "f26209a1-e4ac-48c0-a937-54923f888352", 
+                "id": "2003--Li-Y-H--Ta--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2010-03-10", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "newPP1_47-setfl.eam.alloy is a version of the same potential which has been formatted for use in LAMMPS (\"D\" was replaced by \"E\" and \"Ta\" was added on line 4). It successfully ran with the 20Feb10 version of LAMMPS."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Li-Y-Siegel-D-J-Adams-J-B-Liu-X-Y--Ta/2/newPP1_47-setfl.eam.alloy", 
+                        "link-text": "newPP1_47-setfl.eam.alloy"
+                    }
+                }
+            }
+        ], 
+        "element": "Ta"
+    }
+}

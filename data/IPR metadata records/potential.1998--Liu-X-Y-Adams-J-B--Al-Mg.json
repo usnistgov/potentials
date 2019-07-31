@@ -1,0 +1,71 @@
+{
+    "interatomic-potential": {
+        "key": "471c5c9d-fe61-4bbb-a088-a88be016d78d", 
+        "id": "1998--Liu-X-Y-Adams-J-B--Al-Mg", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Grain-boundary segregation in Al-10%Mg alloys at hot working temperatures", 
+                "author": [
+                    {
+                        "given-name": "X.-Y.", 
+                        "surname": "Liu"
+                    }, 
+                    {
+                        "given-name": "J.B.", 
+                        "surname": "Adams"
+                    }
+                ], 
+                "publication-name": "Acta Materialia", 
+                "publication-date": {
+                    "year": 1998
+                }, 
+                "volume": 46, 
+                "issue": 10, 
+                "abstract": "Monte-Carlo simulations are done to determine Mg enrichment at various grain-boundaries of Al\u201310%Mg alloys at hot working temperatures. The interatomic potentials used in the simulations are developed using the force-matching method. The Mg segregation levels at the grain-boundaries are found to vary from 20% to 40%. The segregation enrichment differences at different grain-boundary sites are explained in terms of atomic size and local hydrostatic stress. The segregation level varies strongly with [110] tilt boundaries from low to high angle while showing minimal variation with [100] twist boundaries. Segregation levels are found to have some correlation with grain-boundary energy. The effect on grain-boundary decohesion due to Mg segregation is found to be a modest (10--35%) reduction in fracture energy compared to the fracture energy in pure Al.", 
+                "pages": "3467-3476", 
+                "DOI": "10.1016/s1359-6454(98)00038-x", 
+                "bibtex": "@article{Liu_1998,\n abstract = {Monte-Carlo simulations are done to determine Mg enrichment at various grain-boundaries of Al\u201310%Mg alloys at hot working temperatures. The interatomic potentials used in the simulations are developed using the force-matching method. The Mg segregation levels at the grain-boundaries are found to vary from 20% to 40%. The segregation enrichment differences at different grain-boundary sites are explained in terms of atomic size and local hydrostatic stress. The segregation level varies strongly with [110] tilt boundaries from low to high angle while showing minimal variation with [100] twist boundaries. Segregation levels are found to have some correlation with grain-boundary energy. The effect on grain-boundary decohesion due to Mg segregation is found to be a modest (10--35%) reduction in fracture energy compared to the fracture energy in pure Al.},\n author = {X.-Y. Liu and J.B. Adams},\n doi = {10.1016/s1359-6454(98)00038-x},\n journal = {Acta Materialia},\n month = {jun},\n number = {10},\n pages = {3467--3476},\n publisher = {Elsevier BV},\n title = {Grain-boundary segregation in Al-10%Mg alloys at hot working temperatures},\n url = {https://doi.org/10.1016%2Fs1359-6454%2898%2900038-x},\n volume = {46},\n year = {1998}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "02c7ad7d-7386-466c-9c51-56ac41735f43", 
+                "id": "1998--Liu-X-Y--Al-Mg--table--ipr1", 
+                "status": "active", 
+                "date": "1995-12-05", 
+                "type": "EAM setfl", 
+                "notes": {
+                    "text": "almg.liu is posted with the permission of J.B. Adams and X.-Y. Liu."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1998--Liu-X-Y-Adams-J-B--Al-Mg/1/almg.liu", 
+                        "link-text": "almg.liu"
+                    }
+                }
+            }, 
+            {
+                "key": "be717c03-4f3f-4d93-a138-84cc821c46a3", 
+                "id": "1998--Liu-X-Y--Al-Mg--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2017-01-01", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "To make the almg.liu file compatible with the eam/alloy style in LAMMPS, replace line 4 with \"2 Mg Al\" and the \"D\"s with \"E\"s in the numbers. This has been done in almg.liu.eam.alloy."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1998--Liu-X-Y-Adams-J-B--Al-Mg/2/almg.liu.eam.alloy", 
+                        "link-text": "almg.liu.eam.alloy"
+                    }
+                }
+            }
+        ], 
+        "element": [
+            "Al", 
+            "Mg"
+        ]
+    }
+}

@@ -1,0 +1,79 @@
+{
+    "interatomic-potential": {
+        "key": "5e72b6b6-d839-4a13-8c6b-980f6f85a523", 
+        "id": "2009--Olsson-P-A-T--V", 
+        "record-version": "2018-11-19", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Semi-empirical atomistic study of point defect properties in BCC transition metals", 
+                "author": {
+                    "given-name": "P.A.T.", 
+                    "surname": "Olsson"
+                }, 
+                "publication-name": "Computational Materials Science", 
+                "publication-date": {
+                    "year": 2009
+                }, 
+                "volume": 47, 
+                "issue": 1, 
+                "abstract": "We have constructed a set of embedded atom method (EAM) potentials for Fe, Ta, W and V and used them in order to study point defect properties. The parametrizations of the potentials ensure that the third order elastic constants are continuous and they have been fitted to the cohesive energies, the lattice constants, the unrelaxed vacancy formation energies and the second order elastic constants. Formation energies for different self-interstitials reveal that the &lt;1 1 0&gt; split dumbbell is the most stable configuration for Fe while for Ta, W and V we find that the &lt;1 1 1&gt; split dumbbell is preferred. Self-interstitial migration energies are simulated using the nudged elastic band method and for Fe and W the migration energies are found to be in good agreement with experimental and <i>ab initio</i> data. Migration energies for Ta and V self-interstitials are found to be quite low. The calculated formation, activation and migration energies for monovacancies are in good agreement with experimental data. Formation energies for divacancies reveal that the second nearest neighbor divacancy is more energetically favorable than nearest neighbor divacancies and the migration energies indicate that nearest neighbor migration paths are more likely to occur than second nearest neighbor migration jumps. For Fe, we have also studied the influence of the pair potential behavior between the second and third nearest neighbor on the stability of the &lt;1 1 0&gt; split dumbbell, which revealed that the higher the energy level of the pair potential is in that region, the more stable the &lt;1 1 0&gt; split dumbbell becomes.", 
+                "pages": "135-145", 
+                "DOI": "10.1016/j.commatsci.2009.06.025", 
+                "bibtex": "@article{Olsson_2009,\n abstract = {We have constructed a set of embedded atom method (EAM) potentials for Fe, Ta, W and V and used them in order to study point defect properties. The parametrizations of the potentials ensure that the third order elastic constants are continuous and they have been fitted to the cohesive energies, the lattice constants, the unrelaxed vacancy formation energies and the second order elastic constants. Formation energies for different self-interstitials reveal that the &lt;1 1 0&gt; split dumbbell is the most stable configuration for Fe while for Ta, W and V we find that the &lt;1 1 1&gt; split dumbbell is preferred. Self-interstitial migration energies are simulated using the nudged elastic band method and for Fe and W the migration energies are found to be in good agreement with experimental and <i>ab initio</i> data. Migration energies for Ta and V self-interstitials are found to be quite low. The calculated formation, activation and migration energies for monovacancies are in good agreement with experimental data. Formation energies for divacancies reveal that the second nearest neighbor divacancy is more energetically favorable than nearest neighbor divacancies and the migration energies indicate that nearest neighbor migration paths are more likely to occur than second nearest neighbor migration jumps. For Fe, we have also studied the influence of the pair potential behavior between the second and third nearest neighbor on the stability of the &lt;1 1 0&gt; split dumbbell, which revealed that the higher the energy level of the pair potential is in that region, the more stable the &lt;1 1 0&gt; split dumbbell becomes.},\n author = {P\u00e4r A.T. Olsson},\n doi = {10.1016/j.commatsci.2009.06.025},\n journal = {Computational Materials Science},\n month = {nov},\n number = {1},\n pages = {135--145},\n publisher = {Elsevier BV},\n title = {Semi-empirical atomistic study of point defect properties in BCC transition metals},\n url = {https://doi.org/10.1016%2Fj.commatsci.2009.06.025},\n volume = {47},\n year = {2009}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "3ce774bb-faac-41c2-8cb0-97943bb6e3fc", 
+                "id": "2009--Olsson-P-A-T--V--table--ipr1", 
+                "status": "active", 
+                "date": "2018-11-19", 
+                "type": "EAM tabulated functions", 
+                "notes": {
+                    "text": "These files were provided by P\u00e4r Olsson (Malmoe University, Sweden) on 11 November 2018 and posted with his permission."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Olsson-P-A-T--V/1/F_v.plt", 
+                            "label": "F(&rho;):", 
+                            "link-text": "F_v.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Olsson-P-A-T--V/1/rho_v.plt", 
+                            "label": "&rho;(r):", 
+                            "link-text": "rho_v.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Olsson-P-A-T--V/1/phi_v.plt", 
+                            "label": "&phi;(r):", 
+                            "link-text": "phi_v.plt"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "35819717-5690-4c08-b0a3-2a4b0f7e203f", 
+                "id": "2009--Olsson-P-A-T--V--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2018-11-19", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was provided by P\u00e4r Olsson (Malmoe University, Sweden) on 11 November 2018 and posted with his permission."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Olsson-P-A-T--V/2/V_Olsson_CMS2009.eam.alloy", 
+                        "link-text": "V_Olsson_CMS2009.eam.alloy"
+                    }
+                }
+            }
+        ], 
+        "element": "V"
+    }
+}

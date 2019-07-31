@@ -1,0 +1,56 @@
+{
+    "interatomic-potential": {
+        "key": "ee7b64fc-4e6e-4b43-8de1-082b8f85bd91", 
+        "id": "2015--Wilson-S-R-Mendelev-M-I--Ni-Zr", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Anisotropy of the solid-liquid interface properties of the Ni-Zr B33 phase from molecular dynamics simulation", 
+                "author": [
+                    {
+                        "given-name": "S.R.", 
+                        "surname": "Wilson"
+                    }, 
+                    {
+                        "given-name": "M.I.", 
+                        "surname": "Mendelev"
+                    }
+                ], 
+                "publication-name": "Philosophical Magazine", 
+                "publication-date": {
+                    "year": 2015
+                }, 
+                "volume": 95, 
+                "issue": 2, 
+                "abstract": "Solid\u2013liquid interface (SLI) properties of the Ni\u2013Zr B33 phase were determined from molecular dynamics simulations. In order to perform these measurements, a new semi-empirical potential for Ni\u2013Zr alloy was developed that well reproduces the material properties required to model SLIs in the Ni50.0Zr50.0 alloy. In particular, the developed potential is shown to provide that the solid phase emerging from the liquid Ni50.0Zr50.0 alloy is B33 (apart from a small fraction of point defects), in agreement with the experimental phase diagram. The SLI properties obtained using the developed potential exhibit an extraordinary degree of anisotropy. It is observed that anisotropies in both the interfacial free energy and mobility are an order of magnitude larger than those measured to date in any other metallic compound. Moreover, the [0 1 0] interface is shown to play a significant role in the observed anisotropy. Our data suggest that the [0 1 0] interface simultaneously corresponds to the lowest mobility, the lowest free energy and the highest stiffness of all inclinations in B33 Ni\u2013Zr. This finding can be understood by taking into account a rather complicated crystal structure in this crystallographic direction.", 
+                "pages": "224-241", 
+                "DOI": "10.1080/14786435.2014.995742", 
+                "bibtex": "@article{Wilson_2015,\n abstract = {Solid\u2013liquid interface (SLI) properties of the Ni\u2013Zr B33 phase were determined from molecular dynamics simulations. In order to perform these measurements, a new semi-empirical potential for Ni\u2013Zr alloy was developed that well reproduces the material properties required to model SLIs in the Ni50.0Zr50.0 alloy. In particular, the developed potential is shown to provide that the solid phase emerging from the liquid Ni50.0Zr50.0 alloy is B33 (apart from a small fraction of point defects), in agreement with the experimental phase diagram. The SLI properties obtained using the developed potential exhibit an extraordinary degree of anisotropy. It is observed that anisotropies in both the interfacial free energy and mobility are an order of magnitude larger than those measured to date in any other metallic compound. Moreover, the [0 1 0] interface is shown to play a significant role in the observed anisotropy. Our data suggest that the [0 1 0] interface simultaneously corresponds to the lowest mobility, the lowest free energy and the highest stiffness of all inclinations in B33 Ni\u2013Zr. This finding can be understood by taking into account a rather complicated crystal structure in this crystallographic direction.},\n author = {S.R. Wilson and M.I. Mendelev},\n doi = {10.1080/14786435.2014.995742},\n journal = {Philosophical Magazine},\n month = {jan},\n number = {2},\n pages = {224--241},\n publisher = {Informa UK Limited},\n title = {Anisotropy of the solid-liquid interface properties of the Ni-Zr B33 phase from molecular dynamics simulation},\n url = {https://doi.org/10.1080%2F14786435.2014.995742},\n volume = {95},\n year = {2015}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "Mikhail Mendelev (Ames Laboratory) noted that the potential is an updated version of the 2012 potential, and it was designed to simulate solidification of B2, B33, and C16 phases in Ni-Zr alloys. Updated previous note on 13 Nov. 2014 to replace \"NiZr2 alloy\" with \"Ni-Zr alloys\". Updated 27 Apr 2015 to include publication information."
+            }
+        }, 
+        "implementation": {
+            "key": "bb816367-0ae2-41fa-9659-5c22014bce5d", 
+            "id": "2015--Wilson-S-R--Ni-Zr--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2009-06-30", 
+            "type": "LAMMPS pair_style eam/fs", 
+            "notes": {
+                "text": "This file was provided by Mikhail Mendelev (Ames Laboratory) and posted with his permission on 2 Jul. 2014."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Wilson-S-R-Mendelev-M-I--Ni-Zr/1/Ni-Zr_Mendelev_2014.eam.fs", 
+                    "link-text": "Ni-Zr_Mendelev_2014.eam.fs"
+                }
+            }
+        }, 
+        "element": [
+            "Ni", 
+            "Zr"
+        ]
+    }
+}

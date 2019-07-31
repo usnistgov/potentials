@@ -1,0 +1,52 @@
+{
+    "interatomic-potential": {
+        "key": "00793d08-c92b-4a43-988e-40aed49ad595", 
+        "id": "2015--Botu-V-Ramprasad-R--Al", 
+        "record-version": "2018-10-05", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Learning scheme to predict atomic forces and accelerate materials simulations", 
+                "author": [
+                    {
+                        "given-name": "V.", 
+                        "surname": "Botu"
+                    }, 
+                    {
+                        "given-name": "R.", 
+                        "surname": "Ramprasad"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 2015
+                }, 
+                "volume": 92, 
+                "issue": 9, 
+                "abstract": "The behavior of an atom in a molecule, liquid, or solid is governed by the force it experiences. If the dependence of this vectorial force on the atomic chemical environment can be learned efficiently with high fidelity from benchmark reference results\u2014using \"big-data\" techniques, i.e., without resorting to actual functional forms\u2014then this capability can be harnessed to enormously speed up in silico materials simulations. The present contribution provides several examples of how such a force field for Al can be used to go far beyond the length-scale and time-scale regimes presently accessible using quantum-mechanical methods. It is argued that pathways are available to systematically and continuously improve the predictive capability of such a learned force field in an adaptive manner, and that this concept can be generalized to include multiple elements.", 
+                "DOI": "10.1103/physrevb.92.094306", 
+                "bibtex": "@article{Botu_2015,\n abstract = {The behavior of an atom in a molecule, liquid, or solid is governed by the force it experiences. If the dependence of this vectorial force on the atomic chemical environment can be learned efficiently with high fidelity from benchmark reference results\u2014using \"big-data\" techniques, i.e., without resorting to actual functional forms\u2014then this capability can be harnessed to enormously speed up in silico materials simulations. The present contribution provides several examples of how such a force field for Al can be used to go far beyond the length-scale and time-scale regimes presently accessible using quantum-mechanical methods. It is argued that pathways are available to systematically and continuously improve the predictive capability of such a learned force field in an adaptive manner, and that this concept can be generalized to include multiple elements.},\n author = {V. Botu and R. Ramprasad},\n doi = {10.1103/physrevb.92.094306},\n journal = {Physical Review B},\n month = {sep},\n number = {9},\n publisher = {American Physical Society (APS)},\n title = {Learning scheme to predict atomic forces and accelerate materials simulations},\n url = {https://doi.org/10.1103%2Fphysrevb.92.094306},\n volume = {92},\n year = {2015}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "This potential is noted as being depreciated in favor of 2017--Botu-V-Batra-R-Chapman-J-Ramprasad-R--Al. Note that the AGNI potentials are machine learning potentials designed to directly reproduce forces and therefore do not directly compute atomic energies."
+            }
+        }, 
+        "implementation": {
+            "key": "c06d8c7c-c232-49d7-907f-2ebf7313d22f", 
+            "id": "2015--Botu-V--Al--LAMMPS--ipr1", 
+            "status": "superseded", 
+            "date": "2018-10-05", 
+            "type": "LAMMPS pair_style agni", 
+            "notes": {
+                "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Botu-V-Ramprasad-R--Al/1/Al_prb.agni", 
+                    "link-text": "Al_prb.agni"
+                }
+            }
+        }, 
+        "element": "Al"
+    }
+}

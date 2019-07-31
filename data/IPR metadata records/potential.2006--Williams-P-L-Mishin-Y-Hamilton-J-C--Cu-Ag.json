@@ -1,0 +1,128 @@
+{
+    "interatomic-potential": {
+        "key": "cfe3a54f-c3b2-4b61-8b03-165613bdd829", 
+        "id": "2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Cu-Ag", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "An embedded-atom potential for the Cu-Ag system", 
+                "author": [
+                    {
+                        "given-name": "P.L.", 
+                        "surname": "Williams"
+                    }, 
+                    {
+                        "given-name": "Y.", 
+                        "surname": "Mishin"
+                    }, 
+                    {
+                        "given-name": "J.C.", 
+                        "surname": "Hamilton"
+                    }
+                ], 
+                "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                "publication-date": {
+                    "year": 2006
+                }, 
+                "volume": 14, 
+                "issue": 5, 
+                "abstract": "A new embedded-atom method (EAM) potential has been constructed for Ag by fitting to experimental and first-principles data. The potential accurately reproduces the lattice parameter, cohesive energy, elastic constants, phonon frequencies, thermal expansion, lattice-defect energies, as well as energies of alternate structures of Ag. Combining this potential with an existing EAM potential for Cu, a binary potential set for the Cu\u2013Ag system has been constructed by fitting the cross-interaction function to first-principles energies of imaginary Cu\u2013Ag compounds. Although properties used in the fit refer to the 0 K temperature (except for thermal expansion factors of pure Cu and Ag) and do not include liquid configurations, the potentials demonstrate good transferability to high-temperature properties. In particular, the entire Cu\u2013Ag phase diagram calculated with the new potentials in conjunction with Monte Carlo simulations is in satisfactory agreement with experiment. This agreement suggests that EAM potentials accurately fit to 0 K properties can be capable of correctly predicting simple phase diagrams. Possible applications of the new potential set are outlined.", 
+                "pages": "817-833", 
+                "DOI": "10.1088/0965-0393/14/5/002", 
+                "bibtex": "@article{Williams_2006,\n abstract = {A new embedded-atom method (EAM) potential has been constructed for Ag by fitting to experimental and first-principles data. The potential accurately reproduces the lattice parameter, cohesive energy, elastic constants, phonon frequencies, thermal expansion, lattice-defect energies, as well as energies of alternate structures of Ag. Combining this potential with an existing EAM potential for Cu, a binary potential set for the Cu\u2013Ag system has been constructed by fitting the cross-interaction function to first-principles energies of imaginary Cu\u2013Ag compounds. Although properties used in the fit refer to the 0 K temperature (except for thermal expansion factors of pure Cu and Ag) and do not include liquid configurations, the potentials demonstrate good transferability to high-temperature properties. In particular, the entire Cu\u2013Ag phase diagram calculated with the new potentials in conjunction with Monte Carlo simulations is in satisfactory agreement with experiment. This agreement suggests that EAM potentials accurately fit to 0 K properties can be capable of correctly predicting simple phase diagrams. Possible applications of the new potential set are outlined.},\n author = {P L Williams and Y Mishin and J C Hamilton},\n doi = {10.1088/0965-0393/14/5/002},\n journal = {Modelling and Simulation in Materials Science and Engineering},\n month = {may},\n number = {5},\n pages = {817--833},\n publisher = {IOP Publishing},\n title = {An embedded-atom potential for the Cu-Ag system},\n url = {https://doi.org/10.1088%2F0965-0393%2F14%2F5%2F002},\n volume = {14},\n year = {2006}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "6a5321bd-7c4c-4b7f-aebf-508bf3d789fc", 
+                "id": "2006--Williams-P-L--Cu-Ag--table--ipr1", 
+                "status": "active", 
+                "date": "2009-01-01", 
+                "type": "EAM tabulated functions", 
+                "notes": {
+                    "text": "These files were provided by Yuri Mishin."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Cu-Ag/1/F_ag.plt", 
+                            "label": "Ag F(&rho;):", 
+                            "link-text": "F_ag.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Cu-Ag/1/F_cu.plt", 
+                            "label": "Cu F(&rho;):", 
+                            "link-text": "F_cu.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Cu-Ag/1/fag.plt", 
+                            "label": "Ag &rho;(r):", 
+                            "link-text": "fag.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Cu-Ag/1/fcu.plt", 
+                            "label": "Cu &rho;(r):", 
+                            "link-text": "fcu.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Cu-Ag/1/pag.plt", 
+                            "label": "Ag &phi;(r):", 
+                            "link-text": "pag.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Cu-Ag/1/pcu.plt", 
+                            "label": "Cu &phi;(r):", 
+                            "link-text": "pcu.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Cu-Ag/1/pcuag.plt", 
+                            "label": "Cu-Ag &phi;(r):", 
+                            "link-text": "pcuag.plt"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "e840f884-36ff-44e9-9d1b-09284f50701d", 
+                "id": "2006--Williams-P-L--Cu-Ag--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2009-02-04", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This conversion was produced by Chandler Becker on 4 February 2009 from the plt files listed above. This version is compatible with LAMMPS. Validation and usage information can be found in CuAg06_releaseNotes_1.pdf. If you use this setfl file, please credit the website in addition to the original reference."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Cu-Ag/2/CuAg.eam.alloy", 
+                            "link-text": "CuAg.eam.alloy"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Cu-Ag/2/CuAg06_releaseNotes_1.pdf", 
+                            "link-text": "CuAg06_releaseNotes_1.pdf"
+                        }
+                    }
+                ]
+            }
+        ], 
+        "element": [
+            "Cu", 
+            "Ag"
+        ]
+    }
+}

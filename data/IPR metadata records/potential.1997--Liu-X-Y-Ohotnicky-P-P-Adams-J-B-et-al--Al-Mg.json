@@ -1,0 +1,83 @@
+{
+    "interatomic-potential": {
+        "key": "b702ae33-5d66-40fb-84e6-f2840555459a", 
+        "id": "1997--Liu-X-Y-Ohotnicky-P-P-Adams-J-B-et-al--Al-Mg", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Anisotropic surface segregation in Al-Mg alloys", 
+                "author": [
+                    {
+                        "given-name": "X.-Y.", 
+                        "surname": "Liu"
+                    }, 
+                    {
+                        "given-name": "P.P.", 
+                        "surname": "Ohotnicky"
+                    }, 
+                    {
+                        "given-name": "J.B.", 
+                        "surname": "Adams"
+                    }, 
+                    {
+                        "given-name": "C.", 
+                        "surname": "Lane Rohrer"
+                    }, 
+                    {
+                        "given-name": "R.W.", 
+                        "surname": "Hyland"
+                    }
+                ], 
+                "publication-name": "Surface Science", 
+                "publication-date": {
+                    "year": 1997
+                }, 
+                "volume": 373, 
+                "issue": "2-3", 
+                "abstract": "A set of embedded-atom method (EAM) potentials for Al-Mg alloys are developed using the \"force matching\" method. The potentials are fitted to both experimental data and a massive quantum mechanical database of atomic forces at finite temperatures. Using the potentials, Monte Carlo simulations are performed to study Mg segregation at different low-index surfaces of an Al alloy with 1\u201310 at% Mg. Surface enrichments of Mg of the order of 80% are found, and the segregation behavior is generally anisotropic. A set of discrete lattice-plane calculations, based on the nearest-neighbor broken-bond model corrected for strain energy, are shown to drastically reduce the anisotropy of surface segregation.", 
+                "pages": "357-370", 
+                "DOI": "10.1016/s0039-6028(96)01154-5", 
+                "bibtex": "@article{Liu_1997,\n abstract = {A set of embedded-atom method (EAM) potentials for Al-Mg alloys are developed using the \"force matching\" method. The potentials are fitted to both experimental data and a massive quantum mechanical database of atomic forces at finite temperatures. Using the potentials, Monte Carlo simulations are performed to study Mg segregation at different low-index surfaces of an Al alloy with 1\u201310 at% Mg. Surface enrichments of Mg of the order of 80% are found, and the segregation behavior is generally anisotropic. A set of discrete lattice-plane calculations, based on the nearest-neighbor broken-bond model corrected for strain energy, are shown to drastically reduce the anisotropy of surface segregation.},\n author = {Xiang-Yang Liu and P.P. Ohotnicky and J.B. Adams and C.Lane Rohrer and R.W. Hyland},\n doi = {10.1016/s0039-6028(96)01154-5},\n journal = {Surface Science},\n month = {mar},\n number = {2-3},\n pages = {357--370},\n publisher = {Elsevier BV},\n title = {Anisotropic surface segregation in Al-Mg alloys},\n volume = {373},\n year = {1997}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "b1ff183e-7729-40c1-ac34-5164a31691d1", 
+                "id": "1997--Liu-X-Y--Al-Mg--table--ipr1", 
+                "status": "active", 
+                "date": "1995-05-22", 
+                "type": "EAM setfl", 
+                "notes": {
+                    "text": "mg-al-set.txt was obtained from <a href=\"http://enpub.fulton.asu.edu/cms/potentials/main/main.htm\" class=\"external\">http://enpub.fulton.asu.edu/cms/potentials/main/main.htm</a> and posted with the permission of J.B. Adams and X.-Y. Liu."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1997--Liu-X-Y-Ohotnicky-P-P-Adams-J-B-et-al--Al-Mg/1/mg-al-set.txt", 
+                        "link-text": "mg-al-set.txt"
+                    }
+                }
+            }, 
+            {
+                "key": "50ecee50-a150-4fc6-8fb3-2e31846792bf", 
+                "id": "1997--Liu-X-Y--Al-Mg--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2010-01-01", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "To make the mg-al-set.txt file compatible with the eam/alloy style in LAMMPS, replace line 4 with \"2 Mg Al\" and the \"D\"s with \"E\"s in the numbers. This has been done in mg-al-set.eam.alloy."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1997--Liu-X-Y-Ohotnicky-P-P-Adams-J-B-et-al--Al-Mg/2/mg-al-set.eam.alloy", 
+                        "link-text": "mg-al-set.eam.alloy"
+                    }
+                }
+            }
+        ], 
+        "element": [
+            "Al", 
+            "Mg"
+        ]
+    }
+}

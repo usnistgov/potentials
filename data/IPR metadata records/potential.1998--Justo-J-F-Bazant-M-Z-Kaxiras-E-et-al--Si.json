@@ -1,0 +1,62 @@
+{
+    "interatomic-potential": {
+        "key": "a14ac6fc-058d-4f76-bc93-d6d1de1695b9", 
+        "id": "1998--Justo-J-F-Bazant-M-Z-Kaxiras-E-et-al--Si", 
+        "record-version": "2018-11-01", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Interatomic potential for silicon defects and disordered phases", 
+                "author": [
+                    {
+                        "given-name": "J.F.", 
+                        "surname": "Justo"
+                    }, 
+                    {
+                        "given-name": "M.Z.", 
+                        "surname": "Bazant"
+                    }, 
+                    {
+                        "given-name": "E.", 
+                        "surname": "Kaxiras"
+                    }, 
+                    {
+                        "given-name": "V.V.", 
+                        "surname": "Bulatov"
+                    }, 
+                    {
+                        "given-name": "S.", 
+                        "surname": "Yip"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 1998
+                }, 
+                "volume": 58, 
+                "issue": 5, 
+                "abstract": "We develop an empirical potential for silicon which represents a considerable improvement over existing models in describing local bonding for bulk defects and disordered phases. The model consists of two- and three-body interactions with theoretically motivated functional forms that capture chemical and physical trends as explained in a companion paper. The numerical parameters in the functional form are obtained by fitting to a set of ab initio results from quantum-mechanical calculations based on density-functional theory in the local-density approximation, which include various bulk phases and defect structures. We test the potential by applying it to the relaxation of point defects, core properties of partial dislocations and the structure of disordered phases, none of which are included in the fitting procedure. For dislocations, our model makes predictions in excellent agreement with ab initio and tight-binding calculations. It is the only potential known to describe both the 30\u00b0- and 90\u00b0-partial dislocations in the glide set {111}. The structural and thermodynamic properties of the liquid and amorphous phases are also in good agreement with experimental and ab initio results. Our potential is capable of simulating a quench directly from the liquid to the amorphous phase, and the resulting amorphous structure is more realistic than with existing empirical preparation methods. These advances in transferability come with no extra computational cost, since force evaluation with our model is faster than with the popular potential of Stillinger-Weber, thus allowing reliable atomistic simulations of very large atomic systems.", 
+                "pages": "2539-2550", 
+                "DOI": "10.1103/physrevb.58.2539", 
+                "bibtex": "@article{Justo_1998,\n abstract = {We develop an empirical potential for silicon which represents a considerable improvement over existing models in describing local bonding for bulk defects and disordered phases. The model consists of two- and three-body interactions with theoretically motivated functional forms that capture chemical and physical trends as explained in a companion paper. The numerical parameters in the functional form are obtained by fitting to a set of ab initio results from quantum-mechanical calculations based on density-functional theory in the local-density approximation, which include various bulk phases and defect structures. We test the potential by applying it to the relaxation of point defects, core properties of partial dislocations and the structure of disordered phases, none of which are included in the fitting procedure. For dislocations, our model makes predictions in excellent agreement with ab initio and tight-binding calculations. It is the only potential known to describe both the 30\u00b0- and 90\u00b0-partial dislocations in the glide set {111}. The structural and thermodynamic properties of the liquid and amorphous phases are also in good agreement with experimental and ab initio results. Our potential is capable of simulating a quench directly from the liquid to the amorphous phase, and the resulting amorphous structure is more realistic than with existing empirical preparation methods. These advances in transferability come with no extra computational cost, since force evaluation with our model is faster than with the popular potential of Stillinger-Weber, thus allowing reliable atomistic simulations of very large atomic systems.},\n author = {Jo\u00e3o F. Justo and Martin Z. Bazant and Efthimios Kaxiras and V. V. Bulatov and Sidney Yip},\n doi = {10.1103/physrevb.58.2539},\n journal = {Physical Review B},\n month = {aug},\n number = {5},\n pages = {2539--2550},\n publisher = {American Physical Society (APS)},\n title = {Interatomic potential for silicon defects and disordered phases},\n url = {https://doi.org/10.1103%2Fphysrevb.58.2539},\n volume = {58},\n year = {1998}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "f35f0ff7-7d29-4b23-977d-e7c9765c2bf9", 
+            "id": "1998--Justo-J-F--Si--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-11-01", 
+            "type": "LAMMPS pair_style edip", 
+            "notes": {
+                "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1998--Justo-J-F-Bazant-M-Z-Kaxiras-E-et-al--Si/1/Si.edip", 
+                    "link-text": "Si.edip"
+                }
+            }
+        }, 
+        "element": "Si"
+    }
+}

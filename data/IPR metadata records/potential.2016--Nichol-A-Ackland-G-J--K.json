@@ -1,0 +1,87 @@
+{
+    "interatomic-potential": {
+        "key": "3957686c-62de-4eee-af2c-435a4527ba4a", 
+        "id": "2016--Nichol-A-Ackland-G-J--K", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Property trends in simple metals: An empirical potential approach", 
+                "author": [
+                    {
+                        "given-name": "A.", 
+                        "surname": "Nichol"
+                    }, 
+                    {
+                        "given-name": "G.J.", 
+                        "surname": "Ackland"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 2016
+                }, 
+                "volume": 93, 
+                "issue": 18, 
+                "abstract": "We demonstrate that the melting points and other thermodynamic quantities of the alkali metals can be calculated based on static crystalline properties. To do this we derive analytic interatomic potentials for the alkali metals fitted precisely to cohesive and vacancy energies, elastic moduli, the lattice parameter, and crystal stability. These potentials are then used to calculate melting points by simulating the equilibration of solid and liquid samples in thermal contact at ambient pressure. With the exception of lithium, remarkably good agreement is found with experimental values. The instability of the bcc structure in Li and Na at low temperatures is also reproduced and, unusually, is not due to a soft T1N phonon mode. No forces or finite-temperature properties are included in the fit, so this demonstrates a surprisingly high level of intrinsic transferability in the simple potentials. Currently, there are few potentials available for the alkali metals, so in addition to demonstrating trends in behavior, we expect that the potentials will be of broad general use.", 
+                "pages": 184101, 
+                "DOI": "10.1103/physrevb.93.184101", 
+                "bibtex": "@article{Nichol_2016,\n abstract = {We demonstrate that the melting points and other thermodynamic quantities of the alkali metals can be calculated based on static crystalline properties. To do this we derive analytic interatomic potentials for the alkali metals fitted precisely to cohesive and vacancy energies, elastic moduli, the lattice parameter, and crystal stability. These potentials are then used to calculate melting points by simulating the equilibration of solid and liquid samples in thermal contact at ambient pressure. With the exception of lithium, remarkably good agreement is found with experimental values. The instability of the bcc structure in Li and Na at low temperatures is also reproduced and, unusually, is not due to a soft T1N phonon mode. No forces or finite-temperature properties are included in the fit, so this demonstrates a surprisingly high level of intrinsic transferability in the simple potentials. Currently, there are few potentials available for the alkali metals, so in addition to demonstrating trends in behavior, we expect that the potentials will be of broad general use.},\n author = {A. Nichol and G. J. Ackland},\n doi = {10.1103/physrevb.93.184101},\n journal = {Physical Review B},\n month = {may},\n number = {18},\n pages = {184101},\n publisher = {American Physical Society (APS)},\n title = {Property trends in simple metals: An empirical potential approach},\n url = {https://doi.org/10.1103%2Fphysrevb.93.184101},\n volume = {93},\n year = {2016}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "G.J. Ackland noted that lattice parameters, elastic constants and cohesive energies were used in the fitting process, so the values produced by this conversion should match known values. He noted that bcc crystal structure should be stable and produce a melting temperature of 336 K. Publication information was updated on 12 Oct. 2017. Prior publication listing for this potential was Han, S., Zepeda-Ruiz, L. A., Ackland, G. J., Car, R., and Srolovitz, D. J. (2003). Interatomic potential for vanadium suitable for radiation damage simulations. Journal of Applied Physics, 93(6), 3328. DOI: 10.1063/1.1555275"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "97b2325b-fa4e-41c3-bc03-b1d9331767a2", 
+                "id": "2016--Nichol-A--K--MOLDY--ipr1", 
+                "status": "active", 
+                "date": "2009-06-30", 
+                "type": "Moldy FS", 
+                "notes": {
+                    "text": "The parameters in K.moldy were obtained from <a href=\"http://homepages.ed.ac.uk/graeme/moldy/moldy.html\" class=\"external\">http://homepages.ed.ac.uk/graeme/moldy/moldy.html </a> and posted with the permission of G.J. Ackland."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Nichol-A-Ackland-G-J--K/1/K.moldy", 
+                        "link-text": "K.moldy"
+                    }
+                }
+            }, 
+            {
+                "key": "27676740-93a0-44a5-93ec-2a3eb6db8379", 
+                "id": "2016--Nichol-A--K--LAMMPS--ipr1", 
+                "status": "superseded", 
+                "date": "2015-12-08", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "This conversion was performed by G.J. Ackland and submitted on 8 Dec. 2015."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Nichol-A-Ackland-G-J--K/2/K.eam.fs", 
+                        "link-text": "K.eam.fs"
+                    }
+                }
+            }, 
+            {
+                "key": "32c370da-7d7f-4a64-972a-8f34bc391fbb", 
+                "id": "2016--Nichol-A--K--LAMMPS--ipr2", 
+                "status": "active", 
+                "date": "2017-10-10", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "A new conversion to LAMMPS performed by G.J. Ackland was submitted on 10 Oct. 2017. The previous setfl version above had a spurious oscillation period in the tabulated r*phi function that influenced measurements, most notably static elastic constant evaluations."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Nichol-A-Ackland-G-J--K/3/K_v2.eam.fs", 
+                        "link-text": "K_v2.eam.fs"
+                    }
+                }
+            }
+        ], 
+        "element": "K"
+    }
+}

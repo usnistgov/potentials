@@ -1,0 +1,68 @@
+{
+    "interatomic-potential": {
+        "key": "f416dd7d-6d20-4cbd-9ef9-25d6ac27fa9a", 
+        "id": "2017--Los-J-H-Kroes-J-M-H-Albe-K-et-al--B-N", 
+        "record-version": "2018-11-01", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Extended Tersoff potential for boron nitride: Energetics and elastic properties of pristine and defective h-BN", 
+                "author": [
+                    {
+                        "given-name": "J.H.", 
+                        "surname": "Los"
+                    }, 
+                    {
+                        "given-name": "J.M.H.", 
+                        "surname": "Kroes"
+                    }, 
+                    {
+                        "given-name": "K.", 
+                        "surname": "Albe"
+                    }, 
+                    {
+                        "given-name": "R.M.", 
+                        "surname": "Gordillo"
+                    }, 
+                    {
+                        "given-name": "M.I.", 
+                        "surname": "Katsnelson"
+                    }, 
+                    {
+                        "given-name": "A.", 
+                        "surname": "Fasolino"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 2017
+                }, 
+                "volume": 96, 
+                "issue": 18, 
+                "abstract": "We present an extended Tersoff potential for boron nitride (BN-ExTeP) for application in large scale atomistic simulations. BN-ExTeP accurately describes the main low energy B, N, and BN structures and yields quantitatively correct trends in the bonding as a function of coordination. The proposed extension of the bond order, added to improve the dependence of bonding on the chemical environment, leads to an accurate description of point defects in hexagonal BN (h-BN) and cubic BN (c-BN). We have implemented this potential in the molecular dynamics LAMMPS code and used it to determine some basic properties of pristine 2D h-BN and the elastic properties of defective h-BN as a function of defect density at zero temperature. Our results show that there is a strong correlation between the size of the static corrugation induced by the defects and the weakening of the in-plane elastic moduli.", 
+                "DOI": "10.1103/physrevb.96.184108", 
+                "bibtex": "@article{Los_2017,\n abstract = {We present an extended Tersoff potential for boron nitride (BN-ExTeP) for application in large scale atomistic simulations. BN-ExTeP accurately describes the main low energy B, N, and BN structures and yields quantitatively correct trends in the bonding as a function of coordination. The proposed extension of the bond order, added to improve the dependence of bonding on the chemical environment, leads to an accurate description of point defects in hexagonal BN (h-BN) and cubic BN (c-BN). We have implemented this potential in the molecular dynamics LAMMPS code and used it to determine some basic properties of pristine 2D h-BN and the elastic properties of defective h-BN as a function of defect density at zero temperature. Our results show that there is a strong correlation between the size of the static corrugation induced by the defects and the weakening of the in-plane elastic moduli.},\n author = {J. H. Los and J. M. H. Kroes and K. Albe and R. M. Gordillo and M. I. Katsnelson and A. Fasolino},\n doi = {10.1103/physrevb.96.184108},\n journal = {Physical Review B},\n month = {nov},\n number = {18},\n publisher = {American Physical Society (APS)},\n title = {Extended Tersoff potential for boron nitride: Energetics and elastic properties of pristine and defective h-BN},\n url = {https://doi.org/10.1103%2Fphysrevb.96.184108},\n volume = {96},\n year = {2017}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "19c66fc5-858c-4027-bb3c-feae215bf618", 
+            "id": "2017--Los-J-H--B-N--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-11-01", 
+            "type": "LAMMPS pair_style extep", 
+            "notes": {
+                "text": "This file was taken from the August 22, 2018 LAMMPS distribution and listed as having been contributed by J.H. Los and J.M.H. Kroes (Radboud University)"
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Los-J-H-Kroes-J-M-H-Albe-K-et-al--B-N/1/BN.extep", 
+                    "link-text": "BN.extep"
+                }
+            }
+        }, 
+        "element": [
+            "B", 
+            "N"
+        ]
+    }
+}

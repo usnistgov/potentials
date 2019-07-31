@@ -1,0 +1,159 @@
+{
+    "interatomic-potential": {
+        "key": "e30ac130-16af-4ca8-8685-eacbd145578d", 
+        "id": "2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Interatomic potential for studying ageing under irradiation in stainless steels: the FeNiCr model alloy", 
+                "author": [
+                    {
+                        "given-name": "G.", 
+                        "surname": "Bonny"
+                    }, 
+                    {
+                        "given-name": "N.", 
+                        "surname": "Castin"
+                    }, 
+                    {
+                        "given-name": "D.", 
+                        "surname": "Terentyev"
+                    }
+                ], 
+                "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                "publication-date": {
+                    "year": 2013
+                }, 
+                "volume": 21, 
+                "issue": 8, 
+                "abstract": "The degradation of austenitic stainless steels in a radiation environment is a known problem for the in-core components of nuclear light water reactors. For a better understanding of the prevailing mechanisms responsible for the materials' degradation, large-scale atomistic simulations are desirable. In this framework and as a follow-up on Bonny et al (2011 Modelling Simul. Mater. Sci. Eng. 19 085008), we developed an embedded atom method type interatomic potential for the ternary FeNiCr system to model the production and evolution of radiation defects. Special attention has been drawn to the Fe10Ni20Cr alloy, whose properties were ensured to be close to those of 316L austenitic stainless steels. The potential is extensively benchmarked against density functional theory calculations and the potential developed in our earlier work. As a first validation, the potential is used in AKMC simulations to simulate thermal annealing experiments in order to determine the self-diffusion coefficients of the components in FeNiCr alloys around the Fe10Ni20Cr composition. The results from these simulations are consistent with experiments, i.e., DCr > DNi > DFe.", 
+                "pages": 85004, 
+                "DOI": "10.1088/0965-0393/21/8/085004", 
+                "bibtex": "@article{Bonny_2013,\n abstract = {The degradation of austenitic stainless steels in a radiation environment is a known problem for the in-core components of nuclear light water reactors. For a better understanding of the prevailing mechanisms responsible for the materials' degradation, large-scale atomistic simulations are desirable. In this framework and as a follow-up on Bonny et al (2011 Modelling Simul. Mater. Sci. Eng. 19 085008), we developed an embedded atom method type interatomic potential for the ternary FeNiCr system to model the production and evolution of radiation defects. Special attention has been drawn to the Fe10Ni20Cr alloy, whose properties were ensured to be close to those of 316L austenitic stainless steels. The potential is extensively benchmarked against density functional theory calculations and the potential developed in our earlier work. As a first validation, the potential is used in AKMC simulations to simulate thermal annealing experiments in order to determine the self-diffusion coefficients of the components in FeNiCr alloys around the Fe10Ni20Cr composition. The results from these simulations are consistent with experiments, i.e., DCr > DNi > DFe.},\n author = {G Bonny and N Castin and D Terentyev},\n doi = {10.1088/0965-0393/21/8/085004},\n journal = {Modelling and Simulation in Materials Science and Engineering},\n month = {oct},\n number = {8},\n pages = {085004},\n publisher = {IOP Publishing},\n title = {Interatomic potential for studying ageing under irradiation in stainless steels: the FeNiCr model alloy},\n url = {https://doi.org/10.1088%2F0965-0393%2F21%2F8%2F085004},\n volume = {21},\n year = {2013}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "Notes from Giovanni Bonny: \"The present potential was developed to model <b>POINT DEFECTS near the Fe-10Ni-20Cr composition</b>."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "569fa95f-b9c7-455b-92d6-32cec1d176f1", 
+                "id": "2013--Bonny-G--Fe-Ni-Cr--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2014-01-13", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was provided by Giovanni Bonny (Nuclear Materials Science Institute of SCK-CEN, Belgium) on 13 Jan. 2014."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/1/FeNiCr_Bonny_2013_ptDef.eam.alloy", 
+                        "link-text": "FeNiCr_Bonny_2013_ptDef.eam.alloy"
+                    }
+                }
+            }, 
+            {
+                "key": "baa2e3e6-47c5-4cdd-bf90-56de0df0e6a1", 
+                "id": "2013--Bonny-G--Fe-Ni-Cr--table--ipr1", 
+                "status": "active", 
+                "date": "2014-01-13", 
+                "type": "EAM tabulated functions", 
+                "notes": {
+                    "text": "These files were provided by Giovanni Bonny on 13 Jan. 2014."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/F_Fe_Bonny_2013.spt", 
+                            "label": "Fe F(&rho;):", 
+                            "link-text": "F_Fe_Bonny_2013.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/F_Ni_Bonny_2013.spt", 
+                            "label": "Ni F(&rho;):", 
+                            "link-text": "F_Ni_Bonny_2013.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/F_Cr_Bonny_2013.spt", 
+                            "label": "Cr F(&rho;):", 
+                            "link-text": "F_Cr_Bonny_2013.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/rhoFe_Bonny_2013.spt", 
+                            "label": "Fe &rho;(r):", 
+                            "link-text": "rhoFe_Bonny_2013.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/rhoNi_Bonny_2013.spt", 
+                            "label": "Ni &rho;(r):", 
+                            "link-text": "rhoNi_Bonny_2013.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/rhoCr_Bonny_2013.spt", 
+                            "label": "Cr &rho;(r):", 
+                            "link-text": "rhoCr_Bonny_2013.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/pFeFe_Bonny_2013.spt", 
+                            "label": "Fe &phi;(r):", 
+                            "link-text": "pFeFe_Bonny_2013.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/pNiNi_Bonny_2013.spt", 
+                            "label": "Ni &phi;(r):", 
+                            "link-text": "pNiNi_Bonny_2013.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/pCrCr_Bonny_2013.spt", 
+                            "label": "Cr &phi;(r):", 
+                            "link-text": "pCrCr_Bonny_2013.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/pFeNi_Bonny_2013.spt", 
+                            "label": "Fe-Ni &phi;(r):", 
+                            "link-text": "pFeNi_Bonny_2013.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/pFeCr_Bonny_2013.spt", 
+                            "label": "Fe-Cr &phi;(r):", 
+                            "link-text": "pFeCr_Bonny_2013.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/pNiCr_Bonny_2013.spt", 
+                            "label": "Ni-Cr &phi;(r):", 
+                            "link-text": "pNiCr_Bonny_2013.spt"
+                        }
+                    }
+                ]
+            }
+        ], 
+        "element": [
+            "Fe", 
+            "Ni", 
+            "Cr"
+        ]
+    }
+}

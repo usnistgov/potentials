@@ -1,0 +1,58 @@
+{
+    "interatomic-potential": {
+        "key": "340d3301-a6ab-4800-984f-1f3cee9890b2", 
+        "id": "2005--Dudarev-S-L-Derlet-P-M--Fe", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "A 'magnetic' interatomic potential for molecular dynamics simulations", 
+                "author": [
+                    {
+                        "given-name": "S.L.", 
+                        "surname": "Dudarev"
+                    }, 
+                    {
+                        "given-name": "P.M.", 
+                        "surname": "Derlet"
+                    }
+                ], 
+                "publication-name": "Journal of Physics: Condensed Matter", 
+                "publication-date": {
+                    "year": 2005
+                }, 
+                "volume": 17, 
+                "issue": 44, 
+                "abstract": "We develop a semi-empirical many-body interatomic potential suitable for large scale molecular dynamics simulations of magnetic \u03b1-iron. The functional form of the embedding part of the potential is derived using a combination of the Stoner and the Ginzburg\u2013Landau models. We show that it is the symmetry broken solutions of the Ginzburg\u2013Landau model describing spontaneous magnetization of atoms that provide the link between magnetism and interatomic forces. We discuss a range of potential applications of the new method.", 
+                "pages": "7097-7118", 
+                "DOI": "10.1088/0953-8984/17/44/003", 
+                "bibtex": "@article{Dudarev_2005,\n abstract = {We develop a semi-empirical many-body interatomic potential suitable for large scale molecular dynamics simulations of magnetic \u03b1-iron. The functional form of the embedding part of the potential is derived using a combination of the Stoner and the Ginzburg\u2013Landau models. We show that it is the symmetry broken solutions of the Ginzburg\u2013Landau model describing spontaneous magnetization of atoms that provide the link between magnetism and interatomic forces. We discuss a range of potential applications of the new method.},\n author = {S L Dudarev and P M Derlet},\n doi = {10.1088/0953-8984/17/44/003},\n journal = {Journal of Physics: Condensed Matter},\n month = {oct},\n number = {44},\n pages = {7097--7118},\n publisher = {IOP Publishing},\n title = {A 'magnetic' interatomic potential for molecular dynamics simulations},\n url = {https://doi.org/10.1088%2F0953-8984%2F17%2F44%2F003},\n volume = {17},\n year = {2005}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "796d40eb-5dfb-4483-b56e-7367030dbc19", 
+            "id": "2005--Dudarev-S-L--Fe--MoldyPSI--ipr1", 
+            "status": "active", 
+            "date": "2010-07-02", 
+            "type": "MoldyPSI", 
+            "notes": {
+                "text": "These files were provided by Peter Derlet (Paul Scherrer Institute) and posted with his permission on 2 July 2010. Usage information can be found in the <a href=\"faq.html#MoldyPSI\">FAQ</a>."
+            }, 
+            "artifact": [
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Dudarev-S-L-Derlet-P-M--Fe/1/fe_dd.dat", 
+                        "link-text": "fe_dd.dat"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Dudarev-S-L-Derlet-P-M--Fe/1/potential_functions_Fe_DD.f90", 
+                        "link-text": "potential_functions_Fe_DD.f90"
+                    }
+                }
+            ]
+        }, 
+        "element": "Fe"
+    }
+}

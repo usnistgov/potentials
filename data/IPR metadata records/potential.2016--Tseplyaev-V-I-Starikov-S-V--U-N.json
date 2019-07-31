@@ -1,0 +1,52 @@
+{
+    "interatomic-potential": {
+        "key": "9f317e60-ac61-4533-a756-a023996aaee5", 
+        "id": "2016--Tseplyaev-V-I-Starikov-S-V--U-N", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "The atomistic simulation of pressure-induced phase transition in uranium mononitride", 
+                "author": [
+                    {
+                        "given-name": "V.I.", 
+                        "surname": "Tseplyaev"
+                    }, 
+                    {
+                        "given-name": "S.V.", 
+                        "surname": "Starikov"
+                    }
+                ], 
+                "publication-name": "Journal of Nuclear Materials", 
+                "publication-date": {
+                    "year": 2016
+                }, 
+                "volume": 480, 
+                "abstract": "In this work we studied the pressure-induced phase transition between different structures of uranium mononitride: cubic Fm-3m-structure and rhombohedral  R-3m-structure. We used molecular dynamics together with a new interatomic potential developed for this purpose. We estimated phase diagram of uranium mononitrde in a wide range of temperature and pressure using thermodynamic and mechanical criteria of stability. From simulations we see that at zero temperature the phase transition Fm-3m -> R-3m takes place at pressure about 35 GPa, which agrees well with the available experimental and theoretical data. Results of the calculations show that the lattice of rhombohedral phase becomes close to cubic structure with increase in temperature.", 
+                "pages": "7-14", 
+                "DOI": "10.1016/j.jnucmat.2016.07.048", 
+                "bibtex": "@article{Tseplyaev_2016,\n abstract = {In this work we studied the pressure-induced phase transition between different structures of uranium mononitride: cubic Fm-3m-structure and rhombohedral  R-3m-structure. We used molecular dynamics together with a new interatomic potential developed for this purpose. We estimated phase diagram of uranium mononitrde in a wide range of temperature and pressure using thermodynamic and mechanical criteria of stability. From simulations we see that at zero temperature the phase transition Fm-3m -> R-3m takes place at pressure about 35 GPa, which agrees well with the available experimental and theoretical data. Results of the calculations show that the lattice of rhombohedral phase becomes close to cubic structure with increase in temperature.},\n author = {V.I. Tseplyaev and S.V. Starikov},\n doi = {10.1016/j.jnucmat.2016.07.048},\n journal = {Journal of Nuclear Materials},\n month = {nov},\n pages = {7--14},\n publisher = {Elsevier BV},\n title = {The atomistic simulation of pressure-induced phase transition in uranium mononitride},\n url = {https://doi.org/10.1016%2Fj.jnucmat.2016.07.048},\n volume = {480},\n year = {2016}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "5a7d4c97-8977-4435-b135-d919e44dd93c", 
+            "id": "2016--Tseplyaev-V-I--U-N--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2016-11-03", 
+            "type": "LAMMPS pair_style adp", 
+            "notes": {
+                "text": "These files were sent by S.V. Starikov (Joint Institute for High Temperatures, Russian Academy of Sciences) on 3 Nov. 2016 and posted with his permission."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Tseplyaev-V-I-Starikov-S-V--U-N/1/un.adp.txt", 
+                    "link-text": "un.adp.txt"
+                }
+            }
+        }, 
+        "element": [
+            "U", 
+            "N"
+        ]
+    }
+}

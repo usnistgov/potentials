@@ -1,0 +1,98 @@
+{
+    "interatomic-potential": {
+        "key": "4a8890c8-1ff4-4346-bdd7-72250e853a56", 
+        "id": "2017--Wang-P-Xu-S-Liu-J-et-al--TWIP", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Atomistic simulation for deforming complex alloys with application toward TWIP steel and associated physical insights", 
+                "author": [
+                    {
+                        "given-name": "P.", 
+                        "surname": "Wang"
+                    }, 
+                    {
+                        "given-name": "S.", 
+                        "surname": "Xu"
+                    }, 
+                    {
+                        "given-name": "J.", 
+                        "surname": "Liu"
+                    }, 
+                    {
+                        "given-name": "X.", 
+                        "surname": "Li"
+                    }, 
+                    {
+                        "given-name": "Y.", 
+                        "surname": "Wei"
+                    }, 
+                    {
+                        "given-name": "H.", 
+                        "surname": "Wang"
+                    }, 
+                    {
+                        "given-name": "H.", 
+                        "surname": "Gao"
+                    }, 
+                    {
+                        "given-name": "W.", 
+                        "surname": "Yang"
+                    }
+                ], 
+                "publication-name": "Journal of the Mechanics and Physics of Solids", 
+                "publication-date": {
+                    "year": 2017
+                }, 
+                "volume": 98, 
+                "abstract": "The interest in promoting deformation twinning for plasticity is mounting for advanced materials. In contrast to disordered grain boundaries, highly organized twin boundaries are beneficial to promoting strength-ductility combination. Twinning deformation typically involves the kinetics of stacking faults, its interplay with dislocations, as well as the interactions between dislocations and twin boundaries. While the latter has been intensively studied, the dynamics of stacking faults has been rarely touched upon. In this work, we report new physical insights on the stacking fault dynamics in twin induced plasticity (TWIP) steels. The atomistic simulation is made possible by a newly introduced approach: meta-atom molecular dynamics simulation. The simulation suggests that the stacking fault interactions are dominated by dislocation reactions that take place spontaneously, different from the existing mechanisms. Whether to generate a single stacking fault, or a twinning partial and a trailing partial dislocation, depends upon a unique parameter, namely the stacking fault energy. The latter in turn determines the deformation twinning characteristics. The complex twin-slip and twin-dislocation interactions demonstrate the dual role of deformation twins as both the dislocation barrier and dislocation storage. This duality contributes to the high strength and high ductility of TWIP steels.", 
+                "pages": "290-308", 
+                "DOI": "10.1016/j.jmps.2016.09.008", 
+                "bibtex": "@article{Wang_2017,\n abstract = {The interest in promoting deformation twinning for plasticity is mounting for advanced materials. In contrast to disordered grain boundaries, highly organized twin boundaries are beneficial to promoting strength-ductility combination. Twinning deformation typically involves the kinetics of stacking faults, its interplay with dislocations, as well as the interactions between dislocations and twin boundaries. While the latter has been intensively studied, the dynamics of stacking faults has been rarely touched upon. In this work, we report new physical insights on the stacking fault dynamics in twin induced plasticity (TWIP) steels. The atomistic simulation is made possible by a newly introduced approach: meta-atom molecular dynamics simulation. The simulation suggests that the stacking fault interactions are dominated by dislocation reactions that take place spontaneously, different from the existing mechanisms. Whether to generate a single stacking fault, or a twinning partial and a trailing partial dislocation, depends upon a unique parameter, namely the stacking fault energy. The latter in turn determines the deformation twinning characteristics. The complex twin-slip and twin-dislocation interactions demonstrate the dual role of deformation twins as both the dislocation barrier and dislocation storage. This duality contributes to the high strength and high ductility of TWIP steels.},\n author = {Peng Wang and Shaofeng Xu and Jiabin Liu and Xiaoyan Li and Yujie Wei and Hongtao Wang and Huajian Gao and Wei Yang},\n doi = {10.1016/j.jmps.2016.09.008},\n journal = {Journal of the Mechanics and Physics of Solids},\n month = {jan},\n pages = {290--308},\n publisher = {Elsevier BV},\n title = {Atomistic simulation for deforming complex alloys with application toward TWIP steel and associated physical insights},\n url = {https://doi.org/10.1016%2Fj.jmps.2016.09.008},\n volume = {98},\n year = {2017}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "Dr. Peng Wang noted that this potential for TWIP steel was developed based on the concept \"meta-atom method\". The meta-atom method is developed based on the basic assumption that the mechanical properties of an alloy system are primarily governed by a finite set of material constants instead of specific atomic configurations. Once the completeness of this set of material constants is established, two systems with the same material constants should exhibit identical mechanical behaviors in experimental observations. In this way, a detailed distinction among various atomic species is discarded and an alloy system is represented by a set of meta-atoms with a single interatomic potential to fit all related material constants. This method is firstly published in Journal of the Mechanics and Physics of Solids (2017), 98, 290-308. It is not possible to model individual elements of Fe or Mn with this potential."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "c6bbc01f-77ce-488e-8997-3a7b6e9c9f99", 
+                "id": "2017--Wang-P--TWIP--LAMMPS--ipr1", 
+                "status": "superseded", 
+                "date": "2009-06-30", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "This file was sent by P. Wang (Zhejiang University) on 24 Feb. 2017 and posted with the permission of Dr. Peng Wang and Prof. Hongtao Wang."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Wang-P-Xu-S-Liu-J-et-al--TWIP/1/Fe.eam.fs", 
+                        "link-text": "Fe.eam.fs"
+                    }
+                }
+            }, 
+            {
+                "key": "04b89a63-a16a-4e89-89e7-dee386bf0a5b", 
+                "id": "2017--Wang-P--TWIP--LAMMPS--ipr2", 
+                "status": "active", 
+                "date": "2009-06-30", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "Dr. P. Wang (Zhejiang University) sent a revised file on 25 Sept. 2017 to address significant confusion regarding the appropriate use of the potential. The file name was changed and the element label Fe was replaced with meta_TWIP. It is not possible to model individual elements of Fe or Mn with this potential."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Wang-P-Xu-S-Liu-J-et-al--TWIP/2/TWIP.eam.fs", 
+                        "link-text": "TWIP.eam.fs"
+                    }
+                }
+            }
+        ], 
+        "element": [
+            "Fe", 
+            "Mn"
+        ], 
+        "other-element": "TWIP"
+    }
+}

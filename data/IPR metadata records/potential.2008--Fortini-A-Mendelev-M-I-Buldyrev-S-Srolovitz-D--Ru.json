@@ -1,0 +1,58 @@
+{
+    "interatomic-potential": {
+        "key": "8a94f366-a892-461e-9d3d-e30a76276727", 
+        "id": "2008--Fortini-A-Mendelev-M-I-Buldyrev-S-Srolovitz-D--Ru", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Asperity contacts at the nanoscale: Comparison of Ru and Au", 
+                "author": [
+                    {
+                        "given-name": "A.", 
+                        "surname": "Fortini"
+                    }, 
+                    {
+                        "given-name": "M.I.", 
+                        "surname": "Mendelev"
+                    }, 
+                    {
+                        "given-name": "S.", 
+                        "surname": "Buldyrev"
+                    }, 
+                    {
+                        "given-name": "D.", 
+                        "surname": "Srolovitz"
+                    }
+                ], 
+                "publication-name": "Journal of Applied Physics", 
+                "publication-date": {
+                    "year": 2008
+                }, 
+                "volume": 104, 
+                "issue": 7, 
+                "abstract": "We develop and validate an interatomic potential for ruthenium based on the embedded atom method framework with the Finnis/Sinclair representation. We confirm that the potential yields a stable hcp lattice with reasonable lattice and elastic constants and surface and stacking fault energies. We employ molecular dynamics simulations to bring two surfaces together, one flat and the other with a single asperity. We compare the process of asperity contact formation and breaking in Au and Ru, two materials currently in use in microelectromechanical system switches. While Au is very ductile at 150 and 300 K, Ru shows considerably less plasticity at 300 and 600 K (approximately the same homologous temperature). In Au, the asperity necks down to a single atom thick bridge at separation. While similar necking occurs in Ru at 600 K, it is much more limited than in Au. On the other hand, at 300 K, Ru breaks by a much more brittle process of fracture/decohesion with limited plastic deformation.", 
+                "pages": 74320, 
+                "DOI": "10.1063/1.2991301", 
+                "bibtex": "@article{Fortini_2008,\n abstract = {We develop and validate an interatomic potential for ruthenium based on the embedded atom method framework with the Finnis/Sinclair representation. We confirm that the potential yields a stable hcp lattice with reasonable lattice and elastic constants and surface and stacking fault energies. We employ molecular dynamics simulations to bring two surfaces together, one flat and the other with a single asperity. We compare the process of asperity contact formation and breaking in Au and Ru, two materials currently in use in microelectromechanical system switches. While Au is very ductile at 150 and 300 K, Ru shows considerably less plasticity at 300 and 600 K (approximately the same homologous temperature). In Au, the asperity necks down to a single atom thick bridge at separation. While similar necking occurs in Ru at 600 K, it is much more limited than in Au. On the other hand, at 300 K, Ru breaks by a much more brittle process of fracture/decohesion with limited plastic deformation.},\n author = {Andrea Fortini and Mikhail I. Mendelev and Sergey Buldyrev and David Srolovitz},\n doi = {10.1063/1.2991301},\n journal = {Journal of Applied Physics},\n number = {7},\n pages = {074320},\n publisher = {AIP Publishing},\n title = {Asperity contacts at the nanoscale: Comparison of Ru and Au},\n url = {https://doi.org/10.1063%2F1.2991301},\n volume = {104},\n year = {2008}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "90e928ab-acad-4e31-8f26-f13d5fb37b53", 
+            "id": "2008--Fortini-A--Ru--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2008-05-15", 
+            "type": "LAMMPS pair_style eam/fs", 
+            "notes": {
+                "text": "This file was provided by Mikhail Mendelev on May 15, 2008. The reference was updated on 14 October 2008."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Fortini-A-Mendelev-M-I-Buldyrev-S-Srolovitz-D--Ru/1/Ru.eam.fs", 
+                    "link-text": "Ru.eam.fs"
+                }
+            }
+        }, 
+        "element": "Ru"
+    }
+}

@@ -1,0 +1,93 @@
+{
+    "interatomic-potential": {
+        "key": "36dbb1ec-c7f0-46a4-a501-1c518f777d5c", 
+        "id": "2003--Zope-R-R-Mishin-Y--Al", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Interatomic potentials for atomistic simulations of the Ti-Al system", 
+                "author": [
+                    {
+                        "given-name": "R.R.", 
+                        "surname": "Zope"
+                    }, 
+                    {
+                        "given-name": "Y.", 
+                        "surname": "Mishin"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 2003
+                }, 
+                "volume": 68, 
+                "issue": 2, 
+                "abstract": "Semiempirical interatomic potentials have been developed for Al, \u03b1\u2212Ti, and \u03b3\u2212TiAl within the embedded atom method (EAM) formalism by fitting to a large database of experimental as well as ab initio data. The ab initio calculations were performed by the linearized augmented plane wave (LAPW) method within the density functional theory to obtain the equations of state for a number of crystal structures of the Ti-Al system. Some of the calculated LAPW energies were used for fitting the potentials while others for examining their quality. The potentials correctly predict the equilibrium crystal structures of the phases and accurately reproduce their basic lattice properties. The potentials are applied to calculate the energies of point defects, surfaces, and planar faults in the equilibrium structures. Unlike earlier EAM potentials for the Ti-Al system, the proposed potentials provide a reasonable description of the lattice thermal expansion, demonstrating their usefulness for molecular-dynamics and Monte Carlo simulations at high temperatures. The energy along the tetragonal deformation path (Bain transformation) in \u03b3\u2212TiAl calculated with the EAM potential is in fairly good agreement with LAPW calculations. Equilibrium point defect concentrations in \u03b3\u2212TiAl are studied using the EAM potential. It is found that antisite defects strongly dominate over vacancies at all compositions around stoichiometry, indicating that \u03b3\u2212TiAl is an antisite disorder compound, in agreement with experimental data.", 
+                "pages": 24102, 
+                "DOI": "10.1103/physrevb.68.024102", 
+                "bibtex": "@article{Zope_2003,\n abstract = {Semiempirical interatomic potentials have been developed for Al, \u03b1\u2212Ti, and \u03b3\u2212TiAl within the embedded atom method (EAM) formalism by fitting to a large database of experimental as well as ab initio data. The ab initio calculations were performed by the linearized augmented plane wave (LAPW) method within the density functional theory to obtain the equations of state for a number of crystal structures of the Ti-Al system. Some of the calculated LAPW energies were used for fitting the potentials while others for examining their quality. The potentials correctly predict the equilibrium crystal structures of the phases and accurately reproduce their basic lattice properties. The potentials are applied to calculate the energies of point defects, surfaces, and planar faults in the equilibrium structures. Unlike earlier EAM potentials for the Ti-Al system, the proposed potentials provide a reasonable description of the lattice thermal expansion, demonstrating their usefulness for molecular-dynamics and Monte Carlo simulations at high temperatures. The energy along the tetragonal deformation path (Bain transformation) in \u03b3\u2212TiAl calculated with the EAM potential is in fairly good agreement with LAPW calculations. Equilibrium point defect concentrations in \u03b3\u2212TiAl are studied using the EAM potential. It is found that antisite defects strongly dominate over vacancies at all compositions around stoichiometry, indicating that \u03b3\u2212TiAl is an antisite disorder compound, in agreement with experimental data.},\n author = {Rajendra R. Zope and Y. Mishin},\n doi = {10.1103/physrevb.68.024102},\n journal = {Physical Review B},\n month = {jul},\n number = {2},\n numpages = {14},\n pages = {024102},\n publisher = {American Physical Society (APS)},\n title = {Interatomic potentials for atomistic simulations of the Ti-Al system},\n url = {https://doi.org/10.1103%2Fphysrevb.68.024102},\n volume = {68},\n year = {2003}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "a6237bcc-a4be-497d-97ed-636f3999c541", 
+                "id": "2003--Zope-R-R--Al--table--ipr1", 
+                "status": "active", 
+                "date": "2009-01-01", 
+                "type": "EAM tabulated functions", 
+                "notes": {
+                    "text": "These files were provided by Yuri Mishin."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Zope-R-R-Mishin-Y--Al/1/F_al.plt", 
+                            "label": "F(&rho;):", 
+                            "link-text": "F_al.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Zope-R-R-Mishin-Y--Al/1/fal.plt", 
+                            "label": "&rho;(r):", 
+                            "link-text": "fal.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Zope-R-R-Mishin-Y--Al/1/pal.plt", 
+                            "label": "&phi;(r):", 
+                            "link-text": "pal.plt"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "1f1253aa-1ef5-42cd-94e3-5d8d24d1b388", 
+                "id": "2003--Zope-R-R--Al--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2009-02-04", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This conversion was produced by Chandler Becker on 4 February 2009 from the plt files listed above. This version is compatible with LAMMPS. Validation and usage information can be found in Al03_releaseNotes_1.pdf. If you use this setfl file, please credit the website in addition to the original reference."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Zope-R-R-Mishin-Y--Al/2/Al03.eam.alloy", 
+                            "link-text": "Al03.eam.alloy"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Zope-R-R-Mishin-Y--Al/2/Al03_releaseNotes_1.pdf", 
+                            "link-text": "Al03_releaseNotes_1.pdf"
+                        }
+                    }
+                ]
+            }
+        ], 
+        "element": "Al"
+    }
+}

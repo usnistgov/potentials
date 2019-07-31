@@ -1,0 +1,62 @@
+{
+    "interatomic-potential": {
+        "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance", 
+        "key": "f8613831-ee3a-431f-b9bd-468a0ee05664", 
+        "id": "2005--Mendelev-M-I-Srolovitz-D-J-Ackland-G-J-Han-S--Al-Fe", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Effect of Fe Segregation on the Migration of a Non-Symmetric \u03a35 Tilt Grain Boundary in Al", 
+                "author": [
+                    {
+                        "given-name": "M.I.", 
+                        "surname": "Mendelev"
+                    }, 
+                    {
+                        "given-name": "D.J.", 
+                        "surname": "Srolovitz"
+                    }, 
+                    {
+                        "given-name": "G.J.", 
+                        "surname": "Ackland"
+                    }, 
+                    {
+                        "given-name": "S.", 
+                        "surname": "Han"
+                    }
+                ], 
+                "publication-name": "Journal of Materials Research", 
+                "publication-date": {
+                    "year": 2005
+                }, 
+                "volume": 20, 
+                "issue": 1, 
+                "abstract": "We present an analysis, based upon atomistic simulation data, of the effect of Fe impurities on grain boundary migration in Al. The first step is the development of a new interatomic potential for Fe in Al. This potential provides an accurate description of Al\u2013Fe liquid diffraction data and the bulk diffusivity of Fe in Al. We use this potential to determine the physical parameters in the Cahn\u2013L\u00fccke\u2013St\u00fcwe (CLS) model for the effect of impurities on grain boundary mobility. These include the heat of segregation of Fe to grain boundaries in Al and the diffusivity of Fe in Al. Using the simulation-parameterized CLS model, we predict the grain boundary mobility in Al in the presence of Fe as a function of temperature and Fe concentration. The order of magnitude and the trends in the mobility from the simulations are in agreement with existing experimental results.", 
+                "pages": "208-218", 
+                "DOI": "10.1557/jmr.2005.0024", 
+                "bibtex": "@article{Mendelev_2005,\n abstract = {We present an analysis, based upon atomistic simulation data, of the effect of Fe impurities on grain boundary migration in Al. The first step is the development of a new interatomic potential for Fe in Al. This potential provides an accurate description of Al\u2013Fe liquid diffraction data and the bulk diffusivity of Fe in Al. We use this potential to determine the physical parameters in the Cahn\u2013L\u00fccke\u2013St\u00fcwe (CLS) model for the effect of impurities on grain boundary mobility. These include the heat of segregation of Fe to grain boundaries in Al and the diffusivity of Fe in Al. Using the simulation-parameterized CLS model, we predict the grain boundary mobility in Al in the presence of Fe as a function of temperature and Fe concentration. The order of magnitude and the trends in the mobility from the simulations are in agreement with existing experimental results.},\n author = {M.I. Mendelev and D.J. Srolovitz and G.J. Ackland and S. Han},\n doi = {10.1557/jmr.2005.0024},\n journal = {Journal of Materials Research},\n month = {jan},\n number = {01},\n pages = {208--218},\n publisher = {Cambridge University Press (CUP)},\n title = {Effect of Fe Segregation on the Migration of a Non-Symmetric \u03a35 Tilt Grain Boundary in Al},\n url = {https://doi.org/10.1557%2Fjmr.2005.0024},\n volume = {20},\n year = {2005}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "28c0fe14-f6f2-4a0c-ac95-9d0e34c1534a", 
+            "id": "2005--Mendelev-M-I--Al-Fe--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2007-01-01", 
+            "type": "LAMMPS pair_style eam/fs", 
+            "notes": {
+                "text": "This file was provided by Mikhail Mendelev.  Except for the comment lines, this file is identical to \"AlFe_mm.eam.fs\" in the August 22, 2018 LAMMPS distribution."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Mendelev-M-I-Srolovitz-D-J-Ackland-G-J-Han-S--Al-Fe/1/Al-Fe.eam.fs", 
+                    "link-text": "Al-Fe.eam.fs"
+                }
+            }
+        }, 
+        "element": [
+            "Al", 
+            "Fe"
+        ]
+    }
+}

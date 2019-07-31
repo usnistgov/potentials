@@ -1,0 +1,98 @@
+{
+    "interatomic-potential": {
+        "key": "5eaad52e-ca4d-4859-b01b-13f70c3c6b54", 
+        "id": "2013--Henriksson-K-O-E-Bjorkas-C-Nordlund-K--Fe-C", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Atomistic simulations of stainless steels: a many-body potential for the Fe-Cr-C system", 
+                "author": [
+                    {
+                        "given-name": "K.O.E.", 
+                        "surname": "Henriksson"
+                    }, 
+                    {
+                        "given-name": "C.", 
+                        "surname": "Bj\u00f6rkas"
+                    }, 
+                    {
+                        "given-name": "K.", 
+                        "surname": "Nordlund"
+                    }
+                ], 
+                "publication-name": "Journal of Physics: Condensed Matter", 
+                "publication-date": {
+                    "year": 2013
+                }, 
+                "volume": 25, 
+                "issue": 44, 
+                "abstract": "Stainless steels found in real-world applications usually have some C content in the base Fe\u2013Cr alloy, resulting in hard and dislocation-pinning carbides\u2014Fe3C (cementite) and Cr23C6\u2014being present in the finished steel product. The higher complexity of the steel microstructure has implications, for example, for the elastic properties and the evolution of defects such as Frenkel pairs and dislocations. This makes it necessary to re-evaluate the effects of basic radiation phenomena and not simply to rely on results obtained from purely metallic Fe\u2013Cr alloys. In this report, an analytical interatomic potential parameterization in the Abell\u2013Brenner\u2013Tersoff form for the entire Fe\u2013Cr\u2013C system is presented to enable such calculations. The potential reproduces, for example, the lattice parameter(s), formation energies and elastic properties of the principal Fe and Cr carbides (Fe3C, Fe5C2, Fe7C3, Cr3C2, Cr7C3, Cr23C6), the Fe\u2013Cr mixing energy curve, formation energies of simple C point defects in Fe and Cr, and the martensite lattice anisotropy, with fair to excellent agreement with empirical results. Tests of the predictive power of the potential show, for example, that Fe\u2013Cr nanowires and bulk samples become elastically stiffer with increasing Cr and C concentrations. High-concentration nanowires also fracture at shorter relative elongations than wires made of pure Fe. Also, tests with Fe3C inclusions show that these act as obstacles for edge dislocations moving through otherwise pure Fe.", 
+                "pages": 445401, 
+                "DOI": "10.1088/0953-8984/25/44/445401", 
+                "bibtex": "@article{Henriksson_2013,\n abstract = {Stainless steels found in real-world applications usually have some C content in the base Fe\u2013Cr alloy, resulting in hard and dislocation-pinning carbides\u2014Fe3C (cementite) and Cr23C6\u2014being present in the finished steel product. The higher complexity of the steel microstructure has implications, for example, for the elastic properties and the evolution of defects such as Frenkel pairs and dislocations. This makes it necessary to re-evaluate the effects of basic radiation phenomena and not simply to rely on results obtained from purely metallic Fe\u2013Cr alloys. In this report, an analytical interatomic potential parameterization in the Abell\u2013Brenner\u2013Tersoff form for the entire Fe\u2013Cr\u2013C system is presented to enable such calculations. The potential reproduces, for example, the lattice parameter(s), formation energies and elastic properties of the principal Fe and Cr carbides (Fe3C, Fe5C2, Fe7C3, Cr3C2, Cr7C3, Cr23C6), the Fe\u2013Cr mixing energy curve, formation energies of simple C point defects in Fe and Cr, and the martensite lattice anisotropy, with fair to excellent agreement with empirical results. Tests of the predictive power of the potential show, for example, that Fe\u2013Cr nanowires and bulk samples become elastically stiffer with increasing Cr and C concentrations. High-concentration nanowires also fracture at shorter relative elongations than wires made of pure Fe. Also, tests with Fe3C inclusions show that these act as obstacles for edge dislocations moving through otherwise pure Fe.},\n author = {K O E Henriksson and C Bj\u00f6rkas and K Nordlund},\n doi = {10.1088/0953-8984/25/44/445401},\n journal = {Journal of Physics: Condensed Matter},\n month = {oct},\n number = {44},\n pages = {445401},\n publisher = {IOP Publishing},\n title = {Atomistic simulations of stainless steels: a many-body potential for the Fe-Cr-C system},\n url = {https://doi.org/10.1088%2F0953-8984%2F25%2F44%2F445401},\n volume = {25},\n year = {2013}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "Note that this entry only represents the Fe-C subset of interatomic potentials developed and used in this reference."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "3b1b8700-6259-476d-9ff3-8e5cb874d06b", 
+                "id": "2013--Henriksson-K-O-E--Fe-C--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2014-07-09", 
+                "type": "LAMMPS pair_style tersoff/zbl", 
+                "notes": {
+                    "text": "The Tersoff/ZBL file was contributed by Astrid Gubbels-Elzas and Peter Klaver (Delft University of Technology, Netherlands) and posted with their approval and that of Krister Henriksson (Univ. of Helsinki, Finland) on 9 Jul. 2014. Note that this file only represents the Fe-C subset of interatomic potentials developed and used in this reference."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Henriksson-K-O-E-Bjorkas-C-Nordlund-K--Fe-C/1/FeC_Henriksson_2013.tersoff.zbl", 
+                        "link-text": "FeC_Henriksson_2013.tersoff.zbl"
+                    }
+                }
+            }, 
+            {
+                "key": "6a82cd3f-ca85-49d2-ab09-89864efd8624", 
+                "id": "2013--Henriksson-K-O-E--Fe-C--table--ipr1", 
+                "status": "active", 
+                "date": "2014-07-25", 
+                "type": "EAM tabulated functions", 
+                "notes": {
+                    "text": "The following files were contributed by Dr. Henriksson and modified by C. Becker to include the reference and format in the header information. They represent the potential in Equation 7 of the reference, and the columns are r, V<sub>ZBL</sub>, and d/dr (V<sub>ZBL</sub>). They were approved by Dr. Henriksson for posting on 25 Jul. 2014."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Henriksson-K-O-E-Bjorkas-C-Nordlund-K--Fe-C/2/Henriksson_FeC_2013_reppot.C.C.in", 
+                            "link-text": "Henriksson_FeC_2013_reppot.C.C.in"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Henriksson-K-O-E-Bjorkas-C-Nordlund-K--Fe-C/2/Henriksson_FeC_2013_reppot.C.Fe.in", 
+                            "link-text": "Henriksson_FeC_2013_reppot.C.Fe.in"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Henriksson-K-O-E-Bjorkas-C-Nordlund-K--Fe-C/2/Henriksson_FeC_2013_reppot.Fe.C.in", 
+                            "link-text": "Henriksson_FeC_2013_reppot.Fe.C.in"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Henriksson-K-O-E-Bjorkas-C-Nordlund-K--Fe-C/2/Henriksson_FeC_2013_reppot.Fe.Fe.in", 
+                            "link-text": "Henriksson_FeC_2013_reppot.Fe.Fe.in"
+                        }
+                    }
+                ]
+            }
+        ], 
+        "element": [
+            "Fe", 
+            "C"
+        ]
+    }
+}

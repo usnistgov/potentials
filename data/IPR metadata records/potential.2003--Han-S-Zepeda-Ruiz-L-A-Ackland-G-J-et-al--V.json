@@ -1,0 +1,80 @@
+{
+    "interatomic-potential": {
+        "key": "04ad93c0-31f0-413f-a6f0-a68f2e709b8f", 
+        "id": "2003--Han-S-Zepeda-Ruiz-L-A-Ackland-G-J-et-al--V", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Interatomic potential for vanadium suitable for radiation damage simulations", 
+                "author": [
+                    {
+                        "given-name": "S.", 
+                        "surname": "Han"
+                    }, 
+                    {
+                        "given-name": "L.A.", 
+                        "surname": "Zepeda-Ruiz"
+                    }, 
+                    {
+                        "given-name": "G.J.", 
+                        "surname": "Ackland"
+                    }, 
+                    {
+                        "given-name": "R.", 
+                        "surname": "Car"
+                    }, 
+                    {
+                        "given-name": "D.J.", 
+                        "surname": "Srolovitz"
+                    }
+                ], 
+                "publication-name": "Journal of Applied Physics", 
+                "publication-date": {
+                    "year": 2003
+                }, 
+                "volume": 93, 
+                "issue": 6, 
+                "abstract": "The ability to predict the behavior of point defects in metals, particularly interstitial defects, is central to accurate modeling of the microstructural evolution in environments with high radiation fluxes. Existing interatomic potentials of embedded atom method type predict disparate stable interstitial defect configurations in vanadium. This is not surprising since accurate first-principles interstitial data were not available when these potentials were fitted. In order to provide the input information required to fit a vanadium potential appropriate for radiation damage studies, we perform a series of first-principles calculations on six different interstitial geometries and vacancies. These calculations identify the \u3008111\u3009 dumbbell as the most stable interstitial with a formation energy of approximately 3.1 eV, at variance with predictions based upon existing potentials. Our potential is of Finnis\u2013Sinclair type and is fitted exactly to the experimental equilibrium lattice parameter, cohesive energy, elastic constants and a calculated unrelaxed vacancy formation energy. Two additional potential parameters were used to obtain the best fit to the set of interstitial formation energies determined from the first-principles calculations. The resulting potential was found to accurately predict both the magnitude and ordering of the formation energies of six interstitial configurations and the unrelaxed vacancy ground state, in addition to accurately describing the migration characteristics of the stable interstitial and vacancy. This vanadium potential is capable of describing the point defect properties appropriate for radiation damage simulations as well as for simulations of more common crystal and simple defect properties.", 
+                "pages": "3328-3335", 
+                "DOI": "10.1063/1.1555275", 
+                "bibtex": "@article{Han_2003,\n abstract = {The ability to predict the behavior of point defects in metals, particularly interstitial defects, is central to accurate modeling of the microstructural evolution in environments with high radiation fluxes. Existing interatomic potentials of embedded atom method type predict disparate stable interstitial defect configurations in vanadium. This is not surprising since accurate first-principles interstitial data were not available when these potentials were fitted. In order to provide the input information required to fit a vanadium potential appropriate for radiation damage studies, we perform a series of first-principles calculations on six different interstitial geometries and vacancies. These calculations identify the \u3008111\u3009 dumbbell as the most stable interstitial with a formation energy of approximately 3.1 eV, at variance with predictions based upon existing potentials. Our potential is of Finnis\u2013Sinclair type and is fitted exactly to the experimental equilibrium lattice parameter, cohesive energy, elastic constants and a calculated unrelaxed vacancy formation energy. Two additional potential parameters were used to obtain the best fit to the set of interstitial formation energies determined from the first-principles calculations. The resulting potential was found to accurately predict both the magnitude and ordering of the formation energies of six interstitial configurations and the unrelaxed vacancy ground state, in addition to accurately describing the migration characteristics of the stable interstitial and vacancy. This vanadium potential is capable of describing the point defect properties appropriate for radiation damage simulations as well as for simulations of more common crystal and simple defect properties.},\n author = {Seungwu Han and Luis A. Zepeda-Ruiz and Graeme J. Ackland and Roberto Car and David J. Srolovitz},\n doi = {10.1063/1.1555275},\n journal = {Journal of Applied Physics},\n month = {mar},\n number = {6},\n pages = {3328--3335},\n publisher = {AIP Publishing},\n title = {Interatomic potential for vanadium suitable for radiation damage simulations},\n url = {https://doi.org/10.1063%2F1.1555275},\n volume = {93},\n year = {2003}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "c9f2b265-75b9-43fb-8e82-75dcc5716c39", 
+                "id": "2003--Han-S--V--MOLDY--ipr1", 
+                "status": "active", 
+                "date": "2009-06-30", 
+                "type": "Moldy FS", 
+                "notes": {
+                    "text": "The parameters in V.moldy were obtained from <a href=\"http://homepages.ed.ac.uk/graeme/moldy/moldy.html\" class=\"external\">http://homepages.ed.ac.uk/graeme/moldy/moldy.html </a> and posted with the permission of G.J. Ackland."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Han-S-Zepeda-Ruiz-L-A-Ackland-G-J-et-al--V/1/V.moldy", 
+                        "link-text": "V.moldy"
+                    }
+                }
+            }, 
+            {
+                "key": "f20ef526-a67b-4bdb-9037-5a16c33d311e", 
+                "id": "2003--Han-S--V--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2017-10-10", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "A conversion to LAMMPS from MOLDY was performed by G.J. Ackland and submitted on 10 Oct. 2017."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Han-S-Zepeda-Ruiz-L-A-Ackland-G-J-et-al--V/2/V.eam.fs", 
+                        "link-text": "V.eam.fs"
+                    }
+                }
+            }
+        ], 
+        "element": "V"
+    }
+}

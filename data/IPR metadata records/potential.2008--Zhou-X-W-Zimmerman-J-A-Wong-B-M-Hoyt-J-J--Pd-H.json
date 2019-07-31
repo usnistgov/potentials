@@ -1,0 +1,61 @@
+{
+    "interatomic-potential": {
+        "key": "d788f3a8-6884-4a89-80ae-c66f0abdfa1a", 
+        "id": "2008--Zhou-X-W-Zimmerman-J-A-Wong-B-M-Hoyt-J-J--Pd-H", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "An embedded-atom method interatomic potential for Pd-H alloys", 
+                "author": [
+                    {
+                        "given-name": "X.W.", 
+                        "surname": "Zhou"
+                    }, 
+                    {
+                        "given-name": "J.A.", 
+                        "surname": "Zimmerman"
+                    }, 
+                    {
+                        "given-name": "B.M.", 
+                        "surname": "Wong"
+                    }, 
+                    {
+                        "given-name": "J.J.", 
+                        "surname": "Hoyt"
+                    }
+                ], 
+                "publication-name": "Journal of Materials Research", 
+                "publication-date": {
+                    "year": 2008
+                }, 
+                "volume": 23, 
+                "issue": 3, 
+                "abstract": "Palladium hydrides have important applications. However, the complex Pd\u2013H alloy system presents a formidable challenge to developing accurate computational models. In particular, the separation of a Pd\u2013H system to dilute (\u03b1) and concentrated (\u03b2) phases is a central phenomenon, but the capability of interatomic potentials to display this phase miscibility gap has been lacking. We have extended an existing palladium embedded-atom method potential to construct a new Pd\u2013H embedded-atom method potential by normalizing the elemental embedding energy and electron density functions. The developed Pd\u2013H potential reasonably well predicts the lattice constants, cohesive energies, and elastic constants for palladium, hydrogen, and PdHx phases with a variety of compositions. It ensures the correct hydrogen interstitial sites within the hydrides and predicts the phase miscibility gap. Preliminary molecular dynamics simulations using this potential show the correct phase stability, hydrogen diffusion mechanism, and mechanical response of the Pd\u2013H system.", 
+                "pages": "704-718", 
+                "DOI": "10.1557/jmr.2008.0090", 
+                "bibtex": "@article{Zhou_2008,\n abstract = {Palladium hydrides have important applications. However, the complex Pd\u2013H alloy system presents a formidable challenge to developing accurate computational models. In particular, the separation of a Pd\u2013H system to dilute (\u03b1) and concentrated (\u03b2) phases is a central phenomenon, but the capability of interatomic potentials to display this phase miscibility gap has been lacking. We have extended an existing palladium embedded-atom method potential to construct a new Pd\u2013H embedded-atom method potential by normalizing the elemental embedding energy and electron density functions. The developed Pd\u2013H potential reasonably well predicts the lattice constants, cohesive energies, and elastic constants for palladium, hydrogen, and PdHx phases with a variety of compositions. It ensures the correct hydrogen interstitial sites within the hydrides and predicts the phase miscibility gap. Preliminary molecular dynamics simulations using this potential show the correct phase stability, hydrogen diffusion mechanism, and mechanical response of the Pd\u2013H system.},\n author = {X.W. Zhou and J.A. Zimmerman and B.M. Wong and J.J. Hoyt},\n doi = {10.1557/jmr.2008.0090},\n journal = {Journal of Materials Research},\n month = {mar},\n number = {03},\n pages = {704--718},\n publisher = {Cambridge University Press (CUP)},\n title = {An embedded-atom method interatomic potential for Pd-H alloys},\n url = {https://doi.org/10.1557%2Fjmr.2008.0090},\n volume = {23},\n year = {2008}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "aa895105-ff22-488c-9eba-9c976fcb1ad9", 
+            "id": "2008--Zhou-X-W--Pd-H--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2011-03-24", 
+            "type": "LAMMPS pair_style eam/alloy", 
+            "notes": {
+                "text": "This file was supplied by Xiaowang Zhou and Jonathan Zimmerman (Sandia National Laboratories) and posted with their approval on 24 March 2011."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Zhou-X-W-Zimmerman-J-A-Wong-B-M-Hoyt-J-J--Pd-H/1/PdH_Zhou_June29_2007_2.set", 
+                    "link-text": "PdH_Zhou_June29_2007_2.set"
+                }
+            }
+        }, 
+        "element": [
+            "Pd", 
+            "H"
+        ]
+    }
+}

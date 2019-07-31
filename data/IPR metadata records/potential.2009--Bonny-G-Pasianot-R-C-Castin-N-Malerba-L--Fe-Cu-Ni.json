@@ -1,0 +1,163 @@
+{
+    "interatomic-potential": {
+        "key": "38d0b8d9-5e5d-426a-9d70-b5a7e501528b", 
+        "id": "2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Ternary Fe-Cu-Ni many-body potential to model reactor pressure vessel steels: First validation by simulated thermal annealing", 
+                "author": [
+                    {
+                        "given-name": "G.", 
+                        "surname": "Bonny"
+                    }, 
+                    {
+                        "given-name": "R.C.", 
+                        "surname": "Pasianot"
+                    }, 
+                    {
+                        "given-name": "N.", 
+                        "surname": "Castin"
+                    }, 
+                    {
+                        "given-name": "L.", 
+                        "surname": "Malerba"
+                    }
+                ], 
+                "publication-name": "Philosophical Magazine", 
+                "publication-date": {
+                    "year": 2009
+                }, 
+                "volume": 89, 
+                "issue": "34-36", 
+                "abstract": "In recent years, the development of atomistic models dealing with microstructure evolution and subsequent mechanical property change in reactor pressure vessel steels has been recognised as an important complement to experiments. In this framework, a literature study has shown the necessity of many-body interatomic potentials for multi-component alloys. In this paper, we develop a ternary many-body Fe\u2013Cu\u2013Ni potential for this purpose. As a first validation, we used it to perform a simulated thermal annealing study of the Fe\u2013Cu and Fe\u2013Cu\u2013Ni alloys. Good qualitative agreement with experiments is found, although fully quantitative comparison proved impossible, due to limitations in the used simulation techniques. These limitations are also briefly discussed.", 
+                "pages": "3531-3546", 
+                "DOI": "10.1080/14786430903299824", 
+                "bibtex": "@article{Bonny_2009,\n abstract = {In recent years, the development of atomistic models dealing with microstructure evolution and subsequent mechanical property change in reactor pressure vessel steels has been recognised as an important complement to experiments. In this framework, a literature study has shown the necessity of many-body interatomic potentials for multi-component alloys. In this paper, we develop a ternary many-body Fe\u2013Cu\u2013Ni potential for this purpose. As a first validation, we used it to perform a simulated thermal annealing study of the Fe\u2013Cu and Fe\u2013Cu\u2013Ni alloys. Good qualitative agreement with experiments is found, although fully quantitative comparison proved impossible, due to limitations in the used simulation techniques. These limitations are also briefly discussed.},\n author = {G. Bonny and R.C. Pasianot and N. Castin and L. Malerba},\n doi = {10.1080/14786430903299824},\n journal = {Philosophical Magazine},\n month = {dec},\n number = {34-36},\n pages = {3531--3546},\n publisher = {Informa UK Limited},\n title = {Ternary Fe-Cu-Ni many-body potential to model reactor pressure vessel steels: First validation by simulated thermal annealing},\n url = {https://doi.org/10.1080%2F14786430903299824},\n volume = {89},\n year = {2009}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "Notes from Giovanni Bonny: The references for the elements and binary potentials used in Fe-Cu-Ni are <ul> <li> Fe: 'potential 2' from M.I. Mendelev, A. Han, D.J. Srolovitz, G.J. Ackland, D.Y. Sun and M. Asta, Phil. Mag. A 83 (2003) 3977. </li> <li> Cu: 'EAM 1' from Y. Mishin, M.J. Mehl, D.A. Papaconstantopoulos, A.F. Voter, J.D. Kress, Phys. Rev. B 63 (2001) 224106. </li> <li> Ni: A.F. Voter and S.P. Chen, Mater. Res. Soc. Symp. Proc. 82 (1987) 175. </li> <li> FeCu: R.C. Pasianot and L. Malerba, J. Nucl. Mater. 360 (2007) 118. </li> <li> FeNi: G. Bonny, R.C. Pasianot and L. Malerba, Model. Simul. Mater. Sci. Eng. 17 (2009) 025010. </li> </ul> F_Ni.spt was modified for densities past 4.8 because of a discontinuity. Unless for cascade conditions (for which the potential was not stiffened), the properties should stay exactly the same (equilibrium density is around 1)."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "6548e397-863e-4d3d-bed6-d3b9eb5c81b2", 
+                "id": "2009--Bonny-G--Fe-Cu-Ni--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2010-02-08", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was provided by Giovanni Bonny (Nuclear Materials Science Institute of SCK-CEN, Belgium) on 8 Feb. 2010."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/1/FeCuNi.eam.alloy", 
+                        "link-text": "FeCuNi.eam.alloy"
+                    }
+                }
+            }, 
+            {
+                "key": "d661cb7d-708b-427c-b6af-f39d98c10227", 
+                "id": "2009--Bonny-G--Fe-Cu-Ni--table--ipr1", 
+                "status": "active", 
+                "date": "2010-02-08", 
+                "type": "EAM tabulated functions", 
+                "notes": {
+                    "text": "These files were provided by Giovanni Bonny on 8 Feb. 2010."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/F_Fe.spt", 
+                            "label": "Fe F(&rho;):", 
+                            "link-text": "F_Fe.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/F_Ni.spt", 
+                            "label": "Ni F(&rho;):", 
+                            "link-text": "F_Ni.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/F_Cu.spt", 
+                            "label": "Cu F(&rho;):", 
+                            "link-text": "F_Cu.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/rhoFe.spt", 
+                            "label": "Fe &rho;(r):", 
+                            "link-text": "rhoFe.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/rhoNi.spt", 
+                            "label": "Ni &rho;(r):", 
+                            "link-text": "rhoNi.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/rhoCu.spt", 
+                            "label": "Cu &rho;(r):", 
+                            "link-text": "rhoCu.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/pFeFe.spt", 
+                            "label": "Fe &phi;(r):", 
+                            "link-text": "pFeFe.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/pNiNi.spt", 
+                            "label": "Ni &phi;(r):", 
+                            "link-text": "pNiNi.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/pCuCu.spt", 
+                            "label": "Cu &phi;(r):", 
+                            "link-text": "pCuCu.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/pFeNi.spt", 
+                            "label": "Fe-Ni &phi;(r):", 
+                            "link-text": "pFeNi.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/pFeCu.spt", 
+                            "label": "Fe-Cu &phi;(r):", 
+                            "link-text": "pFeCu.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/pCuNi.spt", 
+                            "label": "Cu-Ni &phi;(r):", 
+                            "link-text": "pCuNi.spt"
+                        }
+                    }
+                ]
+            }
+        ], 
+        "element": [
+            "Fe", 
+            "Cu", 
+            "Ni"
+        ]
+    }
+}

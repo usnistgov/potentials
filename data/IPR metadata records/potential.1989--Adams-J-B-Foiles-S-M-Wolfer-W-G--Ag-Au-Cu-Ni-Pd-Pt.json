@@ -1,0 +1,96 @@
+{
+    "interatomic-potential": {
+        "key": "9ddb10de-d3f8-43fe-9dfc-472d704537e1", 
+        "id": "1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Ag-Au-Cu-Ni-Pd-Pt", 
+        "record-version": "2018-10-05", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Self-diffusion and impurity diffusion of fcc metals using the five-frequency model and the Embedded Atom Method", 
+                "author": [
+                    {
+                        "given-name": "J.B.", 
+                        "surname": "Adams"
+                    }, 
+                    {
+                        "given-name": "S.M.", 
+                        "surname": "Foiles"
+                    }, 
+                    {
+                        "given-name": "W.G.", 
+                        "surname": "Wolfer"
+                    }
+                ], 
+                "publication-name": "Journal of Materials Research", 
+                "publication-date": {
+                    "year": 1989
+                }, 
+                "volume": 4, 
+                "issue": 1, 
+                "abstract": "The activation energies for self-diffusion of transition metals (Au, Ag, Cu, Ni, Pd, Pt) have been calculated with the Embedded Atom Method (EAM); the results agree well with available experimental data for both mono-vacancy and di-vacancy mechanisms. The EAM was also used to calculate activation energies for vacancy migration near dilute impurities. These energies determine the atomic jump frequencies of the classic \"five-frequency formula,\" which yields the diffusion rates of impurities by a mono-vacancy mechanism. These calculations were found to agree fairly well with experiment and with Neumann and Hirschwald's \"Tm\" model.", 
+                "pages": "102-112", 
+                "DOI": "10.1557/jmr.1989.0102", 
+                "bibtex": "@article{Adams_1989,\n abstract = {The activation energies for self-diffusion of transition metals (Au, Ag, Cu, Ni, Pd, Pt) have been calculated with the Embedded Atom Method (EAM); the results agree well with available experimental data for both mono-vacancy and di-vacancy mechanisms. The EAM was also used to calculate activation energies for vacancy migration near dilute impurities. These energies determine the atomic jump frequencies of the classic \"five-frequency formula,\" which yields the diffusion rates of impurities by a mono-vacancy mechanism. These calculations were found to agree fairly well with experiment and with Neumann and Hirschwald's \"Tm\" model.},\n author = {J. B. Adams and S. M. Foiles and W. G. Wolfer},\n doi = {10.1557/jmr.1989.0102},\n journal = {Journal of Materials Research},\n month = {feb},\n number = {01},\n pages = {102--112},\n publisher = {Cambridge University Press (CUP)},\n title = {Self-diffusion and impurity diffusion of fcc metals using the five-frequency model and the Embedded Atom Method},\n volume = {4},\n year = {1989}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "Cross-element interactions were only considered for small (1-2%) impurity concentrations and use a generalized universal function."
+            }
+        }, 
+        "implementation": {
+            "key": "8a99e4c9-7a90-4c0e-96f5-57048066940f", 
+            "id": "1989--Adams-J-B--Ag-Au-Cu-Ni-Pd-Pt--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-10-05", 
+            "type": "LAMMPS pair_style eam", 
+            "notes": {
+                "text": "These files were obtained from http://enpub.fulton.asu.edu/cms/ potentials/main/main.htm and posted with the permission of J.B. Adams. The name of the file was retained, even though the header information lists the potential as 'universal 4.' Except for the first comment line, \"cuu6.txt\" is identical to \"Cu_u6.eam\" in the August 22, 2018 LAMMPS distribution."
+            }, 
+            "artifact": [
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Ag-Au-Cu-Ni-Pd-Pt/1/agu6.txt", 
+                        "link-text": "agu6.txt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Ag-Au-Cu-Ni-Pd-Pt/1/auu6.txt", 
+                        "link-text": "auu6.txt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Ag-Au-Cu-Ni-Pd-Pt/1/cuu6.txt", 
+                        "link-text": "cuu6.txt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Ag-Au-Cu-Ni-Pd-Pt/1/niu6.txt", 
+                        "link-text": "niu6.txt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Ag-Au-Cu-Ni-Pd-Pt/1/pdu6.txt", 
+                        "link-text": "pdu6.txt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Ag-Au-Cu-Ni-Pd-Pt/1/ptu6.txt", 
+                        "link-text": "ptu6.txt"
+                    }
+                }
+            ]
+        }, 
+        "element": [
+            "Ag", 
+            "Au", 
+            "Cu", 
+            "Ni", 
+            "Pd", 
+            "Pt"
+        ]
+    }
+}

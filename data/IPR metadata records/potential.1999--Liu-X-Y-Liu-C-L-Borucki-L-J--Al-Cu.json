@@ -1,0 +1,75 @@
+{
+    "interatomic-potential": {
+        "key": "92e1a9a3-8124-4808-9fd9-fa5e4abef227", 
+        "id": "1999--Liu-X-Y-Liu-C-L-Borucki-L-J--Al-Cu", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "A new investigation of copper's role in enhancing Al-Cu interconnect electromigration resistance from an atomistic view", 
+                "author": [
+                    {
+                        "given-name": "X.-Y.", 
+                        "surname": "Liu"
+                    }, 
+                    {
+                        "given-name": "C.-L.", 
+                        "surname": "Liu"
+                    }, 
+                    {
+                        "given-name": "L.J.", 
+                        "surname": "Borucki"
+                    }
+                ], 
+                "publication-name": "Acta Materialia", 
+                "publication-date": {
+                    "year": 1999
+                }, 
+                "volume": 47, 
+                "issue": 11, 
+                "abstract": "An explanation of why Cu prolongs the electromigration lifetime of Al\u2013Cu interconnects in comparison to Al is provided based on atomistic calculations. Copper preferentially segregates to the grain-boundary (GB) interstitial sites. The overall GB diffusivity is reduced with Cu segregation at GB sites. Calculation results predict that in Al(Cu) lines, Cu will diffuse first, with Al diffusion essentially suppressed because of a higher diffusion activation energy. The activation energy for Cu incubation diffusion is calculated to be 0.95 eV. The predictions are in excellent agreement with experiments.", 
+                "pages": "3227-3231", 
+                "DOI": "10.1016/s1359-6454(99)00186-x", 
+                "bibtex": "@article{Liu_1999,\n abstract = {An explanation of why Cu prolongs the electromigration lifetime of Al\u2013Cu interconnects in comparison to Al is provided based on atomistic calculations. Copper preferentially segregates to the grain-boundary (GB) interstitial sites. The overall GB diffusivity is reduced with Cu segregation at GB sites. Calculation results predict that in Al(Cu) lines, Cu will diffuse first, with Al diffusion essentially suppressed because of a higher diffusion activation energy. The activation energy for Cu incubation diffusion is calculated to be 0.95 eV. The predictions are in excellent agreement with experiments.},\n author = {X.-Y. Liu and C.-L. Liu and L.J. Borucki},\n doi = {10.1016/s1359-6454(99)00186-x},\n journal = {Acta Materialia},\n month = {sep},\n number = {11},\n pages = {3227--3231},\n publisher = {Elsevier BV},\n title = {A new investigation of copper's role in enhancing Al-Cu interconnect electromigration resistance from an atomistic view},\n url = {https://doi.org/10.1016%2Fs1359-6454%2899%2900186-x},\n volume = {47},\n year = {1999}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "56b1baab-7fcb-4ee2-926c-d8a999ec2f7c", 
+                "id": "1999--Liu-X-Y--Al-Cu--table--ipr1", 
+                "status": "active", 
+                "date": "1997-12-05", 
+                "type": "EAM setfl", 
+                "notes": {
+                    "text": "al-cu-set.txt was obtained from <a href=\"http://enpub.fulton.asu.edu/cms/potentials/main/main.htm\" class=\"external\">http://enpub.fulton.asu.edu/cms/potentials/main/main.htm</a> and posted with the permission of J.B. Adams."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1999--Liu-X-Y-Liu-C-L-Borucki-L-J--Al-Cu/1/al-cu-set.txt", 
+                        "link-text": "al-cu-set.txt"
+                    }
+                }
+            }, 
+            {
+                "key": "6800fe50-fc4f-43ed-950b-1f243006523b", 
+                "id": "1999--Liu-X-Y--Al-Cu--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2017-01-01", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "To make the al-cu-set.txt file compatible with the eam/alloy style in LAMMPS, replace line 4 with \"2 Al Cu\" and the \"D\"s with \"E\"s in the numbers. This has been done in al-cu-set.eam.alloy."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1999--Liu-X-Y-Liu-C-L-Borucki-L-J--Al-Cu/2/al-cu-set.eam.alloy", 
+                        "link-text": "al-cu-set.eam.alloy"
+                    }
+                }
+            }
+        ], 
+        "element": [
+            "Al", 
+            "Cu"
+        ]
+    }
+}

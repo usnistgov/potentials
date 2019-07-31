@@ -1,0 +1,138 @@
+{
+    "interatomic-potential": {
+        "key": "60cf81d5-aa01-4f59-aaa0-8ce26fc1395b", 
+        "id": "2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "On the binding of nanometric hydrogen-helium clusters in tungsten", 
+                "author": [
+                    {
+                        "given-name": "G.", 
+                        "surname": "Bonny"
+                    }, 
+                    {
+                        "given-name": "P.", 
+                        "surname": "Grigorev"
+                    }, 
+                    {
+                        "given-name": "D.", 
+                        "surname": "Terentyev"
+                    }
+                ], 
+                "publication-name": "Journal of Physics: Condensed Matter", 
+                "publication-date": {
+                    "year": 2014
+                }, 
+                "volume": 26, 
+                "issue": 48, 
+                "abstract": "In this work we developed an embedded atom method potential for large scale atomistic simulations in the ternary tungsten\u2013hydrogen\u2013helium (W\u2013H\u2013He) system, focusing on applications in the fusion research domain. Following available ab initio data, the potential reproduces key interactions between H, He and point defects in W and utilizes the most recent potential for matrix W. The potential is applied to assess the thermal stability of various H\u2013He complexes of sizes too large for ab initio techniques. The results show that the dissociation of H\u2013He clusters stabilized by vacancies will occur primarily by emission of hydrogen atoms and then by break-up of V\u2013He complexes, indicating that H\u2013He interaction does influence the release of hydrogen.", 
+                "pages": 485001, 
+                "DOI": "10.1088/0953-8984/26/48/485001", 
+                "bibtex": "@article{Bonny_2014,\n abstract = {In this work we developed an embedded atom method potential for large scale atomistic simulations in the ternary tungsten\u2013hydrogen\u2013helium (W\u2013H\u2013He) system, focusing on applications in the fusion research domain. Following available ab initio data, the potential reproduces key interactions between H, He and point defects in W and utilizes the most recent potential for matrix W. The potential is applied to assess the thermal stability of various H\u2013He complexes of sizes too large for ab initio techniques. The results show that the dissociation of H\u2013He clusters stabilized by vacancies will occur primarily by emission of hydrogen atoms and then by break-up of V\u2013He complexes, indicating that H\u2013He interaction does influence the release of hydrogen.},\n author = {G Bonny and P Grigorev and D Terentyev},\n doi = {10.1088/0953-8984/26/48/485001},\n journal = {Journal of Physics: Condensed Matter},\n month = {oct},\n number = {48},\n pages = {485001},\n publisher = {IOP Publishing},\n title = {On the binding of nanometric hydrogen-helium clusters in tungsten},\n url = {https://doi.org/10.1088%2F0953-8984%2F26%2F48%2F485001},\n volume = {26},\n year = {2014}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "This listing is for the reference's potential parameter set EAM2."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "00fef8d3-11a4-4cee-ae51-2be9abb30dbc", 
+                "id": "2014--Bonny-G--W-H-He-2--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2016-03-18", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "These files were sent by Giovanni Bonny (Nuclear Materials Science Institute of SCK-CEN, Belgium) on 18 Mar. 2016 and posted with his permission. Giovanni Bonny also noted that only W has electron density function. Both W and H have embedding functions that take the electron density from W as an argument. The embedding contributions to the energy from He are zero."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/1/potential-WHHe-EAM2.eam.alloy", 
+                        "link-text": "potential-WHHe-EAM2.eam.alloy"
+                    }
+                }
+            }, 
+            {
+                "key": "b5be14c8-4570-48c5-8da3-e8c4972e45d2", 
+                "id": "2014--Bonny-G--W-H-He-2--table--ipr1", 
+                "status": "active", 
+                "date": "2016-03-18", 
+                "type": "EAM tabulated functions", 
+                "notes": {
+                    "text": "Same functions in separate EAM tables."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-F_H.spt", 
+                            "label": "H F(&rho;):", 
+                            "link-text": "WHHe-EAM2-F_H.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-F_W.spt", 
+                            "label": "W F(&rho;):", 
+                            "link-text": "WHHe-EAM2-F_W.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-rhoW.spt", 
+                            "label": "W &rho;(r):", 
+                            "link-text": "WHHe-EAM2-rhoW.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-pHeHe.spt", 
+                            "label": "He &phi;(r):", 
+                            "link-text": "WHHe-EAM2-pHeHe.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-pHH.spt", 
+                            "label": "H &phi;(r):", 
+                            "link-text": "WHHe-EAM2-pHH.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-pHHe.spt", 
+                            "label": "H-He &phi;(r):", 
+                            "link-text": "WHHe-EAM2-pHHe.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-pWH.spt", 
+                            "label": "W-H &phi;(r):", 
+                            "link-text": "WHHe-EAM2-pWH.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-pWHe.spt", 
+                            "label": "W-He &phi;(r):", 
+                            "link-text": "WHHe-EAM2-pWHe.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-pWW.spt", 
+                            "label": "W &phi;(r):", 
+                            "link-text": "WHHe-EAM2-pWW.spt"
+                        }
+                    }
+                ]
+            }
+        ], 
+        "element": [
+            "W", 
+            "H", 
+            "He"
+        ]
+    }
+}

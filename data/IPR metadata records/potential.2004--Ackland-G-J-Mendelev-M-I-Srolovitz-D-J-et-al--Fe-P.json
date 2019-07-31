@@ -1,0 +1,83 @@
+{
+    "interatomic-potential": {
+        "key": "5793213a-63e3-43de-84c4-c20e5a3902ec", 
+        "id": "2004--Ackland-G-J-Mendelev-M-I-Srolovitz-D-J-et-al--Fe-P", 
+        "record-version": "2018-10-05", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Development of an interatomic potential for phosphorus impurities in \u03b1-iron", 
+                "author": [
+                    {
+                        "given-name": "G.J.", 
+                        "surname": "Ackland"
+                    }, 
+                    {
+                        "given-name": "M.I.", 
+                        "surname": "Mendelev"
+                    }, 
+                    {
+                        "given-name": "D.J.", 
+                        "surname": "Srolovitz"
+                    }, 
+                    {
+                        "given-name": "S.", 
+                        "surname": "Han"
+                    }, 
+                    {
+                        "given-name": "A.V.", 
+                        "surname": "Barashev"
+                    }
+                ], 
+                "publication-name": "Journal of Physics: Condensed Matter", 
+                "publication-date": {
+                    "year": 2004
+                }, 
+                "volume": 16, 
+                "issue": 27, 
+                "abstract": "We present the derivation of an interatomic potential for the iron\u2013phosphorus system based primarily on ab initio data. Transferability in this system is extremely problematic, and the potential is intended specifically to address the problem of radiation damage and point defects in iron containing low concentrations of phosphorus atoms. Some preliminary molecular dynamics calculations show that P strongly affects point defect migration.", 
+                "pages": "S2629-S2642", 
+                "DOI": "10.1088/0953-8984/16/27/003", 
+                "bibtex": "@article{Ackland_2004,\n abstract = {We present the derivation of an interatomic potential for the iron\u2013phosphorus system based primarily on ab initio data. Transferability in this system is extremely problematic, and the potential is intended specifically to address the problem of radiation damage and point defects in iron containing low concentrations of phosphorus atoms. Some preliminary molecular dynamics calculations show that P strongly affects point defect migration.},\n author = {G J Ackland and M I Mendelev and D J Srolovitz and S Han and A V Barashev},\n doi = {10.1088/0953-8984/16/27/003},\n journal = {Journal of Physics: Condensed Matter},\n month = {jun},\n number = {27},\n pages = {S2629--S2642},\n publisher = {IOP Publishing},\n title = {Development of an interatomic potential for phosphorus impurities in \u03b1-iron},\n url = {https://doi.org/10.1088%2F0953-8984%2F16%2F27%2F003},\n volume = {16},\n year = {2004}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "42b9318c-4d62-4af9-a7ea-d8bd05b5f79b", 
+                "id": "2004--Ackland-G-J--Fe-P--parameters--ipr1", 
+                "status": "active", 
+                "date": "2007-01-01", 
+                "type": "Equations", 
+                "notes": {
+                    "text": "The file fep4.19 was obtained from <a href=\"http://homepages.ed.ac.uk/graeme/moldy/moldy.html\" class=\"external\">http://homepages.ed.ac.uk/graeme/moldy/moldy.html </a> and posted with the permission of G.J. Ackland. Besides the parameterized functions in the file, there are also some calculated quantities useful as confirmation.<BR> From that website: \"The iron potential here is slightly improved from the 2003 version to eliminate negative thermal expansion. It has a melting point of 1796 K.\""
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Ackland-G-J-Mendelev-M-I-Srolovitz-D-J-et-al--Fe-P/1/fep4.19", 
+                        "link-text": "fep4.19"
+                    }
+                }
+            }, 
+            {
+                "key": "acfed907-de44-4ade-b3cf-b680935dba28", 
+                "id": "2004--Ackland-G-J--Fe-P--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2007-06-12", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "This file was provided by Mikhail Mendelev. Except for comments, this file is equivalent to \"FeP_mm.eam.fs\" in the August 22, 2018 LAMMPS distribution."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Ackland-G-J-Mendelev-M-I-Srolovitz-D-J-et-al--Fe-P/2/Fe-P.eam.fs", 
+                        "link-text": "Fe-P.eam.fs"
+                    }
+                }
+            }
+        ], 
+        "element": [
+            "Fe", 
+            "P"
+        ]
+    }
+}

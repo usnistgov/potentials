@@ -1,0 +1,89 @@
+{
+    "interatomic-potential": {
+        "key": "df7bbc58-7b3e-4946-9be1-b155f5c1cab9", 
+        "id": "2016--Zhang-P-Trinkle-D-R--Ti-O", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "A modified embedded atom method potential for interstitial oxygen in titanium", 
+                "author": [
+                    {
+                        "given-name": "P.", 
+                        "surname": "Zhang"
+                    }, 
+                    {
+                        "given-name": "D.R.", 
+                        "surname": "Trinkle"
+                    }
+                ], 
+                "publication-name": "Computational Materials Science", 
+                "publication-date": {
+                    "year": 2016
+                }, 
+                "volume": 124, 
+                "abstract": "Modeling oxygen interstitials in titanium requires a new empirical potential. We optimize potential parameters using a fitting database of first-principle oxygen interstitial energies and forces. A new database optimization algorithm based on Bayesian sampling is applied to obtain an optimal potential for a specific testing set of density functional data. A parallel genetic algorithm minimizes the sum of logistic function evaluations of the testing set predictions. We test the transferability of the potential model against oxygen interstitials in HCP titanium, transition barriers between oxygen interstitial sites, and oxygen in the titanium prismatic stacking fault. The potential predicts that the interaction between oxygen and a screw dislocation core is weak and short-ranged.", 
+                "pages": "204-210", 
+                "DOI": "10.1016/j.commatsci.2016.07.039", 
+                "bibtex": "@article{Zhang_2016,\n abstract = {Modeling oxygen interstitials in titanium requires a new empirical potential. We optimize potential parameters using a fitting database of first-principle oxygen interstitial energies and forces. A new database optimization algorithm based on Bayesian sampling is applied to obtain an optimal potential for a specific testing set of density functional data. A parallel genetic algorithm minimizes the sum of logistic function evaluations of the testing set predictions. We test the transferability of the potential model against oxygen interstitials in HCP titanium, transition barriers between oxygen interstitial sites, and oxygen in the titanium prismatic stacking fault. The potential predicts that the interaction between oxygen and a screw dislocation core is weak and short-ranged.},\n author = {Pinchao Zhang and Dallas R. Trinkle},\n doi = {10.1016/j.commatsci.2016.07.039},\n journal = {Computational Materials Science},\n month = {nov},\n pages = {204--210},\n publisher = {Elsevier BV},\n title = {A modified embedded atom method potential for interstitial oxygen in titanium},\n url = {https://doi.org/10.1016%2Fj.commatsci.2016.07.039},\n volume = {124},\n year = {2016}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "Prof. Trinkle said that this potential is specifically intended for dilute oxygen in titanium as there's no oxygen-oxygen interaction. 9 Aug. 2016: the reference information was updated."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "0e0ae5f6-6ddf-4d4b-85e2-dc21942bfa15", 
+                "id": "2016--Zhang-P--Ti-O--table--ipr1", 
+                "status": "superseded", 
+                "date": "2016-08-09", 
+                "type": "MEAM splines", 
+                "notes": {
+                    "text": "This file was sent by Prof. Dallas Trinkle (Univ. of Illinois) on 6 Aug. 2016 and posted with his permission. Update 2018-11-06: file format changed to reflect that it does not work with LAMMPS."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Zhang-P-Trinkle-D-R--Ti-O/1/2016-06-08.TiO.meam.spline", 
+                        "link-text": "2016-06-08.TiO.meam.spline"
+                    }
+                }
+            }, 
+            {
+                "key": "fb6201ce-3130-44d9-ae2c-06ecfe49a43b", 
+                "id": "2016--Zhang-P--Ti-O--table--ipr2", 
+                "status": "superseded", 
+                "date": "2016-08-09", 
+                "type": "MEAM splines", 
+                "notes": {
+                    "text": "This file was sent by Prof. Dallas Trinkle (Univ. of Illinois) on 9 Aug. 2016 and posted with his permission. This version removes an extra comment line that was not compatible with the LAMMPS MEAM/spline code. Update 2018-11-06: file format changed to reflect that it does not work with LAMMPS (see version below)."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Zhang-P-Trinkle-D-R--Ti-O/2/TiO.meam.spline", 
+                        "link-text": "TiO.meam.spline"
+                    }
+                }
+            }, 
+            {
+                "key": "51e7dfd7-66df-4d93-be8c-209ffc278d4e", 
+                "id": "2016--Zhang-P--Ti-O--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2018-11-06", 
+                "type": "LAMMPS pair_style meam/spline", 
+                "notes": {
+                    "text": "This file was taken from the August 22, 2018 LAMMPS distribution. It has a slightly different header section from the above versions allowing it to work in the official multi-element meam/spline implementation. This version successfully ran with the stable March 16, 2018 and August 22, 2018 LAMMPS versions."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Zhang-P-Trinkle-D-R--Ti-O/3/TiO.meam.spline", 
+                        "link-text": "TiO.meam.spline"
+                    }
+                }
+            }
+        ], 
+        "element": [
+            "Ti", 
+            "O"
+        ]
+    }
+}

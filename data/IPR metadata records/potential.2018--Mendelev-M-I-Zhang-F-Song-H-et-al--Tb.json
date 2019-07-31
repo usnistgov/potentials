@@ -1,0 +1,69 @@
+{
+    "interatomic-potential": {
+        "key": "ed3a1bb7-3c6c-47f6-b3ca-e05870435610", 
+        "id": "2018--Mendelev-M-I-Zhang-F-Song-H-et-al--Tb", 
+        "record-version": "2018-08-19", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Molecular dynamics simulation of the solid-liquid interface migration in terbium", 
+                "author": [
+                    {
+                        "given-name": "M.I.", 
+                        "surname": "Mendelev"
+                    }, 
+                    {
+                        "given-name": "F.", 
+                        "surname": "Zhang"
+                    }, 
+                    {
+                        "given-name": "H.", 
+                        "surname": "Song"
+                    }, 
+                    {
+                        "given-name": "Y.", 
+                        "surname": "Sun"
+                    }, 
+                    {
+                        "given-name": "C.Z.", 
+                        "surname": "Wang"
+                    }, 
+                    {
+                        "given-name": "K.M.", 
+                        "surname": "Ho"
+                    }
+                ], 
+                "publication-name": "The Journal of Chemical Physics", 
+                "publication-date": {
+                    "year": 2018
+                }, 
+                "volume": 148, 
+                "issue": 21, 
+                "abstract": "We developed a Tb embedded atom method potential which properly reproduces the liquid structure obtained from the ab initio molecular dynamics simulation, the hexagonal close packed (hcp)-body-centered cubic (bcc) phase transformation, and melting temperatures. At least three crystal phases [hcp, face-centered cubic (fcc), and bcc] described by this potential can coexist with the liquid phase. Thus, the developed potential provides an excellent test bed for studies of the completive phase nucleation and growth in a single component system. The molecular dynamics simulation showed that all crystal phases can grow from the liquid phase close to their melting temperatures. However, in the cases of the hcp and fcc growth from the liquid phase at very large supercoolings, the bcc phase forms at the solid-liquid interface in the close packed orientations in spite of the fact that both hcp and fcc phases are more stable than the bcc phase at these temperatures. This bcc phase closes the hcp and fcc phase from the liquid such that the remaining liquid solidifies into the bcc phase. The initial hcp phase then slowly continues growing in expense of the bcc phase.", 
+                "pages": 214705, 
+                "DOI": "10.1063/1.5026922", 
+                "bibtex": "@article{Mendelev_2018,\n abstract = {We developed a Tb embedded atom method potential which properly reproduces the liquid structure obtained from the ab initio molecular dynamics simulation, the hexagonal close packed (hcp)-body-centered cubic (bcc) phase transformation, and melting temperatures. At least three crystal phases [hcp, face-centered cubic (fcc), and bcc] described by this potential can coexist with the liquid phase. Thus, the developed potential provides an excellent test bed for studies of the completive phase nucleation and growth in a single component system. The molecular dynamics simulation showed that all crystal phases can grow from the liquid phase close to their melting temperatures. However, in the cases of the hcp and fcc growth from the liquid phase at very large supercoolings, the bcc phase forms at the solid-liquid interface in the close packed orientations in spite of the fact that both hcp and fcc phases are more stable than the bcc phase at these temperatures. This bcc phase closes the hcp and fcc phase from the liquid such that the remaining liquid solidifies into the bcc phase. The initial hcp phase then slowly continues growing in expense of the bcc phase.},\n author = {M. I. Mendelev and F. Zhang and H. Song and Y. Sun and C. Z. Wang and K. M. Ho},\n doi = {10.1063/1.5026922},\n journal = {The Journal of Chemical Physics},\n month = {jun},\n number = {21},\n pages = {214705},\n publisher = {AIP Publishing},\n title = {Molecular dynamics simulation of the solid-liquid interface migration in terbium},\n url = {https://doi.org/10.1063%2F1.5026922},\n volume = {148},\n year = {2018}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "Dr. Mendelev noted that this potential was developed to simulate the solidification and hcp-bcc transformation. Update 2018-08-19: Reference information updated."
+            }
+        }, 
+        "implementation": {
+            "key": "c0aa8f35-ddfc-48aa-8737-655dacc46e95", 
+            "id": "2018--Mendelev-M-I--Tb--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-02-12", 
+            "type": "LAMMPS pair_style eam/fs", 
+            "notes": {
+                "text": "This file was sent by M.I. Mendelev (Ames Laboratory) on 12 Feb. 2018 and posted with his permission."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Mendelev-M-I-Zhang-F-Song-H-et-al--Tb/1/Tb.eam.fs", 
+                    "link-text": "Tb.eam.fs"
+                }
+            }
+        }, 
+        "element": "Tb"
+    }
+}

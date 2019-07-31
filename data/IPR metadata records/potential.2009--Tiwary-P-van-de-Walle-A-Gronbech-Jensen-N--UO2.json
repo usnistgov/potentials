@@ -1,0 +1,69 @@
+{
+    "interatomic-potential": {
+        "key": "c35b1a42-b554-4d3c-bf7c-df728ca7535a", 
+        "id": "2009--Tiwary-P-van-de-Walle-A-Gronbech-Jensen-N--UO2", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Ab initio construction of interatomic potentials for uranium dioxide across all interatomic distances", 
+                "author": [
+                    {
+                        "given-name": "P.", 
+                        "surname": "Tiwary"
+                    }, 
+                    {
+                        "given-name": "A.", 
+                        "surname": "van de Walle"
+                    }, 
+                    {
+                        "given-name": "N.", 
+                        "surname": "Gr\u00f8nbech-Jensen"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 2009
+                }, 
+                "volume": 80, 
+                "issue": 17, 
+                "abstract": "We provide a methodology for generating interatomic potentials for use in classical molecular-dynamics simulations of atomistic phenomena occurring at energy scales ranging from lattice vibrations to crystal defects to high-energy collisions. A rigorous method to objectively determine the shape of an interatomic potential over all length scales is introduced by building upon a charged-ion generalization of the well-known Ziegler-Biersack-Littmark universal potential that provides the short- and long-range limiting behavior of the potential. At intermediate ranges the potential is smoothly adjusted by fitting to ab initio data. Our formalism provides a complete description of the interatomic potentials that can be used at any energy scale, and thus, eliminates the inherent ambiguity of splining different potentials generated to study different kinds of atomic-materials behavior. We exemplify the method by developing rigid-ion potentials for uranium dioxide interactions under conditions ranging from thermodynamic equilibrium to very high atomic-energy collisions relevant for fission events.", 
+                "pages": 174302, 
+                "DOI": "10.1103/physrevb.80.174302", 
+                "bibtex": "@article{Tiwary_2009,\n abstract = {We provide a methodology for generating interatomic potentials for use in classical molecular-dynamics simulations of atomistic phenomena occurring at energy scales ranging from lattice vibrations to crystal defects to high-energy collisions. A rigorous method to objectively determine the shape of an interatomic potential over all length scales is introduced by building upon a charged-ion generalization of the well-known Ziegler-Biersack-Littmark universal potential that provides the short- and long-range limiting behavior of the potential. At intermediate ranges the potential is smoothly adjusted by fitting to ab initio data. Our formalism provides a complete description of the interatomic potentials that can be used at any energy scale, and thus, eliminates the inherent ambiguity of splining different potentials generated to study different kinds of atomic-materials behavior. We exemplify the method by developing rigid-ion potentials for uranium dioxide interactions under conditions ranging from thermodynamic equilibrium to very high atomic-energy collisions relevant for fission events.},\n author = {P. Tiwary and A. van de Walle and N. Gr\u00f8nbech-Jensen},\n doi = {10.1103/physrevb.80.174302},\n journal = {Physical Review B},\n month = {nov},\n number = {17},\n numpages = {7},\n pages = {174302},\n publisher = {American Physical Society (APS)},\n title = {Ab initio construction of interatomic potentials for uranium dioxide across all interatomic distances},\n url = {https://doi.org/10.1103%2Fphysrevb.80.174302},\n volume = {80},\n year = {2009}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "31 Jan. 2012 Update: This potential has been superseded by the <a href=\"../../entry/2011--Tiwary-P-Walle-A-Jeon-B-Gronbech-Jensen-N--MOx\">2011--Tiwary-P-Walle-A-Jeon-B-Gronbech-Jensen-N--MOx</a> interatomic potential."
+            }
+        }, 
+        "implementation": {
+            "key": "fd4ac73b-13f1-4e66-8e56-bf4bedb676bc", 
+            "id": "2009--Tiwary-P--UO2--GULP--ipr1", 
+            "status": "superseded", 
+            "date": "2011-06-22", 
+            "type": "GULP", 
+            "notes": {
+                "text": "These were supplied by Pratyush Tiwary and Axel van de Walle (California Institute of Technology) and posted with their approval on 22 June 2011."
+            }, 
+            "artifact": [
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Tiwary-P-van-de-Walle-A-Gronbech-Jensen-N--UO2/1/gulp_uo2.lib", 
+                        "link-text": "gulp_uo2.lib"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Tiwary-P-van-de-Walle-A-Gronbech-Jensen-N--UO2/1/README.TXT", 
+                        "link-text": "README.TXT"
+                    }
+                }
+            ]
+        }, 
+        "element": [
+            "U", 
+            "O"
+        ], 
+        "other-element": "UO2"
+    }
+}

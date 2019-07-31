@@ -1,0 +1,86 @@
+{
+    "interatomic-potential": {
+        "key": "20fa46b5-6b6f-4e6e-9400-66edb643c679", 
+        "id": "2015--Purja-Pun-G-P-Yamakov-V-Mishin-Y--Ni-Co", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Interatomic potential for the ternary Ni\u2013Al\u2013Co system and application to atomistic modeling of the B2\u2013L10 martensitic transformation", 
+                "author": [
+                    {
+                        "given-name": "G.P.", 
+                        "surname": "Purja Pun"
+                    }, 
+                    {
+                        "given-name": "V.", 
+                        "surname": "Yamakov"
+                    }, 
+                    {
+                        "given-name": "Y.", 
+                        "surname": "Mishin"
+                    }
+                ], 
+                "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                "publication-date": {
+                    "year": 2015
+                }, 
+                "volume": 23, 
+                "issue": 6, 
+                "abstract": "Ni\u2013Al\u2013Co is a promising system for ferromagnetic shape memory applications. This paper reports on the development of a ternary embedded-atom potential for this system by fitting to experimental and first-principles data. Reasonably good agreement is achieved for physical properties between values predicted by the potential and values known from experiment and/or first-principles calculations. The potential reproduces basic features of the martensitic phase transformation from the B2-ordered high-temperature phase to a tetragonal CuAu-ordered low-temperature phase. The compositional and temperature ranges of this transformation and the martensite microstructure predicted by the potential compare well with existing experimental data. These results indicate that the proposed potential can be used for simulations of the shape memory effect in the Ni\u2013Al\u2013Co system.", 
+                "pages": 65006, 
+                "DOI": "10.1088/0965-0393/23/6/065006", 
+                "bibtex": "@article{Purja_Pun_2015,\n abstract = {Ni\u2013Al\u2013Co is a promising system for ferromagnetic shape memory applications. This paper reports on the development of a ternary embedded-atom potential for this system by fitting to experimental and first-principles data. Reasonably good agreement is achieved for physical properties between values predicted by the potential and values known from experiment and/or first-principles calculations. The potential reproduces basic features of the martensitic phase transformation from the B2-ordered high-temperature phase to a tetragonal CuAu-ordered low-temperature phase. The compositional and temperature ranges of this transformation and the martensite microstructure predicted by the potential compare well with existing experimental data. These results indicate that the proposed potential can be used for simulations of the shape memory effect in the Ni\u2013Al\u2013Co system.},\n author = {G. P. Purja Pun and V. Yamakov and Y. Mishin},\n doi = {10.1088/0965-0393/23/6/065006},\n journal = {Modelling and Simulation in Materials Science and Engineering},\n month = {jul},\n number = {6},\n pages = {065006},\n publisher = {IOP Publishing},\n title = {Interatomic potential for the ternary Ni\u2013Al\u2013Co system and application to atomistic modeling of the B2\u2013L10 martensitic transformation},\n url = {https://doi.org/10.1088%2F0965-0393%2F23%2F6%2F065006},\n volume = {23},\n year = {2015}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "The reference information was updated on 26 Aug. 2015."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "beb35d7a-eb97-4c9d-b141-2b1b83879a29", 
+                "id": "2015--Purja-Pun-G-P--Ni-Co--LAMMPS--ipr1", 
+                "status": "superseded", 
+                "date": "2013-09-17", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was sent by Y. Mishin (George Mason Univ.) on 17 Sept. 2013 and was posted on 17 Jan. 2014. This version is compatible with LAMMPS. Validation and usage information can be found in Mishin-Ni-Co-2013_lammps.pdf."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Purja-Pun-G-P-Yamakov-V-Mishin-Y--Ni-Co/1/Mishin-Ni-Co-2013.eam.alloy", 
+                            "link-text": "Mishin-Ni-Co-2013.eam.alloy"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Purja-Pun-G-P-Yamakov-V-Mishin-Y--Ni-Co/1/Mishin-Ni-Co-2013_lammps.pdf", 
+                            "link-text": "Mishin-Ni-Co-2013_lammps.pdf"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "304f9a7b-9959-47d6-a705-f7c8dd339f41", 
+                "id": "2015--Purja-Pun-G-P--Ni-Co--LAMMPS--ipr2", 
+                "status": "active", 
+                "date": "2015-10-12", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was sent by G Purja Pun (George Mason Univ.) on 12 Oct. 2015 and was posted on 15 Dec. 2015. This version corrects an issue with the cutoff distance for Co interactions that was discovered during calculations of pressure dependent elastic constants."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Purja-Pun-G-P-Yamakov-V-Mishin-Y--Ni-Co/2/Mishin_updated-Ni-Co-2013.eam.alloy", 
+                        "link-text": "Mishin_updated-Ni-Co-2013.eam.alloy"
+                    }
+                }
+            }
+        ], 
+        "element": [
+            "Ni", 
+            "Co"
+        ]
+    }
+}

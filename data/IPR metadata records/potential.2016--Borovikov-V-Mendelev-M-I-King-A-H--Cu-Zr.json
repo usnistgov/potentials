@@ -1,0 +1,60 @@
+{
+    "interatomic-potential": {
+        "key": "4fc0f7d5-dff6-4de7-8567-d9e87746cb2c", 
+        "id": "2016--Borovikov-V-Mendelev-M-I-King-A-H--Cu-Zr", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Effects of stable and unstable stacking fault energy on dislocation nucleation in nano-crystalline metals", 
+                "author": [
+                    {
+                        "given-name": "V.", 
+                        "surname": "Borovikov"
+                    }, 
+                    {
+                        "given-name": "M.I.", 
+                        "surname": "Mendelev"
+                    }, 
+                    {
+                        "given-name": "A.H.", 
+                        "surname": "King"
+                    }
+                ], 
+                "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                "publication-date": {
+                    "year": 2016
+                }, 
+                "volume": 24, 
+                "issue": 8, 
+                "abstract": "Dislocation nucleation from grain boundaries (GB) can control plastic deformation in nano-crystalline metals under certain conditions, but little is known about what controls dislocation nucleation, because when data from different materials are compared, the variations of many interacting properties tend to obscure the effects of any single property. In this study, we seek clarification by applying a unique capability of semi-empirical potentials in molecular dynamics simulations: the potentials can be modified such that all significant material properties but one, are kept constant. Using a set of potentials developed to isolate the effects of stacking fault energy, we show that for a given grain boundary, loading orientation and strain rate, the yield stress depends linearly on both the stable and unstable stacking fault energies. The coefficients of proportionality depend on the GB structure and the value of the yield stress is related to the density of the E structural units in the GB. While the impact of the stable stacking fault energy is easy to understand, the unstable stacking fault energy requires more elucidation and we provide a framework for understanding how it affects the nucleation and propagation process.", 
+                "pages": 85017, 
+                "DOI": "10.1088/0965-0393/24/8/085017", 
+                "bibtex": "@article{Borovikov_2016,\n abstract = {Dislocation nucleation from grain boundaries (GB) can control plastic deformation in nano-crystalline metals under certain conditions, but little is known about what controls dislocation nucleation, because when data from different materials are compared, the variations of many interacting properties tend to obscure the effects of any single property. In this study, we seek clarification by applying a unique capability of semi-empirical potentials in molecular dynamics simulations: the potentials can be modified such that all significant material properties but one, are kept constant. Using a set of potentials developed to isolate the effects of stacking fault energy, we show that for a given grain boundary, loading orientation and strain rate, the yield stress depends linearly on both the stable and unstable stacking fault energies. The coefficients of proportionality depend on the GB structure and the value of the yield stress is related to the density of the E structural units in the GB. While the impact of the stable stacking fault energy is easy to understand, the unstable stacking fault energy requires more elucidation and we provide a framework for understanding how it affects the nucleation and propagation process.},\n author = {Valery Borovikov and Mikhail I Mendelev and Alexander H King},\n doi = {10.1088/0965-0393/24/8/085017},\n journal = {Modelling and Simulation in Materials Science and Engineering},\n month = {nov},\n number = {8},\n pages = {085017},\n publisher = {IOP Publishing},\n title = {Effects of stable and unstable stacking fault energy on dislocation nucleation in nano-crystalline metals},\n url = {https://doi.org/10.1088%2F0965-0393%2F24%2F8%2F085017},\n volume = {24},\n year = {2016}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "Dr. Mendelev noted that this potential was developed in the same manner as <a href=\"../../entry/2009--Mendelev-M-I-Kramer-M-J-Ott-R-T-et-al--Cu-Zr\">2009--Mendelev-M-I-Kramer-M-J-Ott-R-T-et-al--Cu-Zr</a>, except that the original Cu potential was replaced by <a href=\"../../entry/2015--Mendelev-M-I--fictional-Cu/\">MCu31.eam.fs</a>, which has more realistic stable and unstable stacking fault energies. This potential can be used to simulate the plastic deformation in the Cu-Zr amorphous alloys with embedded Cu particles."
+            }
+        }, 
+        "implementation": {
+            "key": "24ebf7a9-1cdb-498a-94a7-7cd6b96e7381", 
+            "id": "2016--Borovikov-V--Cu-Zr--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2017-09-27", 
+            "type": "LAMMPS pair_style eam/fs", 
+            "notes": {
+                "text": "These files were sent by M.I. Mendelev (Ames Laboratory) on 27 Sept. 2017 and posted with his permission."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Borovikov-V-Mendelev-M-I-King-A-H--Cu-Zr/1/CuZr_3.eam.fs", 
+                    "link-text": "CuZr_3.eam.fs"
+                }
+            }
+        }, 
+        "element": [
+            "Cu", 
+            "Zr"
+        ]
+    }
+}

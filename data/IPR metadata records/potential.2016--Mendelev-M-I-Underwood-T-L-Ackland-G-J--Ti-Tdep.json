@@ -1,0 +1,65 @@
+{
+    "interatomic-potential": {
+        "key": "2570077f-8542-49b1-8e5e-ebf27d5849e8", 
+        "id": "2016--Mendelev-M-I-Underwood-T-L-Ackland-G-J--Ti-Tdep", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Development of an interatomic potential for the simulation of defects, plasticity, and phase transformations in titanium", 
+                "author": [
+                    {
+                        "given-name": "M.I.", 
+                        "surname": "Mendelev"
+                    }, 
+                    {
+                        "given-name": "T.L.", 
+                        "surname": "Underwood"
+                    }, 
+                    {
+                        "given-name": "G.J.", 
+                        "surname": "Ackland"
+                    }
+                ], 
+                "publication-name": "The Journal of Chemical Physics", 
+                "publication-date": {
+                    "year": 2016
+                }, 
+                "volume": 145, 
+                "issue": 15, 
+                "abstract": "New interatomic potentials describing defects, plasticity, and high temperature phase transitions for Ti are presented. Fitting the martensitic hcp-bcc phase transformation temperature requires an efficient and accurate method to determine it. We apply a molecular dynamics method based on determination of the melting temperature of competing solid phases, and Gibbs-Helmholtz integration, and a lattice-switch Monte Carlo method: these agree on the hcp-bcc transformation temperatures to within 2 K. We were able to develop embedded atom potentials which give a good fit to either low or high temperature data, but not both. The first developed potential (Ti1) reproduces the hcp-bcc transformation and melting temperatures and is suitable for the simulation of phase transitions and bcc Ti. Two other potentials (Ti2 and Ti3) correctly describe defect properties and can be used to simulate plasticity or radiation damage in hcp Ti. The fact that a single embedded atom method potential cannot describe both low and high temperature phases may be attributed to neglect of electronic degrees of freedom, notably bcc has a much higher electronic entropy. A temperature-dependent potential obtained from the combination of potentials Ti1 and Ti2 may be used to simulate Ti properties at any temperature.", 
+                "pages": 154102, 
+                "DOI": "10.1063/1.4964654", 
+                "bibtex": "@article{Mendelev_2016,\n abstract = {New interatomic potentials describing defects, plasticity, and high temperature phase transitions for Ti are presented. Fitting the martensitic hcp-bcc phase transformation temperature requires an efficient and accurate method to determine it. We apply a molecular dynamics method based on determination of the melting temperature of competing solid phases, and Gibbs-Helmholtz integration, and a lattice-switch Monte Carlo method: these agree on the hcp-bcc transformation temperatures to within 2 K. We were able to develop embedded atom potentials which give a good fit to either low or high temperature data, but not both. The first developed potential (Ti1) reproduces the hcp-bcc transformation and melting temperatures and is suitable for the simulation of phase transitions and bcc Ti. Two other potentials (Ti2 and Ti3) correctly describe defect properties and can be used to simulate plasticity or radiation damage in hcp Ti. The fact that a single embedded atom method potential cannot describe both low and high temperature phases may be attributed to neglect of electronic degrees of freedom, notably bcc has a much higher electronic entropy. A temperature-dependent potential obtained from the combination of potentials Ti1 and Ti2 may be used to simulate Ti properties at any temperature.},\n author = {M. I. Mendelev and T. L. Underwood and G. J. Ackland},\n doi = {10.1063/1.4964654},\n journal = {The Journal of Chemical Physics},\n month = {oct},\n number = {15},\n pages = {154102},\n publisher = {AIP Publishing},\n title = {Development of an interatomic potential for the simulation of defects, plasticity, and phase transformations in titanium},\n url = {https://doi.org/10.1063%2F1.4964654},\n volume = {145},\n year = {2016}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "This listing is for the reference's temperature-dependent (Tdep) potential.  Dr. Mendelev provided Ti_potentials.pdf which gives a short description of the different potentials in the reference and some basic properties."
+            }
+        }, 
+        "implementation": {
+            "key": "892aea3b-1493-40af-893f-8e645d3c3746", 
+            "id": "2016--Mendelev-M-I--Ti-Tdep--FORTRAN--ipr1", 
+            "status": "active", 
+            "date": "2016-08-27", 
+            "type": "FORTRAN", 
+            "notes": {
+                "text": "This file was sent by G.J. Ackland (University of Edinburgh) on 27 Sept 2016 and posted with his permission. Dr. Ackland noted that temperature-dependent potentials are also presented in the publication. This file is a fortran program that allows a user to specify a temperature and generate a potential for that temperature. The program includes comments to aid in compiling and use."
+            }, 
+            "artifact": [
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Mendelev-M-I-Underwood-T-L-Ackland-G-J--Ti-Tdep/1/LAMMPS_MUA_Tdep.f", 
+                        "link-text": "LAMMPS_MUA_Tdep.f"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Mendelev-M-I-Underwood-T-L-Ackland-G-J--Ti-Tdep/1/Ti_potentials.pdf", 
+                        "link-text": "Ti_potentials.pdf"
+                    }
+                }
+            ]
+        }, 
+        "element": "Ti"
+    }
+}

@@ -1,0 +1,138 @@
+{
+    "interatomic-potential": {
+        "key": "cba1f03d-4e0b-4f08-8b52-0aff0a4224b3", 
+        "id": "2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Embedded-atom potential for B2-NiAl", 
+                "author": [
+                    {
+                        "given-name": "Y.", 
+                        "surname": "Mishin"
+                    }, 
+                    {
+                        "given-name": "M.J.", 
+                        "surname": "Mehl"
+                    }, 
+                    {
+                        "given-name": "D.A.", 
+                        "surname": "Papaconstantopoulos"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 2002
+                }, 
+                "volume": 65, 
+                "issue": 22, 
+                "abstract": "An embedded-atom potential has been constructed for the intermetallic compound B2\u2212NiAl by fitting to both experimental properties and ab initio data. The ab initio data have been generated in the form of energy-volume relations for a number of alternative structures of NiAl and Ni3Al, as well as for Ni and Al. The potential accurately reproduces the basic lattice properties of B2\u2212NiAl, planar faults, and point-defect characteristics. It also reproduces the energetics and stability of all other structures included in the fit. The potential is applied to calculate equilibrium point-defect concentrations in B2\u2212NiAl as functions of temperature and composition near the stoichiometry. In contrast to previous calculations, the defect formation entropies arising from atomic vibrations are included in our calculation within the quasiharmonic approximation. Such entropies tend to increase the concentrations of thermal point defects in B2\u2212NiAl at high temperatures, but the atomic disorder mechanism remains triple-defect type up to the melting point.", 
+                "pages": 224114, 
+                "DOI": "10.1103/physrevb.65.224114", 
+                "bibtex": "@article{Mishin_2002,\n abstract = {An embedded-atom potential has been constructed for the intermetallic compound B2\u2212NiAl by fitting to both experimental properties and ab initio data. The ab initio data have been generated in the form of energy-volume relations for a number of alternative structures of NiAl and Ni3Al, as well as for Ni and Al. The potential accurately reproduces the basic lattice properties of B2\u2212NiAl, planar faults, and point-defect characteristics. It also reproduces the energetics and stability of all other structures included in the fit. The potential is applied to calculate equilibrium point-defect concentrations in B2\u2212NiAl as functions of temperature and composition near the stoichiometry. In contrast to previous calculations, the defect formation entropies arising from atomic vibrations are included in our calculation within the quasiharmonic approximation. Such entropies tend to increase the concentrations of thermal point defects in B2\u2212NiAl at high temperatures, but the atomic disorder mechanism remains triple-defect type up to the melting point.},\n author = {Y. Mishin and M. J. Mehl and D. A. Papaconstantopoulos},\n doi = {10.1103/physrevb.65.224114},\n journal = {Physical Review B},\n month = {jun},\n number = {22},\n numpages = {14},\n pages = {224114},\n publisher = {American Physical Society (APS)},\n title = {Embedded-atom potential for B2-NiAl},\n url = {https://doi.org/10.1103%2Fphysrevb.65.224114},\n volume = {65},\n year = {2002}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "As described in the reference, this potential was highly optimized for the B2 phase of NiAl. For other phases (including the elements), it does not work nearly as well as other potentials. For additional information, see C.A. Becker, et al., Phil. Mag. 91, 3578 (2011)."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "1bda5691-8a4f-4597-ac00-a471898d27a6", 
+                "id": "2002--Mishin-Y--Ni-Al--table--ipr1", 
+                "status": "active", 
+                "date": "2009-01-01", 
+                "type": "EAM tabulated functions", 
+                "notes": {
+                    "text": "These files were provided by Yuri Mishin."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/1/README.txt", 
+                            "label": "Notes:", 
+                            "link-text": "README.txt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/1/F_al.plt", 
+                            "label": "Al F(&rho;):", 
+                            "link-text": "F_al.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/1/F_ni.plt", 
+                            "label": "Ni F(&rho;):", 
+                            "link-text": "F_ni.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/1/fal.plt", 
+                            "label": "Al &rho;(r):", 
+                            "link-text": "fal.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/1/fni.plt", 
+                            "label": "Ni &rho;(r):", 
+                            "link-text": "fni.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/1/pal.plt", 
+                            "label": "Al &phi;(r):", 
+                            "link-text": "pal.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/1/pni.plt", 
+                            "label": "Ni &phi;(r):", 
+                            "link-text": "pni.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/1/pnial.plt", 
+                            "label": "Ni-Al &phi;(r):", 
+                            "link-text": "pnial.plt"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "257a348d-b648-42a6-b7a4-dc0b0f923557", 
+                "id": "2002--Mishin-Y--Ni-Al--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2009-02-14", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This conversion was produced by Chandler Becker on 14 February 2009 from the plt files listed above. This version is compatible with LAMMPS. Validation and usage information can be found in NiAl02_releaseNotes_1.pdf. If you use this setfl file, please credit the website in addition to the original reference."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/2/NiAl02.eam.alloy", 
+                            "link-text": "NiAl02.eam.alloy"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/2/NiAl02_releaseNotes_1.pdf", 
+                            "link-text": "NiAl02_releaseNotes_1.pdf"
+                        }
+                    }
+                ]
+            }
+        ], 
+        "element": [
+            "Ni", 
+            "Al"
+        ]
+    }
+}

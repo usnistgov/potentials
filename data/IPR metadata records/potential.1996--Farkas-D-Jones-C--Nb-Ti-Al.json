@@ -1,0 +1,160 @@
+{
+    "interatomic-potential": {
+        "key": "0856888b-57ec-4005-828d-d1b0c331f120", 
+        "id": "1996--Farkas-D-Jones-C--Nb-Ti-Al", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Interatomic potentials for ternary Nb - Ti - Al alloys", 
+                "author": [
+                    {
+                        "given-name": "D.", 
+                        "surname": "Farkas"
+                    }, 
+                    {
+                        "given-name": "C.", 
+                        "surname": "Jones"
+                    }
+                ], 
+                "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                "publication-date": {
+                    "year": 1996
+                }, 
+                "volume": 4, 
+                "issue": 1, 
+                "abstract": "Interatomic potentials of the embedded-atom type were developed for the Nb - Al system via an empirical fitting to the properties of A15 Nb3Al. The cohesive energy and lattice parameters are fitted by the potentials, which also give good agreement with experimental values for the same properties in the D022 NbAl3 phase. A second interatomic potential was developed for the Nb - Ti system via a fitting to the lattice parameters and thermodynamic properties of the disordered BCC phase. The Al and Ti potentials used here are the same as those used in our previous work to derive Ti - Al potentials based on TiAl. This allows the use of the present potentials in conjunction with those previously derived interactions to study ternary Nb - Ti - Al alloys. The potentials were used to calculate the heats of solution of Al and Ti in Nb, and to simulate the Ti2NbAl orthorhombic phase.", 
+                "pages": "23-32", 
+                "DOI": "10.1088/0965-0393/4/1/004", 
+                "bibtex": "@article{Farkas_1996,\n abstract = {Interatomic potentials of the embedded-atom type were developed for the Nb - Al system via an empirical fitting to the properties of A15 Nb3Al. The cohesive energy and lattice parameters are fitted by the potentials, which also give good agreement with experimental values for the same properties in the D022 NbAl3 phase. A second interatomic potential was developed for the Nb - Ti system via a fitting to the lattice parameters and thermodynamic properties of the disordered BCC phase. The Al and Ti potentials used here are the same as those used in our previous work to derive Ti - Al potentials based on TiAl. This allows the use of the present potentials in conjunction with those previously derived interactions to study ternary Nb - Ti - Al alloys. The potentials were used to calculate the heats of solution of Al and Ti in Nb, and to simulate the Ti2NbAl orthorhombic phase.},\n author = {Diana Farkas and Chris Jones},\n doi = {10.1088/0965-0393/4/1/004},\n journal = {Modelling and Simulation in Materials Science and Engineering},\n month = {jan},\n number = {1},\n pages = {23--32},\n publisher = {IOP Publishing},\n title = {Interatomic potentials for ternary Nb - Ti - Al alloys},\n url = {https://doi.org/10.1088%2F0965-0393%2F4%2F1%2F004},\n volume = {4},\n year = {1996}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "bb69cb78-f906-476f-866a-8411864e5130", 
+                "id": "1996--Farkas-D--Nb-Ti-Al--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2014-07-01", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was generated and tested by Ganga Purja Pun and Yuri Mishin (George Mason Univ.) using the files below that were supplied by Diana Farkas (Virginia Tech.). Testing information is in Test_report_AlTiNb.pdf. These files were approved by Dr. Purja Pun and Profs. Farkas and Mishin and posted on 1 Jul 2014."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1996--Farkas-D-Jones-C--Nb-Ti-Al/1/Farkas_Nb-Ti-Al_1996.eam.alloy", 
+                            "link-text": "Farkas_Nb-Ti-Al_1996.eam.alloy"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1996--Farkas-D-Jones-C--Nb-Ti-Al/1/Test_report_AlTiNb.pdf", 
+                            "link-text": "Test_report_AlTiNb.pdf"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "d150f426-8d82-4afb-ba07-312c5e1e80ae", 
+                "id": "1996--Farkas-D--Nb-Ti-Al--table--ipr1", 
+                "status": "active", 
+                "date": "2014-07-01", 
+                "type": "EAM tabulated functions", 
+                "notes": {
+                    "text": "These files were provided by Diana Farkas and approved by her on 1 Jul 2014."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1996--Farkas-D-Jones-C--Nb-Ti-Al/2/frnb_Nb_Farkas96.dat", 
+                            "label": "Nb F(&rho;):", 
+                            "link-text": "frnb_Nb_Farkas96.dat"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1996--Farkas-D-Jones-C--Nb-Ti-Al/2/frti_Ti_Farkas96.dat", 
+                            "label": "Ti F(&rho;):", 
+                            "link-text": "frti_Ti_Farkas96.dat"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1996--Farkas-D-Jones-C--Nb-Ti-Al/2/fral_Al_Farkas96.dat", 
+                            "label": "Al F(&rho;):", 
+                            "link-text": "fral_Al_Farkas96.dat"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1996--Farkas-D-Jones-C--Nb-Ti-Al/2/fnb_Nb_Farkas96.dat", 
+                            "label": "Nb &rho;(r):", 
+                            "link-text": "fnb_Nb_Farkas96.dat"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1996--Farkas-D-Jones-C--Nb-Ti-Al/2/fti_Ti_Farkas96.dat", 
+                            "label": "Ti &rho;(r):", 
+                            "link-text": "fti_Ti_Farkas96.dat"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1996--Farkas-D-Jones-C--Nb-Ti-Al/2/for021_Al_Farkas96.dat", 
+                            "label": "Al &rho;(r):", 
+                            "link-text": "for021_Al_Farkas96.dat"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1996--Farkas-D-Jones-C--Nb-Ti-Al/2/pnb_Nb_Farkas96.dat", 
+                            "label": "Nb &phi;(r):", 
+                            "link-text": "pnb_Nb_Farkas96.dat"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1996--Farkas-D-Jones-C--Nb-Ti-Al/2/pti_Ti_Farkas96.dat", 
+                            "label": "Ti &phi;(r):", 
+                            "link-text": "pti_Ti_Farkas96.dat"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1996--Farkas-D-Jones-C--Nb-Ti-Al/2/pal_Al_Farkas96.dat", 
+                            "label": "Al &phi;(r):", 
+                            "link-text": "pal_Al_Farkas96.dat"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1996--Farkas-D-Jones-C--Nb-Ti-Al/2/palnb_Al-Nb_Farkas96.dat", 
+                            "label": "Al-Nb &phi;(r):", 
+                            "link-text": "palnb_Al-Nb_Farkas96.dat"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1996--Farkas-D-Jones-C--Nb-Ti-Al/2/palti_Al-Ti_Farkas96.dat", 
+                            "label": "Al-Ti &phi;(r):", 
+                            "link-text": "palti_Al-Ti_Farkas96.dat"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1996--Farkas-D-Jones-C--Nb-Ti-Al/2/ptinb_Ti-Nb_Farkas96.dat", 
+                            "label": "Ti-Nb &phi;(r):", 
+                            "link-text": "ptinb_Ti-Nb_Farkas96.dat"
+                        }
+                    }
+                ]
+            }
+        ], 
+        "element": [
+            "Nb", 
+            "Ti", 
+            "Al"
+        ]
+    }
+}

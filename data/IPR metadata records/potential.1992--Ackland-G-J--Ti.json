@@ -1,0 +1,78 @@
+{
+    "interatomic-potential": {
+        "key": "8a634ace-23df-4e28-8041-007bd0e11cfb", 
+        "id": "1992--Ackland-G-J--Ti", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Theoretical study of titanium surfaces and defects with a new many-body potential", 
+                "author": {
+                    "given-name": "G.J.", 
+                    "surname": "Ackland"
+                }, 
+                "publication-name": "Philosophical Magazine A", 
+                "publication-date": {
+                    "year": 1992
+                }, 
+                "volume": 66, 
+                "issue": 6, 
+                "abstract": "It is shown that any force model using short-range pair-functional interactions can only have three independent h.c.p. elastic constants. Empirical data show that these elastic properties are nearly realized in a number of materials. A new parametrization of a Finnis-Sinclair-type many-body potential for titanium is presented using these relations. Particular care is taken to describe the anisotropy of the shear constants and the deviation of the c/a lattice parameter ratio from ideal, while maintaining smooth monotonic functions. Energies, stresses and reconstruction modes of various low-index surfaces are calculated and general rules for surface stability are proposed. Various stacking faults on the basal and pyramidal plane are investigated.", 
+                "pages": "917-932", 
+                "DOI": "10.1080/01418619208247999", 
+                "bibtex": "@article{Ackland_1992,\n abstract = {It is shown that any force model using short-range pair-functional interactions can only have three independent h.c.p. elastic constants. Empirical data show that these elastic properties are nearly realized in a number of materials. A new parametrization of a Finnis-Sinclair-type many-body potential for titanium is presented using these relations. Particular care is taken to describe the anisotropy of the shear constants and the deviation of the c/a lattice parameter ratio from ideal, while maintaining smooth monotonic functions. Energies, stresses and reconstruction modes of various low-index surfaces are calculated and general rules for surface stability are proposed. Various stacking faults on the basal and pyramidal plane are investigated.},\n author = {Graeme J. Ackland},\n doi = {10.1080/01418619208247999},\n journal = {Philosophical Magazine A},\n month = {dec},\n number = {6},\n pages = {917--932},\n publisher = {Informa UK Limited},\n title = {Theoretical study of titanium surfaces and defects with a new many-body potential},\n url = {https://doi.org/10.1080%2F01418619208247999},\n volume = {66},\n year = {1992}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "8fcc2b18-026e-45cc-bb47-08a980bab663", 
+                "id": "1992--Ackland-G-J--Ti--MOLDY--ipr1", 
+                "status": "active", 
+                "date": "2009-06-30", 
+                "type": "Moldy FS", 
+                "notes": {
+                    "text": "The parameters in ti.moldy were obtained from <a href=\"http://homepages.ed.ac.uk/graeme/moldy/moldy.html\" class=\"external\">http://homepages.ed.ac.uk/graeme/moldy/moldy.html </a> and posted with the permission of G.J. Ackland (University of Edinburgh)."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1992--Ackland-G-J--Ti/1/ti.moldy", 
+                        "link-text": "ti.moldy"
+                    }
+                }
+            }, 
+            {
+                "key": "60f2b912-7538-4bfa-9b58-9058ca99f7ae", 
+                "id": "1992--Ackland-G-J--Ti--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2009-06-30", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "This conversion was performed from G.J. Ackland's parameters by M.I. Mendelev (Ames National Laboratory). The email address was changed from that of M.I. Mendelev to G.J. Ackland. C.A. Becker (NIST) tested the file to run with the 7Jul09 release of LAMMPS, but properties were not evaluated. This file was posted on 1 Dec. 2009 with the permission of G.J. Ackland and M.I. Mendelev."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1992--Ackland-G-J--Ti/2/Ti.eam.fs", 
+                        "link-text": "Ti.eam.fs"
+                    }
+                }
+            }, 
+            {
+                "key": "8ba373d3-812d-435f-a44b-68c236cbf882", 
+                "id": "1992--Ackland-G-J--Ti--LAMMPS--ipr2", 
+                "status": "active", 
+                "date": "2017-10-10", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "A new conversion to LAMMPS performed by G.J. Ackland was submitted on 10 Oct. 2017. This version adds close-range repulsion for radiation studies."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1992--Ackland-G-J--Ti/3/Ti_v2.eam.fs", 
+                        "link-text": "Ti_v2.eam.fs"
+                    }
+                }
+            }
+        ], 
+        "element": "Ti"
+    }
+}

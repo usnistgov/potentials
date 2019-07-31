@@ -1,0 +1,124 @@
+{
+    "interatomic-potential": {
+        "key": "57fe7a02-b8ad-4362-b98f-6439c9ad14dd", 
+        "id": "2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Interatomic potential to study plastic deformation in tungsten-rhenium alloys", 
+                "author": [
+                    {
+                        "given-name": "G.", 
+                        "surname": "Bonny"
+                    }, 
+                    {
+                        "given-name": "A.", 
+                        "surname": "Bakaev"
+                    }, 
+                    {
+                        "given-name": "D.", 
+                        "surname": "Terentyev"
+                    }, 
+                    {
+                        "given-name": "Y.A.", 
+                        "surname": "Mastrikov"
+                    }
+                ], 
+                "publication-name": "Journal of Applied Physics", 
+                "publication-date": {
+                    "year": 2017
+                }, 
+                "volume": 121, 
+                "issue": 16, 
+                "abstract": "In this work, an interatomic potential for the W-Re system is fitted and benchmarked against experimental and density functional theory (DFT) data, of which part are generated in this work. Having in mind studies related to the plasticity of W-Re alloys under irradiation, emphasis is put on fitting point-defect properties, elastic constants, and dislocation properties. The developed potential can reproduce the mechanisms responsible for the experimentally observed softening, i.e., decreasing shear moduli, decreasing Peierls barrier, and asymmetric screw dislocation core structure with increasing Re content in W-Re solid solutions. In addition, the potential predicts elastic constants in reasonable agreement with DFT data for the phases forming non-coherent precipitates (\u03c3- and \u03c7-phases) in W-Re alloys. In addition, the mechanical stability of the different experimentally observed phases is verified in the temperature range of interest (700\u20131500 K). As a conclusion, the presented potential provides an excellent tool to study plasticity in W-Re alloys at the atomic level.", 
+                "pages": 165107, 
+                "DOI": "10.1063/1.4982361", 
+                "bibtex": "@article{Bonny_2017,\n abstract = {In this work, an interatomic potential for the W-Re system is fitted and benchmarked against experimental and density functional theory (DFT) data, of which part are generated in this work. Having in mind studies related to the plasticity of W-Re alloys under irradiation, emphasis is put on fitting point-defect properties, elastic constants, and dislocation properties. The developed potential can reproduce the mechanisms responsible for the experimentally observed softening, i.e., decreasing shear moduli, decreasing Peierls barrier, and asymmetric screw dislocation core structure with increasing Re content in W-Re solid solutions. In addition, the potential predicts elastic constants in reasonable agreement with DFT data for the phases forming non-coherent precipitates (\u03c3- and \u03c7-phases) in W-Re alloys. In addition, the mechanical stability of the different experimentally observed phases is verified in the temperature range of interest (700\u20131500 K). As a conclusion, the presented potential provides an excellent tool to study plasticity in W-Re alloys at the atomic level.},\n author = {G. Bonny and A. Bakaev and D. Terentyev and Yu. A. Mastrikov},\n doi = {10.1063/1.4982361},\n journal = {Journal of Applied Physics},\n month = {apr},\n number = {16},\n pages = {165107},\n publisher = {AIP Publishing},\n title = {Interatomic potential to study plastic deformation in tungsten-rhenium alloys},\n url = {https://doi.org/10.1063%2F1.4982361},\n volume = {121},\n year = {2017}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "b9ac4993-d934-4eee-8f79-0cdb94db1160", 
+                "id": "2017--Bonny-G--W-Re--table--ipr1", 
+                "status": "active", 
+                "date": "2017-11-02", 
+                "type": "EAM tabulated functions", 
+                "notes": {
+                    "text": "These files were sent by Dr. Giovanni Bonny (Nuclear Materials Science Institute of SCK-CEN, Belgium) on 2 November 2017 and posted with his permission."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re/1/F_W.spt", 
+                            "label": "W F(&rho;):", 
+                            "link-text": "F_W.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re/1/F_Re.spt", 
+                            "label": "Re F(&rho;):", 
+                            "link-text": "F_Re.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re/1/rhoW.spt", 
+                            "label": "W &rho;(r):", 
+                            "link-text": "rhoW.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re/1/rhoRe.spt", 
+                            "label": "Re &rho;(r):", 
+                            "link-text": "rhoRe.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re/1/pWW.spt", 
+                            "label": "W-W &phi;(r):", 
+                            "link-text": "pWW.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re/1/pReRe.spt", 
+                            "label": "Re-Re &phi;(r):", 
+                            "link-text": "pReRe.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re/1/pWRe.spt", 
+                            "label": "W-Re &phi;(r):", 
+                            "link-text": "pWRe.spt"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "6aa8fa90-ebf0-48e9-a517-5b0c5e671302", 
+                "id": "2017--Bonny-G--W-Re--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2017-11-02", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "LAMMPS-compatible file sent by Dr. Giovanni Bonny (Nuclear Materials Science Institute of SCK-CEN, Belgium) on 2 November 2017 and posted with his permission."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re/2/WRe.eam.alloy", 
+                        "link-text": "WRe.eam.alloy"
+                    }
+                }
+            }
+        ], 
+        "element": [
+            "W", 
+            "Re"
+        ]
+    }
+}

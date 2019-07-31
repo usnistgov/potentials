@@ -1,0 +1,143 @@
+{
+    "interatomic-potential": {
+        "key": "82612d4c-ee29-4d1c-b5eb-64bbc9da5485", 
+        "id": "2010--Apostol-F-Mishin-Y--Al-H", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Angular-dependent interatomic potential for the aluminum-hydrogen system", 
+                "author": [
+                    {
+                        "given-name": "F.", 
+                        "surname": "Apostol"
+                    }, 
+                    {
+                        "given-name": "Y.", 
+                        "surname": "Mishin"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 2010
+                }, 
+                "volume": 82, 
+                "issue": 14, 
+                "abstract": "We report on the development of an angular-dependent interatomic potential for hydrogen and the aluminum-hydrogen system. The potential reproduces properties of diatomic hydrogen gas, accurate solution energies of hydrogen atoms in crystalline Al, the energetic preference of the tetrahedral interstitial site occupation over octahedral, the hydrogen diffusion barrier in Al, and a number of other properties. Some of the results predicted by the potential have been tested by molecular dynamics simulations. It is suggested that the new potential can be used in atomistic simulations of the effect of dissolved hydrogen on deformation and fracture of Al, a problem which is relevant to hydrogen-induced degradation of Al alloys.", 
+                "pages": 144115, 
+                "DOI": "10.1103/physrevb.82.144115", 
+                "bibtex": "@article{Apostol_2010,\n abstract = {We report on the development of an angular-dependent interatomic potential for hydrogen and the aluminum-hydrogen system. The potential reproduces properties of diatomic hydrogen gas, accurate solution energies of hydrogen atoms in crystalline Al, the energetic preference of the tetrahedral interstitial site occupation over octahedral, the hydrogen diffusion barrier in Al, and a number of other properties. Some of the results predicted by the potential have been tested by molecular dynamics simulations. It is suggested that the new potential can be used in atomistic simulations of the effect of dissolved hydrogen on deformation and fracture of Al, a problem which is relevant to hydrogen-induced degradation of Al alloys.},\n author = {F. Apostol and Y. Mishin},\n doi = {10.1103/physrevb.82.144115},\n journal = {Physical Review B},\n month = {oct},\n number = {14},\n numpages = {10},\n pages = {144115},\n publisher = {American Physical Society (APS)},\n title = {Angular-dependent interatomic potential for the aluminum-hydrogen system},\n url = {https://doi.org/10.1103%2Fphysrevb.82.144115},\n volume = {82},\n year = {2010}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "Prof. Mishin requested the following be noted: There was a typing error in the original ADP paper (Y. Mishin, et al., Acta Mat. <b>53</b>, 4029 (2005)). More information and a correction can be found in the <a href=\"faq.html#ADP\">FAQ</a>."
+            }
+        }, 
+        "implementation": {
+            "key": "2da2948e-5f0f-4b79-a110-9aa7acc72080", 
+            "id": "2010--Apostol-F--Al-H--table--ipr1", 
+            "status": "active", 
+            "date": "2010-10-26", 
+            "type": "ADP tabulated functions", 
+            "notes": {
+                "text": "These files were provided by Yuri Mishin (George Mason University) and posted on 26 Oct. 2010."
+            }, 
+            "artifact": [
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/F_Al.plt", 
+                        "label": "Al F(&rho;):", 
+                        "link-text": "F_Al.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/F_H.plt", 
+                        "label": "H F(&rho;):", 
+                        "link-text": "F_H.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/fAl.plt", 
+                        "label": "Al &rho;(r):", 
+                        "link-text": "fAl.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/fH.plt", 
+                        "label": "H &rho;(r):", 
+                        "link-text": "fH.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/pAl.plt", 
+                        "label": "Al &phi;(r):", 
+                        "link-text": "pAl.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/pH.plt", 
+                        "label": "H &phi;(r):", 
+                        "link-text": "pH.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/pAlH.plt", 
+                        "label": "Al-H &phi;(r):", 
+                        "link-text": "pAlH.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/dAl.plt", 
+                        "label": "Al u(r):", 
+                        "link-text": "dAl.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/dH.plt", 
+                        "label": "H u(r):", 
+                        "link-text": "dH.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/dAlH.plt", 
+                        "label": "Al-H u(r):", 
+                        "link-text": "dAlH.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/qAl.plt", 
+                        "label": "Al w(r):", 
+                        "link-text": "qAl.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/qH.plt", 
+                        "label": "H w(r):", 
+                        "link-text": "qH.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/qAlH.plt", 
+                        "label": "Al-H w(r):", 
+                        "link-text": "qAlH.plt"
+                    }
+                }
+            ]
+        }, 
+        "element": [
+            "Al", 
+            "H"
+        ]
+    }
+}

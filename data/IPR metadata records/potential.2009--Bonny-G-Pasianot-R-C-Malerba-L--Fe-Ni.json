@@ -1,0 +1,120 @@
+{
+    "interatomic-potential": {
+        "key": "d11fb3e1-ada3-4cfd-b755-426607af4716", 
+        "id": "2009--Bonny-G-Pasianot-R-C-Malerba-L--Fe-Ni", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Fe-Ni many-body potential for metallurgical applications", 
+                "author": [
+                    {
+                        "given-name": "G.", 
+                        "surname": "Bonny"
+                    }, 
+                    {
+                        "given-name": "R.C.", 
+                        "surname": "Pasianot"
+                    }, 
+                    {
+                        "given-name": "L.", 
+                        "surname": "Malerba"
+                    }
+                ], 
+                "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                "publication-date": {
+                    "year": 2009
+                }, 
+                "volume": 17, 
+                "issue": 2, 
+                "abstract": "A many-body interatomic potential for the Fe\u2013Ni system is fitted, capable of describing both the ferritic and austenitic phase. The Fe\u2013Ni system exhibits two stable ordered intermetallic phases, namely, L10 FeNi and L12 FeNi3, that are key issues to be tackled when creating a Fe\u2013Ni potential consistent with thermodynamics. A procedure, based on a rigid lattice Ising model and the theory of correlation functions space, is developed to address all the intermetallics that are possible ground states of the system. While controlling the ground states of the system, the mixing enthalpy and defect properties were fitted. Both bcc and fcc defect properties are compared with density functional theory calculations and other potentials found in the literature. Finally, the potential is thermodynamically validated by constructing the alloy phase diagram. It is shown that the experimental phase diagram is reproduced reasonably well and that our potential gives a globally improved description of the Fe\u2013Ni system in the whole concentration range with respect to the potentials found in the literature.", 
+                "pages": 25010, 
+                "DOI": "10.1088/0965-0393/17/2/025010", 
+                "bibtex": "@article{Bonny_2009,\n abstract = {A many-body interatomic potential for the Fe\u2013Ni system is fitted, capable of describing both the ferritic and austenitic phase. The Fe\u2013Ni system exhibits two stable ordered intermetallic phases, namely, L10 FeNi and L12 FeNi3, that are key issues to be tackled when creating a Fe\u2013Ni potential consistent with thermodynamics. A procedure, based on a rigid lattice Ising model and the theory of correlation functions space, is developed to address all the intermetallics that are possible ground states of the system. While controlling the ground states of the system, the mixing enthalpy and defect properties were fitted. Both bcc and fcc defect properties are compared with density functional theory calculations and other potentials found in the literature. Finally, the potential is thermodynamically validated by constructing the alloy phase diagram. It is shown that the experimental phase diagram is reproduced reasonably well and that our potential gives a globally improved description of the Fe\u2013Ni system in the whole concentration range with respect to the potentials found in the literature.},\n author = {G Bonny and R C Pasianot and L Malerba},\n doi = {10.1088/0965-0393/17/2/025010},\n journal = {Modelling and Simulation in Materials Science and Engineering},\n month = {jan},\n number = {2},\n pages = {025010},\n publisher = {IOP Publishing},\n title = {Fe-Ni many-body potential for metallurgical applications},\n url = {https://doi.org/10.1088%2F0965-0393%2F17%2F2%2F025010},\n volume = {17},\n year = {2009}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "491d8ed8-0470-4b45-ab72-d377eaf9ca31", 
+                "id": "2009--Bonny-G--Fe-Ni--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2009-01-22", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was provided by Giovanni Bonny on 22 Jan. 2009."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Malerba-L--Fe-Ni/1/Fe-Ni.eam.alloy", 
+                        "link-text": "Fe-Ni.eam.alloy"
+                    }
+                }
+            }, 
+            {
+                "key": "901605da-a655-40e9-aed8-554b5672ab62", 
+                "id": "2009--Bonny-G--Fe-Ni--table--ipr1", 
+                "status": "active", 
+                "date": "2009-01-22", 
+                "type": "EAM tabulated functions", 
+                "notes": {
+                    "text": "These files were provided by Giovanni Bonny on 26 Jan. 2009."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Malerba-L--Fe-Ni/2/F_Fe.spt", 
+                            "label": "Fe F(&rho;):", 
+                            "link-text": "F_Fe.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Malerba-L--Fe-Ni/2/F_Ni.spt", 
+                            "label": "Ni F(&rho;):", 
+                            "link-text": "F_Ni.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Malerba-L--Fe-Ni/2/rhoFe.spt", 
+                            "label": "Fe &rho;(r):", 
+                            "link-text": "rhoFe.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Malerba-L--Fe-Ni/2/rhoNi.spt", 
+                            "label": "Ni &rho;(r):", 
+                            "link-text": "rhoNi.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Malerba-L--Fe-Ni/2/pFeFe.spt", 
+                            "label": "Fe &phi;(r):", 
+                            "link-text": "pFeFe.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Malerba-L--Fe-Ni/2/pNiNi.spt", 
+                            "label": "Ni &phi;(r):", 
+                            "link-text": "pNiNi.spt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Malerba-L--Fe-Ni/2/pFeNi.spt", 
+                            "label": "Fe-Ni &phi;(r):", 
+                            "link-text": "pFeNi.spt"
+                        }
+                    }
+                ]
+            }
+        ], 
+        "element": [
+            "Fe", 
+            "Ni"
+        ]
+    }
+}

@@ -1,0 +1,72 @@
+{
+    "interatomic-potential": {
+        "key": "8f71b887-b4c5-42c0-b06c-9456153725d9", 
+        "id": "2004--Liu-X-Y-Ercolessi-F-Adams-J-B--Al", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Aluminium interatomic potential from density functional theory calculations with improved stacking fault energy", 
+                "author": [
+                    {
+                        "given-name": "X.-Y.", 
+                        "surname": "Liu"
+                    }, 
+                    {
+                        "given-name": "F.", 
+                        "surname": "Ercolessi"
+                    }, 
+                    {
+                        "given-name": "J.B.", 
+                        "surname": "Adams"
+                    }
+                ], 
+                "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                "publication-date": {
+                    "year": 2004
+                }, 
+                "volume": 12, 
+                "issue": 4, 
+                "abstract": "A new Al potential with improved stacking fault energy is constructed using the force-matching method. The potential is fitted to an ab initio forces database and various experimental data. By using a slightly larger cut-off, we found that the new potential gives the relaxed stacking fault energy in the experimental range without changing the excellent thermal and surface properties of the original force-matching Al potential given by Ercolessi and Adams (1994 Europhys. Lett. 26 583).", 
+                "pages": "665-670", 
+                "DOI": "10.1088/0965-0393/12/4/007", 
+                "bibtex": "@article{Liu_2004,\n abstract = {A new Al potential with improved stacking fault energy is constructed using the force-matching method. The potential is fitted to an ab initio forces database and various experimental data. By using a slightly larger cut-off, we found that the new potential gives the relaxed stacking fault energy in the experimental range without changing the excellent thermal and surface properties of the original force-matching Al potential given by Ercolessi and Adams (1994 Europhys. Lett. 26 583).},\n author = {Xiang-Yang Liu and Furio Ercolessi and James B Adams},\n doi = {10.1088/0965-0393/12/4/007},\n journal = {Modelling and Simulation in Materials Science and Engineering},\n month = {may},\n number = {4},\n pages = {665--670},\n publisher = {IOP Publishing},\n title = {Aluminium interatomic potential from density functional theory calculations with improved stacking fault energy},\n url = {https://doi.org/10.1088%2F0965-0393%2F12%2F4%2F007},\n volume = {12},\n year = {2004}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "e8cb5f73-c704-4630-ab37-38692f9c1767", 
+                "id": "2004--Liu-X-Y--Al--table--ipr1", 
+                "status": "active", 
+                "date": "2006-01-01", 
+                "type": "EAM setfl", 
+                "notes": {
+                    "text": "NEWAl.txt was obtained from <a href=\"http://enpub.fulton.asu.edu/cms/potentials/main/main.htm\" class=\"external\">http://enpub.fulton.asu.edu/cms/potentials/main/main.htm</a> and posted with the permission of J.B. Adams."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Liu-X-Y-Ercolessi-F-Adams-J-B--Al/1/NEWAl.txt", 
+                        "link-text": "NEWAl.txt"
+                    }
+                }
+            }, 
+            {
+                "key": "41aaa580-48b9-4036-aaa9-66e5234edb9f", 
+                "id": "2004--Liu-X-Y--Al--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2006-06-01", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "Al-LEA.eam.alloy is a version of the same potential which has been formatted for use in LAMMPS (\"D\" was replaced by \"e\", \"FCC\" by \"fcc\", and \"Al\" was added on line 3)."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Liu-X-Y-Ercolessi-F-Adams-J-B--Al/2/Al-LEA.eam.alloy", 
+                        "link-text": "Al-LEA.eam.alloy"
+                    }
+                }
+            }
+        ], 
+        "element": "Al"
+    }
+}

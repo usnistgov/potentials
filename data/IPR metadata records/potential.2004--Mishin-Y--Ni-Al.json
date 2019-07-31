@@ -1,0 +1,118 @@
+{
+    "interatomic-potential": {
+        "key": "13051c1b-48f7-47f5-bad7-fc627fe10376", 
+        "id": "2004--Mishin-Y--Ni-Al", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Atomistic modeling of the \u03b3 and \u03b3'-phases of the Ni-Al system", 
+                "author": {
+                    "given-name": "Y.", 
+                    "surname": "Mishin"
+                }, 
+                "publication-name": "Acta Materialia", 
+                "publication-date": {
+                    "year": 2004
+                }, 
+                "volume": 52, 
+                "issue": 6, 
+                "abstract": "A new embedded-atom potential has been developed for Ni3Al by fitting to experimental and first-principles data. The potential describes lattice properties of Ni3Al, point defects, planar faults, as well as the \u03b3 and \u03b3\u2032 fields on the Ni\u2013Al phase diagram. The potential is applied to calculate the energies of coherent Ni/Ni3Al interphase boundaries with three different crystallographic orientations. Depending on the orientation, the interface energy varies between 12 and 46 mJ/m2. Coherent \u03b3/\u03b3\u2032 interfaces existing at high temperatures are shown to be more diffuse and are likely to have a lower energy than Ni/Ni3Al interfaces.", 
+                "pages": "1451-1467", 
+                "DOI": "10.1016/j.actamat.2003.11.026", 
+                "bibtex": "@article{Mishin_2004,\n abstract = {A new embedded-atom potential has been developed for Ni3Al by fitting to experimental and first-principles data. The potential describes lattice properties of Ni3Al, point defects, planar faults, as well as the \u03b3 and \u03b3\u2032 fields on the Ni\u2013Al phase diagram. The potential is applied to calculate the energies of coherent Ni/Ni3Al interphase boundaries with three different crystallographic orientations. Depending on the orientation, the interface energy varies between 12 and 46 mJ/m2. Coherent \u03b3/\u03b3\u2032 interfaces existing at high temperatures are shown to be more diffuse and are likely to have a lower energy than Ni/Ni3Al interfaces.},\n author = {Y. Mishin},\n doi = {10.1016/j.actamat.2003.11.026},\n journal = {Acta Materialia},\n month = {apr},\n number = {6},\n pages = {1451--1467},\n publisher = {Elsevier BV},\n title = {Atomistic modeling of the \u03b3 and \u03b3'-phases of the Ni-Al system},\n url = {https://doi.org/10.1016%2Fj.actamat.2003.11.026},\n volume = {52},\n year = {2004}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "239e4f9a-145d-4c93-a967-73fb3ba28fea", 
+                "id": "2004--Mishin-Y--Ni-Al--table--ipr1", 
+                "status": "active", 
+                "date": "2009-01-01", 
+                "type": "EAM tabulated functions", 
+                "notes": {
+                    "text": "These files were provided by Yuri Mishin."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/1/Fal.plt", 
+                            "label": "Al F(&rho;):", 
+                            "link-text": "Fal.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/1/Fni.plt", 
+                            "label": "Ni F(&rho;):", 
+                            "link-text": "Fni.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/1/fal.plt", 
+                            "label": "Al &rho;(r):", 
+                            "link-text": "fal.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/1/fni.plt", 
+                            "label": "Ni &rho;(r):", 
+                            "link-text": "fni.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/1/pal.plt", 
+                            "label": "Al &phi;(r):", 
+                            "link-text": "pal.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/1/pni.plt", 
+                            "label": "Ni &phi;(r):", 
+                            "link-text": "pni.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/1/pnial.plt", 
+                            "label": "Ni-Al &phi;(r):", 
+                            "link-text": "pnial.plt"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "ed17e8a5-986c-4a78-8a1a-373964dc1d64", 
+                "id": "2004--Mishin-Y--Ni-Al--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2009-01-07", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This conversion was produced by Chandler Becker on 7 Jan 2009 from the plt files listed above. This version is compatible with LAMMPS. Validation and usage information can be found in NiAl04_releaseNotes_2.pdf. If you use this setfl file, please include the following citation (in addition to the Mishin reference): C.A. Becker, et al. (2011) Philos Mag 91(27) 3578-3597."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/2/NiAl.eam.alloy", 
+                            "link-text": "NiAl.eam.alloy"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/2/NiAl04_releaseNotes_2.pdf", 
+                            "link-text": "NiAl04_releaseNotes_2.pdf"
+                        }
+                    }
+                ]
+            }
+        ], 
+        "element": [
+            "Ni", 
+            "Al"
+        ]
+    }
+}

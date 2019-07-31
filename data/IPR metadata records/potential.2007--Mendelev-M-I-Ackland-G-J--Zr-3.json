@@ -1,0 +1,74 @@
+{
+    "interatomic-potential": {
+        "@xmlns:xsi": "http://www.w3.org/2001/XMLSchema-instance", 
+        "key": "bd58ae4c-dc17-40e4-91f0-db3eae46f933", 
+        "id": "2007--Mendelev-M-I-Ackland-G-J--Zr-3", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Development of an interatomic potential for the simulation of phase transformations in zirconium", 
+                "author": [
+                    {
+                        "given-name": "M.I.", 
+                        "surname": "Mendelev"
+                    }, 
+                    {
+                        "given-name": "G.J.", 
+                        "surname": "Ackland"
+                    }
+                ], 
+                "publication-name": "Philosophical Magazine Letters", 
+                "publication-date": {
+                    "year": 2007
+                }, 
+                "volume": 87, 
+                "issue": 5, 
+                "abstract": "In recent years, some 30 studies have been published on the molecular dynamics (MD) of zirconium, primarily of its twinning deformation and response to radiation damage. Its low thermal neutron absorption makes it uniquely suited for the latter application. Surprisingly, currently used interatomic potentials do not encapsulate the unique properties of Zr, namely its high stacking-fault energy, anomolous self-diffusion, melting and phase transformation under temperature and pressure (or alloying). Ab initio calculations have shown deficiencies in the description of point defects, both vacancies and interstitials, using existing interatomic potentials, deficiencies that can now be rectified by refitting. Here, we show the calculation of phase transitions self-consistently and present a potential for Zr that correctly reproduces the energetics of our extended database of ab initio configurations and high-temperature phase transitions. The potential has an analytic many-body form, making it suitable for existing large-scale MD codes. We also present a best-fit potential for the hcp structure and its defects.", 
+                "pages": "349-359", 
+                "DOI": "10.1080/09500830701191393", 
+                "bibtex": "@article{Mendelev_2007,\n abstract = {In recent years, some 30 studies have been published on the molecular dynamics (MD) of zirconium, primarily of its twinning deformation and response to radiation damage. Its low thermal neutron absorption makes it uniquely suited for the latter application. Surprisingly, currently used interatomic potentials do not encapsulate the unique properties of Zr, namely its high stacking-fault energy, anomolous self-diffusion, melting and phase transformation under temperature and pressure (or alloying). Ab initio calculations have shown deficiencies in the description of point defects, both vacancies and interstitials, using existing interatomic potentials, deficiencies that can now be rectified by refitting. Here, we show the calculation of phase transitions self-consistently and present a potential for Zr that correctly reproduces the energetics of our extended database of ab initio configurations and high-temperature phase transitions. The potential has an analytic many-body form, making it suitable for existing large-scale MD codes. We also present a best-fit potential for the hcp structure and its defects.},\n author = {M. I. Mendelev and G. J. Ackland},\n doi = {10.1080/09500830701191393},\n journal = {Philosophical Magazine Letters},\n month = {may},\n number = {5},\n pages = {349--359},\n publisher = {Informa UK Limited},\n title = {Development of an interatomic potential for the simulation of phase transformations in zirconium},\n url = {https://doi.org/10.1080%2F09500830701191393},\n volume = {87},\n year = {2007}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "This listing is for the reference's potential parameter set #3."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "7fdf9c6b-beb6-4c7f-b8ab-fe60820cbc44", 
+                "id": "2007--Mendelev-M-I--Zr-3--LAMMPS--ipr1", 
+                "status": "superseded", 
+                "date": "2007-11-29", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was provided by Mikhail Mendelev.  Except for comments, this file is identical to \"Zr_mm.eam.fs\" in the August 22, 2018 LAMMPS distribution."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2007--Mendelev-M-I-Ackland-G-J--Zr-3/1/Zr_3.eam.fs", 
+                        "label": "Zr #3:", 
+                        "link-text": "Zr_3.eam.fs"
+                    }
+                }
+            }, 
+            {
+                "key": "3191c162-8c6e-4c48-8e50-239f88592bcd", 
+                "id": "2007--Mendelev-M-I--Zr-3--LAMMPS--ipr2", 
+                "status": "active", 
+                "date": "2009-02-24", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "Update 09 Mar 2009: New files for Zr #2 and Zr #3 (24 Feb 2009) were sent as replacements for the previous version. They better treat radial distances smaller than 0.5 A for use in radiation damage simulations."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2007--Mendelev-M-I-Ackland-G-J--Zr-3/2/Zr_3.eam.fs", 
+                        "label": "Zr #3:", 
+                        "link-text": "Zr_3.eam.fs"
+                    }
+                }
+            }
+        ], 
+        "element": "Zr"
+    }
+}

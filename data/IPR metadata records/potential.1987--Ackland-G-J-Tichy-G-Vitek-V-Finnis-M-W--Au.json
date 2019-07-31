@@ -1,0 +1,100 @@
+{
+    "interatomic-potential": {
+        "key": "25899e46-6992-460a-b1c7-fb2704629e9f", 
+        "id": "1987--Ackland-G-J-Tichy-G-Vitek-V-Finnis-M-W--Au", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Simple N-body potentials for the noble metals and nickel", 
+                "author": [
+                    {
+                        "given-name": "G.J.", 
+                        "surname": "Ackland"
+                    }, 
+                    {
+                        "given-name": "G.", 
+                        "surname": "Tichy"
+                    }, 
+                    {
+                        "given-name": "V.", 
+                        "surname": "Vitek"
+                    }, 
+                    {
+                        "given-name": "M.W.", 
+                        "surname": "Finnis"
+                    }
+                ], 
+                "publication-name": "Philosophical Magazine A", 
+                "publication-date": {
+                    "year": 1987
+                }, 
+                "volume": 56, 
+                "issue": 6, 
+                "abstract": "Using the approach of Finnis and Sinclair, N-body potentials for copper, silver, gold and nickel have been constructed. The total energy is regarded as consisting of a pair-potential part and a many body cohesive part. Both these parts are functions of the atomic separations only and are represented by cubic splines, fitted to various bulk properties. For the noble metals, the pair-potentials were fitted at short range to pressure-volume relationships calculated by Christensen and Heine so that interactions at separations smaller than that of the first-nearest neighbours can be treated in this scheme. Using these potentials, point defects, surfaces (including the surface reconstructions) and grain boundaries have been studied and satisfactory agreement with available experimental data has been found.", 
+                "pages": "735-756", 
+                "DOI": "10.1080/01418618708204485", 
+                "bibtex": "@article{Ackland_1987,\n abstract = {Using the approach of Finnis and Sinclair, N-body potentials for copper, silver, gold and nickel have been constructed. The total energy is regarded as consisting of a pair-potential part and a many body cohesive part. Both these parts are functions of the atomic separations only and are represented by cubic splines, fitted to various bulk properties. For the noble metals, the pair-potentials were fitted at short range to pressure-volume relationships calculated by Christensen and Heine so that interactions at separations smaller than that of the first-nearest neighbours can be treated in this scheme. Using these potentials, point defects, surfaces (including the surface reconstructions) and grain boundaries have been studied and satisfactory agreement with available experimental data has been found.},\n author = {G. J. Ackland and G. Tichy and V. Vitek and M. W. Finnis},\n doi = {10.1080/01418618708204485},\n journal = {Philosophical Magazine A},\n month = {dec},\n number = {6},\n pages = {735--756},\n publisher = {Informa UK Limited},\n title = {Simple N-body potentials for the noble metals and nickel},\n url = {https://doi.org/10.1080%2F01418618708204485},\n volume = {56},\n year = {1987}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "733c780d-03d2-4bd1-b518-867ae98dca52", 
+                "id": "1987--Ackland-G-J--Au--MOLDY--ipr1", 
+                "status": "active", 
+                "date": "2009-06-30", 
+                "type": "Moldy FS", 
+                "notes": {
+                    "text": "The parameters in au.moldy were obtained from <a href=\"http://homepages.ed.ac.uk/graeme/moldy/moldy.html\" class=\"external\">http://homepages.ed.ac.uk/graeme/moldy/moldy.html </a> and posted with the permission of G.J. Ackland."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1987--Ackland-G-J-Tichy-G-Vitek-V-Finnis-M-W--Au/1/au.moldy", 
+                        "link-text": "au.moldy"
+                    }
+                }
+            }, 
+            {
+                "key": "d8dc01ec-7e50-48f2-92a7-a3b670f28037", 
+                "id": "1987--Ackland-G-J--Au--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2009-06-30", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "This conversion was performed from G.J. Ackland's parameters by M.I. Mendelev. Conversion checks from M.I. Mendelev can be found in the conversion_check.pdf. These files were posted on 30 June 2009 with the permission of G.J. Ackland and M.I. Mendelev. These potentials are not designed for simulations of radiation damage."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1987--Ackland-G-J-Tichy-G-Vitek-V-Finnis-M-W--Au/2/Au.eam.fs", 
+                            "link-text": "Au.eam.fs"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1987--Ackland-G-J-Tichy-G-Vitek-V-Finnis-M-W--Au/2/conversion_check.pdf", 
+                            "link-text": "conversion_check.pdf"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "0fb01014-9712-408b-9707-1663fdde3d9f", 
+                "id": "1987--Ackland-G-J--Au--LAMMPS--ipr2", 
+                "status": "active", 
+                "date": "2017-10-10", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "A new conversion to LAMMPS performed by G.J. Ackland was submitted on 10 Oct. 2017. This version adds close-range repulsion for radiation studies."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1987--Ackland-G-J-Tichy-G-Vitek-V-Finnis-M-W--Au/3/Au_v2.eam.fs", 
+                        "link-text": "Au_v2.eam.fs"
+                    }
+                }
+            }
+        ], 
+        "element": "Au"
+    }
+}

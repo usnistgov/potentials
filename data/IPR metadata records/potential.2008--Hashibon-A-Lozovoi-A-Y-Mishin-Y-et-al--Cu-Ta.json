@@ -1,0 +1,155 @@
+{
+    "interatomic-potential": {
+        "key": "40679d21-487e-4b95-b5c3-16e137083ab2", 
+        "id": "2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Interatomic potential for the Cu-Ta system and its application to surface wetting and dewetting", 
+                "author": [
+                    {
+                        "given-name": "A.", 
+                        "surname": "Hashibon"
+                    }, 
+                    {
+                        "given-name": "A.Y.", 
+                        "surname": "Lozovoi"
+                    }, 
+                    {
+                        "given-name": "Y.", 
+                        "surname": "Mishin"
+                    }, 
+                    {
+                        "given-name": "C.", 
+                        "surname": "Els\u00e4sser"
+                    }, 
+                    {
+                        "given-name": "P.", 
+                        "surname": "Gumbsch"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 2008
+                }, 
+                "volume": 77, 
+                "issue": 9, 
+                "abstract": "An angle-dependent interatomic potential has been developed for the Cu-Ta system by crossing two existing potentials for pure Cu and Ta. The cross-interaction functions have been fitted to first-principles data generated in this work. The potential has been extensively tested against first-principles energies not included in the fitting database and applied to molecular dynamics simulations of wetting and dewetting of Cu on Ta. We find that a Cu film placed on a Ta (110) surface dewets from it, forming a Cu droplet on top of a stable Cu monolayer. We also observe that a drop of liquid Cu placed on a clean Ta (110) surface spreads over it as a stable monolayer, while the extra Cu atoms remain in the drop. The stability of a Cu monolayer and instability of thicker Cu films are consistent with recent experiments and first-principles calculations. This agreement demonstrates the utility of the potential for atomistic simulations of Cu-Ta interfaces.", 
+                "pages": 94131, 
+                "DOI": "10.1103/physrevb.77.094131", 
+                "bibtex": "@article{Hashibon_2008,\n abstract = {An angle-dependent interatomic potential has been developed for the Cu-Ta system by crossing two existing potentials for pure Cu and Ta. The cross-interaction functions have been fitted to first-principles data generated in this work. The potential has been extensively tested against first-principles energies not included in the fitting database and applied to molecular dynamics simulations of wetting and dewetting of Cu on Ta. We find that a Cu film placed on a Ta (110) surface dewets from it, forming a Cu droplet on top of a stable Cu monolayer. We also observe that a drop of liquid Cu placed on a clean Ta (110) surface spreads over it as a stable monolayer, while the extra Cu atoms remain in the drop. The stability of a Cu monolayer and instability of thicker Cu films are consistent with recent experiments and first-principles calculations. This agreement demonstrates the utility of the potential for atomistic simulations of Cu-Ta interfaces.},\n author = {Adham Hashibon and Alexander Y. Lozovoi and Yuri Mishin and Christian Els\u00e4sser and Peter Gumbsch},\n doi = {10.1103/physrevb.77.094131},\n journal = {Physical Review B},\n month = {mar},\n number = {9},\n numpages = {9},\n pages = {094131},\n publisher = {American Physical Society (APS)},\n title = {Interatomic potential for the Cu-Ta system and its application to surface wetting and dewetting},\n url = {https://doi.org/10.1103%2Fphysrevb.77.094131},\n volume = {77},\n year = {2008}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "Prof. Mishin requested the following be noted: There was a typing error in the original ADP paper (Y. Mishin, et al., Acta Mat. <b>53</b>, 4029 (2005)). More information and a correction can be found in the <a href=\"faq.html#ADP\">FAQ</a>. <b>Update 17 Jan. 2014:</b> Prof. Mishin noted that \"Our ADP Ta potential has a known error: the elastic constants predicted by the potential as a factor of two different from those reported in the paper. This was the result of a bug in the fitting code that was used during the potential development. All other properties are exactly as reported in the paper. The mixed Cu-Ta interactions are also fine. However, because of this error in the elastic constants, the potential cannot be recommended for studying mechanical properties of pure Ta.\" <b>Update:</b> The 2015--Purja-Pun-G-P--Cu-Ta ADP potential has supplanted this potential."
+            }
+        }, 
+        "implementation": {
+            "key": "65454edc-a240-4691-83f6-8ebb078b674c", 
+            "id": "2008--Hashibon-A--Cu-Ta--table--ipr1", 
+            "status": "superseded", 
+            "date": "2010-01-22", 
+            "type": "ADP tabulated functions", 
+            "notes": {
+                "text": "These files were provided by Yuri Mishin (George Mason University) and posted on 22 Jan. 2010."
+            }, 
+            "artifact": [
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/F_Cu.plt", 
+                        "label": "Cu F(&rho;):", 
+                        "link-text": "F_Cu.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/F_Ta.plt", 
+                        "label": "Ta F(&rho;):", 
+                        "link-text": "F_Ta.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/fCu.plt", 
+                        "label": "Cu &rho;(r):", 
+                        "link-text": "fCu.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/fTa.plt", 
+                        "label": "Ta &rho;(r):", 
+                        "link-text": "fTa.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/pCu.plt", 
+                        "label": "Cu &phi;(r):", 
+                        "link-text": "pCu.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/pTa.plt", 
+                        "label": "Ta &phi;(r):", 
+                        "link-text": "pTa.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/pCuTa.plt", 
+                        "label": "Cu-Ta &phi;(r):", 
+                        "link-text": "pCuTa.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/dCu.plt", 
+                        "label": "Cu u(r):", 
+                        "link-text": "dCu.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/dTa.plt", 
+                        "label": "Ta u(r):", 
+                        "link-text": "dTa.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/dCuTa.plt", 
+                        "label": "Cu-Ta u(r):", 
+                        "link-text": "dCuTa.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/qCu.plt", 
+                        "label": "Cu w(r):", 
+                        "link-text": "qCu.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/qTa.plt", 
+                        "label": "Ta w(r):", 
+                        "link-text": "qTa.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/qCuTa.plt", 
+                        "label": "Cu-Ta w(r):", 
+                        "link-text": "qCuTa.plt"
+                    }
+                }
+            ]
+        }, 
+        "element": [
+            "Cu", 
+            "Ta"
+        ]
+    }
+}

@@ -1,0 +1,156 @@
+{
+    "interatomic-potential": {
+        "key": "2b5389d5-0313-43be-a7c7-ce9130ba51b8", 
+        "id": "2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Cu", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Misfit-energy-increasing dislocations in vapor-deposited CoFe/NiFe multilayers", 
+                "author": [
+                    {
+                        "given-name": "X.W.", 
+                        "surname": "Zhou"
+                    }, 
+                    {
+                        "given-name": "R.A.", 
+                        "surname": "Johnson"
+                    }, 
+                    {
+                        "given-name": "H.N.G.", 
+                        "surname": "Wadley"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 2004
+                }, 
+                "volume": 69, 
+                "issue": 14, 
+                "abstract": "Recent molecular dynamics simulations of the growth of [Ni0.8Fe0.2/Au] multilayers have revealed the formation of misfit-strain-reducing dislocation structures very similar to those observed experimentally. Here we report similar simulations showing the formation of edge dislocations near the interfaces of vapor-deposited (111) [NiFe/CoFe/Cu] multilayers. Unlike misfit dislocations that accommodate lattice mismatch, the dislocation structures observed here increase the mismatch strain energy. Stop-action observations of the dynamically evolving atomic structures indicate that during deposition on the (111) surface of a fcc lattice, adatoms may occupy either fcc sites or hcp sites. This results in the random formation of fcc and hcp domains, with dislocations at the domain boundaries. These dislocations enable atoms to undergo a shift from fcc to hcp sites, or vice versa. These shifts lead to missing atoms, and therefore a later deposited layer can have missing planes compared to a previously deposited layer. This dislocation formation mechanism can create tensile stress in fcc films. The probability that such dislocations are formed was found to quickly diminish under energetic deposition conditions.", 
+                "pages": 144113, 
+                "DOI": "10.1103/physrevb.69.144113", 
+                "bibtex": "@article{Zhou_2004,\n abstract = {Recent molecular dynamics simulations of the growth of [Ni0.8Fe0.2/Au] multilayers have revealed the formation of misfit-strain-reducing dislocation structures very similar to those observed experimentally. Here we report similar simulations showing the formation of edge dislocations near the interfaces of vapor-deposited (111) [NiFe/CoFe/Cu] multilayers. Unlike misfit dislocations that accommodate lattice mismatch, the dislocation structures observed here increase the mismatch strain energy. Stop-action observations of the dynamically evolving atomic structures indicate that during deposition on the (111) surface of a fcc lattice, adatoms may occupy either fcc sites or hcp sites. This results in the random formation of fcc and hcp domains, with dislocations at the domain boundaries. These dislocations enable atoms to undergo a shift from fcc to hcp sites, or vice versa. These shifts lead to missing atoms, and therefore a later deposited layer can have missing planes compared to a previously deposited layer. This dislocation formation mechanism can create tensile stress in fcc films. The probability that such dislocations are formed was found to quickly diminish under energetic deposition conditions.},\n author = {X. W. Zhou and R. A. Johnson and H. N. G. Wadley},\n doi = {10.1103/physrevb.69.144113},\n journal = {Physical Review B},\n month = {apr},\n number = {14},\n numpages = {10},\n pages = {144113},\n publisher = {American Physical Society (APS)},\n title = {Misfit-energy-increasing dislocations in vapor-deposited CoFe/NiFe multilayers},\n url = {https://doi.org/10.1103%2Fphysrevb.69.144113},\n volume = {69},\n year = {2004}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "7327569b-111a-43b5-b8ec-5a5a4630e85c", 
+                "id": "2004--Zhou-X-W--Cu--FORTRAN--ipr1", 
+                "status": "superseded", 
+                "date": "2010-01-01", 
+                "type": "FORTRAN", 
+                "notes": {
+                    "text": "These are the original files sent by X.W. Zhou (Sandia National Laboratory) and posted with his permission. C.A. Becker (NIST) modified create.f to include the reference in the generated potential files and the EAM.input file for this composition. These files can be used to generate alloy potentials for Cu, Ag, Au, Ni, Pd, Pt, Al, Pb, Fe, Mo, Ta, W, Mg, Co, Ti, and Zr by editing EAM.input. However, as addressed in the reference, these potentials were not designed for use with metal compounds."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Cu/1/README", 
+                            "link-text": "README"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Cu/1/README_IPR_mod", 
+                            "link-text": "README_IPR_mod"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Cu/1/compile_script", 
+                            "link-text": "compile_script"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Cu/1/create.f", 
+                            "link-text": "create.f"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Cu/1/EAM.input.Cu", 
+                            "link-text": "EAM.input.Cu"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Cu/1/EAM_code", 
+                            "link-text": "EAM_code"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "cd194d31-b32a-4296-84d0-b5cd08f871d1", 
+                "id": "2004--Zhou-X-W--Cu--LAMMPS--ipr1", 
+                "status": "superseded", 
+                "date": "2010-10-07", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was generated by C.A. Becker (NIST) from create.f and posted with X.W. Zhou's (Sandia National Laboratory) permission."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Cu/2/Cu.set", 
+                        "link-text": "Cu.set"
+                    }
+                }
+            }, 
+            {
+                "key": "649aefd2-c7bd-47d6-860f-318019d3ed01", 
+                "id": "2004--Zhou-X-W--Cu--FORTRAN--ipr2", 
+                "status": "active", 
+                "date": "2018-04-01", 
+                "type": "FORTRAN", 
+                "notes": {
+                    "text": "The file Zhou04_create_v2.f is an updated version of create.f modified by L.M. Hale (NIST) following advice from X.W. Zhou (Sandia National Laboratory). This version removes spurious fluctuations in the tabulated functions of the original potential files caused by single/double precision floating point number conflicts."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Cu/3/README_v2", 
+                            "link-text": "README_v2"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Cu/3/Zhou04_create_v2.f", 
+                            "link-text": "Zhou04_create_v2.f"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Cu/3/EAM.input.Cu", 
+                            "link-text": "EAM.input.Cu"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Cu/3/EAM_code", 
+                            "link-text": "EAM_code"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "6414fdfc-5024-44ce-b2e3-d94389d35702", 
+                "id": "2004--Zhou-X-W--Cu--LAMMPS--ipr2", 
+                "status": "active", 
+                "date": "2018-04-13", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was generated by L.M. Hale from Zhou04_create_v2.f on 13 April 2018 and posted with X.W. Zhou's (Sandia National Laboratory) permission. This version corrects an issue with spurious fluctuations in the tabulated functions."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Cu/4/Cu_Zhou04.eam.alloy", 
+                        "link-text": "Cu_Zhou04.eam.alloy"
+                    }
+                }
+            }
+        ], 
+        "element": "Cu"
+    }
+}

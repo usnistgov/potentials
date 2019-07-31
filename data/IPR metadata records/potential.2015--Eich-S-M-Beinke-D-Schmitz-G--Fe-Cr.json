@@ -1,0 +1,122 @@
+{
+    "interatomic-potential": {
+        "key": "dd645cb8-8065-4cdf-96e0-3b0ca893ef60", 
+        "id": "2015--Eich-S-M-Beinke-D-Schmitz-G--Fe-Cr", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Embedded-atom potential for an accurate thermodynamic description of the iron-chromium system", 
+                "author": [
+                    {
+                        "given-name": "S.M.", 
+                        "surname": "Eich"
+                    }, 
+                    {
+                        "given-name": "D.", 
+                        "surname": "Beinke"
+                    }, 
+                    {
+                        "given-name": "G.", 
+                        "surname": "Schmitz"
+                    }
+                ], 
+                "publication-name": "Computational Materials Science", 
+                "publication-date": {
+                    "year": 2015
+                }, 
+                "volume": 104, 
+                "abstract": "A new potential for the iron\u2013chromium (Fe\u2013Cr) alloy system was optimized for the embedded-atom method (EAM) within the two-band model (TBM) extension. In contrast to previous works, free model parameters are predominantly adapted to available experimental high-temperature data of the mixing enthalpy. As a major improvement, the metastable \u03b1/\u03b1' miscibility gap is accurately described in agreement with experimental data and a recent CALPHAD parametrization. The potential was also fitted to obtain an enriched solubility for chromium atoms in an iron matrix at 0 K, as it is predicted by several ab initio calculations. Furthermore, it was benchmarked against phonon excess entropies at 300 K and 1600 K demonstrating good agreement with respective results of inelastic neutron scattering.", 
+                "pages": "185-192", 
+                "DOI": "10.1016/j.commatsci.2015.03.047", 
+                "bibtex": "@article{Eich_2015,\n abstract = {A new potential for the iron\u2013chromium (Fe\u2013Cr) alloy system was optimized for the embedded-atom method (EAM) within the two-band model (TBM) extension. In contrast to previous works, free model parameters are predominantly adapted to available experimental high-temperature data of the mixing enthalpy. As a major improvement, the metastable \u03b1/\u03b1' miscibility gap is accurately described in agreement with experimental data and a recent CALPHAD parametrization. The potential was also fitted to obtain an enriched solubility for chromium atoms in an iron matrix at 0 K, as it is predicted by several ab initio calculations. Furthermore, it was benchmarked against phonon excess entropies at 300 K and 1600 K demonstrating good agreement with respective results of inelastic neutron scattering.},\n author = {S.M. Eich and D. Beinke and G. Schmitz},\n doi = {10.1016/j.commatsci.2015.03.047},\n journal = {Computational Materials Science},\n month = {jun},\n pages = {185--192},\n publisher = {Elsevier BV},\n title = {Embedded-atom potential for an accurate thermodynamic description of the iron-chromium system},\n url = {https://doi.org/10.1016%2Fj.commatsci.2015.03.047},\n volume = {104},\n year = {2015}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "e82f23b0-266c-404c-85ed-9e26dc6461df", 
+            "id": "2015--Eich-S-M--Fe-Cr--table--ipr1", 
+            "status": "active", 
+            "date": "2015-08-20", 
+            "type": "EAM tabulated functions", 
+            "notes": {
+                "text": "These files were sent by S.M. Eich (University of Stuttgart) on 20 Aug. 2015 and posted with his permission. Dr. Eich noted, \"That the provided tables are directly obtained by the fitting process for the Fe-Cr interaction without subsequent transformation into the effective pair format. This was done in the publication for comparison, but the additional rescaling of the electron density for pure components wouldn't describe the energetics of alloys correctly unless the rescaling has been performed before starting the fitting routine (which then would affect the fitting process).\" Dr. Eich noted that the distance units are Angstroms and the energy units are eV."
+            }, 
+            "artifact": [
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Eich-S-M-Beinke-D-Schmitz-G--Fe-Cr/1/Cr_Olsson_2005_embed.txt", 
+                        "label": "Fe F(&rho;):", 
+                        "link-text": "Cr_Olsson_2005_embed.txt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Eich-S-M-Beinke-D-Schmitz-G--Fe-Cr/1/Cr_Olsson_2005_dens.txt", 
+                        "label": "Fe &rho;(r):", 
+                        "link-text": "Cr_Olsson_2005_dens.txt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Eich-S-M-Beinke-D-Schmitz-G--Fe-Cr/1/Cr_Olsson_2005_pair.txt", 
+                        "label": "Fe &phi;(r):", 
+                        "link-text": "Cr_Olsson_2005_pair.txt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Eich-S-M-Beinke-D-Schmitz-G--Fe-Cr/1/Fe_Ackland_2004_embed.txt", 
+                        "label": "Cr F(&rho;):", 
+                        "link-text": "Fe_Ackland_2004_embed.txt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Eich-S-M-Beinke-D-Schmitz-G--Fe-Cr/1/Fe_Ackland_2004_dens.txt", 
+                        "label": "Cr &rho;(r):", 
+                        "link-text": "Fe_Ackland_2004_dens.txt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Eich-S-M-Beinke-D-Schmitz-G--Fe-Cr/1/Fe_Ackland_2004_pair.txt", 
+                        "label": "Cr &phi;(r):", 
+                        "link-text": "Fe_Ackland_2004_pair.txt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Eich-S-M-Beinke-D-Schmitz-G--Fe-Cr/1/Fe_Cr_Eich_2015_TBM_sembed_Fe.txt", 
+                        "label": "Fe Fs(&rho;s):", 
+                        "link-text": "Fe_Cr_Eich_2015_TBM_sembed_Fe.txt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Eich-S-M-Beinke-D-Schmitz-G--Fe-Cr/1/Fe_Cr_Eich_2015_TBM_sembed_Cr.txt", 
+                        "label": "Cr Fs(&rho;s):", 
+                        "link-text": "Fe_Cr_Eich_2015_TBM_sembed_Cr.txt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Eich-S-M-Beinke-D-Schmitz-G--Fe-Cr/1/Fe_Cr_Eich_2015_TBM_sdens.txt", 
+                        "label": "Fe-Cr &rho;s(r):", 
+                        "link-text": "Fe_Cr_Eich_2015_TBM_sdens.txt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Eich-S-M-Beinke-D-Schmitz-G--Fe-Cr/1/Fe_Cr_Eich_2015_TBM_pair.txt", 
+                        "label": "Fe-Cr &phi;(r):", 
+                        "link-text": "Fe_Cr_Eich_2015_TBM_pair.txt"
+                    }
+                }
+            ]
+        }, 
+        "element": [
+            "Fe", 
+            "Cr"
+        ]
+    }
+}

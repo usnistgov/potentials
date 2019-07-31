@@ -1,0 +1,86 @@
+{
+    "interatomic-potential": {
+        "key": "0bee394c-6121-48ac-8e6d-81351d0bda44", 
+        "id": "2010--Fellinger-M-R-Park-H-Wilkins-J-W--Nb", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Force-matched embedded-atom method potential for niobium", 
+                "author": [
+                    {
+                        "given-name": "M.R.", 
+                        "surname": "Fellinger"
+                    }, 
+                    {
+                        "given-name": "H.", 
+                        "surname": "Park"
+                    }, 
+                    {
+                        "given-name": "J.W.", 
+                        "surname": "Wilkins"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 2010
+                }, 
+                "volume": 81, 
+                "issue": 14, 
+                "abstract": "Large-scale simulations of plastic deformation and phase transformations in alloys require reliable classical interatomic potentials. We construct an embedded-atom method potential for niobium as the first step in alloy potential development. Optimization of the potential parameters to a well-converged set of density-functional theory (DFT) forces, energies, and stresses produces a reliable and transferable potential for molecular-dynamics simulations. The potential accurately describes properties related to the fitting data and also produces excellent results for quantities outside the fitting range. Structural and elastic properties, defect energetics, and thermal behavior compare well with DFT results and experimental data, e.g., DFT surface energies are reproduced with less than 4% error, generalized stacking-fault energies differ from DFT values by less than 15%, and the melting temperature is within 2% of the experimental value.", 
+                "pages": 144119, 
+                "DOI": "10.1103/physrevb.81.144119", 
+                "bibtex": "@article{Fellinger_2010,\n abstract = {Large-scale simulations of plastic deformation and phase transformations in alloys require reliable classical interatomic potentials. We construct an embedded-atom method potential for niobium as the first step in alloy potential development. Optimization of the potential parameters to a well-converged set of density-functional theory (DFT) forces, energies, and stresses produces a reliable and transferable potential for molecular-dynamics simulations. The potential accurately describes properties related to the fitting data and also produces excellent results for quantities outside the fitting range. Structural and elastic properties, defect energetics, and thermal behavior compare well with DFT results and experimental data, e.g., DFT surface energies are reproduced with less than 4% error, generalized stacking-fault energies differ from DFT values by less than 15%, and the melting temperature is within 2% of the experimental value.},\n author = {Michael R. Fellinger and Hyoungki Park and John W. Wilkins},\n doi = {10.1103/physrevb.81.144119},\n journal = {Physical Review B},\n month = {apr},\n number = {14},\n numpages = {15},\n pages = {144119},\n publisher = {American Physical Society (APS)},\n title = {Force-matched embedded-atom method potential for niobium},\n url = {https://doi.org/10.1103%2Fphysrevb.81.144119},\n volume = {81},\n year = {2010}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "ef61e0ad-d7f2-4117-ae35-e6d241d7cefc", 
+                "id": "2010--Fellinger-M-R--Nb--IMD--ipr1", 
+                "status": "active", 
+                "date": "2010-07-14", 
+                "type": "IMD option EAM", 
+                "notes": {
+                    "text": "These files were provided by Michael Fellinger, Hyoungki Park, and John Wilkins (The Ohio State University) and posted with their permission on 14 July 2010. Details of the fitting procedure and testing can be found in the reference listed above."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Fellinger-M-R-Park-H-Wilkins-J-W--Nb/1/imd_phi.imd.pt", 
+                            "link-text": "imd_phi.imd.pt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Fellinger-M-R-Park-H-Wilkins-J-W--Nb/1/imd_F.imd.pt", 
+                            "link-text": "imd_F.imd.pt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Fellinger-M-R-Park-H-Wilkins-J-W--Nb/1/imd_rho.imd.pt", 
+                            "link-text": "imd_rho.imd.pt"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "23a734ab-b2ca-4a23-a837-144fa03528cb", 
+                "id": "2010--Fellinger-M-R--Nb--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2010-07-14", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "These files were provided by Michael Fellinger, Hyoungki Park, and John Wilkins (The Ohio State University) and posted with their permission on 14 July 2010. Mike Fellinger also provided the additional note: \"The Nb.eam.alloy file is in the setfl format suitable for the <a href=\"http://lammps.sandia.gov\" class=\"external\">LAMMPS</a> MD code. This format requires r*phi and rho to be tabulated from r = 0 to r = r_cut. The domain of phi and rho in the published potential is 1.738 &le; r &le; 4.75 A. For phi, we extend the cubic polynomial for 1.738 &le; r &le; 2.073 A to r = 0. For rho, we linearly extrapolate from r = 1.738 A to r = 0. The potential in the <a name=\"IMD\" href=\"http://www.itap.physik.uni-stuttgart.de/~imd/\" class=\"external\">IMD</a> format is tabulated with 5,001 points for each function. The potential in the LAMMPS setfl format is tabulated with 10,001 points for each function. Comparisons of the two tabulations show very slight differences in some defect energies, probably due to the different numbers of tabulation points.\""
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Fellinger-M-R-Park-H-Wilkins-J-W--Nb/2/Nb.eam.alloy", 
+                        "link-text": "Nb.eam.alloy"
+                    }
+                }
+            }
+        ], 
+        "element": "Nb"
+    }
+}

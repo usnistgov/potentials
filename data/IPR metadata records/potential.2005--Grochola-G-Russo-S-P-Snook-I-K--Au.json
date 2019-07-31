@@ -1,0 +1,97 @@
+{
+    "interatomic-potential": {
+        "key": "92a89043-e2bb-4c37-bd39-d98bf4e1de1e", 
+        "id": "2005--Grochola-G-Russo-S-P-Snook-I-K--Au", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "On fitting a gold embedded atom method potential using the force matching method", 
+                "author": [
+                    {
+                        "given-name": "G.", 
+                        "surname": "Grochola"
+                    }, 
+                    {
+                        "given-name": "S.P.", 
+                        "surname": "Russo"
+                    }, 
+                    {
+                        "given-name": "I.K.", 
+                        "surname": "Snook"
+                    }
+                ], 
+                "publication-name": "The Journal of Chemical Physics", 
+                "publication-date": {
+                    "year": 2005
+                }, 
+                "volume": 123, 
+                "issue": 20, 
+                "abstract": "We fit a new gold embedded atom method (EAM) potential using an improved force matching methodology which included fitting to high-temperature solid lattice constants and liquid densities. The new potential shows a good overall improvement in agreement to the experimental lattice constants, elastic constants, stacking fault energy, radial distribution function, and fcc/hcp/bcc lattice energy differences over previous potentials by Foiles, Baskes, and Daw (FBD) [Phys. Rev. B 33, 7983 (1986)] Johnson [Phys. Rev. B 37, 3924 (1988)], and the glue model potential by Ercolessi et al. [Philos. Mag. A 50, 213 (1988)]. Surface energy was improved slightly as compared to potentials by FBD and Johnson but as a result vacancy formation energy is slightly inferior as compared to the same potentials. The results obtained here for gold suggest for other metal species that further overall improvements in potentials may still be possible within the EAM framework with an improved fitting methodology. On the other hand, we also explore the limitations of the EAM framework by attempting a brute force fit to all properties exactly which was found to be unsuccessful. The main conflict in such a brute force fit was between the surface energy and the liquid lattice constant where both could not be fitted identically. By intentionally using a very large number of spline sections for the pair potential, electron-density function, and embedding energy function, we eliminated a lack of functional freedom as a possible cause of this conflict and hence can conclude that it must result from a fundamental limitation in the EAM framework.", 
+                "pages": 204719, 
+                "DOI": "10.1063/1.2124667", 
+                "bibtex": "@article{Grochola_2005,\n abstract = {We fit a new gold embedded atom method (EAM) potential using an improved force matching methodology which included fitting to high-temperature solid lattice constants and liquid densities. The new potential shows a good overall improvement in agreement to the experimental lattice constants, elastic constants, stacking fault energy, radial distribution function, and fcc/hcp/bcc lattice energy differences over previous potentials by Foiles, Baskes, and Daw (FBD) [Phys. Rev. B 33, 7983 (1986)] Johnson [Phys. Rev. B 37, 3924 (1988)], and the glue model potential by Ercolessi et al. [Philos. Mag. A 50, 213 (1988)]. Surface energy was improved slightly as compared to potentials by FBD and Johnson but as a result vacancy formation energy is slightly inferior as compared to the same potentials. The results obtained here for gold suggest for other metal species that further overall improvements in potentials may still be possible within the EAM framework with an improved fitting methodology. On the other hand, we also explore the limitations of the EAM framework by attempting a brute force fit to all properties exactly which was found to be unsuccessful. The main conflict in such a brute force fit was between the surface energy and the liquid lattice constant where both could not be fitted identically. By intentionally using a very large number of spline sections for the pair potential, electron-density function, and embedding energy function, we eliminated a lack of functional freedom as a possible cause of this conflict and hence can conclude that it must result from a fundamental limitation in the EAM framework.},\n author = {Gregory Grochola and Salvy P. Russo and Ian K. Snook},\n doi = {10.1063/1.2124667},\n journal = {The Journal of Chemical Physics},\n month = {nov},\n number = {20},\n pages = {204719},\n publisher = {AIP Publishing},\n title = {On fitting a gold embedded atom method potential using the force matching method},\n url = {https://doi.org/10.1063%2F1.2124667},\n volume = {123},\n year = {2005}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "d392558b-1d28-4301-b9b5-66875b427f07", 
+                "id": "2005--Grochola-G--Au--table--ipr1", 
+                "status": "active", 
+                "date": "2011-01-01", 
+                "type": "EAM tabulated functions", 
+                "notes": {
+                    "text": "These files were approved by G. Grochola."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Grochola-G-Russo-S-P-Snook-I-K--Au/1/Au-Grochola-JCP05-F.table", 
+                            "label": "F(&rho;):", 
+                            "link-text": "Au-Grochola-JCP05-F.table"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Grochola-G-Russo-S-P-Snook-I-K--Au/1/Au-Grochola-JCP05-rou.table", 
+                            "label": "&rho;(r):", 
+                            "link-text": "Au-Grochola-JCP05-rou.table"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Grochola-G-Russo-S-P-Snook-I-K--Au/1/Au-Grochola-JCP05-Phi.table", 
+                            "label": "&phi;(r):", 
+                            "link-text": "Au-Grochola-JCP05-Phi.table"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "8f78e7a4-a563-471d-83ae-539939526902", 
+                "id": "2005--Grochola-G--Au--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2011-02-21", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was generated by C.A. Becker from the files above that were approved by G. Grochola (RMIT University) and posted with his permission on 21 Feb. 2011. This version is compatible with LAMMPS. Validation and usage information can be found in Au-Grochola-JCP05-conversion-notes_v2.pdf. If you use this eam.alloy file, please credit the website in addition to the original reference."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Grochola-G-Russo-S-P-Snook-I-K--Au/2/Au-Grochola-JCP05.eam.alloy", 
+                            "link-text": "Au-Grochola-JCP05.eam.alloy"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Grochola-G-Russo-S-P-Snook-I-K--Au/2/Au-Grochola-JCP05-conversion-notes_v2.pdf", 
+                            "link-text": "Au-Grochola-JCP05-conversion-notes_v2.pdf"
+                        }
+                    }
+                ]
+            }
+        ], 
+        "element": "Au"
+    }
+}

@@ -1,0 +1,84 @@
+{
+    "interatomic-potential": {
+        "key": "372f9e5f-dcbd-4cc6-902a-ebcafd664018", 
+        "id": "1997--Ackland-G-J-Bacon-D-J-Calder-A-F-Harry-T--Fe", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Computer simulation of point defect properties in dilute Fe-Cu alloy using a many-body interatomic potential", 
+                "author": [
+                    {
+                        "given-name": "G.J.", 
+                        "surname": "Ackland"
+                    }, 
+                    {
+                        "given-name": "D.J.", 
+                        "surname": "Bacon"
+                    }, 
+                    {
+                        "given-name": "A.F.", 
+                        "surname": "Calder"
+                    }, 
+                    {
+                        "given-name": "T.", 
+                        "surname": "Harry"
+                    }
+                ], 
+                "publication-name": "Philosophical Magazine A", 
+                "publication-date": {
+                    "year": 1997
+                }, 
+                "volume": 75, 
+                "issue": 3, 
+                "abstract": "The behaviour of copper atoms in dilute solution in \u03b1-iron is important for the microstructural changes that occur in ferritic pressure vessel steels under fastneutron irradiation. To investigate the properties of atomic defects that control this behaviour, a set of many-body interatomic potentials has been developed for the Fe\u2014Cu system. The procedures employed, including modifications to ensure suitability for simulating atomic collisions at high energy, are described. The effect of copper on the lattice parameter of iron in the new model is in good agreement with experiment. The phonon properties of the pure crystals and, in particular, the influence of the instability of the metastable, bcc phase of copper that precipitates during irradiation are discussed. The properties of point defects have been investigated. It is found that the vacancy has lower formation and migration energy in bcc copper than in \u03b1-iron, and the self-interstitial atom has very low formation energy in this phase of copper. The threshold displacement energy in iron has been computed as a function of recoil orientation for both iron-and copper-atom recoils. The differences between the energy for the two species are small.", 
+                "pages": "713-732", 
+                "DOI": "10.1080/01418619708207198", 
+                "bibtex": "@article{Ackland_1997,\n abstract = {The behaviour of copper atoms in dilute solution in \u03b1-iron is important for the microstructural changes that occur in ferritic pressure vessel steels under fastneutron irradiation. To investigate the properties of atomic defects that control this behaviour, a set of many-body interatomic potentials has been developed for the Fe\u2014Cu system. The procedures employed, including modifications to ensure suitability for simulating atomic collisions at high energy, are described. The effect of copper on the lattice parameter of iron in the new model is in good agreement with experiment. The phonon properties of the pure crystals and, in particular, the influence of the instability of the metastable, bcc phase of copper that precipitates during irradiation are discussed. The properties of point defects have been investigated. It is found that the vacancy has lower formation and migration energy in bcc copper than in \u03b1-iron, and the self-interstitial atom has very low formation energy in this phase of copper. The threshold displacement energy in iron has been computed as a function of recoil orientation for both iron-and copper-atom recoils. The differences between the energy for the two species are small.},\n author = {G. J. Ackland and D. J. Bacon and A. F. Calder and T. Harry},\n doi = {10.1080/01418619708207198},\n journal = {Philosophical Magazine A},\n month = {mar},\n number = {3},\n pages = {713--732},\n publisher = {Informa UK Limited},\n title = {Computer simulation of point defect properties in dilute Fe-Cu alloy using a many-body interatomic potential},\n url = {https://doi.org/10.1080%2F01418619708207198},\n volume = {75},\n year = {1997}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "9b6067ed-bbe4-4449-bd96-95e1d1ef6afb", 
+                "id": "1997--Ackland-G-J--Fe--MOLDY--ipr1", 
+                "status": "active", 
+                "date": "2009-06-30", 
+                "type": "Moldy FS", 
+                "notes": {
+                    "text": "The parameters in Fe.moldy were obtained from <a href=\"http://homepages.ed.ac.uk/graeme/moldy/moldy.html\" class=\"external\">http://homepages.ed.ac.uk/graeme/moldy/moldy.html </a> and posted with the permission of G.J. Ackland."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1997--Ackland-G-J-Bacon-D-J-Calder-A-F-Harry-T--Fe/1/Fe.moldy", 
+                        "link-text": "Fe.moldy"
+                    }
+                }
+            }, 
+            {
+                "key": "ea22356d-3d68-436d-bbff-4a0519560191", 
+                "id": "1997--Ackland-G-J--Fe--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2009-06-30", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "This conversion was performed from G.J. Ackland's parameters by M.I. Mendelev. Conversion checks from M.I. Mendelev can be found in conversion_check.pdf. These files were posted on 30 June 2009 with the permission of G.J. Ackland and M.I. Mendelev. These potentials are not designed for simulations of radiation damage."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1997--Ackland-G-J-Bacon-D-J-Calder-A-F-Harry-T--Fe/2/Fe.eam.fs", 
+                            "link-text": "Fe.eam.fs"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/1997--Ackland-G-J-Bacon-D-J-Calder-A-F-Harry-T--Fe/2/conversion_check.pdf", 
+                            "link-text": "conversion_check.pdf"
+                        }
+                    }
+                ]
+            }
+        ], 
+        "element": "Fe"
+    }
+}

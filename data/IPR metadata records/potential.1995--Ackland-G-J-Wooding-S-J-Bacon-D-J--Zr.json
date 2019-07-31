@@ -1,0 +1,72 @@
+{
+    "interatomic-potential": {
+        "key": "c754e222-3417-45d9-a7a3-1d399ea72c1e", 
+        "id": "1995--Ackland-G-J-Wooding-S-J-Bacon-D-J--Zr", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Defect, surface and displacement-threshold properties of \u03b1-zirconium simulated with a many-body potential", 
+                "author": [
+                    {
+                        "given-name": "G.J.", 
+                        "surname": "Ackland"
+                    }, 
+                    {
+                        "given-name": "S.J.", 
+                        "surname": "Wooding"
+                    }, 
+                    {
+                        "given-name": "D.J.", 
+                        "surname": "Bacon"
+                    }
+                ], 
+                "publication-name": "Philosophical Magazine A", 
+                "publication-date": {
+                    "year": 1995
+                }, 
+                "volume": 71, 
+                "issue": 3, 
+                "abstract": "A many-body interatomic potential has been developed for the h.c.p. metal \u03b1-zirconium using the same methodology as that used by Ackland for \u03b1-titanium. The repulsive pair part of the potential has been constructed so that the model can be employed for simulating atomic collisions. The favoured self-interstitial configurations are the \u30081120\u3009 crowdion and split defects, and they are highly mobile in the basal plane. The energy of surfaces is not strongly dependent on the crystallographic orientation, and the I2 stacking fault on the basal plane is not stable. The displacement threshold energy in a crystal at 0 K exhibits a similar orientation dependence to that computed recently for \u03b1-titanium by Bacon et al. and has the same minimum of 27\u00b75 eV along the \u30081120\u3009 directions, but the mean value of 55 eV averaged over all orientations is higher than that of 30 eV in titanium.", 
+                "pages": "553-565", 
+                "DOI": "10.1080/01418619508244468", 
+                "bibtex": "@article{Ackland_1995,\n abstract = {A many-body interatomic potential has been developed for the h.c.p. metal \u03b1-zirconium using the same methodology as that used by Ackland for \u03b1-titanium. The repulsive pair part of the potential has been constructed so that the model can be employed for simulating atomic collisions. The favoured self-interstitial configurations are the \u30081120\u3009 crowdion and split defects, and they are highly mobile in the basal plane. The energy of surfaces is not strongly dependent on the crystallographic orientation, and the I2 stacking fault on the basal plane is not stable. The displacement threshold energy in a crystal at 0 K exhibits a similar orientation dependence to that computed recently for \u03b1-titanium by Bacon et al. and has the same minimum of 27\u00b75 eV along the \u30081120\u3009 directions, but the mean value of 55 eV averaged over all orientations is higher than that of 30 eV in titanium.},\n author = {G. J. Ackland and S. J. Wooding and D. J. Bacon},\n doi = {10.1080/01418619508244468},\n journal = {Philosophical Magazine A},\n month = {mar},\n number = {3},\n pages = {553--565},\n publisher = {Informa UK Limited},\n title = {Defect, surface and displacement-threshold properties of \u03b1-zirconium simulated with a many-body potential},\n url = {https://doi.org/10.1080%2F01418619508244468},\n volume = {71},\n year = {1995}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "2ed1ad41-3bb1-4340-bd1b-ca7d4c9e54e5", 
+                "id": "1995--Ackland-G-J--Zr--MOLDY--ipr1", 
+                "status": "active", 
+                "date": "2009-06-30", 
+                "type": "Moldy FS", 
+                "notes": {
+                    "text": "The parameters in zr.moldy were obtained from <a href=\"http://homepages.ed.ac.uk/graeme/moldy/moldy.html\" class=\"external\">http://homepages.ed.ac.uk/graeme/moldy/moldy.html </a> and posted with the permission of G.J. Ackland. From that website: \"Note typoes in the journal version of zirconium.\""
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1995--Ackland-G-J-Wooding-S-J-Bacon-D-J--Zr/1/zr.moldy", 
+                        "link-text": "zr.moldy"
+                    }
+                }
+            }, 
+            {
+                "key": "649563b2-aaf2-4f5e-b7d3-999790e5dcf9", 
+                "id": "1995--Ackland-G-J--Zr--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2017-10-10", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "A conversion to LAMMPS from MOLDY was performed by G.J. Ackland and submitted on 10 Oct. 2017. This implementation includes the short-range repulsion for radiation studies."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1995--Ackland-G-J-Wooding-S-J-Bacon-D-J--Zr/2/Zr.eam.fs", 
+                        "link-text": "Zr.eam.fs"
+                    }
+                }
+            }
+        ], 
+        "element": "Zr"
+    }
+}

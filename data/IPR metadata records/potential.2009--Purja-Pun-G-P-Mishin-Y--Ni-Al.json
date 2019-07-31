@@ -1,0 +1,124 @@
+{
+    "interatomic-potential": {
+        "key": "d71da5f1-db8a-46ad-a78d-c026768200af", 
+        "id": "2009--Purja-Pun-G-P-Mishin-Y--Ni-Al", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Development of an interatomic potential for the Ni-Al system", 
+                "author": [
+                    {
+                        "given-name": "G.P.", 
+                        "surname": "Purja Pun"
+                    }, 
+                    {
+                        "given-name": "Y.", 
+                        "surname": "Mishin"
+                    }
+                ], 
+                "publication-name": "Philosophical Magazine", 
+                "publication-date": {
+                    "year": 2009
+                }, 
+                "volume": 89, 
+                "issue": "34-36", 
+                "abstract": "We construct an interatomic potential for the Ni-Al system within the embedded-atom method formalism. The potential is based on previously developed accurate potentials for pure Ni and Al. The cross-interactions are fitted to experimental cohesive energy, lattice parameter and elastic constants of B2-NiAl, as well as to ab initio formation energies of several real or imaginary intermetallic compounds with different crystal structures and chemical compositions. The potential accurately reproduces a variety of physical properties of the NiAl and Ni3Al phases, and shows reasonable agreement with experimental and ab initio data for phase stability across the Ni-Al phase diagram. Most of the properties reproduced by the new potential were not involved in the fitting process, which demonstrates its excellent transferability. Advantages and certain weaknesses of the new potential in comparison with other existing potentials are discussed in detail. The potential is expected to be especially suitable for simulations of heterophase interfaces and mechanical behavior of Ni-Al alloys.", 
+                "pages": "3245-3267", 
+                "DOI": "10.1080/14786430903258184", 
+                "bibtex": "@article{Purja_Pun_2009,\n abstract = {We construct an interatomic potential for the Ni-Al system within the embedded-atom method formalism. The potential is based on previously developed accurate potentials for pure Ni and Al. The cross-interactions are fitted to experimental cohesive energy, lattice parameter and elastic constants of B2-NiAl, as well as to ab initio formation energies of several real or imaginary intermetallic compounds with different crystal structures and chemical compositions. The potential accurately reproduces a variety of physical properties of the NiAl and Ni3Al phases, and shows reasonable agreement with experimental and ab initio data for phase stability across the Ni-Al phase diagram. Most of the properties reproduced by the new potential were not involved in the fitting process, which demonstrates its excellent transferability. Advantages and certain weaknesses of the new potential in comparison with other existing potentials are discussed in detail. The potential is expected to be especially suitable for simulations of heterophase interfaces and mechanical behavior of Ni-Al alloys.},\n author = {G.P. Purja Pun and Y. Mishin},\n doi = {10.1080/14786430903258184},\n journal = {Philosophical Magazine},\n month = {dec},\n number = {34-36},\n pages = {3245--3267},\n publisher = {Informa UK Limited},\n title = {Development of an interatomic potential for the Ni-Al system},\n url = {https://doi.org/10.1080%2F14786430903258184},\n volume = {89},\n year = {2009}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "1f4633df-b213-428c-bc46-9b83783af3e3", 
+                "id": "2009--Purja-Pun-G-P--Ni-Al--table--ipr1", 
+                "status": "active", 
+                "date": "2009-01-01", 
+                "type": "EAM tabulated functions", 
+                "notes": {
+                    "text": "These files were provided by Yuri Mishin."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Purja-Pun-G-P-Mishin-Y--Ni-Al/1/F_Al.plt", 
+                            "label": "Al F(&rho;):", 
+                            "link-text": "F_Al.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Purja-Pun-G-P-Mishin-Y--Ni-Al/1/F_Ni.plt", 
+                            "label": "Ni F(&rho;):", 
+                            "link-text": "F_Ni.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Purja-Pun-G-P-Mishin-Y--Ni-Al/1/fAl.plt", 
+                            "label": "Al &rho;(r):", 
+                            "link-text": "fAl.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Purja-Pun-G-P-Mishin-Y--Ni-Al/1/fNi.plt", 
+                            "label": "Ni &rho;(r):", 
+                            "link-text": "fNi.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Purja-Pun-G-P-Mishin-Y--Ni-Al/1/pAl.plt", 
+                            "label": "Al &phi;(r):", 
+                            "link-text": "pAl.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Purja-Pun-G-P-Mishin-Y--Ni-Al/1/pNi.plt", 
+                            "label": "Ni &phi;(r):", 
+                            "link-text": "pNi.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Purja-Pun-G-P-Mishin-Y--Ni-Al/1/pNiAl.plt", 
+                            "label": "Ni-Al &phi;(r):", 
+                            "link-text": "pNiAl.plt"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "702b81e2-b380-4659-ada4-368a6d0170d7", 
+                "id": "2009--Purja-Pun-G-P--Ni-Al--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2009-08-13", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This conversion was produced by Chandler Becker on 13 Aug. 2009 from the plt files listed above. This version is compatible with LAMMPS. Validation and usage information can be found in Mishin-Ni-Al-2009_releaseNotes_1.pdf. 15 Dec. 2009: Reference was updated from \"in press.\""
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Purja-Pun-G-P-Mishin-Y--Ni-Al/2/Mishin-Ni-Al-2009.eam.alloy", 
+                            "link-text": "Mishin-Ni-Al-2009.eam.alloy"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Purja-Pun-G-P-Mishin-Y--Ni-Al/2/Mishin-Ni-Al-2009_releaseNotes_1.pdf", 
+                            "link-text": "Mishin-Ni-Al-2009_releaseNotes_1.pdf"
+                        }
+                    }
+                ]
+            }
+        ], 
+        "element": [
+            "Ni", 
+            "Al"
+        ]
+    }
+}

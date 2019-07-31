@@ -1,0 +1,161 @@
+{
+    "interatomic-potential": {
+        "key": "84180f41-771d-4098-8a97-89fa1510477b", 
+        "id": "2011--Apostol-F-Mishin-Y--Al-Cu", 
+        "record-version": "2018-10-12", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Interatomic potential for the Al-Cu system", 
+                "author": [
+                    {
+                        "given-name": "F.", 
+                        "surname": "Apostol"
+                    }, 
+                    {
+                        "given-name": "Y.", 
+                        "surname": "Mishin"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 2011
+                }, 
+                "volume": 83, 
+                "issue": 5, 
+                "abstract": "An angular-dependent interatomic potential has been developed for the Al-Cu system based on existing embedded-atom method potentials for Al and Cu and fitting of the cross-interaction functions to experimental and first-principles data. The potential reproduces lattice parameters, formation energies, and elastic constants of the \u03b8 and \u03b8\u2032 phases of this system. It predicts the \u03b8\u2032 phase to be more stable than \u03b8 at 0 K but to become less stable at hight temperatures due to vibrational entropy. The temperate and entropy of this phase transformation are in good agreement with previous first-principles calculations [C. Wolverton and V. Ozoli\u0146\u0161, Phys. Rev. Lett. 86, 5518 (2001)]. The potential provides a reasonable description of the phase stability across the Al-Cu phase diagram, dilute heats of solution, and other thermodynamic properties. It has also been tested for generalized stacking fault energies in the presence of a copper layer embedded in Al. This configuration bears some resemblance to Guinier-Preston zones that strengthen Al-Cu alloys. The trends predicted by the potential for uniform shearing of this configuration are in agreement with results of first-principles density-functional calculations performed in this work. The potential is expected to be suitable for atomistic simulations of precipitation hardening of Al-Cu alloys.", 
+                "pages": 54116, 
+                "DOI": "10.1103/physrevb.83.054116", 
+                "bibtex": "@article{Apostol_2011,\n abstract = {An angular-dependent interatomic potential has been developed for the Al-Cu system based on existing embedded-atom method potentials for Al and Cu and fitting of the cross-interaction functions to experimental and first-principles data. The potential reproduces lattice parameters, formation energies, and elastic constants of the \u03b8 and \u03b8\u2032 phases of this system. It predicts the \u03b8\u2032 phase to be more stable than \u03b8 at 0 K but to become less stable at hight temperatures due to vibrational entropy. The temperate and entropy of this phase transformation are in good agreement with previous first-principles calculations [C. Wolverton and V. Ozoli\u0146\u0161, Phys. Rev. Lett. 86, 5518 (2001)]. The potential provides a reasonable description of the phase stability across the Al-Cu phase diagram, dilute heats of solution, and other thermodynamic properties. It has also been tested for generalized stacking fault energies in the presence of a copper layer embedded in Al. This configuration bears some resemblance to Guinier-Preston zones that strengthen Al-Cu alloys. The trends predicted by the potential for uniform shearing of this configuration are in agreement with results of first-principles density-functional calculations performed in this work. The potential is expected to be suitable for atomistic simulations of precipitation hardening of Al-Cu alloys.},\n author = {F. Apostol and Y. Mishin},\n doi = {10.1103/physrevb.83.054116},\n journal = {Physical Review B},\n month = {feb},\n number = {5},\n numpages = {8},\n pages = {054116},\n publisher = {American Physical Society (APS)},\n title = {Interatomic potential for the Al-Cu system},\n url = {https://doi.org/10.1103%2Fphysrevb.83.054116},\n volume = {83},\n year = {2011}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "Prof. Mishin requested the following be noted: There was a typing error in the original ADP paper (Y. Mishin, et al., Acta Mat. <b>53</b>, 4029 (2005)). More information and a correction can be found in the <a href=\"faq.html#ADP\">FAQ</a>."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "1bff3fbb-3ae9-473d-9795-c84eeeb1d2dd", 
+                "id": "2011--Apostol-F--Al-Cu--table--ipr1", 
+                "status": "active", 
+                "date": "2011-03-16", 
+                "type": "ADP tabulated functions", 
+                "notes": {
+                    "text": "These files were provided by Yuri Mishin (George Mason University) and posted on 16 Mar. 2011."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_F_Al.plt", 
+                            "label": "Al F(&rho;):", 
+                            "link-text": "Apostol_Mishin_2011_F_Al.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_F_Cu.plt", 
+                            "label": "Cu F(&rho;):", 
+                            "link-text": "Apostol_Mishin_2011_F_Cu.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_ro_Al.plt", 
+                            "label": "Al &rho;(r):", 
+                            "link-text": "Apostol_Mishin_2011_ro_Al.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_ro_Cu.plt", 
+                            "label": "Cu &rho;(r):", 
+                            "link-text": "Apostol_Mishin_2011_ro_Cu.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_p_Al.plt", 
+                            "label": "Al &phi;(r):", 
+                            "link-text": "Apostol_Mishin_2011_p_Al.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_p_Cu.plt", 
+                            "label": "Cu &phi;(r):", 
+                            "link-text": "Apostol_Mishin_2011_p_Cu.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_p_AlCu.plt", 
+                            "label": "Al-Cu &phi;(r):", 
+                            "link-text": "Apostol_Mishin_2011_p_AlCu.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_d_Al.plt", 
+                            "label": "Al u(r):", 
+                            "link-text": "Apostol_Mishin_2011_d_Al.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_d_Cu.plt", 
+                            "label": "Cu u(r):", 
+                            "link-text": "Apostol_Mishin_2011_d_Cu.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_d_AlCu.plt", 
+                            "label": "Al-Cu u(r):", 
+                            "link-text": "Apostol_Mishin_2011_d_AlCu.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_q_Al.plt", 
+                            "label": "Al w(r):", 
+                            "link-text": "Apostol_Mishin_2011_q_Al.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_q_Cu.plt", 
+                            "label": "Cu w(r):", 
+                            "link-text": "Apostol_Mishin_2011_q_Cu.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_q_AlCu.plt", 
+                            "label": "Al-Cu w(r):", 
+                            "link-text": "Apostol_Mishin_2011_q_AlCu.plt"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "3488f6de-4021-4cb2-8c66-66bf52b24fc6", 
+                "id": "2011--Apostol-F--Al-Cu--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2018-10-12", 
+                "type": "LAMMPS pair_style adp", 
+                "notes": {
+                    "text": "This file was taken from the August 22, 2018 LAMMPS distribution and listed as having been created by CV Singh (Cornell). The tabulated functions and their numerical derivatives appear consistent between this file and the tables listed above."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/2/AlCu.adp", 
+                        "link-text": "AlCu.adp"
+                    }
+                }
+            }
+        ], 
+        "element": [
+            "Al", 
+            "Cu"
+        ]
+    }
+}

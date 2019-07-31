@@ -1,0 +1,93 @@
+{
+    "interatomic-potential": {
+        "key": "3837b6da-05c4-4148-97cd-90b26a2092df", 
+        "id": "2006--Chamati-H-Papanicolaou-N-I-Mishin-Y-Papaconstantopoulos-D-A--Fe", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Embedded-atom potential for Fe and its application to self-diffusion on Fe(100)", 
+                "author": [
+                    {
+                        "given-name": "H.", 
+                        "surname": "Chamati"
+                    }, 
+                    {
+                        "given-name": "N.I.", 
+                        "surname": "Papanicolaou"
+                    }, 
+                    {
+                        "given-name": "Y.", 
+                        "surname": "Mishin"
+                    }, 
+                    {
+                        "given-name": "D.A.", 
+                        "surname": "Papaconstantopoulos"
+                    }
+                ], 
+                "publication-name": "Surface Science", 
+                "publication-date": {
+                    "year": 2006
+                }, 
+                "volume": 600, 
+                "issue": 9, 
+                "abstract": "We have constructed an embedded-atom potential for Fe by fitting to both experimental and first-principles results. The potential reproduces with satisfactory accuracy the lattice properties, surface energies and point defect energies for both BCC and the high temperature FCC phases of the metal. The potential was used in tandem with molecular-dynamics simulations to calculate the thermal expansion of both BCC-Fe and FCC-Fe, the phonon dispersion curves, mean-square displacements and surface relaxations of the element. In addition, we have studied self-diffusion of single adatoms on the BCC-Fe(1 0 0) surface at several temperatures. The migration energies and pre-exponential factors for three main diffusion mechanisms were determined and compared with available experimental data. We have found that the diagonal exchange diffusion process is energetically favored over the direct hopping mechanism and that its migration energy is close to the experimental value. Furthermore, the diffusion coefficient associated with the diagonal exchange diffusion process is about an order of magnitude higher than those of the hopping and the non-diagonal exchange mechanisms.", 
+                "pages": "1793-1803", 
+                "DOI": "10.1016/j.susc.2006.02.010", 
+                "bibtex": "@article{Chamati_2006,\n abstract = {We have constructed an embedded-atom potential for Fe by fitting to both experimental and first-principles results. The potential reproduces with satisfactory accuracy the lattice properties, surface energies and point defect energies for both BCC and the high temperature FCC phases of the metal. The potential was used in tandem with molecular-dynamics simulations to calculate the thermal expansion of both BCC-Fe and FCC-Fe, the phonon dispersion curves, mean-square displacements and surface relaxations of the element. In addition, we have studied self-diffusion of single adatoms on the BCC-Fe(1 0 0) surface at several temperatures. The migration energies and pre-exponential factors for three main diffusion mechanisms were determined and compared with available experimental data. We have found that the diagonal exchange diffusion process is energetically favored over the direct hopping mechanism and that its migration energy is close to the experimental value. Furthermore, the diffusion coefficient associated with the diagonal exchange diffusion process is about an order of magnitude higher than those of the hopping and the non-diagonal exchange mechanisms.},\n author = {H. Chamati and N.I. Papanicolaou and Y. Mishin and D.A. Papaconstantopoulos},\n doi = {10.1016/j.susc.2006.02.010},\n journal = {Surface Science},\n month = {may},\n number = {9},\n pages = {1793--1803},\n publisher = {Elsevier BV},\n title = {Embedded-atom potential for Fe and its application to self-diffusion on Fe(100)},\n url = {https://doi.org/10.1016%2Fj.susc.2006.02.010},\n volume = {600},\n year = {2006}\n}\n\n"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "9e16d628-87cc-49a0-8ce8-a23097f798e5", 
+                "id": "2006--Chamati-H--Fe--table--ipr1", 
+                "status": "active", 
+                "date": "2009-12-10", 
+                "type": "EAM tabulated functions", 
+                "notes": {
+                    "text": "These files were provided by Yuri Mishin (George Mason University) and posted on 10 Dec. 2009."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Chamati-H-Papanicolaou-N-I-Mishin-Y-Papaconstantopoulos-D-A--Fe/1/F_fe.plt", 
+                            "label": "F(&rho;):", 
+                            "link-text": "F_fe.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Chamati-H-Papanicolaou-N-I-Mishin-Y-Papaconstantopoulos-D-A--Fe/1/ffe.plt", 
+                            "label": "&rho;(r):", 
+                            "link-text": "ffe.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Chamati-H-Papanicolaou-N-I-Mishin-Y-Papaconstantopoulos-D-A--Fe/1/pfe.plt", 
+                            "label": "&phi;(r):", 
+                            "link-text": "pfe.plt"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "8ca857c2-a6eb-460d-b46a-a40e236c2616", 
+                "id": "2006--Chamati-H--Fe--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2017-08-23", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "Professor Mishin provided a LAMMPS-compatible version of the potential, which was posted on 23 Aug. 2017."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Chamati-H-Papanicolaou-N-I-Mishin-Y-Papaconstantopoulos-D-A--Fe/2/Fe_Mishin2006.eam.alloy", 
+                        "link-text": "Fe_Mishin2006.eam.alloy"
+                    }
+                }
+            }
+        ], 
+        "element": "Fe"
+    }
+}

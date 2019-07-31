@@ -1,0 +1,108 @@
+{
+    "interatomic-potential": {
+        "key": "a7910725-e80c-4a53-83e8-adfb5724dc9f", 
+        "id": "2001--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A-et-al--Cu-1", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Structural stability and lattice defects in copper: Ab initio, tight-binding, and embedded-atom calculations", 
+                "author": [
+                    {
+                        "given-name": "Y.", 
+                        "surname": "Mishin"
+                    }, 
+                    {
+                        "given-name": "M.J.", 
+                        "surname": "Mehl"
+                    }, 
+                    {
+                        "given-name": "D.A.", 
+                        "surname": "Papaconstantopoulos"
+                    }, 
+                    {
+                        "given-name": "A.F.", 
+                        "surname": "Voter"
+                    }, 
+                    {
+                        "given-name": "J.D.", 
+                        "surname": "Kress"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 2001
+                }, 
+                "volume": 63, 
+                "issue": 22, 
+                "abstract": "We evaluate the ability of the embedded-atom method (EAM) potentials and the tight-binding (TB) method to predict reliably energies and stability of nonequilibrium structures by taking Cu as a model material. Two EAM potentials are used here. One is constructed in this work by using more fitting parameters than usual and including ab initio energies in the fitting database. The other potential was constructed previously using a traditional scheme. Excellent agreement is observed between ab initio, TB, and EAM results for the energies and stability of several nonequilibrium structures of Cu, as well as for energies along deformation paths between different structures. We conclude that not only TB calculations but also EAM potentials can be suitable for simulations in which correct energies and stability of different atomic configurations are essential, at least for Cu. The bcc, simple cubic, and diamond structures of Cu were identified as elastically unstable, while some other structures (e.g., hcp and 9R) are metastable. As an application of this analysis, nonequilibrium structures of epitaxial Cu films on (001)-oriented fcc or bcc substrates are evaluated using a simple model and atomistic simulations with an EAM potential. In agreement with experimental data, the structure of the film can be either deformed fcc or deformed hcp. The bcc structure cannot be stabilized by epitaxial constraints.", 
+                "pages": 224106, 
+                "DOI": "10.1103/physrevb.63.224106", 
+                "bibtex": "@article{Mishin_2001,\n abstract = {We evaluate the ability of the embedded-atom method (EAM) potentials and the tight-binding (TB) method to predict reliably energies and stability of nonequilibrium structures by taking Cu as a model material. Two EAM potentials are used here. One is constructed in this work by using more fitting parameters than usual and including ab initio energies in the fitting database. The other potential was constructed previously using a traditional scheme. Excellent agreement is observed between ab initio, TB, and EAM results for the energies and stability of several nonequilibrium structures of Cu, as well as for energies along deformation paths between different structures. We conclude that not only TB calculations but also EAM potentials can be suitable for simulations in which correct energies and stability of different atomic configurations are essential, at least for Cu. The bcc, simple cubic, and diamond structures of Cu were identified as elastically unstable, while some other structures (e.g., hcp and 9R) are metastable. As an application of this analysis, nonequilibrium structures of epitaxial Cu films on (001)-oriented fcc or bcc substrates are evaluated using a simple model and atomistic simulations with an EAM potential. In agreement with experimental data, the structure of the film can be either deformed fcc or deformed hcp. The bcc structure cannot be stabilized by epitaxial constraints.},\n author = {Y. Mishin and M. J. Mehl and D. A. Papaconstantopoulos and A. F. Voter and J. D. Kress},\n doi = {10.1103/physrevb.63.224106},\n journal = {Physical Review B},\n month = {may},\n number = {22},\n numpages = {16},\n pages = {224106},\n publisher = {American Physical Society (APS)},\n title = {Structural stability and lattice defects in copper: Ab initio, tight-binding, and embedded-atom calculations},\n url = {https://doi.org/10.1103%2Fphysrevb.63.224106},\n volume = {63},\n year = {2001}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "This listing is for the reference's EAM1 potential."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "a063df15-8cb7-4773-8e50-79e6a889c27c", 
+                "id": "2001--Mishin-Y--Cu-1--table--ipr1", 
+                "status": "active", 
+                "date": "2009-01-01", 
+                "type": "EAM tabulated functions", 
+                "notes": {
+                    "text": "These files were provided by Yuri Mishin."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2001--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A-et-al--Cu-1/1/F_cu.plt", 
+                            "label": "F(&rho;):", 
+                            "link-text": "F_cu.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2001--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A-et-al--Cu-1/1/fcu.plt", 
+                            "label": "&rho;(r):", 
+                            "link-text": "fcu.plt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2001--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A-et-al--Cu-1/1/pcu.plt", 
+                            "label": "&phi;(r):", 
+                            "link-text": "pcu.plt"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "996ee8d7-a0a4-48c1-b689-81e4e0825dfa", 
+                "id": "2001--Mishin-Y--Cu-1--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2009-02-04", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This conversion was produced by Chandler Becker on 4 February 2009 from the plt files listed above. This version is compatible with LAMMPS. Validation and usage information can be found in Cu01_releaseNotes_1.pdf. If you use this setfl file, please credit the website in addition to the original reference."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2001--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A-et-al--Cu-1/2/Cu01.eam.alloy", 
+                            "link-text": "Cu01.eam.alloy"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2001--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A-et-al--Cu-1/2/Cu01_releaseNotes_1.pdf", 
+                            "link-text": "Cu01_releaseNotes_1.pdf"
+                        }
+                    }
+                ]
+            }
+        ], 
+        "element": "Cu"
+    }
+}

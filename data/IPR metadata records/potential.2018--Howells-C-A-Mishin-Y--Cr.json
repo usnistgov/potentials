@@ -1,0 +1,50 @@
+{
+    "interatomic-potential": {
+        "key": "c6620af7-cfe4-4086-b9cf-8198d56e1d30", 
+        "id": "2018--Howells-C-A-Mishin-Y--Cr", 
+        "record-version": "2018-11-05", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Angular-dependent interatomic potential for the binary Ni-Cr system", 
+                "author": [
+                    {
+                        "given-name": "C.A.", 
+                        "surname": "Howells"
+                    }, 
+                    {
+                        "given-name": "Y.", 
+                        "surname": "Mishin"
+                    }
+                ], 
+                "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                "publication-date": {
+                    "year": 2018
+                }, 
+                "volume": 26, 
+                "issue": 8, 
+                "abstract": "A new interatomic potential has been developed for the Ni\u2013Cr system in the angular-dependent potential (ADP) format by fitting the potential parameters to a set of experimental and first-principles data. The ADP potential reproduces a wide range of properties of both elements as well as binary alloys with reasonable accuracy, including thermal and mechanical properties, defects, melting points of Ni and Cr, and the Ni\u2013Cr phase diagram. The potential can be used for atomistic simulations of solidification, mechanical behavior and microstructure of the Ni-based and Cr-based phases as well as two-phase alloys.", 
+                "pages": 85008, 
+                "DOI": "10.1088/1361-651x/aae400", 
+                "bibtex": "@article{Howells_2018,\n abstract = {A new interatomic potential has been developed for the Ni\u2013Cr system in the angular-dependent potential (ADP) format by fitting the potential parameters to a set of experimental and first-principles data. The ADP potential reproduces a wide range of properties of both elements as well as binary alloys with reasonable accuracy, including thermal and mechanical properties, defects, melting points of Ni and Cr, and the Ni\u2013Cr phase diagram. The potential can be used for atomistic simulations of solidification, mechanical behavior and microstructure of the Ni-based and Cr-based phases as well as two-phase alloys.},\n author = {C A Howells and Y Mishin},\n doi = {10.1088/1361-651x/aae400},\n journal = {Modelling and Simulation in Materials Science and Engineering},\n month = {oct},\n number = {8},\n pages = {085008},\n publisher = {IOP Publishing},\n title = {Angular-dependent interatomic potential for the binary Ni-Cr system},\n url = {https://doi.org/10.1088%2F1361-651x%2Faae400},\n volume = {26},\n year = {2018}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "16c5d68c-bf58-41e2-bd1e-22ab7c7436e1", 
+            "id": "2018--Howells-C-A--Cr--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-11-05", 
+            "type": "LAMMPS pair_style adp", 
+            "notes": {
+                "text": "This file was provided by Yuri Mishin (George Mason University) on 2 Nov. 2018."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Howells-C-A-Mishin-Y--Cr/1/Cr.adp.txt", 
+                    "link-text": "Cr.adp.txt"
+                }
+            }
+        }, 
+        "element": "Cr"
+    }
+}

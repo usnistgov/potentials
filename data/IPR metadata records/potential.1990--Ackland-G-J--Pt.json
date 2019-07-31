@@ -1,0 +1,38 @@
+{
+    "interatomic-potential": {
+        "key": "8f889026-92ea-4fc4-abc3-6981d5ad2729", 
+        "id": "1990--Ackland-G-J--Pt", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "unspecified", 
+                "title": "unpublished", 
+                "author": {
+                    "given-name": "G.J.", 
+                    "surname": "Ackland"
+                }, 
+                "publication-date": {
+                    "year": 1990
+                }, 
+                "bibtex": "@unpublished{1990--Ackland-G-J--Pt,\n author = {G.J. Ackland},\n note = {1990--Ackland-G-J--Pt},\n title = {unpublished},\n year = {1990}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "d6f08899-aa77-489d-a332-a96bdc0321d1", 
+            "id": "1990--Ackland-G-J--Pt--MOLDY--ipr1", 
+            "status": "active", 
+            "date": "2009-06-30", 
+            "type": "Moldy FS", 
+            "notes": {
+                "text": "The parameters in pt.moldy were obtained from <a href=\"http://homepages.ed.ac.uk/graeme/moldy/moldy.html\" class=\"external\">http://homepages.ed.ac.uk/graeme/moldy/moldy.html</a> and posted with the permission of G.J. Ackland."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1990--Ackland-G-J--Pt/1/pt.moldy", 
+                    "link-text": "pt.moldy"
+                }
+            }
+        }, 
+        "element": "Pt"
+    }
+}

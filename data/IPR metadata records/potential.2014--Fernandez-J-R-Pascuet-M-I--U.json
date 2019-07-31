@@ -1,0 +1,58 @@
+{
+    "interatomic-potential": {
+        "key": "d172f071-9afa-4332-b762-65fc99e1fd59", 
+        "id": "2014--Fernandez-J-R-Pascuet-M-I--U", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "On the accurate description of uranium metallic phases: a MEAM interatomic potential approach", 
+                "author": [
+                    {
+                        "given-name": "J.R.", 
+                        "surname": "Fern\u00e1ndez"
+                    }, 
+                    {
+                        "given-name": "M.I.", 
+                        "surname": "Pascuet"
+                    }
+                ], 
+                "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                "publication-date": {
+                    "year": 2014
+                }, 
+                "volume": 22, 
+                "issue": 5, 
+                "abstract": "A new interatomic potential in the framework of the modified embedded atom method (MEAM) to model U metal is presented. The potential acceptably reproduces the lattice parameters and cohesive energy of the orthorhombic \u03b1U. The relative stability of the experimentally observed phase at low temperatures with respect to several other structures (bct, bcc, simple cubic, tetragonal \u03b2 Np, fcc and hcp) is also taken into account. Intrinsic point defect properties compare reasonably well with data from the literature. To determine the quality of the interaction, the potential is used to study a number of properties for the pure metal at finite temperatures and the results are compared with the available data. The obtained allotropic \u03b1U \u2194 \u03b3U transformation and melting temperatures are in good agreement with experimental values. Based on the simulations, a new \u03b1U \u2194 \u03b3U transformation mechanism is proposed.", 
+                "pages": 55019, 
+                "DOI": "10.1088/0965-0393/22/5/055019", 
+                "bibtex": "@article{Fern_ndez_2014,\n abstract = {A new interatomic potential in the framework of the modified embedded atom method (MEAM) to model U metal is presented. The potential acceptably reproduces the lattice parameters and cohesive energy of the orthorhombic \u03b1U. The relative stability of the experimentally observed phase at low temperatures with respect to several other structures (bct, bcc, simple cubic, tetragonal \u03b2 Np, fcc and hcp) is also taken into account. Intrinsic point defect properties compare reasonably well with data from the literature. To determine the quality of the interaction, the potential is used to study a number of properties for the pure metal at finite temperatures and the results are compared with the available data. The obtained allotropic \u03b1U \u2194 \u03b3U transformation and melting temperatures are in good agreement with experimental values. Based on the simulations, a new \u03b1U \u2194 \u03b3U transformation mechanism is proposed.},\n author = {J R Fern\u00e1ndez and M I Pascuet},\n doi = {10.1088/0965-0393/22/5/055019},\n journal = {Modelling and Simulation in Materials Science and Engineering},\n month = {jun},\n number = {5},\n pages = {055019},\n publisher = {IOP Publishing},\n title = {On the accurate description of uranium metallic phases: a MEAM interatomic potential approach},\n url = {https://doi.org/10.1088%2F0965-0393%2F22%2F5%2F055019},\n volume = {22},\n year = {2014}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "7006fadd-1124-471f-b35c-f3e6cced28de", 
+            "id": "2014--Fernandez-J-R--U--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2016-04-25", 
+            "type": "LAMMPS pair_style meam", 
+            "notes": {
+                "text": "These files were sent by M.I. Pascuet (CONICET) on 25 Apr. 2016 and posted with her permission."
+            }, 
+            "artifact": [
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Fernandez-J-R-Pascuet-M-I--U/1/U.meam", 
+                        "link-text": "U.meam"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Fernandez-J-R-Pascuet-M-I--U/1/library-U.meam", 
+                        "link-text": "library-U.meam"
+                    }
+                }
+            ]
+        }, 
+        "element": "U"
+    }
+}

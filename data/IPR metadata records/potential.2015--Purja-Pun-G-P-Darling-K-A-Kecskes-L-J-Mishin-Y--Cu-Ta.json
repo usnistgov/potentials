@@ -1,0 +1,81 @@
+{
+    "interatomic-potential": {
+        "key": "b2cdadf2-6f7a-4cfc-919b-b78904969e6b", 
+        "id": "2015--Purja-Pun-G-P-Darling-K-A-Kecskes-L-J-Mishin-Y--Cu-Ta", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Angular-dependent interatomic potential for the Cu-Ta system and its application to structural stability of nano-crystalline alloys", 
+                "author": [
+                    {
+                        "given-name": "G.P.", 
+                        "surname": "Purja Pun"
+                    }, 
+                    {
+                        "given-name": "K.A.", 
+                        "surname": "Darling"
+                    }, 
+                    {
+                        "given-name": "L.J.", 
+                        "surname": "Kecskes"
+                    }, 
+                    {
+                        "given-name": "Y.", 
+                        "surname": "Mishin"
+                    }
+                ], 
+                "publication-name": "Acta Materialia", 
+                "publication-date": {
+                    "year": 2015
+                }, 
+                "volume": 100, 
+                "abstract": "Atomistic computer simulations are capable of providing insights into physical mechanisms responsible for the extraordinary structural stability and strength of immiscible Cu\u2013Ta alloys. To enable reliable simulations of these alloys, we have developed an angular-dependent potential (ADP) for the Cu\u2013Ta system by fitting to a large database of first-principles and experimental data. This, in turn, required the development of a new ADP potential for elemental Ta, which accurately reproduces a wide range of properties of Ta and is transferable to severely deformed states and diverse atomic environments. The new Cu\u2013Ta potential is applied for studying the kinetics of grain growth in nano-crystalline Cu\u2013Ta alloys with different chemical compositions. Ta atoms form nanometer-scale clusters preferentially located at grain boundaries (GBs) and triple junctions. These clusters pin some of the GBs in place and cause a drastic decrease in grain growth by the Zener pinning mechanism. The results of the simulations are well consistent with experimental observations and suggest possible mechanisms of the stabilization effect of Ta.", 
+                "pages": "377-391", 
+                "DOI": "10.1016/j.actamat.2015.08.052", 
+                "bibtex": "@article{Purja_Pun_2015,\n abstract = {Atomistic computer simulations are capable of providing insights into physical mechanisms responsible for the extraordinary structural stability and strength of immiscible Cu\u2013Ta alloys. To enable reliable simulations of these alloys, we have developed an angular-dependent potential (ADP) for the Cu\u2013Ta system by fitting to a large database of first-principles and experimental data. This, in turn, required the development of a new ADP potential for elemental Ta, which accurately reproduces a wide range of properties of Ta and is transferable to severely deformed states and diverse atomic environments. The new Cu\u2013Ta potential is applied for studying the kinetics of grain growth in nano-crystalline Cu\u2013Ta alloys with different chemical compositions. Ta atoms form nanometer-scale clusters preferentially located at grain boundaries (GBs) and triple junctions. These clusters pin some of the GBs in place and cause a drastic decrease in grain growth by the Zener pinning mechanism. The results of the simulations are well consistent with experimental observations and suggest possible mechanisms of the stabilization effect of Ta.},\n author = {G.P. Purja Pun and K.A. Darling and L.J. Kecskes and Y. Mishin},\n doi = {10.1016/j.actamat.2015.08.052},\n journal = {Acta Materialia},\n month = {nov},\n pages = {377--391},\n publisher = {Elsevier BV},\n title = {Angular-dependent interatomic potential for the Cu-Ta system and its application to structural stability of nano-crystalline alloys},\n url = {https://doi.org/10.1016%2Fj.actamat.2015.08.052},\n volume = {100},\n year = {2015}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "This potential is meant to supplant the Hahibon 2008 Cu-Ta ADP potential by providing a refit of the Ta-Ta and Cu-Ta interactions."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "167e5dfd-c0c3-49d3-8b67-c37268f94d04", 
+                "id": "2015--Purja-Pun-G-P--Cu-Ta--LAMMPS--ipr1", 
+                "status": "superseded", 
+                "date": "2009-06-30", 
+                "type": "LAMMPS pair_style adp", 
+                "notes": {
+                    "text": "This file was provided by Yuri Mishin (George Mason University) on 11 Sep. 2015."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Purja-Pun-G-P-Darling-K-A-Kecskes-L-J-Mishin-Y--Cu-Ta/1/CuTa_LJ15_2014.angdep", 
+                        "link-text": "CuTa_LJ15_2014.angdep"
+                    }
+                }
+            }, 
+            {
+                "key": "46586f9c-95ec-4ce2-81d5-91416a009d60", 
+                "id": "2015--Purja-Pun-G-P--Cu-Ta--LAMMPS--ipr2", 
+                "status": "active", 
+                "date": "2018-11-05", 
+                "type": "LAMMPS pair_style adp", 
+                "notes": {
+                    "text": "This file was provided by Yuri Mishin (George Mason University) on 2 Nov. 2018. Ganga Purja Pun noted that the tabulated values are identical to the version above except that the short range behaviors (r < 0.5 Angstroms) for some functions have been fixed so that they now follow the correct trends."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Purja-Pun-G-P-Darling-K-A-Kecskes-L-J-Mishin-Y--Cu-Ta/2/CuTa_LJ15_2014.adp.txt", 
+                        "link-text": "CuTa_LJ15_2014.adp.txt"
+                    }
+                }
+            }
+        ], 
+        "element": [
+            "Cu", 
+            "Ta"
+        ]
+    }
+}

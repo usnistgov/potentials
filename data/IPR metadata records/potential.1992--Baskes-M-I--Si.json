@@ -1,0 +1,44 @@
+{
+    "interatomic-potential": {
+        "key": "206f614d-8dc9-471e-92da-7b9e5d646b0d", 
+        "id": "1992--Baskes-M-I--Si", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Modified embedded-atom potentials for cubic materials and impurities", 
+                "author": {
+                    "given-name": "M.I.", 
+                    "surname": "Baskes"
+                }, 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 1992
+                }, 
+                "volume": 46, 
+                "issue": 5, 
+                "abstract": "In a comprehensive study, the modified embedded-atom method is extended to a variety of cubic materials and impurities. In this extension, all functions are analytic and computationally simple. The basic equations of the method are developed and applied to 26 elements: ten fcc, ten bcc, three diamond cubic, and three gaseous materials. The materials modeled include metals, semiconductors, and diatomic gases, all of which exhibit different types of bonding. Properties of these materials, including equation of state, elastic moduli, structural energies and lattice constants, simple defects, and surfaces, are calculated. The formalism for applying the method to combinations of these elements is developed and applied to the calculation of dilute heats of solution. In all cases, comparison is made to experiment or higher-level calculations when possible.", 
+                "pages": "2727-2742", 
+                "DOI": "10.1103/physrevb.46.2727", 
+                "bibtex": "@article{Baskes_1992,\n abstract = {In a comprehensive study, the modified embedded-atom method is extended to a variety of cubic materials and impurities. In this extension, all functions are analytic and computationally simple. The basic equations of the method are developed and applied to 26 elements: ten fcc, ten bcc, three diamond cubic, and three gaseous materials. The materials modeled include metals, semiconductors, and diatomic gases, all of which exhibit different types of bonding. Properties of these materials, including equation of state, elastic moduli, structural energies and lattice constants, simple defects, and surfaces, are calculated. The formalism for applying the method to combinations of these elements is developed and applied to the calculation of dilute heats of solution. In all cases, comparison is made to experiment or higher-level calculations when possible.},\n author = {M. I. Baskes},\n doi = {10.1103/physrevb.46.2727},\n journal = {Physical Review B},\n month = {aug},\n number = {5},\n pages = {2727--2742},\n publisher = {American Physical Society (APS)},\n title = {Modified embedded-atom potentials for cubic materials and impurities},\n url = {https://doi.org/10.1103%2Fphysrevb.46.2727},\n volume = {46},\n year = {1992}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "c6be851a-3893-41a2-be5b-b5849dfc80b9", 
+            "id": "1992--Baskes-M-I--Si--parameters--ipr1", 
+            "status": "active", 
+            "date": "2010-01-29", 
+            "type": "MEAM parameters", 
+            "notes": {
+                "text": "This file was sent by Mike Baskes (Los Alamos National Laboratory) and posted on 29 Jan. 2010. It includes the MEAM parameters, papers with additional information, and various property evaluations."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1992--Baskes-M-I--Si/1/MEAM_Si.pdf", 
+                    "link-text": "MEAM_Si.pdf"
+                }
+            }
+        }, 
+        "element": "Si"
+    }
+}

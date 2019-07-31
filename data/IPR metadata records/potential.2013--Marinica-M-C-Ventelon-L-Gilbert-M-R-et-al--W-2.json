@@ -1,0 +1,77 @@
+{
+    "interatomic-potential": {
+        "key": "35eb4e57-5629-4b16-a21d-f87367d10a51", 
+        "id": "2013--Marinica-M-C-Ventelon-L-Gilbert-M-R-et-al--W-2", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Interatomic potentials for modelling radiation defects and dislocations in tungsten", 
+                "author": [
+                    {
+                        "given-name": "M.-C.", 
+                        "surname": "Marinica"
+                    }, 
+                    {
+                        "given-name": "L.", 
+                        "surname": "Ventelon"
+                    }, 
+                    {
+                        "given-name": "M.R.", 
+                        "surname": "Gilbert"
+                    }, 
+                    {
+                        "given-name": "L.", 
+                        "surname": "Proville"
+                    }, 
+                    {
+                        "given-name": "S.L.", 
+                        "surname": "Dudarev"
+                    }, 
+                    {
+                        "given-name": "J.", 
+                        "surname": "Marian"
+                    }, 
+                    {
+                        "given-name": "G.", 
+                        "surname": "Bencteux"
+                    }, 
+                    {
+                        "given-name": "F.", 
+                        "surname": "Willaime"
+                    }
+                ], 
+                "publication-name": "Journal of Physics: Condensed Matter", 
+                "publication-date": {
+                    "year": 2013
+                }, 
+                "volume": 25, 
+                "issue": 39, 
+                "abstract": "We have developed empirical interatomic potentials for studying radiation defects and dislocations in tungsten. The potentials use the embedded atom method formalism and are fitted to a mixed database, containing various experimentally measured properties of tungsten and ab initio formation energies of defects, as well as ab initio interatomic forces computed for random liquid configurations. The availability of data on atomic force fields proves critical for the development of the new potentials. Several point and extended defect configurations were used to test the transferability of the potentials. The trends predicted for the Peierls barrier of the 1/2<111> screw dislocation are in qualitative agreement with ab initio calculations, enabling quantitative comparison of the predicted kink-pair formation energies with experimental data.", 
+                "pages": 395502, 
+                "DOI": "10.1088/0953-8984/25/39/395502", 
+                "bibtex": "@article{Marinica_2013,\n abstract = {We have developed empirical interatomic potentials for studying radiation defects and dislocations in tungsten. The potentials use the embedded atom method formalism and are fitted to a mixed database, containing various experimentally measured properties of tungsten and ab initio formation energies of defects, as well as ab initio interatomic forces computed for random liquid configurations. The availability of data on atomic force fields proves critical for the development of the new potentials. Several point and extended defect configurations were used to test the transferability of the potentials. The trends predicted for the Peierls barrier of the 1/2<111> screw dislocation are in qualitative agreement with ab initio calculations, enabling quantitative comparison of the predicted kink-pair formation energies with experimental data.},\n author = {M-C Marinica and Lisa Ventelon and M R Gilbert and L Proville and S L Dudarev and J Marian and G Bencteux and F Willaime},\n doi = {10.1088/0953-8984/25/39/395502},\n journal = {Journal of Physics: Condensed Matter},\n month = {sep},\n number = {39},\n pages = {395502},\n publisher = {IOP Publishing},\n title = {Interatomic potentials for modelling radiation defects and dislocations in tungsten},\n url = {https://doi.org/10.1088%2F0953-8984%2F25%2F39%2F395502},\n volume = {25},\n year = {2013}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "This listing is for potential the reference's potential parameter set EAM2."
+            }
+        }, 
+        "implementation": {
+            "key": "8f8b7506-13db-4798-8eeb-e92a397f9ca3", 
+            "id": "2013--Marinica-M-C--W-2--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2017-01-09", 
+            "type": "LAMMPS pair_style eam/fs", 
+            "notes": {
+                "text": "This file was sent by M.-C. Marinica (CEA, France) on 9 January 2017 and posted with his permission."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Marinica-M-C-Ventelon-L-Gilbert-M-R-et-al--W-2/1/w_eam2.fs", 
+                    "link-text": "w_eam2.fs"
+                }
+            }
+        }, 
+        "element": "W"
+    }
+}

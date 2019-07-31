@@ -1,0 +1,70 @@
+{
+    "interatomic-potential": {
+        "key": "9873fcee-4fcc-405b-860b-b6af7ea3c8db", 
+        "id": "2015--Choudhary-K-Liang-T-Chernatynskiy-A-et-al--Al", 
+        "record-version": "2018-11-09", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Charge optimized many-body potential for aluminum", 
+                "author": [
+                    {
+                        "given-name": "K.", 
+                        "surname": "Choudhary"
+                    }, 
+                    {
+                        "given-name": "T.", 
+                        "surname": "Liang"
+                    }, 
+                    {
+                        "given-name": "A.", 
+                        "surname": "Chernatynskiy"
+                    }, 
+                    {
+                        "given-name": "Z.", 
+                        "surname": "Lu"
+                    }, 
+                    {
+                        "given-name": "A.", 
+                        "surname": "Goyal"
+                    }, 
+                    {
+                        "given-name": "S.R.", 
+                        "surname": "Phillpot"
+                    }, 
+                    {
+                        "given-name": "S.B.", 
+                        "surname": "Sinnott"
+                    }
+                ], 
+                "publication-name": "Journal of Physics: Condensed Matter", 
+                "publication-date": {
+                    "year": 2015
+                }, 
+                "volume": 27, 
+                "issue": 1, 
+                "abstract": "An interatomic potential for Al is developed within the third generation of the charge optimized many-body (COMB3) formalism. The database used for the parameterization of the potential consists of experimental data and the results of first-principles and quantum chemical calculations. The potential exhibits reasonable agreement with cohesive energy, lattice parameters, elastic constants, bulk and shear modulus, surface energies, stacking fault energies, point defect formation energies, and the phase order of metallic Al from experiments and density functional theory. In addition, the predicted phonon dispersion is in good agreement with the experimental data and first-principles calculations. Importantly for the prediction of the mechanical behavior, the unstable stacking fault energetics along the <1 2 -1> direction on the (1\u20091\u20091) plane are similar to those obtained from first-principles calculations. The polycrsytal when strained shows responses that are physical and the overall behavior is consistent with experimental observations.", 
+                "pages": 15003, 
+                "DOI": "10.1088/0953-8984/27/1/015003", 
+                "bibtex": "@article{Choudhary_2014,\n abstract = {An interatomic potential for Al is developed within the third generation of the charge optimized many-body (COMB3) formalism. The database used for the parameterization of the potential consists of experimental data and the results of first-principles and quantum chemical calculations. The potential exhibits reasonable agreement with cohesive energy, lattice parameters, elastic constants, bulk and shear modulus, surface energies, stacking fault energies, point defect formation energies, and the phase order of metallic Al from experiments and density functional theory. In addition, the predicted phonon dispersion is in good agreement with the experimental data and first-principles calculations. Importantly for the prediction of the mechanical behavior, the unstable stacking fault energetics along the <1 2 -1> direction on the (1\u20091\u20091) plane are similar to those obtained from first-principles calculations. The polycrsytal when strained shows responses that are physical and the overall behavior is consistent with experimental observations.},\n author = {Kamal Choudhary and Tao Liang and Aleksandr Chernatynskiy and Zizhe Lu and Anuj Goyal and Simon R Phillpot and Susan B Sinnott},\n doi = {10.1088/0953-8984/27/1/015003},\n journal = {Journal of Physics: Condensed Matter},\n month = {nov},\n number = {1},\n pages = {015003},\n publisher = {IOP Publishing},\n title = {Charge optimized many-body potential for aluminum},\n url = {https://doi.org/10.1088%2F0953-8984%2F27%2F1%2F015003},\n volume = {27},\n year = {2015}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "4c211b73-c2b6-4fc6-8fb0-66c6585ce456", 
+            "id": "2015--Choudhary-K--Al--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-11-09", 
+            "type": "LAMMPS pair_style comb3", 
+            "notes": {
+                "text": "This file was obtained from <a href=\"https://www.ctcms.nist.gov/~knc6/periodic.html\">Jarvis-FF (https://www.ctcms.nist.gov/~knc6/periodic.html)</a> on 9 Nov. 2018 and posted at Kamal Choudhary's (NIST) request."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Choudhary-K-Liang-T-Chernatynskiy-A-et-al--Al/1/ffield.comb3.NiAlO", 
+                    "link-text": "ffield.comb3.NiAlO"
+                }
+            }
+        }, 
+        "element": "Al"
+    }
+}

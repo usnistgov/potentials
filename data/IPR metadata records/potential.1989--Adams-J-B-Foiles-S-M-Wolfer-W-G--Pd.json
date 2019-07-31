@@ -1,0 +1,54 @@
+{
+    "interatomic-potential": {
+        "key": "d43c300c-e557-42f8-87a0-c26cf82370df", 
+        "id": "1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Pd", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Self-diffusion and impurity diffusion of fcc metals using the five-frequency model and the Embedded Atom Method", 
+                "author": [
+                    {
+                        "given-name": "J.B.", 
+                        "surname": "Adams"
+                    }, 
+                    {
+                        "given-name": "S.M.", 
+                        "surname": "Foiles"
+                    }, 
+                    {
+                        "given-name": "W.G.", 
+                        "surname": "Wolfer"
+                    }
+                ], 
+                "publication-name": "Journal of Materials Research", 
+                "publication-date": {
+                    "year": 1989
+                }, 
+                "volume": 4, 
+                "issue": 1, 
+                "abstract": "The activation energies for self-diffusion of transition metals (Au, Ag, Cu, Ni, Pd, Pt) have been calculated with the Embedded Atom Method (EAM); the results agree well with available experimental data for both mono-vacancy and di-vacancy mechanisms. The EAM was also used to calculate activation energies for vacancy migration near dilute impurities. These energies determine the atomic jump frequencies of the classic \"five-frequency formula,\" which yields the diffusion rates of impurities by a mono-vacancy mechanism. These calculations were found to agree fairly well with experiment and with Neumann and Hirschwald's \"Tm\" model.", 
+                "pages": "102-112", 
+                "DOI": "10.1557/jmr.1989.0102", 
+                "bibtex": "@article{Adams_1989,\n abstract = {The activation energies for self-diffusion of transition metals (Au, Ag, Cu, Ni, Pd, Pt) have been calculated with the Embedded Atom Method (EAM); the results agree well with available experimental data for both mono-vacancy and di-vacancy mechanisms. The EAM was also used to calculate activation energies for vacancy migration near dilute impurities. These energies determine the atomic jump frequencies of the classic \"five-frequency formula,\" which yields the diffusion rates of impurities by a mono-vacancy mechanism. These calculations were found to agree fairly well with experiment and with Neumann and Hirschwald's \"Tm\" model.},\n author = {J. B. Adams and S. M. Foiles and W. G. Wolfer},\n doi = {10.1557/jmr.1989.0102},\n journal = {Journal of Materials Research},\n month = {feb},\n number = {01},\n pages = {102--112},\n publisher = {Cambridge University Press (CUP)},\n title = {Self-diffusion and impurity diffusion of fcc metals using the five-frequency model and the Embedded Atom Method},\n volume = {4},\n year = {1989}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "a5486f00-b393-45af-9b99-c841d2615563", 
+            "id": "1989--Adams-J-B--Pd--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2009-02-19", 
+            "type": "LAMMPS pair_style eam", 
+            "notes": {
+                "text": "pdu6.txt was obtained from <a href=\"http://enpub.fulton.asu.edu/cms/potentials/main/main.htm\" class=\"external\">http://enpub.fulton.asu.edu/cms/ potentials/main/main.htm</a> and posted with the permission of J.B. Adams. The name of the file was retained, even though the header information lists the potential as 'universal 4.' This file is compatible with the \"pair_style eam\" format in LAMMPS (19Feb09 version)."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Pd/1/pdu6.txt", 
+                    "link-text": "pdu6.txt"
+                }
+            }
+        }, 
+        "element": "Pd"
+    }
+}

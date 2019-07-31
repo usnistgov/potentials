@@ -1,0 +1,50 @@
+{
+    "interatomic-potential": {
+        "key": "71a2713d-ae28-4bf6-9bda-79a216c45380", 
+        "id": "1987--Ackland-G-J-Thetford-R--Ta", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "An improved N-body semi-empirical model for body-centred cubic transition metals", 
+                "author": [
+                    {
+                        "given-name": "G.J.", 
+                        "surname": "Ackland"
+                    }, 
+                    {
+                        "given-name": "R.", 
+                        "surname": "Thetford"
+                    }
+                ], 
+                "publication-name": "Philosophical Magazine A", 
+                "publication-date": {
+                    "year": 1987
+                }, 
+                "volume": 56, 
+                "issue": 1, 
+                "abstract": "The recently published semi-empirical potentials of Finnis and Sinclair for the metals V, Nb, Ta, Mo and W appear to give unphysical results for properties involving small interatomic separation. This is remedied by adding to the potentials cores fitted to electron gas calculations on dimers. The adjusted potentials are shown to predict a more realistic pressure-volume relationship. Interstitial formation energies are calculated for various configurations, using quenched molecular dynamics and static relaxation. Some preliminary results on interstitial migration are presented.", 
+                "pages": "15-30", 
+                "DOI": "10.1080/01418618708204464", 
+                "bibtex": "@article{Ackland_1987,\n abstract = {The recently published semi-empirical potentials of Finnis and Sinclair for the metals V, Nb, Ta, Mo and W appear to give unphysical results for properties involving small interatomic separation. This is remedied by adding to the potentials cores fitted to electron gas calculations on dimers. The adjusted potentials are shown to predict a more realistic pressure-volume relationship. Interstitial formation energies are calculated for various configurations, using quenched molecular dynamics and static relaxation. Some preliminary results on interstitial migration are presented.},\n author = {G. J. Ackland and R. Thetford},\n doi = {10.1080/01418618708204464},\n journal = {Philosophical Magazine A},\n month = {jul},\n number = {1},\n pages = {15--30},\n publisher = {Informa UK Limited},\n title = {An improved N-body semi-empirical model for body-centred cubic transition metals},\n url = {https://doi.org/10.1080%2F01418618708204464},\n volume = {56},\n year = {1987}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "0f037790-d27f-4674-a6b8-3aae015fc6e3", 
+            "id": "1987--Ackland-G-J--Ta--parameters--ipr1", 
+            "status": "active", 
+            "date": "2009-06-30", 
+            "type": "Equations", 
+            "notes": {
+                "text": "The file AckThet.pdf was obtained from <a href=\"http://homepages.ed.ac.uk/graeme/moldy/moldy.html\" class=\"external\">http://homepages.ed.ac.uk/graeme/moldy/moldy.html </a> and posted with the permission of G.J. Ackland."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1987--Ackland-G-J-Thetford-R--Ta/1/AckThet.pdf", 
+                    "link-text": "AckThet.pdf"
+                }
+            }
+        }, 
+        "element": "Ta"
+    }
+}

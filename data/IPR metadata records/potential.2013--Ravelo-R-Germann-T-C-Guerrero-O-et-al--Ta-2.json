@@ -1,0 +1,83 @@
+{
+    "interatomic-potential": {
+        "key": "f6dc059a-6c4a-442b-8190-e364f45a0f5a", 
+        "id": "2013--Ravelo-R-Germann-T-C-Guerrero-O-et-al--Ta-2", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Shock-induced plasticity in tantalum single crystals: Interatomic potentials and large-scale molecular-dynamics simulations", 
+                "author": [
+                    {
+                        "given-name": "R.", 
+                        "surname": "Ravelo"
+                    }, 
+                    {
+                        "given-name": "T.C.", 
+                        "surname": "Germann"
+                    }, 
+                    {
+                        "given-name": "O.", 
+                        "surname": "Guerrero"
+                    }, 
+                    {
+                        "given-name": "Q.", 
+                        "surname": "An"
+                    }, 
+                    {
+                        "given-name": "B.L.", 
+                        "surname": "Holian"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 2013
+                }, 
+                "volume": 88, 
+                "issue": 13, 
+                "abstract": "We report on large-scale nonequilibrium molecular dynamics simulations of shock wave compression in tantalum single crystals. Two new embedded atom method interatomic potentials of Ta have been developed and optimized by fitting to experimental and density functional theory data. The potentials reproduce the isothermal equation of state of Ta up to 300 GPa. We examined the nature of the plastic deformation and elastic limits as functions of crystal orientation. Shock waves along (100), (110), and (111) exhibit elastic-plastic two-wave structures. Plastic deformation in shock compression along (110) is due primarily to the formation of twins that nucleate at the shock front. The strain-rate dependence of the flow stress is found to be orientation dependent, with (110) shocks exhibiting the weaker dependence. Premelting at a temperature much below that of thermodynamic melting at the shock front is observed in all three directions for shock pressures above about 180 GPa.", 
+                "pages": 134101, 
+                "DOI": "10.1103/physrevb.88.134101", 
+                "bibtex": "@article{Ravelo_2013,\n abstract = {We report on large-scale nonequilibrium molecular dynamics simulations of shock wave compression in tantalum single crystals. Two new embedded atom method interatomic potentials of Ta have been developed and optimized by fitting to experimental and density functional theory data. The potentials reproduce the isothermal equation of state of Ta up to 300 GPa. We examined the nature of the plastic deformation and elastic limits as functions of crystal orientation. Shock waves along (100), (110), and (111) exhibit elastic-plastic two-wave structures. Plastic deformation in shock compression along (110) is due primarily to the formation of twins that nucleate at the shock front. The strain-rate dependence of the flow stress is found to be orientation dependent, with (110) shocks exhibiting the weaker dependence. Premelting at a temperature much below that of thermodynamic melting at the shock front is observed in all three directions for shock pressures above about 180 GPa.},\n author = {R. Ravelo and T. C. Germann and O. Guerrero and Q. An and B. L. Holian},\n doi = {10.1103/physrevb.88.134101},\n journal = {Physical Review B},\n month = {oct},\n number = {13},\n numpages = {17},\n pages = {134101},\n publisher = {American Physical Society (APS)},\n title = {Shock-induced plasticity in tantalum single crystals: Interatomic potentials and large-scale molecular-dynamics simulations},\n url = {https://doi.org/10.1103%2Fphysrevb.88.134101},\n volume = {88},\n year = {2013}\n}\n\n"
+            }, 
+            "notes": {
+                "text": "This listing is for the reference's potential parameter set Ta2."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "491cdf0d-6c3d-47ef-ba4e-86413cc99cc3", 
+                "id": "2013--Ravelo-R--Ta-2--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2014-02-15", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "Ta2 interaction in LAMMPS-compatible format. Approved by Prof. Ravelo (Univ. of Texas at El Paso) and posted on 15 Feb. 2014 with his permission."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Ravelo-R-Germann-T-C-Guerrero-O-et-al--Ta-2/1/Ta2_Ravelo_2013.eam.alloy", 
+                        "link-text": "Ta2_Ravelo_2013.eam.alloy"
+                    }
+                }
+            }, 
+            {
+                "key": "482c7125-ae1f-4978-afbc-9eb2b4abeb20", 
+                "id": "2013--Ravelo-R--Ta-2--SPaSM--ipr1", 
+                "status": "active", 
+                "date": "2014-02-15", 
+                "type": "SPaSM", 
+                "notes": {
+                    "text": "Ta2 interaction in SPaSM tables. Approved by Prof. Ravelo (Univ. of Texas at El Paso) and posted on 15 Feb. 2014 with his permission."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Ravelo-R-Germann-T-C-Guerrero-O-et-al--Ta-2/2/Ta2_Ravelo_2013.SPaSM", 
+                        "link-text": "Ta2_Ravelo_2013.SPaSM"
+                    }
+                }
+            }
+        ], 
+        "element": "Ta"
+    }
+}

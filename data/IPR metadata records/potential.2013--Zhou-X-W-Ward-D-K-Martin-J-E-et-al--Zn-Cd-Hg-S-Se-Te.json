@@ -1,0 +1,73 @@
+{
+    "interatomic-potential": {
+        "key": "95fe0b68-f5a1-4bb6-9a11-f446b361d12b", 
+        "id": "2013--Zhou-X-W-Ward-D-K-Martin-J-E-et-al--Zn-Cd-Hg-S-Se-Te", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Stillinger-Weber potential for the II-VI elements Zn-Cd-Hg-S-Se-Te", 
+                "author": [
+                    {
+                        "given-name": "X.W.", 
+                        "surname": "Zhou"
+                    }, 
+                    {
+                        "given-name": "D.K.", 
+                        "surname": "Ward"
+                    }, 
+                    {
+                        "given-name": "J.E.", 
+                        "surname": "Martin"
+                    }, 
+                    {
+                        "given-name": "F.B.", 
+                        "surname": "van Swol"
+                    }, 
+                    {
+                        "given-name": "J.L.", 
+                        "surname": "Cruz-Campa"
+                    }, 
+                    {
+                        "given-name": "D.", 
+                        "surname": "Zubia"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": 2013
+                }, 
+                "volume": 88, 
+                "issue": 8, 
+                "abstract": "Bulk and multilayered thin film crystals of II-VI semiconductor compounds are the leading materials for infrared sensing, \u03b3-ray detection, photovoltaics, and quantum dot lighting applications. The key to achieving high performance for these applications is reducing crystallographic defects. Unfortunately, past efforts to improve these materials have been prolonged due to a lack of understanding with regards to defect formation and evolution mechanisms. To enable high-fidelity and high-efficiency atomistic simulations of defect mechanisms, this paper develops a Stillinger-Weber interatomic potential database for semiconductor compounds composed of the major II-VI elements Zn, Cd, Hg, S, Se, and Te. The potential's fidelity is achieved by optimizing all the pertinent model parameters, by imposing reasonable energy trends to correctly capture the transformation between elemental, solid solution, and compound phases, and by capturing exactly the experimental cohesive energies, lattice constants, and bulk moduli of all binary compounds. Verification tests indicate that our model correctly predicts crystalline growth of all binary compounds during molecular dynamics simulations of vapor deposition. Two stringent cases convincingly show that our potential is applicable for a variety of compound configurations involving all the six elements considered here. In the first case, we demonstrate a successful molecular dynamics simulation of crystalline growth of an alloyed (Cd0.28Zn0.68Hg0.04) (Te0.20Se0.18S0.62) compound on a ZnS substrate. In the second case, we demonstrate the predictive power of our model on defects, such as misfit dislocations, stacking faults, and subgrain nucleation, using a complex growth simulation of ZnS/CdSe/HgTe multilayers that also contain all the six elements considered here. Using CdTe as a case study, a comprehensive comparison of our potential with literature potentials is also made. Finally, we also propose unique insights for improving the Stillinger-Weber potential in future developments.", 
+                "pages": 85309, 
+                "DOI": "10.1103/physrevb.88.085309", 
+                "bibtex": "@article{Zhou_2013,\n abstract = {Bulk and multilayered thin film crystals of II-VI semiconductor compounds are the leading materials for infrared sensing, \u03b3-ray detection, photovoltaics, and quantum dot lighting applications. The key to achieving high performance for these applications is reducing crystallographic defects. Unfortunately, past efforts to improve these materials have been prolonged due to a lack of understanding with regards to defect formation and evolution mechanisms. To enable high-fidelity and high-efficiency atomistic simulations of defect mechanisms, this paper develops a Stillinger-Weber interatomic potential database for semiconductor compounds composed of the major II-VI elements Zn, Cd, Hg, S, Se, and Te. The potential's fidelity is achieved by optimizing all the pertinent model parameters, by imposing reasonable energy trends to correctly capture the transformation between elemental, solid solution, and compound phases, and by capturing exactly the experimental cohesive energies, lattice constants, and bulk moduli of all binary compounds. Verification tests indicate that our model correctly predicts crystalline growth of all binary compounds during molecular dynamics simulations of vapor deposition. Two stringent cases convincingly show that our potential is applicable for a variety of compound configurations involving all the six elements considered here. In the first case, we demonstrate a successful molecular dynamics simulation of crystalline growth of an alloyed (Cd0.28Zn0.68Hg0.04) (Te0.20Se0.18S0.62) compound on a ZnS substrate. In the second case, we demonstrate the predictive power of our model on defects, such as misfit dislocations, stacking faults, and subgrain nucleation, using a complex growth simulation of ZnS/CdSe/HgTe multilayers that also contain all the six elements considered here. Using CdTe as a case study, a comprehensive comparison of our potential with literature potentials is also made. Finally, we also propose unique insights for improving the Stillinger-Weber potential in future developments.},\n author = {X. W. Zhou and D. K. Ward and J. E. Martin and F. B. van Swol and J. L. Cruz-Campa and D. Zubia},\n doi = {10.1103/physrevb.88.085309},\n journal = {Physical Review B},\n month = {aug},\n number = {8},\n numpages = {14},\n pages = {085309},\n publisher = {American Physical Society (APS)},\n title = {Stillinger-Weber potential for the II-VI elements Zn-Cd-Hg-S-Se-Te},\n url = {https://doi.org/10.1103%2Fphysrevb.88.085309},\n volume = {88},\n year = {2013}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "b61dec76-c838-4883-92c2-480122e3471c", 
+            "id": "2013--Zhou-X-W--Zn-Cd-Hg-S-Se-Te--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2013-09-11", 
+            "type": "LAMMPS pair_style sw", 
+            "notes": {
+                "text": "This file was sent by Dr. Xiaowang Zhou (Sandia National Laboratories) and approved for distribution on 11 Sept. 2013. This file is compatible with LAMMPS and is intended to be used for elements and compounds of the Zn-Cd-Hg-S-Se-Te system (II-VI semiconductors)."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Zhou-X-W-Ward-D-K-Martin-J-E-et-al--Zn-Cd-Hg-S-Se-Te/1/CdTeZnSeHgS0.sw", 
+                    "link-text": "CdTeZnSeHgS0.sw"
+                }
+            }
+        }, 
+        "element": [
+            "Zn", 
+            "Cd", 
+            "Hg", 
+            "S", 
+            "Se", 
+            "Te"
+        ]
+    }
+}

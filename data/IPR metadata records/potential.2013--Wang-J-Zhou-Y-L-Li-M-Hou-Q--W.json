@@ -1,0 +1,72 @@
+{
+    "interatomic-potential": {
+        "key": "98c08cee-aec1-4cbc-ae41-db1ea21be551", 
+        "id": "2013--Wang-J-Zhou-Y-L-Li-M-Hou-Q--W", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "A modified W-W interatomic potential based on ab initio calculations", 
+                "author": [
+                    {
+                        "given-name": "J.", 
+                        "surname": "Wang"
+                    }, 
+                    {
+                        "given-name": "Y.L.", 
+                        "surname": "Zhou"
+                    }, 
+                    {
+                        "given-name": "M.", 
+                        "surname": "Li"
+                    }, 
+                    {
+                        "given-name": "Q.", 
+                        "surname": "Hou"
+                    }
+                ], 
+                "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                "publication-date": {
+                    "year": 2013
+                }, 
+                "volume": 22, 
+                "issue": 1, 
+                "abstract": "In this paper we have developed a Finnis\u2013Sinclair-type interatomic potential for W-W interactions that is based on ab initio calculations. The modified potential is able to reproduce the correct formation energies of self-interstitial atom (SIA) defects in tungsten, offering a significant improvement over the Ackland\u2013Thetford tungsten potential. Using the modified potential, the thermal expansion is calculated in a temperature range from 0 to 3500 K. The results are in reasonable agreement with the experimental data, thus overcoming the shortcomings of the negative thermal expansion using the Derlet\u2013Nguyen\u2013Manh\u2013Dudarev tungsten potential. The W\u2013W potential presented here is also applied to study in detail the diffusion of SIAs in tungsten. We reveal that the initial SIA initiates a sequence of tungsten atom displacements and replacements in the \u3008111\u3009 direction. An Arrhenius fit to the diffusion data at temperatures below 550 K indicates a migration energy of 0.022 eV, which is in reasonable agreement with the experimental data.", 
+                "pages": 15004, 
+                "DOI": "10.1088/0965-0393/22/1/015004", 
+                "bibtex": "@article{Wang_2013,\n abstract = {In this paper we have developed a Finnis\u2013Sinclair-type interatomic potential for W-W interactions that is based on ab initio calculations. The modified potential is able to reproduce the correct formation energies of self-interstitial atom (SIA) defects in tungsten, offering a significant improvement over the Ackland\u2013Thetford tungsten potential. Using the modified potential, the thermal expansion is calculated in a temperature range from 0 to 3500 K. The results are in reasonable agreement with the experimental data, thus overcoming the shortcomings of the negative thermal expansion using the Derlet\u2013Nguyen\u2013Manh\u2013Dudarev tungsten potential. The W\u2013W potential presented here is also applied to study in detail the diffusion of SIAs in tungsten. We reveal that the initial SIA initiates a sequence of tungsten atom displacements and replacements in the \u3008111\u3009 direction. An Arrhenius fit to the diffusion data at temperatures below 550 K indicates a migration energy of 0.022 eV, which is in reasonable agreement with the experimental data.},\n author = {J Wang and Y L Zhou and M Li and Q Hou},\n doi = {10.1088/0965-0393/22/1/015004},\n journal = {Modelling and Simulation in Materials Science and Engineering},\n month = {dec},\n number = {1},\n pages = {015004},\n publisher = {IOP Publishing},\n title = {A modified W-W interatomic potential based on ab initio calculations},\n url = {https://doi.org/10.1088%2F0965-0393%2F22%2F1%2F015004},\n volume = {22},\n year = {2013}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "820b0324-9fc4-4231-8077-6ec7b5b91c92", 
+            "id": "2013--Wang-J--W--table--ipr1", 
+            "status": "active", 
+            "date": "2014-01-24", 
+            "type": "Finnis-Sinclair tables", 
+            "notes": {
+                "text": "These files were sent by Dr. Jun Wang and Prof. Qing Hou (Sichuan Univ.) and approved on 24 Jan. 2014.  Additional information is found in Wang_W_2014_information.pdf, including a correction to equations 4 and 5 in the publication. Specifically, according to Dr. Wang, \"'f(r)' should be 'V(r)' in equation (4) and in equation (5) 'V(r)' should be 'f(r)'.\""
+            }, 
+            "artifact": [
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Wang-J-Zhou-Y-L-Li-M-Hou-Q--W/1/W-e-dens-Wang-2014.txt", 
+                        "link-text": "W-e-dens-Wang-2014.txt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Wang-J-Zhou-Y-L-Li-M-Hou-Q--W/1/W-pair-Wang-2014.txt", 
+                        "link-text": "W-pair-Wang-2014.txt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Wang-J-Zhou-Y-L-Li-M-Hou-Q--W/1/Wang_W_2014_information.pdf", 
+                        "link-text": "Wang_W_2014_information.pdf"
+                    }
+                }
+            ]
+        }, 
+        "element": "W"
+    }
+}

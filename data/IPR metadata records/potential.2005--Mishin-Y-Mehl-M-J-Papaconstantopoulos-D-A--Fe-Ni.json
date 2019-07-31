@@ -1,0 +1,156 @@
+{
+    "interatomic-potential": {
+        "key": "76452c02-4b98-4632-bce7-93fec036f745", 
+        "id": "2005--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Fe-Ni", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Phase stability in the Fe-Ni system: Investigation by first-principles calculations and atomistic simulations", 
+                "author": [
+                    {
+                        "given-name": "Y.", 
+                        "surname": "Mishin"
+                    }, 
+                    {
+                        "given-name": "M.J.", 
+                        "surname": "Mehl"
+                    }, 
+                    {
+                        "given-name": "D.A.", 
+                        "surname": "Papaconstantopoulos"
+                    }
+                ], 
+                "publication-name": "Acta Materialia", 
+                "publication-date": {
+                    "year": 2005
+                }, 
+                "volume": 53, 
+                "issue": 15, 
+                "abstract": "First-principles calculations of the energy of various crystal structures of Fe, Ni and ordered Fe\u2013Ni compounds with different stoichiometries have been performed by the linearized augmented plane wave (LAPW) method in the generalized gradient approximation. The most stable compounds are L12\u2013Ni3Fe, L10\u2013FeNi, C11f\u2013Ni2Fe and C11f\u2013Fe2Ni. The L12-Ni3Fe compound has the largest negative formation energy, which is consistent with the experimental Fe\u2013Ni phase diagram. The L10\u2013FeNi compound has also been observed experimentally in meteorite samples as a metastable phase. It is suggested here that the C11f compounds could also form in Fe\u2013Ni alloys at low temperatures. A new semi-empirical interatomic potential has been developed for the Fe\u2013Ni system by fitting to experimental data and the results of the LAPW calculations. Recognizing the significance of the covalent component of bonding in this system, the potential is based on the embedded-atom method (EAM) but additionally includes a bond-angle dependence. In comparison with the existing modified EAM method, our potential form is simpler, extends interactions to several (3\u20135) coordination shells and replaces the screening procedure by a smooth cutoff of the potential functions. The potential reproduces a variety of properties of Fe and Ni with a reasonable accuracy. It also reproduces all stability trends across the Fe\u2013Ni system established by the LAPW calculations. The potential can be useful in atomistic simulations of the phases of the Fe\u2013Ni system.", 
+                "pages": "4029-4041", 
+                "DOI": "10.1016/j.actamat.2005.05.001", 
+                "bibtex": "@article{Mishin_2005,\n abstract = {First-principles calculations of the energy of various crystal structures of Fe, Ni and ordered Fe\u2013Ni compounds with different stoichiometries have been performed by the linearized augmented plane wave (LAPW) method in the generalized gradient approximation. The most stable compounds are L12\u2013Ni3Fe, L10\u2013FeNi, C11f\u2013Ni2Fe and C11f\u2013Fe2Ni. The L12-Ni3Fe compound has the largest negative formation energy, which is consistent with the experimental Fe\u2013Ni phase diagram. The L10\u2013FeNi compound has also been observed experimentally in meteorite samples as a metastable phase. It is suggested here that the C11f compounds could also form in Fe\u2013Ni alloys at low temperatures. A new semi-empirical interatomic potential has been developed for the Fe\u2013Ni system by fitting to experimental data and the results of the LAPW calculations. Recognizing the significance of the covalent component of bonding in this system, the potential is based on the embedded-atom method (EAM) but additionally includes a bond-angle dependence. In comparison with the existing modified EAM method, our potential form is simpler, extends interactions to several (3\u20135) coordination shells and replaces the screening procedure by a smooth cutoff of the potential functions. The potential reproduces a variety of properties of Fe and Ni with a reasonable accuracy. It also reproduces all stability trends across the Fe\u2013Ni system established by the LAPW calculations. The potential can be useful in atomistic simulations of the phases of the Fe\u2013Ni system.},\n author = {Y. Mishin and M.J. Mehl and D.A. Papaconstantopoulos},\n doi = {10.1016/j.actamat.2005.05.001},\n journal = {Acta Materialia},\n month = {sep},\n number = {15},\n pages = {4029--4041},\n publisher = {Elsevier BV},\n title = {Phase stability in the Fe-Ni system: Investigation by first-principles calculations and atomistic simulations},\n url = {https://doi.org/10.1016%2Fj.actamat.2005.05.001},\n volume = {53},\n year = {2005}\n}\n\n"
+            }
+        }, 
+        "implementation": {
+            "key": "4227d6c9-63ed-4c2e-9740-2215bdbd89b4", 
+            "id": "2005--Mishin-Y--Fe-Ni--table--ipr1", 
+            "status": "active", 
+            "date": "2009-12-22", 
+            "type": "ADP tabulated functions", 
+            "notes": {
+                "text": "These files were provided by Yuri Mishin (George Mason University) and posted on 22 Dec. 2009. Prof. Mishin requested the following note be included: \"The equation appearing in the Appendix on page 4040 contains a typing error: the sign before 1/3 in the last line must be negative.\" He provided the corrected equation for the angular-dependent force contributions in ADP_Forces.jpg or ADP_Forces.pdf."
+            }, 
+            "artifact": [
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Fe-Ni/1/F_Fe.plt", 
+                        "label": "Fe F(&rho;):", 
+                        "link-text": "F_Fe.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Fe-Ni/1/F_Ni.plt", 
+                        "label": "Ni F(&rho;):", 
+                        "link-text": "F_Ni.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Fe-Ni/1/fFe.plt", 
+                        "label": "Fe &rho;(r):", 
+                        "link-text": "fFe.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Fe-Ni/1/fNi.plt", 
+                        "label": "Ni &rho;(r):", 
+                        "link-text": "fNi.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Fe-Ni/1/pFe.plt", 
+                        "label": "Fe &phi;(r):", 
+                        "link-text": "pFe.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Fe-Ni/1/pNi.plt", 
+                        "label": "Ni &phi;(r):", 
+                        "link-text": "pNi.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Fe-Ni/1/pFeNi.plt", 
+                        "label": "Fe-Ni &phi;(r):", 
+                        "link-text": "pFeNi.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Fe-Ni/1/dFe.plt", 
+                        "label": "Fe u(r):", 
+                        "link-text": "dFe.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Fe-Ni/1/dNi.plt", 
+                        "label": "Ni u(r):", 
+                        "link-text": "dNi.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Fe-Ni/1/dFeNi.plt", 
+                        "label": "Fe-Ni u(r):", 
+                        "link-text": "dFeNi.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Fe-Ni/1/qFe.plt", 
+                        "label": "Fe w(r):", 
+                        "link-text": "qFe.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Fe-Ni/1/qNi.plt", 
+                        "label": "Ni w(r):", 
+                        "link-text": "qNi.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Fe-Ni/1/qFeNi.plt", 
+                        "label": "Fe-Ni w(r):", 
+                        "link-text": "qFeNi.plt"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Fe-Ni/1/ADP_Forces.jpg", 
+                        "link-text": "ADP_Forces.jpg"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Fe-Ni/1/ADP_Forces.pdf", 
+                        "link-text": "ADP_Forces.pdf"
+                    }
+                }
+            ]
+        }, 
+        "element": [
+            "Fe", 
+            "Ni"
+        ]
+    }
+}

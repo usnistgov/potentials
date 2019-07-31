@@ -1,0 +1,140 @@
+{
+    "interatomic-potential": {
+        "key": "3319544c-7ad9-414d-80c7-f91f163d0fac", 
+        "id": "2011--Tiwary-P-Walle-A-Jeon-B-Gronbech-Jensen-N--MOx", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": [
+                {
+                    "document-type": "journal", 
+                    "title": "Interatomic potentials for mixed oxide and advanced nuclear fuels", 
+                    "author": [
+                        {
+                            "given-name": "P.", 
+                            "surname": "Tiwary"
+                        }, 
+                        {
+                            "given-name": "A.", 
+                            "surname": "Walle"
+                        }, 
+                        {
+                            "given-name": "B.", 
+                            "surname": "Jeon"
+                        }, 
+                        {
+                            "given-name": "N.", 
+                            "surname": "Gr\u00f8nbech-Jensen"
+                        }
+                    ], 
+                    "publication-name": "Physical Review B", 
+                    "publication-date": {
+                        "year": 2011
+                    }, 
+                    "volume": 83, 
+                    "issue": 9, 
+                    "abstract": "We extend our recently developed interatomic potentials for UO2 to the fuel system (U,Pu,Np)O2. We do so by fitting against an extensive database of ab initio results as well as to experimental measurements. The applicability of these interactions to a variety of mixed environments beyond the fitting domain is also assessed. The employed formalism makes these potentials applicable across all interatomic distances without the need for any ambiguous splining to the well-established short-range Ziegler-Biersack-Littmark universal pair potential. We therefore expect these to be reliable potentials for carrying out damage simulations (and molecular dynamics simulations in general) in nuclear fuels of varying compositions for all relevant atomic collision energies.", 
+                    "pages": 94104, 
+                    "DOI": "10.1103/physrevb.83.094104", 
+                    "bibtex": "@article{Tiwary_2011,\n abstract = {We extend our recently developed interatomic potentials for UO2 to the fuel system (U,Pu,Np)O2. We do so by fitting against an extensive database of ab initio results as well as to experimental measurements. The applicability of these interactions to a variety of mixed environments beyond the fitting domain is also assessed. The employed formalism makes these potentials applicable across all interatomic distances without the need for any ambiguous splining to the well-established short-range Ziegler-Biersack-Littmark universal pair potential. We therefore expect these to be reliable potentials for carrying out damage simulations (and molecular dynamics simulations in general) in nuclear fuels of varying compositions for all relevant atomic collision energies.},\n author = {Pratyush Tiwary and Axel van de Walle and Byoungseon Jeon and Niels Gr\u00f8nbech-Jensen},\n doi = {10.1103/physrevb.83.094104},\n journal = {Physical Review B},\n month = {mar},\n number = {9},\n numpages = {6},\n pages = {094104},\n publisher = {American Physical Society (APS)},\n title = {Interatomic potentials for mixed oxide and advanced nuclear fuels},\n url = {https://doi.org/10.1103%2Fphysrevb.83.094104},\n volume = {83},\n year = {2011}\n}\n\n"
+                }, 
+                {
+                    "document-type": "journal", 
+                    "title": "Ab initio construction of interatomic potentials for uranium dioxide across all interatomic distances", 
+                    "author": [
+                        {
+                            "given-name": "P.", 
+                            "surname": "Tiwary"
+                        }, 
+                        {
+                            "given-name": "A.", 
+                            "surname": "van de Walle"
+                        }, 
+                        {
+                            "given-name": "N.", 
+                            "surname": "Gr\u00f8nbech-Jensen"
+                        }
+                    ], 
+                    "publication-name": "Physical Review B", 
+                    "publication-date": {
+                        "year": 2009
+                    }, 
+                    "volume": 80, 
+                    "issue": 17, 
+                    "abstract": "We provide a methodology for generating interatomic potentials for use in classical molecular-dynamics simulations of atomistic phenomena occurring at energy scales ranging from lattice vibrations to crystal defects to high-energy collisions. A rigorous method to objectively determine the shape of an interatomic potential over all length scales is introduced by building upon a charged-ion generalization of the well-known Ziegler-Biersack-Littmark universal potential that provides the short- and long-range limiting behavior of the potential. At intermediate ranges the potential is smoothly adjusted by fitting to ab initio data. Our formalism provides a complete description of the interatomic potentials that can be used at any energy scale, and thus, eliminates the inherent ambiguity of splining different potentials generated to study different kinds of atomic-materials behavior. We exemplify the method by developing rigid-ion potentials for uranium dioxide interactions under conditions ranging from thermodynamic equilibrium to very high atomic-energy collisions relevant for fission events.", 
+                    "pages": 174302, 
+                    "DOI": "10.1103/physrevb.80.174302", 
+                    "bibtex": "@article{Tiwary_2009,\n abstract = {We provide a methodology for generating interatomic potentials for use in classical molecular-dynamics simulations of atomistic phenomena occurring at energy scales ranging from lattice vibrations to crystal defects to high-energy collisions. A rigorous method to objectively determine the shape of an interatomic potential over all length scales is introduced by building upon a charged-ion generalization of the well-known Ziegler-Biersack-Littmark universal potential that provides the short- and long-range limiting behavior of the potential. At intermediate ranges the potential is smoothly adjusted by fitting to ab initio data. Our formalism provides a complete description of the interatomic potentials that can be used at any energy scale, and thus, eliminates the inherent ambiguity of splining different potentials generated to study different kinds of atomic-materials behavior. We exemplify the method by developing rigid-ion potentials for uranium dioxide interactions under conditions ranging from thermodynamic equilibrium to very high atomic-energy collisions relevant for fission events.},\n author = {P. Tiwary and A. van de Walle and N. Gr\u00f8nbech-Jensen},\n doi = {10.1103/physrevb.80.174302},\n journal = {Physical Review B},\n month = {nov},\n number = {17},\n numpages = {7},\n pages = {174302},\n publisher = {American Physical Society (APS)},\n title = {Ab initio construction of interatomic potentials for uranium dioxide across all interatomic distances},\n url = {https://doi.org/10.1103%2Fphysrevb.80.174302},\n volume = {80},\n year = {2009}\n}\n\n"
+                }
+            ]
+        }, 
+        "implementation": [
+            {
+                "key": "f25646be-bdb9-47c7-9fda-d7e112036a34", 
+                "id": "2011--Tiwary-P--MOx--GULP--ipr1", 
+                "status": "superseded", 
+                "date": "2011-06-16", 
+                "type": "GULP", 
+                "notes": {
+                    "text": "These files were posted on 17 June 2011 with the approval of Pratyush Tiwary and Axel van de Walle (California Institute of Technology). 30 Jan. 2012 Update: These files are identified as having problems with thermal expansion in UO2 and are superseded by the next GULP implementation below."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Tiwary-P-Walle-A-Jeon-B-Gronbech-Jensen-N--MOx/1/gulp_mox.pdf", 
+                            "link-text": "gulp_mox.pdf"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Tiwary-P-Walle-A-Jeon-B-Gronbech-Jensen-N--MOx/1/gulp_mox.doc", 
+                            "link-text": "gulp_mox.doc"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Tiwary-P-Walle-A-Jeon-B-Gronbech-Jensen-N--MOx/1/README.TXT", 
+                            "link-text": "README.TXT"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "79817a41-0761-4a82-9d83-4673d309444f", 
+                "id": "2011--Tiwary-P--MOx--GULP--ipr2", 
+                "status": "active", 
+                "date": "2012-01-30", 
+                "type": "GULP", 
+                "notes": {
+                    "text": "30 Jan. 2012 Update: These files (version 2.0) were provided by Pratyush Tiwary (California Institute of Technology) and posted with his permission. According to him, this version corrects the \"U-U interaction term (truncated at 4 Angstroms) to resolve problems with thermal expansion in UO2.\" Additional information is located in readme_v2.txt"
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Tiwary-P-Walle-A-Jeon-B-Gronbech-Jensen-N--MOx/2/gulp_mox_v2.lib", 
+                            "link-text": "gulp_mox_v2.lib"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Tiwary-P-Walle-A-Jeon-B-Gronbech-Jensen-N--MOx/2/gulp_mox_v2.txt", 
+                            "link-text": "gulp_mox_v2.txt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Tiwary-P-Walle-A-Jeon-B-Gronbech-Jensen-N--MOx/2/readme_v2.txt", 
+                            "link-text": "readme_v2.txt"
+                        }
+                    }
+                ]
+            }
+        ], 
+        "element": [
+            "U", 
+            "Pu", 
+            "Np", 
+            "O"
+        ], 
+        "other-element": "MOx"
+    }
+}
