@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "0860d71e-28ee-44a1-af35-9bb87d844c8c", 
+        "id": "1987--Ackland-G-J--W--parameters--ipr1", 
+        "status": "active", 
+        "date": "2009-06-30", 
+        "interatomic-potential-key": "c5b97edd-c857-4ab5-8b15-13b740eb2325", 
+        "type": "Equations", 
+        "notes": {
+            "text": "The file AckThet.pdf was obtained from <a href=\"http://homepages.ed.ac.uk/graeme/moldy/moldy.html\" class=\"external\">http://homepages.ed.ac.uk/graeme/moldy/moldy.html </a> and posted with the permission of G.J. Ackland."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/1987--Ackland-G-J-Thetford-R--W/1/AckThet.pdf", 
+                "link-text": "AckThet.pdf"
+            }
+        }
+    }
+}

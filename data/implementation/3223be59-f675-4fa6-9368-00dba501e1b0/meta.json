@@ -1,0 +1,33 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "3223be59-f675-4fa6-9368-00dba501e1b0", 
+        "id": "2009--Kim-H-K--Fe-Ti-C--LAMMPS--ipr2", 
+        "status": "active", 
+        "date": "2015-08-31", 
+        "interatomic-potential-key": "205eeeb9-973f-4849-8288-c05f05aaa42d", 
+        "type": "LAMMPS pair_style meam", 
+        "notes": {
+            "text": "This file was submitted by Sebasti&#225;n ECHEVERRI RESTREPO (SKF Engineering & Research Centre) on 31 August 2015 and approved for distribution by Byeong-Joo Lee (POSTECH). This version is compatible with LAMMPS. Implementation information can be found in FeTiC_Implementation.pdf."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Kim-H-K-Jung-W-S-Lee-B-J--Fe-Ti-C/1/FeTiC.meam", 
+                    "link-text": "FeTiC.meam"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Kim-H-K-Jung-W-S-Lee-B-J--Fe-Ti-C/1/FeTiClibrary.meam", 
+                    "link-text": "FeTiClibrary.meam"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Kim-H-K-Jung-W-S-Lee-B-J--Fe-Ti-C/1/FeTiC_Implementation.pdf", 
+                    "link-text": "FeTiC_Implementation.pdf"
+                }
+            }
+        ]
+    }
+}

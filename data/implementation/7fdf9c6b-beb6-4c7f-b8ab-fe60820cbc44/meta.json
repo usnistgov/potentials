@@ -1,0 +1,20 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "7fdf9c6b-beb6-4c7f-b8ab-fe60820cbc44", 
+        "id": "2007--Mendelev-M-I--Zr-3--LAMMPS--ipr1", 
+        "status": "superseded", 
+        "date": "2007-11-29", 
+        "interatomic-potential-key": "bd58ae4c-dc17-40e4-91f0-db3eae46f933", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This file was provided by Mikhail Mendelev.  Except for comments, this file is identical to \"Zr_mm.eam.fs\" in the August 22, 2018 LAMMPS distribution."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2007--Mendelev-M-I-Ackland-G-J--Zr-3/1/Zr_3.eam.fs", 
+                "label": "Zr #3:", 
+                "link-text": "Zr_3.eam.fs"
+            }
+        }
+    }
+}

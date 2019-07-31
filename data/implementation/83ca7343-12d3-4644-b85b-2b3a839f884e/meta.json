@@ -1,0 +1,27 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "83ca7343-12d3-4644-b85b-2b3a839f884e", 
+        "id": "2015--Pascuet-M-I--Al--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2016-05-04", 
+        "interatomic-potential-key": "b5fb2f1f-a582-4f81-9445-f002ce31e66e", 
+        "type": "LAMMPS pair_style meam", 
+        "notes": {
+            "text": "These files were sent by M.I. Pascuet (CONICET) on 4 May 2016 and posted with her permission."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Pascuet-M-I-Fernandez-J-R--Al/1/Al.meam", 
+                    "link-text": "Al.meam"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Pascuet-M-I-Fernandez-J-R--Al/1/library-Al.meam", 
+                    "link-text": "library-Al.meam"
+                }
+            }
+        ]
+    }
+}

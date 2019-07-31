@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "725aed6f-be30-4679-bed8-7c139b4fb34b", 
+        "id": "2009--Branicio-P-S--In-P--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-11-01", 
+        "interatomic-potential-key": "4976b7b8-73cb-4cf8-bcb3-7c0526c3bc98", 
+        "type": "LAMMPS pair_style vashishta", 
+        "notes": {
+            "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Branicio-P-S-Rino-J-P-Gan-C-K-Tsuzuki-H--In-P/1/InP.vashishta", 
+                "link-text": "InP.vashishta"
+            }
+        }
+    }
+}

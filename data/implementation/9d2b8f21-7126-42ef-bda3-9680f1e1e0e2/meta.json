@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "9d2b8f21-7126-42ef-bda3-9680f1e1e0e2", 
+        "id": "2005--Erhart-P--Si-C-II--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-10-10", 
+        "interatomic-potential-key": "b484d453-4f89-44d2-b64f-bbca3eb97d30", 
+        "type": "LAMMPS pair_style tersoff", 
+        "notes": {
+            "text": "This file was created and verified by Lucas Hale. The parameter values are identical to the ones in the parameter file used by openKIM model MO_408791041969_001."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Erhart-P-Albe-K--Si-C-II/1/2005_SiC_II.tersoff", 
+                "link-text": "2005_SiC_II.tersoff"
+            }
+        }
+    }
+}

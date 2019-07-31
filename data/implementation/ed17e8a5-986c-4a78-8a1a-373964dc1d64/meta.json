@@ -1,0 +1,27 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "ed17e8a5-986c-4a78-8a1a-373964dc1d64", 
+        "id": "2004--Mishin-Y--Ni-Al--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2009-01-07", 
+        "interatomic-potential-key": "13051c1b-48f7-47f5-bad7-fc627fe10376", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This conversion was produced by Chandler Becker on 7 Jan 2009 from the plt files listed above. This version is compatible with LAMMPS. Validation and usage information can be found in NiAl04_releaseNotes_2.pdf. If you use this setfl file, please include the following citation (in addition to the Mishin reference): C.A. Becker, et al. (2011) Philos Mag 91(27) 3578-3597."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/2/NiAl.eam.alloy", 
+                    "link-text": "NiAl.eam.alloy"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/2/NiAl04_releaseNotes_2.pdf", 
+                    "link-text": "NiAl04_releaseNotes_2.pdf"
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "c6620af7-cfe4-4086-b9cf-8198d56e1d30", 
+        "id": "2018--Howells-C-A-Mishin-Y--Cr", 
+        "record-version": "2018-11-05", 
+        "description": {
+            "citation": {
+                "DOI": "10.1088/1361-651x/aae400"
+            }
+        }, 
+        "element": "Cr"
+    }
+}

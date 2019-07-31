@@ -1,0 +1,99 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "baa2e3e6-47c5-4cdd-bf90-56de0df0e6a1", 
+        "id": "2013--Bonny-G--Fe-Ni-Cr--table--ipr1", 
+        "status": "active", 
+        "date": "2014-01-13", 
+        "interatomic-potential-key": "e30ac130-16af-4ca8-8685-eacbd145578d", 
+        "type": "EAM tabulated functions", 
+        "notes": {
+            "text": "These files were provided by Giovanni Bonny on 13 Jan. 2014."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/F_Fe_Bonny_2013.spt", 
+                    "label": "Fe F(&rho;):", 
+                    "link-text": "F_Fe_Bonny_2013.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/F_Ni_Bonny_2013.spt", 
+                    "label": "Ni F(&rho;):", 
+                    "link-text": "F_Ni_Bonny_2013.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/F_Cr_Bonny_2013.spt", 
+                    "label": "Cr F(&rho;):", 
+                    "link-text": "F_Cr_Bonny_2013.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/rhoFe_Bonny_2013.spt", 
+                    "label": "Fe &rho;(r):", 
+                    "link-text": "rhoFe_Bonny_2013.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/rhoNi_Bonny_2013.spt", 
+                    "label": "Ni &rho;(r):", 
+                    "link-text": "rhoNi_Bonny_2013.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/rhoCr_Bonny_2013.spt", 
+                    "label": "Cr &rho;(r):", 
+                    "link-text": "rhoCr_Bonny_2013.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/pFeFe_Bonny_2013.spt", 
+                    "label": "Fe &phi;(r):", 
+                    "link-text": "pFeFe_Bonny_2013.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/pNiNi_Bonny_2013.spt", 
+                    "label": "Ni &phi;(r):", 
+                    "link-text": "pNiNi_Bonny_2013.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/pCrCr_Bonny_2013.spt", 
+                    "label": "Cr &phi;(r):", 
+                    "link-text": "pCrCr_Bonny_2013.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/pFeNi_Bonny_2013.spt", 
+                    "label": "Fe-Ni &phi;(r):", 
+                    "link-text": "pFeNi_Bonny_2013.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/pFeCr_Bonny_2013.spt", 
+                    "label": "Fe-Cr &phi;(r):", 
+                    "link-text": "pFeCr_Bonny_2013.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/2/pNiCr_Bonny_2013.spt", 
+                    "label": "Ni-Cr &phi;(r):", 
+                    "link-text": "pNiCr_Bonny_2013.spt"
+                }
+            }
+        ]
+    }
+}

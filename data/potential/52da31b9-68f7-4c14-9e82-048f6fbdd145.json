@@ -1,0 +1,17 @@
+{
+    "interatomic-potential": {
+        "key": "52da31b9-68f7-4c14-9e82-048f6fbdd145", 
+        "id": "2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Cu-Ag-Au", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.69.144113"
+            }
+        }, 
+        "element": [
+            "Cu", 
+            "Ag", 
+            "Au"
+        ]
+    }
+}

@@ -1,0 +1,20 @@
+{
+    "interatomic-potential": {
+        "key": "d0b8ed5d-d5bf-4e22-acfb-ccf84a87690b", 
+        "id": "2013--Bonny-G-Castin-N-Bullens-J-et-al--Fe-Cr-W", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1088/0953-8984/25/31/315401"
+            }, 
+            "notes": {
+                "text": "Dr. Bonny noted that the FeCr part is identical to the bcc FeCr potential by himself and posted to the NIST Repository. He further noted that since the FeCr potential is in the 2BM formalism, the ternary is in the same format."
+            }
+        }, 
+        "element": [
+            "Fe", 
+            "Cr", 
+            "W"
+        ]
+    }
+}

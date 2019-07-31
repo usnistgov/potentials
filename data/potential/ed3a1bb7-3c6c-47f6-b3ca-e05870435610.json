@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "ed3a1bb7-3c6c-47f6-b3ca-e05870435610", 
+        "id": "2018--Mendelev-M-I-Zhang-F-Song-H-et-al--Tb", 
+        "record-version": "2018-08-19", 
+        "description": {
+            "citation": {
+                "DOI": "10.1063/1.5026922"
+            }, 
+            "notes": {
+                "text": "Dr. Mendelev noted that this potential was developed to simulate the solidification and hcp-bcc transformation. Update 2018-08-19: Reference information updated."
+            }
+        }, 
+        "element": "Tb"
+    }
+}

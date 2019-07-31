@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "1b27c797-2fa3-455a-8d24-8ef7d5814424", 
+        "id": "1990--Vashishta-P--Si-O--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-11-01", 
+        "interatomic-potential-key": "cb2ed094-032f-4e20-bb3b-a32bdb173697", 
+        "type": "LAMMPS pair_style vashishta", 
+        "notes": {
+            "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/1990--Vashishta-P-Kalia-R-K-Rino-J-P-Ebbsjo-I--Si-O/1/SiO.1990.vashishta", 
+                "link-text": "SiO.1990.vashishta"
+            }
+        }
+    }
+}

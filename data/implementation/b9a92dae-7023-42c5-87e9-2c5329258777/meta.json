@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "b9a92dae-7023-42c5-87e9-2c5329258777", 
+        "id": "1994--Nakano-A--Si-O--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-11-01", 
+        "interatomic-potential-key": "f3b91308-31ed-488f-bc55-ae7a7e3fd76e", 
+        "type": "LAMMPS pair_style vashishta", 
+        "notes": {
+            "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/1994--Nakano-A-Kalia-R-K-Vashishta-P--Si-O/1/SiO.1994.vashishta", 
+                "link-text": "SiO.1994.vashishta"
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "6aa30d73-b21a-4e1d-8126-cb5901ca4716", 
+        "id": "2000--Landa-A--Al-Pb--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2010-03-30", 
+        "interatomic-potential-key": "df6401e2-2541-484c-bf5d-1b0ff4b1ac39", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "alpb-setfl.eam.alloy is a version of the same potential which has been formatted for use in LAMMPS (\"D\" was replaced by \"E\" and \"Al Pb\" was added on line 4). It successfully ran with the 20Feb10 version of LAMMPS."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2000--Landa-A-Wynblatt-P-Siegel-D-J-et-al--Al-Pb/2/alpb-setfl.eam.alloy", 
+                "link-text": "alpb-setfl.eam.alloy"
+            }
+        }
+    }
+}

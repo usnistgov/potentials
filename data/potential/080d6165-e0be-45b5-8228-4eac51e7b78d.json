@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "080d6165-e0be-45b5-8228-4eac51e7b78d", 
+        "id": "2018--Etesami-S-A-Asadi-E--Cu", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1016/j.jpcs.2017.09.001"
+            }, 
+            "notes": {
+                "text": "S. A. Etesami (University of Memphis) noted that \"We added both melting point and high temperature elastic constants into material properties database for MEAM parameter development process.\""
+            }
+        }, 
+        "element": "Cu"
+    }
+}

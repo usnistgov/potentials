@@ -1,0 +1,19 @@
+{
+    "interatomic-potential": {
+        "key": "71b03297-b66d-4efd-9502-02cf83d9dc38", 
+        "id": "2015--Purja-Pun-G-P-Yamakov-V-Mishin-Y--Al-Co", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1088/0965-0393/23/6/065006"
+            }, 
+            "notes": {
+                "text": "The reference information was updated on 26 Aug. 2015."
+            }
+        }, 
+        "element": [
+            "Al", 
+            "Co"
+        ]
+    }
+}

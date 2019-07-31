@@ -1,0 +1,27 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "62a85d17-508a-406f-aedb-710902e55dd4", 
+        "id": "2018--Dickel-D-E--Mg-Al-Zn--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-05-17", 
+        "interatomic-potential-key": "826e0c49-18e9-4e72-a526-aae0ff30d20d", 
+        "type": "LAMMPS pair_style meam", 
+        "notes": {
+            "text": "These files were submitted by Doyl Dickel on May 17, 2018."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Dickel-D-E-Baskes-M-I-Aslam-I-Barrett-C-D--Mg-Al-Zn/1/MgAlZn.library.meam", 
+                    "link-text": "MgAlZn.library.meam"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Dickel-D-E-Baskes-M-I-Aslam-I-Barrett-C-D--Mg-Al-Zn/1/MgAlZn.parameter.meam", 
+                    "link-text": "MgAlZn.parameter.meam"
+                }
+            }
+        ]
+    }
+}

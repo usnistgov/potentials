@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "2bdb069e-f91c-435f-8912-406bcbedbbc7", 
+        "id": "2002--Albe-K-Nordlund-K-Nord-J-Kuronen-A--Ga-As", 
+        "record-version": "2018-10-10", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.66.035205"
+            }
+        }, 
+        "element": [
+            "Ga", 
+            "As"
+        ]
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "d07092e4-8c38-4cf5-bd05-bf18f8b80776", 
+        "id": "2006--Sun-D-Y-Mendelev-M-I-Becker-C-A-et-al--Mg", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.73.024116"
+            }
+        }, 
+        "element": "Mg"
+    }
+}

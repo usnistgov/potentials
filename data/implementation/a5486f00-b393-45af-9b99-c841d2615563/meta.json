@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "a5486f00-b393-45af-9b99-c841d2615563", 
+        "id": "1989--Adams-J-B--Pd--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2009-02-19", 
+        "interatomic-potential-key": "d43c300c-e557-42f8-87a0-c26cf82370df", 
+        "type": "LAMMPS pair_style eam", 
+        "notes": {
+            "text": "pdu6.txt was obtained from <a href=\"http://enpub.fulton.asu.edu/cms/potentials/main/main.htm\" class=\"external\">http://enpub.fulton.asu.edu/cms/ potentials/main/main.htm</a> and posted with the permission of J.B. Adams. The name of the file was retained, even though the header information lists the potential as 'universal 4.' This file is compatible with the \"pair_style eam\" format in LAMMPS (19Feb09 version)."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Pd/1/pdu6.txt", 
+                "link-text": "pdu6.txt"
+            }
+        }
+    }
+}

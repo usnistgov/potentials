@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "904676a4-1559-4205-bc31-b64d5ac26d79", 
+        "id": "2015--Ko-W-S-Grabowski-B-Neugebauer-J--Ni-Ti", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.92.134107"
+            }
+        }, 
+        "element": [
+            "Ni", 
+            "Ti"
+        ]
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "030d9099-cf7f-4623-b597-733e80d214a4", 
+        "id": "2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Fe", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.69.144113"
+            }
+        }, 
+        "element": "Fe"
+    }
+}

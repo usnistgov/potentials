@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "da278bc2-40c3-4197-a4ab-9d671c963c68", 
+        "id": "2003--Los-J-H--C--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-11-01", 
+        "interatomic-potential-key": "ef26cdaf-8b0d-46d8-aa68-41cb2721b67e", 
+        "type": "LAMMPS pair_style lcbop", 
+        "notes": {
+            "text": "This file was taken from the August 22, 2018 LAMMPS distribution. The LAMMPS documentation for pair_style lcbop notes \"The parameters/coefficients for the LCBOP potential as applied to C are listed in the C.lcbop file to agree with the original (Los and Fasolino) paper. Thus the parameters are specific to this potential and the way it was fit, so modifying the file should be done carefully.\""
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Los-J-H-Fasolino-A--C/1/C.lcbop", 
+                "link-text": "C.lcbop"
+            }
+        }
+    }
+}

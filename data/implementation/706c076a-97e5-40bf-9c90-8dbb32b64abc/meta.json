@@ -1,0 +1,27 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "706c076a-97e5-40bf-9c90-8dbb32b64abc", 
+        "id": "2012--Norman-G-E--Au--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-07-23", 
+        "interatomic-potential-key": "d559106d-4277-4119-a8e7-9ecf845af3e5", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "These files were submitted by Sergey Starikov on July 23, 2018. This EAM-potential describes Au at various electronic temperatures (0.1 eV, 1.5 eV, 3.0 eV, 4.5 eV, 6.0 eV). It is implemented as a set of EAM-potentials for alloy where each component corresponds to some electron temperature. This version is compatible with LAMMPS. Validation and usage information can be found in Verification.pdf. It should be noted that the potential may be used at classical molecular dynamics simulation for study of room-temperature properties. In this case, only \"Au\" type of alloy is necessary."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2012--Norman-G-E-Starikov-S-V-Stegailov-V-V--Au/1/Au_5T.eam.alloy", 
+                    "link-text": "Au_5T.eam.alloy"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2012--Norman-G-E-Starikov-S-V-Stegailov-V-V--Au/1/Verification.pdf", 
+                    "link-text": "Verification.pdf"
+                }
+            }
+        ]
+    }
+}

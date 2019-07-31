@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "ecb27c54-e9b5-4497-a0a1-c3e4850c0f7e", 
+        "id": "2016--Nichol-A--Cs--LAMMPS--ipr2", 
+        "status": "active", 
+        "date": "2017-10-10", 
+        "interatomic-potential-key": "ca73cf4e-aaae-40f6-9592-6f28abc18029", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "A new conversion to LAMMPS performed by G.J. Ackland was submitted on 10 Oct. 2017. The previous setfl version above had a spurious oscillation period in the tabulated r*phi function that influenced measurements, most notably static elastic constant evaluations."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Nichol-A-Ackland-G-J--Cs/3/Cs_v2.eam.fs", 
+                "link-text": "Cs_v2.eam.fs"
+            }
+        }
+    }
+}

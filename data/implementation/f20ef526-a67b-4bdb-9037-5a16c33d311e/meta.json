@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "f20ef526-a67b-4bdb-9037-5a16c33d311e", 
+        "id": "2003--Han-S--V--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2017-10-10", 
+        "interatomic-potential-key": "04ad93c0-31f0-413f-a6f0-a68f2e709b8f", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "A conversion to LAMMPS from MOLDY was performed by G.J. Ackland and submitted on 10 Oct. 2017."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Han-S-Zepeda-Ruiz-L-A-Ackland-G-J-et-al--V/2/V.eam.fs", 
+                "link-text": "V.eam.fs"
+            }
+        }
+    }
+}

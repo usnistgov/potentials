@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "d9495b9a-ff7a-4c4f-bb25-de2062e794d9", 
+        "id": "2007--Vashishta-P-Kalia-R-K-Nakano-A-Rino-J-P--Si-C", 
+        "record-version": "2018-11-01", 
+        "description": {
+            "citation": {
+                "DOI": "10.1063/1.2724570"
+            }
+        }, 
+        "element": [
+            "Si", 
+            "C"
+        ]
+    }
+}

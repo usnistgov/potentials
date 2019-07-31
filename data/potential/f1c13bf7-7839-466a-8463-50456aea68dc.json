@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "f1c13bf7-7839-466a-8463-50456aea68dc", 
+        "id": "2016--Zhou-X-W-Ward-D-K-Foster-M-E--Al-Cu", 
+        "record-version": "2018-10-12", 
+        "description": {
+            "citation": {
+                "DOI": "10.1016/j.jallcom.2016.04.055"
+            }
+        }, 
+        "element": [
+            "Al", 
+            "Cu"
+        ]
+    }
+}

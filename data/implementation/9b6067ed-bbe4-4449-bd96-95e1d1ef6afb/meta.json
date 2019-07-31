@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "9b6067ed-bbe4-4449-bd96-95e1d1ef6afb", 
+        "id": "1997--Ackland-G-J--Fe--MOLDY--ipr1", 
+        "status": "active", 
+        "date": "2009-06-30", 
+        "interatomic-potential-key": "372f9e5f-dcbd-4cc6-902a-ebcafd664018", 
+        "type": "Moldy FS", 
+        "notes": {
+            "text": "The parameters in Fe.moldy were obtained from <a href=\"http://homepages.ed.ac.uk/graeme/moldy/moldy.html\" class=\"external\">http://homepages.ed.ac.uk/graeme/moldy/moldy.html </a> and posted with the permission of G.J. Ackland."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/1997--Ackland-G-J-Bacon-D-J-Calder-A-F-Harry-T--Fe/1/Fe.moldy", 
+                "link-text": "Fe.moldy"
+            }
+        }
+    }
+}

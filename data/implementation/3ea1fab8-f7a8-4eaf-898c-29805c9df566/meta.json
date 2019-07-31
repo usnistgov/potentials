@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "3ea1fab8-f7a8-4eaf-898c-29805c9df566", 
+        "id": "2016--Wilson-S-R--Mg--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2015-12-07", 
+        "interatomic-potential-key": "2a6e9260-0a82-4041-852b-88e69bfbd79d", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "These files were sent by M.I. Mendelev (Ames Laboratory) on 7 Dec. 2015 and posted with his permission."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Wilson-S-R-Mendelev-M-I--Mg/1/Mg1.eam.fs", 
+                "link-text": "Mg1.eam.fs"
+            }
+        }
+    }
+}

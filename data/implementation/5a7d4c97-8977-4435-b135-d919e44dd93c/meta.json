@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "5a7d4c97-8977-4435-b135-d919e44dd93c", 
+        "id": "2016--Tseplyaev-V-I--U-N--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2016-11-03", 
+        "interatomic-potential-key": "9f317e60-ac61-4533-a756-a023996aaee5", 
+        "type": "LAMMPS pair_style adp", 
+        "notes": {
+            "text": "These files were sent by S.V. Starikov (Joint Institute for High Temperatures, Russian Academy of Sciences) on 3 Nov. 2016 and posted with his permission."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Tseplyaev-V-I-Starikov-S-V--U-N/1/un.adp.txt", 
+                "link-text": "un.adp.txt"
+            }
+        }
+    }
+}

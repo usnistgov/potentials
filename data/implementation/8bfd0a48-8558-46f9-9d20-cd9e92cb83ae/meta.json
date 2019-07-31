@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "8bfd0a48-8558-46f9-9d20-cd9e92cb83ae", 
+        "id": "2017--Purja-Pun-G-P--Au--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2017-09-07", 
+        "interatomic-potential-key": "ef908258-25d1-439e-8223-3bf4df924ed0", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "These files were sent by G.P. Purja Pun (George Mason) on 7 Sept. 2017 and posted with his permission."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Purja-Pun-G-P--Au/1/Au_GLJ10_3.eam.alloy", 
+                "link-text": "Au_GLJ10_3.eam.alloy"
+            }
+        }
+    }
+}

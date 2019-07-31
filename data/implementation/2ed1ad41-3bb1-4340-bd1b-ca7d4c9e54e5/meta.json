@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "2ed1ad41-3bb1-4340-bd1b-ca7d4c9e54e5", 
+        "id": "1995--Ackland-G-J--Zr--MOLDY--ipr1", 
+        "status": "active", 
+        "date": "2009-06-30", 
+        "interatomic-potential-key": "c754e222-3417-45d9-a7a3-1d399ea72c1e", 
+        "type": "Moldy FS", 
+        "notes": {
+            "text": "The parameters in zr.moldy were obtained from <a href=\"http://homepages.ed.ac.uk/graeme/moldy/moldy.html\" class=\"external\">http://homepages.ed.ac.uk/graeme/moldy/moldy.html </a> and posted with the permission of G.J. Ackland. From that website: \"Note typoes in the journal version of zirconium.\""
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/1995--Ackland-G-J-Wooding-S-J-Bacon-D-J--Zr/1/zr.moldy", 
+                "link-text": "zr.moldy"
+            }
+        }
+    }
+}

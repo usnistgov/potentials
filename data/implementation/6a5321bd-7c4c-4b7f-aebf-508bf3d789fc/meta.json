@@ -1,0 +1,64 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "6a5321bd-7c4c-4b7f-aebf-508bf3d789fc", 
+        "id": "2006--Williams-P-L--Cu-Ag--table--ipr1", 
+        "status": "active", 
+        "date": "2009-01-01", 
+        "interatomic-potential-key": "cfe3a54f-c3b2-4b61-8b03-165613bdd829", 
+        "type": "EAM tabulated functions", 
+        "notes": {
+            "text": "These files were provided by Yuri Mishin."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Cu-Ag/1/F_ag.plt", 
+                    "label": "Ag F(&rho;):", 
+                    "link-text": "F_ag.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Cu-Ag/1/F_cu.plt", 
+                    "label": "Cu F(&rho;):", 
+                    "link-text": "F_cu.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Cu-Ag/1/fag.plt", 
+                    "label": "Ag &rho;(r):", 
+                    "link-text": "fag.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Cu-Ag/1/fcu.plt", 
+                    "label": "Cu &rho;(r):", 
+                    "link-text": "fcu.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Cu-Ag/1/pag.plt", 
+                    "label": "Ag &phi;(r):", 
+                    "link-text": "pag.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Cu-Ag/1/pcu.plt", 
+                    "label": "Cu &phi;(r):", 
+                    "link-text": "pcu.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Williams-P-L-Mishin-Y-Hamilton-J-C--Cu-Ag/1/pcuag.plt", 
+                    "label": "Cu-Ag &phi;(r):", 
+                    "link-text": "pcuag.plt"
+                }
+            }
+        ]
+    }
+}

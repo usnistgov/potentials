@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "a1ead210-13f2-4c1e-8c02-4293e8ad0f97", 
+        "id": "2018--Farkas-D--Fe-Ni-Cr-Co-Cu--LAMMPS--ipr1", 
+        "status": "superseded", 
+        "date": "2019-03-19", 
+        "interatomic-potential-key": "78392771-83e9-491c-bf4c-39175befd072", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This file was provided by Diana Farkas (Virginia Tech) on 19 March 2019 and posted with her permission. Update 2019-05-20: Superseded by new version."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Farkas-D-Caro-A--Fe-Ni-Cr-Co-Cu/1/FeNiCrCoCu-heamix.eam.alloy", 
+                "link-text": "FeNiCrCoCu-heamix.eam.alloy"
+            }
+        }
+    }
+}

@@ -1,0 +1,33 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "6a9a08f8-11be-4e37-bfbc-84044f8ecf7a", 
+        "id": "2012--Jelinek-B--Al-Si-Mg-Cu-Fe--LAMMPS--ipr2", 
+        "status": "active", 
+        "date": "2012-07-03", 
+        "interatomic-potential-key": "1515dd80-1984-49de-bc92-d5724059ff56", 
+        "type": "LAMMPS pair_style meam", 
+        "notes": {
+            "text": "This file was sent by Bohumir Jelinek (Mississippi State University) and posted on 3 July 2012. He noted, \"This is a MEAM potential for Al, Si, Mg, Cu, Fe alloys. It works with LAMMPS, version 19 Jul 2011 or later, when compiled with MEAM support. Most of the MEAM potential results presented in the accompanying paper can be reproduced with Atomistic Simulation Environment (ASE) and testing routines are provided in ase-atomistic-potential-tests-rev60.tar.gz\""
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2012--Jelinek-B-Groh-S-Horstemeyer-M-F-et-al--Al-Si-Mg-Cu-Fe/1/Jelinek_2012_meamf", 
+                    "link-text": "Jelinek_2012_meamf"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2012--Jelinek-B-Groh-S-Horstemeyer-M-F-et-al--Al-Si-Mg-Cu-Fe/1/Jelinek_2012_meam.alsimgcufe", 
+                    "link-text": "Jelinek_2012_meam.alsimgcufe"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2012--Jelinek-B-Groh-S-Horstemeyer-M-F-et-al--Al-Si-Mg-Cu-Fe/1/ase-atomistic-potential-tests-rev60.tar.gz", 
+                    "link-text": "ase-atomistic-potential-tests-rev60.tar.gz"
+                }
+            }
+        ]
+    }
+}

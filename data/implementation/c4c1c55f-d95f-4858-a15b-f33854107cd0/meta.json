@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "c4c1c55f-d95f-4858-a15b-f33854107cd0", 
+        "id": "2006--Bere-A--Ga-N--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-11-01", 
+        "interatomic-potential-key": "a08eb46e-3856-4329-9dce-41af22f9acc1", 
+        "type": "LAMMPS pair_style sw", 
+        "notes": {
+            "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Bere-A-Serra-A--Ga-N/1/GaN.sw", 
+                "link-text": "GaN.sw"
+            }
+        }
+    }
+}

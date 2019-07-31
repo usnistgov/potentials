@@ -1,0 +1,78 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "b5be14c8-4570-48c5-8da3-e8c4972e45d2", 
+        "id": "2014--Bonny-G--W-H-He-2--table--ipr1", 
+        "status": "active", 
+        "date": "2016-03-18", 
+        "interatomic-potential-key": "60cf81d5-aa01-4f59-aaa0-8ce26fc1395b", 
+        "type": "EAM tabulated functions", 
+        "notes": {
+            "text": "Same functions in separate EAM tables."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-F_H.spt", 
+                    "label": "H F(&rho;):", 
+                    "link-text": "WHHe-EAM2-F_H.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-F_W.spt", 
+                    "label": "W F(&rho;):", 
+                    "link-text": "WHHe-EAM2-F_W.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-rhoW.spt", 
+                    "label": "W &rho;(r):", 
+                    "link-text": "WHHe-EAM2-rhoW.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-pHeHe.spt", 
+                    "label": "He &phi;(r):", 
+                    "link-text": "WHHe-EAM2-pHeHe.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-pHH.spt", 
+                    "label": "H &phi;(r):", 
+                    "link-text": "WHHe-EAM2-pHH.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-pHHe.spt", 
+                    "label": "H-He &phi;(r):", 
+                    "link-text": "WHHe-EAM2-pHHe.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-pWH.spt", 
+                    "label": "W-H &phi;(r):", 
+                    "link-text": "WHHe-EAM2-pWH.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-pWHe.spt", 
+                    "label": "W-He &phi;(r):", 
+                    "link-text": "WHHe-EAM2-pWHe.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-2/2/WHHe-EAM2-pWW.spt", 
+                    "label": "W &phi;(r):", 
+                    "link-text": "WHHe-EAM2-pWW.spt"
+                }
+            }
+        ]
+    }
+}

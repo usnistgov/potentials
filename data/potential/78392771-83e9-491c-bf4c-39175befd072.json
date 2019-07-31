@@ -1,0 +1,19 @@
+{
+    "interatomic-potential": {
+        "key": "78392771-83e9-491c-bf4c-39175befd072", 
+        "id": "2018--Farkas-D-Caro-A--Fe-Ni-Cr-Co-Cu", 
+        "record-version": "2019-03-19", 
+        "description": {
+            "citation": {
+                "DOI": "10.1557/jmr.2018.245"
+            }
+        }, 
+        "element": [
+            "Fe", 
+            "Ni", 
+            "Cr", 
+            "Co", 
+            "Cu"
+        ]
+    }
+}

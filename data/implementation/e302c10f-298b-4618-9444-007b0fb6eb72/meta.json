@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "e302c10f-298b-4618-9444-007b0fb6eb72", 
+        "id": "2018--Starikov-S-V--U-Mo--LAMMPS--ipr2", 
+        "status": "active", 
+        "date": "2018-08-19", 
+        "interatomic-potential-key": "0363c268-9d42-4d82-9cc7-5a610c707c6c", 
+        "type": "LAMMPS pair_style adp", 
+        "notes": {
+            "text": "This file was recieved by Sergei Starikov on August 2, 2018. He noted: \"In the previous version, one function for Mo-Mo interaction had poor smoothing with r=r_cut. This \"bug\" led to the sake of the energy conservation during high-temperature (or long) calculations for pure Mo or U-Mo alloy. I made an additional check and found a small potential compilation issue leading to this energy drift. I fixed the file, so now it can be safely used with the time-step = 0.5 fs, even for long runs at high temperatures (the test was made for 1500K).\""
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Starikov-S-V-Kolotova-L-N-Kuksin-A-Y-et-al--U-Mo/2/U_Mo.alloy.adp_cor.txt", 
+                "link-text": "U_Mo.alloy.adp_cor.txt"
+            }
+        }
+    }
+}

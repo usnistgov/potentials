@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "536398a4-c74f-473d-b738-968bf97519f0", 
+        "id": "2000--Landa-A--Al-Pb--table--ipr1", 
+        "status": "active", 
+        "date": "2010-03-25", 
+        "interatomic-potential-key": "df6401e2-2541-484c-bf5d-1b0ff4b1ac39", 
+        "type": "EAM setfl", 
+        "notes": {
+            "text": "alpb.set was sent by Alexander Landa (Lawrence Livermore National Laboratory) on 25 Mar. 2010 and posted with his permission and that of Don Siegel (University of Michigan)."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2000--Landa-A-Wynblatt-P-Siegel-D-J-et-al--Al-Pb/1/alpb.set", 
+                "link-text": "alpb.set"
+            }
+        }
+    }
+}

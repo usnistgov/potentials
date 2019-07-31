@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "57fe7a02-b8ad-4362-b98f-6439c9ad14dd", 
+        "id": "2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1063/1.4982361"
+            }
+        }, 
+        "element": [
+            "W", 
+            "Re"
+        ]
+    }
+}

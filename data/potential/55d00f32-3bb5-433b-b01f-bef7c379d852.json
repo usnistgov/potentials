@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "55d00f32-3bb5-433b-b01f-bef7c379d852", 
+        "id": "2007--Munetoh-S-Motooka-T-Moriguchi-K-Shintani-A--Si-O", 
+        "record-version": "2018-10-10", 
+        "description": {
+            "citation": {
+                "DOI": "10.1016/j.commatsci.2006.06.010"
+            }
+        }, 
+        "element": [
+            "Si", 
+            "O"
+        ]
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "ee87565b-c8a9-4cc8-9f99-1e405f56d165", 
+        "id": "2007--Kumagai-T--Si--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-11-05", 
+        "interatomic-potential-key": "390be585-f40c-4e4c-ba6a-7aa0577dadee", 
+        "type": "LAMMPS pair_style tersoff/mod", 
+        "notes": {
+            "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2007--Kumagai-T-Izumi-S-Hara-S-Sakai-S--Si/1/Si.tersoff.mod", 
+                "link-text": "Si.tersoff.mod"
+            }
+        }
+    }
+}

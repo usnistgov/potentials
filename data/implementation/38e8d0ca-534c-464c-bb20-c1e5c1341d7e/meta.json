@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "38e8d0ca-534c-464c-bb20-c1e5c1341d7e", 
+        "id": "2018--Wang-K--Pb-II--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-11-19", 
+        "interatomic-potential-key": "8ded9172-8e27-478a-b8f9-eea237d2e830", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This file was provided by Kun Wang (Institute of Applied Physics and Computational Mathematics, Beijing 100088, China) on 11 November 2018 and posted with his permission. He notes that: \"This file is generated and tested using CMOFP (v18.04.30). Detailed descriptions about the CMOFP can be found in ref: K. Wang, W. Zhu, S. Xiao, J. Chen, W. Hu, Journal of Physics: Condensed Matter, 28 (2016) 505201.\""
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Wang-K-Zhu-W-Xiang-M-et-al--Pb-II/1/Pb_Wang02.eam.fs", 
+                "link-text": "Pb_Wang02.eam.fs"
+            }
+        }
+    }
+}

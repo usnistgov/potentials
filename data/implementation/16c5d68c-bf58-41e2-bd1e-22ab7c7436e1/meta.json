@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "16c5d68c-bf58-41e2-bd1e-22ab7c7436e1", 
+        "id": "2018--Howells-C-A--Cr--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-11-05", 
+        "interatomic-potential-key": "c6620af7-cfe4-4086-b9cf-8198d56e1d30", 
+        "type": "LAMMPS pair_style adp", 
+        "notes": {
+            "text": "This file was provided by Yuri Mishin (George Mason University) on 2 Nov. 2018."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Howells-C-A-Mishin-Y--Cr/1/Cr.adp.txt", 
+                "link-text": "Cr.adp.txt"
+            }
+        }
+    }
+}

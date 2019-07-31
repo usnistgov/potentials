@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "7a0fc5db-0c9f-44f0-a005-4d6d6862a7aa", 
+        "id": "1989--Tersoff-J--Si-Ge--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-10-10", 
+        "interatomic-potential-key": "866a3898-fa41-42e0-9b2c-7a25beb42604", 
+        "type": "LAMMPS pair_style tersoff", 
+        "notes": {
+            "text": "This file was created and verified by Lucas Hale. The parameter values are comparable to the Si(D)-Ge interactions in SiCGe.tersoff file in the August 22, 2018 LAMMPS distribution, with this file having higher numerical precision for the derived mixing parameters. The parameters are identical to those in the parameter file used by openKIM model MO_350526375143_001."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/1989--Tersoff-J--Si-Ge/1/1989_SiGe.tersoff", 
+                "link-text": "1989_SiGe.tersoff"
+            }
+        }
+    }
+}

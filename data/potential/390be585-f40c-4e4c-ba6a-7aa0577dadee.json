@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "390be585-f40c-4e4c-ba6a-7aa0577dadee", 
+        "id": "2007--Kumagai-T-Izumi-S-Hara-S-Sakai-S--Si", 
+        "record-version": "2018-11-05", 
+        "description": {
+            "citation": {
+                "DOI": "10.1016/j.commatsci.2006.07.013"
+            }
+        }, 
+        "element": "Si"
+    }
+}

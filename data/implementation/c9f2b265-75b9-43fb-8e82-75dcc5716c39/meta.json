@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "c9f2b265-75b9-43fb-8e82-75dcc5716c39", 
+        "id": "2003--Han-S--V--MOLDY--ipr1", 
+        "status": "active", 
+        "date": "2009-06-30", 
+        "interatomic-potential-key": "04ad93c0-31f0-413f-a6f0-a68f2e709b8f", 
+        "type": "Moldy FS", 
+        "notes": {
+            "text": "The parameters in V.moldy were obtained from <a href=\"http://homepages.ed.ac.uk/graeme/moldy/moldy.html\" class=\"external\">http://homepages.ed.ac.uk/graeme/moldy/moldy.html </a> and posted with the permission of G.J. Ackland."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Han-S-Zepeda-Ruiz-L-A-Ackland-G-J-et-al--V/1/V.moldy", 
+                "link-text": "V.moldy"
+            }
+        }
+    }
+}

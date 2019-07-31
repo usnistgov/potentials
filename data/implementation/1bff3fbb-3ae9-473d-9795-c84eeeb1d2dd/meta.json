@@ -1,0 +1,106 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "1bff3fbb-3ae9-473d-9795-c84eeeb1d2dd", 
+        "id": "2011--Apostol-F--Al-Cu--table--ipr1", 
+        "status": "active", 
+        "date": "2011-03-16", 
+        "interatomic-potential-key": "84180f41-771d-4098-8a97-89fa1510477b", 
+        "type": "ADP tabulated functions", 
+        "notes": {
+            "text": "These files were provided by Yuri Mishin (George Mason University) and posted on 16 Mar. 2011."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_F_Al.plt", 
+                    "label": "Al F(&rho;):", 
+                    "link-text": "Apostol_Mishin_2011_F_Al.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_F_Cu.plt", 
+                    "label": "Cu F(&rho;):", 
+                    "link-text": "Apostol_Mishin_2011_F_Cu.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_ro_Al.plt", 
+                    "label": "Al &rho;(r):", 
+                    "link-text": "Apostol_Mishin_2011_ro_Al.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_ro_Cu.plt", 
+                    "label": "Cu &rho;(r):", 
+                    "link-text": "Apostol_Mishin_2011_ro_Cu.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_p_Al.plt", 
+                    "label": "Al &phi;(r):", 
+                    "link-text": "Apostol_Mishin_2011_p_Al.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_p_Cu.plt", 
+                    "label": "Cu &phi;(r):", 
+                    "link-text": "Apostol_Mishin_2011_p_Cu.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_p_AlCu.plt", 
+                    "label": "Al-Cu &phi;(r):", 
+                    "link-text": "Apostol_Mishin_2011_p_AlCu.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_d_Al.plt", 
+                    "label": "Al u(r):", 
+                    "link-text": "Apostol_Mishin_2011_d_Al.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_d_Cu.plt", 
+                    "label": "Cu u(r):", 
+                    "link-text": "Apostol_Mishin_2011_d_Cu.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_d_AlCu.plt", 
+                    "label": "Al-Cu u(r):", 
+                    "link-text": "Apostol_Mishin_2011_d_AlCu.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_q_Al.plt", 
+                    "label": "Al w(r):", 
+                    "link-text": "Apostol_Mishin_2011_q_Al.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_q_Cu.plt", 
+                    "label": "Cu w(r):", 
+                    "link-text": "Apostol_Mishin_2011_q_Cu.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Apostol-F-Mishin-Y--Al-Cu/1/Apostol_Mishin_2011_q_AlCu.plt", 
+                    "label": "Al-Cu w(r):", 
+                    "link-text": "Apostol_Mishin_2011_q_AlCu.plt"
+                }
+            }
+        ]
+    }
+}

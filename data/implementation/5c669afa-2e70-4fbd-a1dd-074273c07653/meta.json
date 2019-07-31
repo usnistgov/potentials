@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "5c669afa-2e70-4fbd-a1dd-074273c07653", 
+        "id": "2016--Zhou-X-W--Al-Cu--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-10-12", 
+        "interatomic-potential-key": "f1c13bf7-7839-466a-8463-50456aea68dc", 
+        "type": "LAMMPS pair_style bop", 
+        "notes": {
+            "text": "This file was taken from the August 22, 2018 LAMMPS distribution and listed as having been created by X.W. Zhou (Sandia)"
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Zhou-X-W-Ward-D-K-Foster-M-E--Al-Cu/1/AlCu.bop.table", 
+                "link-text": "AlCu.bop.table"
+            }
+        }
+    }
+}

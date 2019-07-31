@@ -1,0 +1,20 @@
+{
+    "interatomic-potential": {
+        "key": "c35b1a42-b554-4d3c-bf7c-df728ca7535a", 
+        "id": "2009--Tiwary-P-van-de-Walle-A-Gronbech-Jensen-N--UO2", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.80.174302"
+            }, 
+            "notes": {
+                "text": "31 Jan. 2012 Update: This potential has been superseded by the <a href=\"../../entry/2011--Tiwary-P-Walle-A-Jeon-B-Gronbech-Jensen-N--MOx\">2011--Tiwary-P-Walle-A-Jeon-B-Gronbech-Jensen-N--MOx</a> interatomic potential."
+            }
+        }, 
+        "element": [
+            "U", 
+            "O"
+        ], 
+        "other-element": "UO2"
+    }
+}

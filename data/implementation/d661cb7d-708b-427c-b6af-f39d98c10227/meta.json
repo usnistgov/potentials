@@ -1,0 +1,99 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "d661cb7d-708b-427c-b6af-f39d98c10227", 
+        "id": "2009--Bonny-G--Fe-Cu-Ni--table--ipr1", 
+        "status": "active", 
+        "date": "2010-02-08", 
+        "interatomic-potential-key": "38d0b8d9-5e5d-426a-9d70-b5a7e501528b", 
+        "type": "EAM tabulated functions", 
+        "notes": {
+            "text": "These files were provided by Giovanni Bonny on 8 Feb. 2010."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/F_Fe.spt", 
+                    "label": "Fe F(&rho;):", 
+                    "link-text": "F_Fe.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/F_Ni.spt", 
+                    "label": "Ni F(&rho;):", 
+                    "link-text": "F_Ni.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/F_Cu.spt", 
+                    "label": "Cu F(&rho;):", 
+                    "link-text": "F_Cu.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/rhoFe.spt", 
+                    "label": "Fe &rho;(r):", 
+                    "link-text": "rhoFe.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/rhoNi.spt", 
+                    "label": "Ni &rho;(r):", 
+                    "link-text": "rhoNi.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/rhoCu.spt", 
+                    "label": "Cu &rho;(r):", 
+                    "link-text": "rhoCu.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/pFeFe.spt", 
+                    "label": "Fe &phi;(r):", 
+                    "link-text": "pFeFe.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/pNiNi.spt", 
+                    "label": "Ni &phi;(r):", 
+                    "link-text": "pNiNi.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/pCuCu.spt", 
+                    "label": "Cu &phi;(r):", 
+                    "link-text": "pCuCu.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/pFeNi.spt", 
+                    "label": "Fe-Ni &phi;(r):", 
+                    "link-text": "pFeNi.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/pFeCu.spt", 
+                    "label": "Fe-Cu &phi;(r):", 
+                    "link-text": "pFeCu.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni/2/pCuNi.spt", 
+                    "label": "Cu-Ni &phi;(r):", 
+                    "link-text": "pCuNi.spt"
+                }
+            }
+        ]
+    }
+}

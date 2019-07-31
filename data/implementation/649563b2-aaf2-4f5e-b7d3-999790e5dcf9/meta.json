@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "649563b2-aaf2-4f5e-b7d3-999790e5dcf9", 
+        "id": "1995--Ackland-G-J--Zr--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2017-10-10", 
+        "interatomic-potential-key": "c754e222-3417-45d9-a7a3-1d399ea72c1e", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "A conversion to LAMMPS from MOLDY was performed by G.J. Ackland and submitted on 10 Oct. 2017. This implementation includes the short-range repulsion for radiation studies."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/1995--Ackland-G-J-Wooding-S-J-Bacon-D-J--Zr/2/Zr.eam.fs", 
+                "link-text": "Zr.eam.fs"
+            }
+        }
+    }
+}

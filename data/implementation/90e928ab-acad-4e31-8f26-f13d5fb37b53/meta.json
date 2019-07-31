@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "90e928ab-acad-4e31-8f26-f13d5fb37b53", 
+        "id": "2008--Fortini-A--Ru--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2008-05-15", 
+        "interatomic-potential-key": "8a94f366-a892-461e-9d3d-e30a76276727", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "This file was provided by Mikhail Mendelev on May 15, 2008. The reference was updated on 14 October 2008."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Fortini-A-Mendelev-M-I-Buldyrev-S-Srolovitz-D--Ru/1/Ru.eam.fs", 
+                "link-text": "Ru.eam.fs"
+            }
+        }
+    }
+}

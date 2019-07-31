@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "98713310-57ee-4917-93b5-af7f9ece7b3f", 
+        "id": "2012--Proville-L--Fe--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2017-01-10", 
+        "interatomic-potential-key": "8d55ef4d-6451-453e-b636-5ff1e2552d18", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "This file was sent by M.-C. Marinica (CEA, France) on 10 January 2017 and posted with his permission."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2012--Proville-L-Rodney-D-Marinica-M-C--Fe/1/MCM2011_eam.fs", 
+                "link-text": "MCM2011_eam.fs"
+            }
+        }
+    }
+}

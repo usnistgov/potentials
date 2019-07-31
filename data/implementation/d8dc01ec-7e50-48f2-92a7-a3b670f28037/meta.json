@@ -1,0 +1,27 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "d8dc01ec-7e50-48f2-92a7-a3b670f28037", 
+        "id": "1987--Ackland-G-J--Au--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2009-06-30", 
+        "interatomic-potential-key": "25899e46-6992-460a-b1c7-fb2704629e9f", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "This conversion was performed from G.J. Ackland's parameters by M.I. Mendelev. Conversion checks from M.I. Mendelev can be found in the conversion_check.pdf. These files were posted on 30 June 2009 with the permission of G.J. Ackland and M.I. Mendelev. These potentials are not designed for simulations of radiation damage."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1987--Ackland-G-J-Tichy-G-Vitek-V-Finnis-M-W--Au/2/Au.eam.fs", 
+                    "link-text": "Au.eam.fs"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1987--Ackland-G-J-Tichy-G-Vitek-V-Finnis-M-W--Au/2/conversion_check.pdf", 
+                    "link-text": "conversion_check.pdf"
+                }
+            }
+        ]
+    }
+}

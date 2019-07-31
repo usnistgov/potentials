@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "ddb93f7b-349f-4ab2-a630-97de04d12eff", 
+        "id": "1989--Adams-J-B--Cu--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2009-02-19", 
+        "interatomic-potential-key": "69d9f89a-f9a2-47ef-bd15-415d1bb7a9ba", 
+        "type": "LAMMPS pair_style eam", 
+        "notes": {
+            "text": "cuu6.txt was obtained from <a href=\"http://enpub.fulton.asu.edu/cms/potentials/main/main.htm\" class=\"external\">http://enpub.fulton.asu.edu/cms/ potentials/main/main.htm</a> and posted with the permission of J.B. Adams. The name of the file was retained, even though the header information lists the potential as 'universal 4.' Except for the first comment line, this file is identical to \"Cu_u6.eam\" in the August 22, 2018 LAMMPS distribution."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Cu/1/cuu6.txt", 
+                "link-text": "cuu6.txt"
+            }
+        }
+    }
+}

@@ -1,0 +1,78 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "e2155227-bb97-4e26-8d38-e8c21f616d01", 
+        "id": "2011--Bonny-G--Fe-Cr--table--ipr1", 
+        "status": "active", 
+        "date": "2017-11-02", 
+        "interatomic-potential-key": "c42c513a-f843-41c4-ba4f-3f31316c6a7b", 
+        "type": "EAM tabulated functions", 
+        "notes": {
+            "text": "These files were sent by Dr. Giovanni Bonny (Nuclear Materials Science Institute of SCK-CEN, Belgium) on 2 November 2017 and posted with his permission."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Bonny-G-Pasianot-R-C-Terentyev-D-Malerba-L--Fe-Cr/1/Fd_Fe.spt", 
+                    "label": "Fe F(&rho;):", 
+                    "link-text": "Fd_Fe.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Bonny-G-Pasianot-R-C-Terentyev-D-Malerba-L--Fe-Cr/1/Fd_Cr.spt", 
+                    "label": "Cr F(&rho;):", 
+                    "link-text": "Fd_Cr.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Bonny-G-Pasianot-R-C-Terentyev-D-Malerba-L--Fe-Cr/1/rhoFe.spt", 
+                    "label": "Fe &rho;d(r):", 
+                    "link-text": "rhoFe.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Bonny-G-Pasianot-R-C-Terentyev-D-Malerba-L--Fe-Cr/1/rhoCr.spt", 
+                    "label": "Cr &rho;d(r):", 
+                    "link-text": "rhoCr.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Bonny-G-Pasianot-R-C-Terentyev-D-Malerba-L--Fe-Cr/1/rhoFeCr.spt", 
+                    "label": "Fe-Cr &rho;s(r):", 
+                    "link-text": "rhoFeCr.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Bonny-G-Pasianot-R-C-Terentyev-D-Malerba-L--Fe-Cr/1/pFeFe.spt", 
+                    "label": "Fe-Fe &phi;(r):", 
+                    "link-text": "pFeFe.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Bonny-G-Pasianot-R-C-Terentyev-D-Malerba-L--Fe-Cr/1/pCrCr.spt", 
+                    "label": "Cr-Cr &phi;(r):", 
+                    "link-text": "pCrCr.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Bonny-G-Pasianot-R-C-Terentyev-D-Malerba-L--Fe-Cr/1/pFeCr.spt", 
+                    "label": "Fe-Cr &phi;(r):", 
+                    "link-text": "pFeCr.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Bonny-G-Pasianot-R-C-Terentyev-D-Malerba-L--Fe-Cr/1/README.txt", 
+                    "label": "Documentation:", 
+                    "link-text": "README.txt"
+                }
+            }
+        ]
+    }
+}

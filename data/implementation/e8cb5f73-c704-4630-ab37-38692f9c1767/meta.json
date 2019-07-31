@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "e8cb5f73-c704-4630-ab37-38692f9c1767", 
+        "id": "2004--Liu-X-Y--Al--table--ipr1", 
+        "status": "active", 
+        "date": "2006-01-01", 
+        "interatomic-potential-key": "8f71b887-b4c5-42c0-b06c-9456153725d9", 
+        "type": "EAM setfl", 
+        "notes": {
+            "text": "NEWAl.txt was obtained from <a href=\"http://enpub.fulton.asu.edu/cms/potentials/main/main.htm\" class=\"external\">http://enpub.fulton.asu.edu/cms/potentials/main/main.htm</a> and posted with the permission of J.B. Adams."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Liu-X-Y-Ercolessi-F-Adams-J-B--Al/1/NEWAl.txt", 
+                "link-text": "NEWAl.txt"
+            }
+        }
+    }
+}

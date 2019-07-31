@@ -1,0 +1,4 @@
+README modified by C.A. Becker on 7 Oct. 2010 from the original provided by X.W. Zhou:
+
+Use compile_script to compile create.f.  Then execute Zhou04_EAM<EAM.input to create an EAM .set file for lammps using the EAM database: X. W. Zhou, R. A. Johnson, and H. N. G. Wadley, Phys. Rev. B, 69, 144113 (2004). 
+Users can use the input file EAM.input to select elements.  An example for pure Cu is in EAM.input.Cu.  For Ta-Cu, see EAM.input.TaCu.  An example for Cu-Ag-Au is in EAM.input.CuAgAu.

@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "8d55ef4d-6451-453e-b636-5ff1e2552d18", 
+        "id": "2012--Proville-L-Rodney-D-Marinica-M-C--Fe", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1038/nmat3401"
+            }
+        }, 
+        "element": "Fe"
+    }
+}

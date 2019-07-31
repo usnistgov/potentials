@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "3837b6da-05c4-4148-97cd-90b26a2092df", 
+        "id": "2006--Chamati-H-Papanicolaou-N-I-Mishin-Y-Papaconstantopoulos-D-A--Fe", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1016/j.susc.2006.02.010"
+            }
+        }, 
+        "element": "Fe"
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "5796a72b-bcf4-4dd4-a0f3-ee5f462b7f7c", 
+        "id": "2018--Etesami-S-A--Fe--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-04-23", 
+        "interatomic-potential-key": "6c0f6df2-88e4-451b-833e-b9a0d3ccdc34", 
+        "type": "LAMMPS pair_style meam", 
+        "notes": {
+            "text": "These files were sent by S. A. Etesami (University of Memphis) on 23 April 2018 and posted with his permission. This version is compatible with LAMMPS."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Etesami-S-A-Asadi-E--Fe/1/Fe.meam", 
+                    "link-text": "Fe.meam"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Etesami-S-A-Asadi-E--Fe/1/library.Fe.meam", 
+                    "link-text": "library.Fe.meam"
+                }
+            }
+        ]
+    }
+}

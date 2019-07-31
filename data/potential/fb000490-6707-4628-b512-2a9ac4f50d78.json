@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "fb000490-6707-4628-b512-2a9ac4f50d78", 
+        "id": "2015--Kumar-A-Chernatynskiy-A-Liang-T-et-al--Al-Ni", 
+        "record-version": "2018-11-09", 
+        "description": {
+            "citation": {
+                "DOI": "10.1088/0953-8984/27/33/336302"
+            }
+        }, 
+        "element": [
+            "Al", 
+            "Ni"
+        ]
+    }
+}

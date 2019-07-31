@@ -1,0 +1,23 @@
+{
+    "interatomic-potential": {
+        "key": "9ddb10de-d3f8-43fe-9dfc-472d704537e1", 
+        "id": "1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Ag-Au-Cu-Ni-Pd-Pt", 
+        "record-version": "2018-10-05", 
+        "description": {
+            "citation": {
+                "DOI": "10.1557/jmr.1989.0102"
+            }, 
+            "notes": {
+                "text": "Cross-element interactions were only considered for small (1-2%) impurity concentrations and use a generalized universal function."
+            }
+        }, 
+        "element": [
+            "Ag", 
+            "Au", 
+            "Cu", 
+            "Ni", 
+            "Pd", 
+            "Pt"
+        ]
+    }
+}

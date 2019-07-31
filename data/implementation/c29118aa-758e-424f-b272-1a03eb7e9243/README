@@ -1,0 +1,3 @@
+compile create.f and execute a.out<EAM.input will create an EAM .set file for lammps using the EAM database: X. W. Zhou, R. A. Johnson, and H. N. G. Wadley, Phys. Rev. B, 69, 144113 (2004). Users can use the input file EAM.input to select elements.
+
+

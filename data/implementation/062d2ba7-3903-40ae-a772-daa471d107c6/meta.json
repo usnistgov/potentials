@@ -1,0 +1,27 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "062d2ba7-3903-40ae-a772-daa471d107c6", 
+        "id": "1985--Foiles-S-M--Ni-Cu--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2007-12-09", 
+        "interatomic-potential-key": "301f04ce-9082-4542-8590-489300cd19e8", 
+        "type": "LAMMPS pair_style eam", 
+        "notes": {
+            "text": "These files were obtained from the December 9, 2007 LAMMPS distribution. According to Stephen M. Foiles, they differ from the original formulations in the following ways: a) The fcc is upper case in one and lower case in the other. b) The comment in the LAMMPS distribution for Ni_smf7.eam incorrectly lists it as being for the NiPd alloys rather than NiCu alloys. The potential file has been updated with \"NiCu\" to reflect the second comment."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1985--Foiles-S-M--Ni-Cu/1/Cu_smf7.eam", 
+                    "link-text": "Cu_smf7.eam"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1985--Foiles-S-M--Ni-Cu/1/Ni_smf7.eam", 
+                    "link-text": "Ni_smf7.eam"
+                }
+            }
+        ]
+    }
+}

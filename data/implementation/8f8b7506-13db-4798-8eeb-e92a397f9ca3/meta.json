@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "8f8b7506-13db-4798-8eeb-e92a397f9ca3", 
+        "id": "2013--Marinica-M-C--W-2--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2017-01-09", 
+        "interatomic-potential-key": "35eb4e57-5629-4b16-a21d-f87367d10a51", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "This file was sent by M.-C. Marinica (CEA, France) on 9 January 2017 and posted with his permission."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Marinica-M-C-Ventelon-L-Gilbert-M-R-et-al--W-2/1/w_eam2.fs", 
+                "link-text": "w_eam2.fs"
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "5865b613-2d2a-4653-98f5-8e7da9098232", 
+        "id": "2003--Li-Y-H--Ta--table--ipr1", 
+        "status": "active", 
+        "date": "2010-03-09", 
+        "interatomic-potential-key": "f981e581-ca81-43ba-9c24-dc5f8ef0a908", 
+        "type": "EAM setfl", 
+        "notes": {
+            "text": "newPP1_47-setfl.txt was sent by Don Siegel (University of Michigan) on 9 Mar. 2010 and posted with his permission."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Li-Y-Siegel-D-J-Adams-J-B-Liu-X-Y--Ta/1/newPP1_47-setfl.txt", 
+                "link-text": "newPP1_47-setfl.txt"
+            }
+        }
+    }
+}

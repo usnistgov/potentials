@@ -1,0 +1,19 @@
+{
+    "interatomic-potential": {
+        "key": "2d5b5a05-a57f-4986-95ea-c5940c51d4d7", 
+        "id": "2012--Mendelev-M-I-Kramer-M-J-Hao-S-G-et-al--Ni-Zr", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1080/14786435.2012.712220"
+            }, 
+            "notes": {
+                "text": "Mikhail Mendelev (Ames Laboratory) noted that the potential is designed to simulate liquid/glass properties and solidification in the NiZr2 alloy. The potential utilizes the following interactions from other potentials: Ni = <a href=\"../../entry/2012--Mendelev-M-I-Kramer-M-J-Hao-S-G-et-al--Ni\">2012--Mendelev-M-I-Kramer-M-J-Hao-S-G-et-al--Ni</a> and Zr = <a href=\"../../entry/2007--Mendelev-M-I-Ackland-G-J--Zr-2\">2007--Mendelev-M-I-Ackland-G-J--Zr-2</a>. 31 May 2013: The reference was updated to reflect the publication status."
+            }
+        }, 
+        "element": [
+            "Ni", 
+            "Zr"
+        ]
+    }
+}

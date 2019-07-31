@@ -1,0 +1,64 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "4a23cdcd-0370-4702-99b9-8a5ff4824149", 
+        "id": "2003--Zope-R-R--Ti-Al--table--ipr1", 
+        "status": "active", 
+        "date": "2009-01-01", 
+        "interatomic-potential-key": "274cbc15-b7c1-4701-a3e8-07b0b046ad7b", 
+        "type": "EAM tabulated functions", 
+        "notes": {
+            "text": "These files were provided by Yuri Mishin."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Zope-R-R-Mishin-Y--Ti-Al/1/F_al.plt", 
+                    "label": "Al F(&rho;):", 
+                    "link-text": "F_al.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Zope-R-R-Mishin-Y--Ti-Al/1/F_ti.plt", 
+                    "label": "Ti F(&rho;):", 
+                    "link-text": "F_ti.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Zope-R-R-Mishin-Y--Ti-Al/1/fal.plt", 
+                    "label": "Al &rho;(r):", 
+                    "link-text": "fal.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Zope-R-R-Mishin-Y--Ti-Al/1/fti.plt", 
+                    "label": "Ti &rho;(r):", 
+                    "link-text": "fti.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Zope-R-R-Mishin-Y--Ti-Al/1/pal.plt", 
+                    "label": "Al &phi;(r):", 
+                    "link-text": "pal.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Zope-R-R-Mishin-Y--Ti-Al/1/pti.plt", 
+                    "label": "Ti &phi;(r):", 
+                    "link-text": "pti.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Zope-R-R-Mishin-Y--Ti-Al/1/ptial.plt", 
+                    "label": "Ti-Al &phi;(r):", 
+                    "link-text": "ptial.plt"
+                }
+            }
+        ]
+    }
+}

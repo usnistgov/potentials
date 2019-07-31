@@ -1,0 +1,20 @@
+{
+    "interatomic-potential": {
+        "key": "38d0b8d9-5e5d-426a-9d70-b5a7e501528b", 
+        "id": "2009--Bonny-G-Pasianot-R-C-Castin-N-Malerba-L--Fe-Cu-Ni", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1080/14786430903299824"
+            }, 
+            "notes": {
+                "text": "Notes from Giovanni Bonny: The references for the elements and binary potentials used in Fe-Cu-Ni are <ul> <li> Fe: 'potential 2' from M.I. Mendelev, A. Han, D.J. Srolovitz, G.J. Ackland, D.Y. Sun and M. Asta, Phil. Mag. A 83 (2003) 3977. </li> <li> Cu: 'EAM 1' from Y. Mishin, M.J. Mehl, D.A. Papaconstantopoulos, A.F. Voter, J.D. Kress, Phys. Rev. B 63 (2001) 224106. </li> <li> Ni: A.F. Voter and S.P. Chen, Mater. Res. Soc. Symp. Proc. 82 (1987) 175. </li> <li> FeCu: R.C. Pasianot and L. Malerba, J. Nucl. Mater. 360 (2007) 118. </li> <li> FeNi: G. Bonny, R.C. Pasianot and L. Malerba, Model. Simul. Mater. Sci. Eng. 17 (2009) 025010. </li> </ul> F_Ni.spt was modified for densities past 4.8 because of a discontinuity. Unless for cascade conditions (for which the potential was not stiffened), the properties should stay exactly the same (equilibrium density is around 1)."
+            }
+        }, 
+        "element": [
+            "Fe", 
+            "Cu", 
+            "Ni"
+        ]
+    }
+}

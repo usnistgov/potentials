@@ -1,0 +1,19 @@
+{
+    "interatomic-potential": {
+        "key": "e114e23c-d2ee-4a53-b34b-f02e740f1bd6", 
+        "id": "1994--Tersoff-J--Si-C", 
+        "record-version": "2018-10-10", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.49.16349"
+            }, 
+            "notes": {
+                "text": "This parameterization uses the interactions of 1990--Tersoff-J--Si-C and the cutoff of 1989--Tersoff-J--Si-C, with a slight correction for heat of mixing."
+            }
+        }, 
+        "element": [
+            "Si", 
+            "C"
+        ]
+    }
+}

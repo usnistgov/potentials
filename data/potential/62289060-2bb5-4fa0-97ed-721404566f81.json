@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "62289060-2bb5-4fa0-97ed-721404566f81", 
+        "id": "2012--Mendelev-M-I-Kramer-M-J-Hao-S-G-et-al--Ni", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1080/14786435.2012.712220"
+            }, 
+            "notes": {
+                "text": "Mikhail Mendelev (Ames Laboratory) noted that the potential is designed to simulate liquid properties and melting. 31 May 2013: This reference was updated to reflect the publication status."
+            }
+        }, 
+        "element": "Ni"
+    }
+}

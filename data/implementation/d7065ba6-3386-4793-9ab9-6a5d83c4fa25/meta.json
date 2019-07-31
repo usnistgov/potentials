@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "d7065ba6-3386-4793-9ab9-6a5d83c4fa25", 
+        "id": "2003--Mendelev-M-I--Fe-2--LAMMPS--ipr2", 
+        "status": "retracted", 
+        "date": "2009-03-09", 
+        "interatomic-potential-key": "06bf7ccd-ea6a-4744-bfbc-adefa5bcdd60", 
+        "type": "LAMMPS pair_style eam", 
+        "notes": {
+            "text": "Update 09 Mar 2009: The file for Fe #2 (Feb 22, 2009) was sent as a replacement for the Jun 10, 2007 file above. It better treats radial distances smaller than 0.5 A for use in radiation damage simulations. Update 22 Dec 2010: The file Fe_2.eam was removed because it was found to have an energy of 11.31356 eV/atom for bcc with a=2.855324 A. For archival purposes, the file can be found here. Thanks to Jianyang Wu for bringing this to our attention and Mikhail Mendelev for his help in sorting it out."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Mendelev-M-I-Han-S-Srolovitz-D-J-et-al--Fe-2/2/Fe_2.eam", 
+                "link-text": "Fe_2.eam"
+            }
+        }
+    }
+}

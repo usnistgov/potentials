@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "7ac10a7e-235f-4d29-ae89-3bfffbf7906c", 
+        "id": "1997--Broughton-J-Q--Si-O--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-11-01", 
+        "interatomic-potential-key": "0d0d9313-b0ff-4c3b-9e2f-622f7b0f9b0d", 
+        "type": "LAMMPS pair_style vashishta", 
+        "notes": {
+            "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/1997--Broughton-J-Q-Meli-C-A-Vashishta-P-Kalia-R-K--Si-O/1/SiO.1997.vashishta", 
+                "link-text": "SiO.1997.vashishta"
+            }
+        }
+    }
+}

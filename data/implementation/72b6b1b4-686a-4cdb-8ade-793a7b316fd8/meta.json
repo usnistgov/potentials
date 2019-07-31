@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "72b6b1b4-686a-4cdb-8ade-793a7b316fd8", 
+        "id": "2008--Mendelev-M-I--Cu--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2009-06-30", 
+        "interatomic-potential-key": "22c4afdb-5a0c-4541-9634-18f325e1af02", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "This file was provided by Mikhail Mendelev (Ames Laboratory) and posted with his permission on 14 Oct. 2010. He noted that it is the Cu potential used for <a href=\"../../2007--Mendelev-M-I-Sordelet-D-J-Kramer-M-J--Cu-Zr\">2007--Mendelev-M-I-Sordelet-D-J-Kramer-M-J--Cu-Zr</a> and <a href=\"../../2009--Mendelev-M-I-Kramer-M-J-Ott-R-T-et-al--Cu-Zr\">2009--Mendelev-M-I-Kramer-M-J-Ott-R-T-et-al--Cu-Zr</a>, though the files are different due to transformations of the density and embedding energy functions which do not affect the pure element properties."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Mendelev-M-I-Kramer-M-J-Becker-C-A-Asta-M--Cu/1/Cu1.eam.fs", 
+                "link-text": "Cu1.eam.fs"
+            }
+        }
+    }
+}

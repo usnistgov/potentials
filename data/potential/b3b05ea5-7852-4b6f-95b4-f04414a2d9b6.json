@@ -1,0 +1,19 @@
+{
+    "interatomic-potential": {
+        "key": "b3b05ea5-7852-4b6f-95b4-f04414a2d9b6", 
+        "id": "1990--Tersoff-J--Si-C", 
+        "record-version": "2018-10-10", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevlett.64.1757"
+            }, 
+            "notes": {
+                "text": "This parameterization focused on studying C interstitials in bulk Si. It has a sharp cutoff not suited for unconstrained simulations."
+            }
+        }, 
+        "element": [
+            "Si", 
+            "C"
+        ]
+    }
+}

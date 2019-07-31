@@ -1,0 +1,24 @@
+{
+    "interatomic-potential": {
+        "key": "3319544c-7ad9-414d-80c7-f91f163d0fac", 
+        "id": "2011--Tiwary-P-Walle-A-Jeon-B-Gronbech-Jensen-N--MOx", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": [
+                {
+                    "DOI": "10.1103/physrevb.83.094104"
+                }, 
+                {
+                    "DOI": "10.1103/physrevb.80.174302"
+                }
+            ]
+        }, 
+        "element": [
+            "U", 
+            "Pu", 
+            "Np", 
+            "O"
+        ], 
+        "other-element": "MOx"
+    }
+}

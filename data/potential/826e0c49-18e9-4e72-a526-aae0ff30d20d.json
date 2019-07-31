@@ -1,0 +1,17 @@
+{
+    "interatomic-potential": {
+        "key": "826e0c49-18e9-4e72-a526-aae0ff30d20d", 
+        "id": "2018--Dickel-D-E-Baskes-M-I-Aslam-I-Barrett-C-D--Mg-Al-Zn", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1088/1361-651x/aabaad"
+            }
+        }, 
+        "element": [
+            "Mg", 
+            "Al", 
+            "Zn"
+        ]
+    }
+}

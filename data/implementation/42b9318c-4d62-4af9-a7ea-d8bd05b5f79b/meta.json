@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "42b9318c-4d62-4af9-a7ea-d8bd05b5f79b", 
+        "id": "2004--Ackland-G-J--Fe-P--parameters--ipr1", 
+        "status": "active", 
+        "date": "2007-01-01", 
+        "interatomic-potential-key": "5793213a-63e3-43de-84c4-c20e5a3902ec", 
+        "type": "Equations", 
+        "notes": {
+            "text": "The file fep4.19 was obtained from <a href=\"http://homepages.ed.ac.uk/graeme/moldy/moldy.html\" class=\"external\">http://homepages.ed.ac.uk/graeme/moldy/moldy.html </a> and posted with the permission of G.J. Ackland. Besides the parameterized functions in the file, there are also some calculated quantities useful as confirmation.<BR> From that website: \"The iron potential here is slightly improved from the 2003 version to eliminate negative thermal expansion. It has a melting point of 1796 K.\""
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Ackland-G-J-Mendelev-M-I-Srolovitz-D-J-et-al--Fe-P/1/fep4.19", 
+                "link-text": "fep4.19"
+            }
+        }
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "176dfbb2-63a5-450e-a17f-b2b5f260eb4f", 
+        "id": "1987--Ackland-G-J--Cu--LAMMPS--ipr2", 
+        "status": "active", 
+        "date": "2017-10-10", 
+        "interatomic-potential-key": "41ea33df-5737-4c25-b94c-a708f063f26f", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "A new conversion to LAMMPS performed by G.J. Ackland was submitted on 10 Oct. 2017. This version adds close-range repulsion for radiation studies."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/1987--Ackland-G-J-Tichy-G-Vitek-V-Finnis-M-W--Cu/3/Cu1_v2.eam.fs", 
+                "link-text": "Cu1_v2.eam.fs"
+            }
+        }
+    }
+}

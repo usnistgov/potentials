@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "36cd86c0-f56f-456b-95c3-d60ec9f632b9", 
+        "id": "2009--Wu-H-H--Cu-Ag--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2010-05-07", 
+        "interatomic-potential-key": "4001be29-5c6f-4fe9-bae3-71371cb247b6", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This file was provided by Henry H. Wu and posted with his permission. He also supplied a new file where the first line of the header was updated to reflect the publication status."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Wu-H-H-Trinkle-D-R--Cu-Ag/1/cu_ag_ymwu.eam.alloy", 
+                "link-text": "cu_ag_ymwu.eam.alloy"
+            }
+        }
+    }
+}

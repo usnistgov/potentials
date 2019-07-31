@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "b702ae33-5d66-40fb-84e6-f2840555459a", 
+        "id": "1997--Liu-X-Y-Ohotnicky-P-P-Adams-J-B-et-al--Al-Mg", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1016/s0039-6028(96)01154-5"
+            }
+        }, 
+        "element": [
+            "Al", 
+            "Mg"
+        ]
+    }
+}

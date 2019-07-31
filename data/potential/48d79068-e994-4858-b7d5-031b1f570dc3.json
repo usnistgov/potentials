@@ -1,0 +1,19 @@
+{
+    "interatomic-potential": {
+        "key": "48d79068-e994-4858-b7d5-031b1f570dc3", 
+        "id": "2009--Mendelev-M-I-Kramer-M-J-Ott-R-T-et-al--Cu-Zr", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1080/14786430902832773"
+            }, 
+            "notes": {
+                "text": "Update 22 Apr. 2009: the reference was added. Update 14 Oct. 2010: the Cu part of this potential is available separately as <a href=\"../../entry/2008--Mendelev-M-I-Kramer-M-J-Becker-C-A-Asta-M--Cu\">2008--Mendelev-M-I-Kramer-M-J-Becker-C-A-Asta-M--Cu</a>."
+            }
+        }, 
+        "element": [
+            "Cu", 
+            "Zr"
+        ]
+    }
+}

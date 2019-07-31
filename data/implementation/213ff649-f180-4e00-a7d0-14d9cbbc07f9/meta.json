@@ -1,0 +1,43 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "213ff649-f180-4e00-a7d0-14d9cbbc07f9", 
+        "id": "2011--Bonny-G--Fe-Cr--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2017-11-02", 
+        "interatomic-potential-key": "c42c513a-f843-41c4-ba4f-3f31316c6a7b", 
+        "type": "LAMMPS pair_style hybrid/overlay eam/alloy eam/fs", 
+        "notes": {
+            "text": "These files were sent by Dr. Giovanni Bonny (Nuclear Materials Science Institute of SCK-CEN, Belgium) on 2 November 2017 and posted with his permission. Giovanni Bonny also included Caution.pdf file, which explains why a large number of grid points for the s-embedding function are necessary. Giovanni Bonny noted that this warning is in fact valid for all known two-band model (2BM) potentials. Giovanni Bonny thanks Junlei Zhao (Department of Physics, University of Helsinki, Finland) for help in preparation of the LAMMPS files."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Bonny-G-Pasianot-R-C-Terentyev-D-Malerba-L--Fe-Cr/2/READ_ME.txt", 
+                    "label": "Documentation:", 
+                    "link-text": "READ_ME.txt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Bonny-G-Pasianot-R-C-Terentyev-D-Malerba-L--Fe-Cr/2/Caution.pdf", 
+                    "label": "Documentation:", 
+                    "link-text": "Caution.pdf"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Bonny-G-Pasianot-R-C-Terentyev-D-Malerba-L--Fe-Cr/2/FeCr_d.eam.alloy", 
+                    "label": "d_band:", 
+                    "link-text": "FeCr_d.eam.alloy"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Bonny-G-Pasianot-R-C-Terentyev-D-Malerba-L--Fe-Cr/2/FeCr_s.eam.fs", 
+                    "label": "S_band:", 
+                    "link-text": "FeCr_s.eam.fs"
+                }
+            }
+        ]
+    }
+}

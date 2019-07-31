@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "d085648c-b3ef-4be8-824b-7093fd22770a", 
+        "id": "1985--Stillinger-F-H--Si--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-11-01", 
+        "interatomic-potential-key": "edc31ad6-2b9a-455c-9b5f-e888a672ecbd", 
+        "type": "LAMMPS pair_style sw", 
+        "notes": {
+            "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/1985--Stillinger-F-H-Weber-T-A--Si/1/Si.sw", 
+                "link-text": "Si.sw"
+            }
+        }
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "13051c1b-48f7-47f5-bad7-fc627fe10376", 
+        "id": "2004--Mishin-Y--Ni-Al", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1016/j.actamat.2003.11.026"
+            }
+        }, 
+        "element": [
+            "Ni", 
+            "Al"
+        ]
+    }
+}

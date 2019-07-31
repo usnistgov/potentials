@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "bab8324b-68b9-48b8-ad3e-cc03b549c13d", 
+        "id": "2002--Albe-K--Ga-As--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-10-10", 
+        "interatomic-potential-key": "2bdb069e-f91c-435f-8912-406bcbedbbc7", 
+        "type": "LAMMPS pair_style tersoff", 
+        "notes": {
+            "text": "This file was created and verified by Lucas Hale. The parameter values are identical to the ones in the parameter file used by openKIM model MO_799020228312_001."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Albe-K-Nordlund-K-Nord-J-Kuronen-A--Ga-As/1/2002_GaAs.tersoff", 
+                "link-text": "2002_GaAs.tersoff"
+            }
+        }
+    }
+}

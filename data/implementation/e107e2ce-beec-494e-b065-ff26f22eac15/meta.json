@@ -1,0 +1,36 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "e107e2ce-beec-494e-b065-ff26f22eac15", 
+        "id": "1999--Mishin-Y--Al--table--ipr1", 
+        "status": "active", 
+        "date": "2008-01-01", 
+        "interatomic-potential-key": "0c2ddffb-e644-4e5c-8e53-9bf722bb5dee", 
+        "type": "EAM tabulated functions", 
+        "notes": {
+            "text": "These files were provided by Yuri Mishin."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1999--Mishin-Y-Farkas-D-Mehl-M-J-Papaconstantopoulos-D-A--Al/1/F_al.plt", 
+                    "label": "F(&rho;):", 
+                    "link-text": "F_al.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1999--Mishin-Y-Farkas-D-Mehl-M-J-Papaconstantopoulos-D-A--Al/1/fal.plt", 
+                    "label": "&rho;(r):", 
+                    "link-text": "fal.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1999--Mishin-Y-Farkas-D-Mehl-M-J-Papaconstantopoulos-D-A--Al/1/pal_m.plt", 
+                    "label": "&phi;(r):", 
+                    "link-text": "pal_m.plt"
+                }
+            }
+        ]
+    }
+}

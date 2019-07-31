@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "acfed907-de44-4ade-b3cf-b680935dba28", 
+        "id": "2004--Ackland-G-J--Fe-P--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2007-06-12", 
+        "interatomic-potential-key": "5793213a-63e3-43de-84c4-c20e5a3902ec", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "This file was provided by Mikhail Mendelev. Except for comments, this file is equivalent to \"FeP_mm.eam.fs\" in the August 22, 2018 LAMMPS distribution."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Ackland-G-J-Mendelev-M-I-Srolovitz-D-J-et-al--Fe-P/2/Fe-P.eam.fs", 
+                "link-text": "Fe-P.eam.fs"
+            }
+        }
+    }
+}

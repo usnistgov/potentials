@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "81adb388-59eb-4f49-88bf-6f06a1343fae", 
+        "id": "1999--Mishin-Y-Farkas-D-Mehl-M-J-Papaconstantopoulos-D-A--Ni", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.59.3393"
+            }
+        }, 
+        "element": "Ni"
+    }
+}

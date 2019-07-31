@@ -1,0 +1,20 @@
+{
+    "interatomic-potential": {
+        "key": "91ffec63-8483-445c-b807-7a04d4ecf632", 
+        "id": "2014--Nouranian-S-Tschopp-M-A-Gwaltney-S-R-et-al--CH", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1039/c4cp00027g"
+            }, 
+            "notes": {
+                "text": "Dr. Sasan Nouranian (Center for Advanced Vehicular Systems, Mississippi State Univ.) noted: \"These MEAM parameters for elements C and H as well as the diatomic CH are appropriate for energy minimization and reactive molecular dynamics simulations of SATURATED hydrocarbons, where all carbon atoms have the sp<sup>3</sup> hybridization (single C-C bonds). At the current state, MEAM cannot handle unsaturated compounds with great accuracy. Furthermore, these C and H parameters are not appropriate for diamond and graphite systems. For the first time, MEAM can be used to simulate hydrocarbons and hydrocarbon/metal systems, since it has a large parameter database for major metals in the periodic table of elements. Since MEAM is a reactive potential, it can also be used to simulate fracture and fatigue in hydrocarbon-based polymers, such as polyethylene and polypropylene and their composites with nanometals as well as polymer/metal interfaces.\""
+            }
+        }, 
+        "element": [
+            "C", 
+            "H"
+        ], 
+        "other-element": "CH"
+    }
+}

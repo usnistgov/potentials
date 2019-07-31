@@ -1,0 +1,36 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "a6237bcc-a4be-497d-97ed-636f3999c541", 
+        "id": "2003--Zope-R-R--Al--table--ipr1", 
+        "status": "active", 
+        "date": "2009-01-01", 
+        "interatomic-potential-key": "36dbb1ec-c7f0-46a4-a501-1c518f777d5c", 
+        "type": "EAM tabulated functions", 
+        "notes": {
+            "text": "These files were provided by Yuri Mishin."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Zope-R-R-Mishin-Y--Al/1/F_al.plt", 
+                    "label": "F(&rho;):", 
+                    "link-text": "F_al.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Zope-R-R-Mishin-Y--Al/1/fal.plt", 
+                    "label": "&rho;(r):", 
+                    "link-text": "fal.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Zope-R-R-Mishin-Y--Al/1/pal.plt", 
+                    "label": "&phi;(r):", 
+                    "link-text": "pal.plt"
+                }
+            }
+        ]
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "interatomic-potential": {
+        "key": "fc5a9a34-b8be-4935-aa63-aa02a15d93b8", 
+        "id": "2013--Smirnova-D-E-Kuksin-A-Y-Starikov-S-V-et-al--U-Mo-Xe", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1088/0965-0393/21/3/035011"
+            }
+        }, 
+        "element": [
+            "U", 
+            "Mo", 
+            "Xe"
+        ]
+    }
+}

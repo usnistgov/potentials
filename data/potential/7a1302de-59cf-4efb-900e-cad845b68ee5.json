@@ -1,0 +1,23 @@
+{
+    "interatomic-potential": {
+        "key": "7a1302de-59cf-4efb-900e-cad845b68ee5", 
+        "id": "1986--Foiles-S-M-Baskes-M-I-Daw-M-S--Ag-Au-Cu-Ni-Pd-Pt", 
+        "record-version": "2018-10-04", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.33.7983"
+            }, 
+            "notes": {
+                "text": "The cross-elemental interactions use a universal function designed to show trends across the metals and is not fitted for revealing compounds."
+            }
+        }, 
+        "element": [
+            "Ag", 
+            "Au", 
+            "Cu", 
+            "Ni", 
+            "Pd", 
+            "Pt"
+        ]
+    }
+}

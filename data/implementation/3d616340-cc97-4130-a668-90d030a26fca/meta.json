@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "3d616340-cc97-4130-a668-90d030a26fca", 
+        "id": "2012--Mendelev-M-I--Cu--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2012-07-25", 
+        "interatomic-potential-key": "6e89fdb2-4d7f-4032-a14d-53f7d1c8f2eb", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "This file was provided by Mikhail Mendelev (Ames Laboratory) and posted with his permission on 25 Jul. 2012. He noted that \"This potential is an improvement of Cu1 (<a href=\"../../entry/2008--Mendelev-M-I-Kramer-M-J-Becker-C-A-Asta-M--Cu\">2008--Mendelev-M-I-Kramer-M-J-Becker-C-A-Asta-M--Cu</a>) to better describe stacking fault energies.\""
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Mendelev-M-I-King-A-H--Cu/1/Mendelev_Cu2_2012.eam.fs", 
+                "link-text": "Mendelev_Cu2_2012.eam.fs"
+            }
+        }
+    }
+}

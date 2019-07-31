@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "e1b401a9-6696-41d1-ac13-1281e4173d73", 
+        "id": "2012--Jiang-C--Si-C--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-11-01", 
+        "interatomic-potential-key": "91bec147-9238-4cdc-bd9c-fd83792899d8", 
+        "type": "LAMMPS pair_style edip/multi", 
+        "notes": {
+            "text": "This file was taken from the August 22, 2018 LAMMPS distribution. It is listed as being contributed by Chao Jiang (University of Wisconsin)"
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2012--Jiang-C-Morgan-D-Szlufarska-I--Si-C/1/SiC.edip", 
+                "link-text": "SiC.edip"
+            }
+        }
+    }
+}

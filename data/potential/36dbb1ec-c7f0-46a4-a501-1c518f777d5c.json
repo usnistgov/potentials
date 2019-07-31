@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "36dbb1ec-c7f0-46a4-a501-1c518f777d5c", 
+        "id": "2003--Zope-R-R-Mishin-Y--Al", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.68.024102"
+            }
+        }, 
+        "element": "Al"
+    }
+}

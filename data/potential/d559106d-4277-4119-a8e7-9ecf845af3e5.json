@@ -1,0 +1,21 @@
+{
+    "interatomic-potential": {
+        "key": "d559106d-4277-4119-a8e7-9ecf845af3e5", 
+        "id": "2012--Norman-G-E-Starikov-S-V-Stegailov-V-V--Au", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": [
+                {
+                    "DOI": "10.1134/s1063776112040115"
+                }, 
+                {
+                    "DOI": "10.1007/s00340-014-5789-y"
+                }
+            ], 
+            "notes": {
+                "text": null
+            }
+        }, 
+        "element": "Au"
+    }
+}

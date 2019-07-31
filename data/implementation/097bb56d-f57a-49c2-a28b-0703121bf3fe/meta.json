@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "097bb56d-f57a-49c2-a28b-0703121bf3fe", 
+        "id": "2006--Sun-D-Y--Mg--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2007-06-10", 
+        "interatomic-potential-key": "d07092e4-8c38-4cf5-bd05-bf18f8b80776", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "This file was provided by Mikhail Mendelev.  Except for comments, this file is identical to \"Mg_mm.eam.fs\" in the August 22, 2018 LAMMPS distribution."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Sun-D-Y-Mendelev-M-I-Becker-C-A-et-al--Mg/1/Mg.eam.fs", 
+                "link-text": "Mg.eam.fs"
+            }
+        }
+    }
+}

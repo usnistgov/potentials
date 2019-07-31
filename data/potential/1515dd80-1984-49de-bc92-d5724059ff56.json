@@ -1,0 +1,19 @@
+{
+    "interatomic-potential": {
+        "key": "1515dd80-1984-49de-bc92-d5724059ff56", 
+        "id": "2012--Jelinek-B-Groh-S-Horstemeyer-M-F-et-al--Al-Si-Mg-Cu-Fe", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.85.245102"
+            }
+        }, 
+        "element": [
+            "Al", 
+            "Si", 
+            "Mg", 
+            "Cu", 
+            "Fe"
+        ]
+    }
+}

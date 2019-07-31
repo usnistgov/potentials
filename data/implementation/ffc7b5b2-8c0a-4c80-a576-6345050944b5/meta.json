@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "ffc7b5b2-8c0a-4c80-a576-6345050944b5", 
+        "id": "2018--Farkas-D--Fe-Ni-Cr-Co-Cu--LAMMPS--ipr2", 
+        "status": "active", 
+        "date": "2019-05-28", 
+        "interatomic-potential-key": "78392771-83e9-491c-bf4c-39175befd072", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This file was provided by Diana Farkas (Virginia Tech) on 20 May 2019.  Professor Farkas notes \"The update is to make the potentials go to zero smoothly for distances of 5.8 \u00c5.  The original version went up to 6 \u00c5 and the last 0.2 \u00c5 were not smooth.  This does not affect any of the common calculations but may make a difference in some cases like Peierls stresses of dislocations.\""
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Farkas-D-Caro-A--Fe-Ni-Cr-Co-Cu/2/FeNiCrCoCu-heafixed.setfl", 
+                "link-text": "FeNiCrCoCu-heafixed.setfl"
+            }
+        }
+    }
+}

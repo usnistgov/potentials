@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "15a085b9-d9d6-404f-9c2f-3ed40e8ff7a4", 
+        "id": "1986--Foiles-S-M-Baskes-M-I-Daw-M-S--Ni", 
+        "record-version": "2018-10-04", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.33.7983"
+            }
+        }, 
+        "element": "Ni"
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "f12498d1-1560-4fcf-af65-7ec9934b0b95", 
+        "id": "2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Ta-Cu", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.69.144113"
+            }
+        }, 
+        "element": [
+            "Ta", 
+            "Cu"
+        ]
+    }
+}

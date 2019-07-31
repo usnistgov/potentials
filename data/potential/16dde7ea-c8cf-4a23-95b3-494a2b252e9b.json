@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "16dde7ea-c8cf-4a23-95b3-494a2b252e9b", 
+        "id": "1986--Foiles-S-M-Baskes-M-I-Daw-M-S--Pd", 
+        "record-version": "2018-10-04", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.33.7983"
+            }
+        }, 
+        "element": "Pd"
+    }
+}

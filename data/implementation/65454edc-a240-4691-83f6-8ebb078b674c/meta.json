@@ -1,0 +1,106 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "65454edc-a240-4691-83f6-8ebb078b674c", 
+        "id": "2008--Hashibon-A--Cu-Ta--table--ipr1", 
+        "status": "superseded", 
+        "date": "2010-01-22", 
+        "interatomic-potential-key": "40679d21-487e-4b95-b5c3-16e137083ab2", 
+        "type": "ADP tabulated functions", 
+        "notes": {
+            "text": "These files were provided by Yuri Mishin (George Mason University) and posted on 22 Jan. 2010."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/F_Cu.plt", 
+                    "label": "Cu F(&rho;):", 
+                    "link-text": "F_Cu.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/F_Ta.plt", 
+                    "label": "Ta F(&rho;):", 
+                    "link-text": "F_Ta.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/fCu.plt", 
+                    "label": "Cu &rho;(r):", 
+                    "link-text": "fCu.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/fTa.plt", 
+                    "label": "Ta &rho;(r):", 
+                    "link-text": "fTa.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/pCu.plt", 
+                    "label": "Cu &phi;(r):", 
+                    "link-text": "pCu.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/pTa.plt", 
+                    "label": "Ta &phi;(r):", 
+                    "link-text": "pTa.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/pCuTa.plt", 
+                    "label": "Cu-Ta &phi;(r):", 
+                    "link-text": "pCuTa.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/dCu.plt", 
+                    "label": "Cu u(r):", 
+                    "link-text": "dCu.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/dTa.plt", 
+                    "label": "Ta u(r):", 
+                    "link-text": "dTa.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/dCuTa.plt", 
+                    "label": "Cu-Ta u(r):", 
+                    "link-text": "dCuTa.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/qCu.plt", 
+                    "label": "Cu w(r):", 
+                    "link-text": "qCu.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/qTa.plt", 
+                    "label": "Ta w(r):", 
+                    "link-text": "qTa.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Hashibon-A-Lozovoi-A-Y-Mishin-Y-et-al--Cu-Ta/1/qCuTa.plt", 
+                    "label": "Cu-Ta w(r):", 
+                    "link-text": "qCuTa.plt"
+                }
+            }
+        ]
+    }
+}

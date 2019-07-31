@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "ef3c968c-5e47-45bb-836c-8d8703d44edb", 
+        "id": "2013--Onat-B--Cu-Ni--LAMMPS--ipr2", 
+        "status": "active", 
+        "date": "2018-10-05", 
+        "interatomic-potential-key": "31a90189-5dd6-43bc-ba69-78c94fca1bd1", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This file was taken from openKIM model EAM_Dynamo_Onat_Durukanoglu_CuNi__MO_592013496703_004. It features more tabulation points and higher cutoffs for both rho and r."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Onat-B-Durukanoglu-S--Cu-Ni/2/CuNi_v2.eam.alloy", 
+                "link-text": "CuNi_v2.eam.alloy"
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "ec818ee8-318c-4bca-9198-0d9fdfaa1748", 
+        "id": "2008--Hennig-R-G-Lenosky-T-J-Trinkle-D-R-et-al--Ti", 
+        "record-version": "2018-11-06", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.78.054121"
+            }
+        }, 
+        "element": "Ti"
+    }
+}

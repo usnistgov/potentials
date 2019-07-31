@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "81f0943d-7b43-433a-b114-32f3d1694459", 
+        "id": "2013--Agrawal-A--Be--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2016-08-29", 
+        "interatomic-potential-key": "7d0265d5-3088-44df-8b36-6a08e3799695", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "These files were sent by A. Agrawal (Washington University in St. Louis) on 29 August 2016 and posted with her permission."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Agrawal-A-Mishra-R-Ward-L-et-al--Be/1/Be_Agrawal.eam.alloy", 
+                "link-text": "Be_Agrawal.eam.alloy"
+            }
+        }
+    }
+}

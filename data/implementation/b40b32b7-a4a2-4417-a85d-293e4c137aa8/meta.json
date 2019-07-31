@@ -1,0 +1,27 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "b40b32b7-a4a2-4417-a85d-293e4c137aa8", 
+        "id": "1999--Mishin-Y--Al--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2008-12-30", 
+        "interatomic-potential-key": "0c2ddffb-e644-4e5c-8e53-9bf722bb5dee", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This conversion was produced by Chandler Becker on 30 December 2008 from the plt files listed above. This version is compatible with LAMMPS. Validation and usage information can be found in Al99_releaseNotes_1.pdf. If you use this setfl file, please credit the website in addition to the original reference."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1999--Mishin-Y-Farkas-D-Mehl-M-J-Papaconstantopoulos-D-A--Al/2/Al99.eam.alloy", 
+                    "link-text": "Al99.eam.alloy"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1999--Mishin-Y-Farkas-D-Mehl-M-J-Papaconstantopoulos-D-A--Al/2/Al99_releaseNotes_1.pdf", 
+                    "link-text": "Al99_releaseNotes_1.pdf"
+                }
+            }
+        ]
+    }
+}

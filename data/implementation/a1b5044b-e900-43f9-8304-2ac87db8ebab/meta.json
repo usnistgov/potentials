@@ -1,0 +1,27 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "a1b5044b-e900-43f9-8304-2ac87db8ebab", 
+        "id": "2003--Han-S--W--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2009-07-02", 
+        "interatomic-potential-key": "4be111f4-c616-4196-8912-6809c97e5ecb", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "This conversion was performed from G.J. Ackland's parameters by M.I. Mendelev. Conversion checks from M.I. Mendelev can be found in conversion_check.pdf. These files were posted on 2 July 2009 with the permission of G.J. Ackland and M.I. Mendelev."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Han-S-Zepeda-Ruiz-L-A-Ackland-G-J-et-al--W/2/W.eam.fs", 
+                    "link-text": "W.eam.fs"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Han-S-Zepeda-Ruiz-L-A-Ackland-G-J-et-al--W/2/conversion_check.pdf", 
+                    "link-text": "conversion_check.pdf"
+                }
+            }
+        ]
+    }
+}

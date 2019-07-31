@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "5293e68a-6194-4d7c-a9e4-16426f51d9a9", 
+        "id": "2018--Setyawan-W--W-Re--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2019-02-21", 
+        "interatomic-potential-key": "4054e2cb-fe2c-4bc4-84db-8448ad4bb7f4", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This file was provided by Wahyu Setyawan (Pacific Northwest National Laboratory) on 2 February 2019 and posted with his permission."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Setyawan-W-Gao-N-Kurtz-R-J--W-Re/1/WRe_Setyawan_set145.eam.alloy", 
+                "link-text": "WRe_Setyawan_set145.eam.alloy"
+            }
+        }
+    }
+}

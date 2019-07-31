@@ -1,0 +1,106 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "2da2948e-5f0f-4b79-a110-9aa7acc72080", 
+        "id": "2010--Apostol-F--Al-H--table--ipr1", 
+        "status": "active", 
+        "date": "2010-10-26", 
+        "interatomic-potential-key": "82612d4c-ee29-4d1c-b5eb-64bbc9da5485", 
+        "type": "ADP tabulated functions", 
+        "notes": {
+            "text": "These files were provided by Yuri Mishin (George Mason University) and posted on 26 Oct. 2010."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/F_Al.plt", 
+                    "label": "Al F(&rho;):", 
+                    "link-text": "F_Al.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/F_H.plt", 
+                    "label": "H F(&rho;):", 
+                    "link-text": "F_H.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/fAl.plt", 
+                    "label": "Al &rho;(r):", 
+                    "link-text": "fAl.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/fH.plt", 
+                    "label": "H &rho;(r):", 
+                    "link-text": "fH.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/pAl.plt", 
+                    "label": "Al &phi;(r):", 
+                    "link-text": "pAl.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/pH.plt", 
+                    "label": "H &phi;(r):", 
+                    "link-text": "pH.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/pAlH.plt", 
+                    "label": "Al-H &phi;(r):", 
+                    "link-text": "pAlH.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/dAl.plt", 
+                    "label": "Al u(r):", 
+                    "link-text": "dAl.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/dH.plt", 
+                    "label": "H u(r):", 
+                    "link-text": "dH.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/dAlH.plt", 
+                    "label": "Al-H u(r):", 
+                    "link-text": "dAlH.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/qAl.plt", 
+                    "label": "Al w(r):", 
+                    "link-text": "qAl.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/qH.plt", 
+                    "label": "H w(r):", 
+                    "link-text": "qH.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Apostol-F-Mishin-Y--Al-H/1/qAlH.plt", 
+                    "label": "Al-H w(r):", 
+                    "link-text": "qAlH.plt"
+                }
+            }
+        ]
+    }
+}

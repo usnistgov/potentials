@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "7d2a2e88-bbec-4431-bd5a-007d7ec22a00", 
+        "id": "2007--Mendelev-M-I--V-Fe--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2008-04-24", 
+        "interatomic-potential-key": "6b558c94-3b96-4bc1-840f-48521e8770b6", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "This file was provided by Mikhail Mendelev.  Except for comments, this file is equivalent to \"VFe_mm.eam.fs\" in the August 22, 2018 LAMMPS distribution."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2007--Mendelev-M-I-Han-S-Son-W-et-al--V-Fe/1/V-Fe.eam.fs", 
+                "link-text": "V-Fe.eam.fs"
+            }
+        }
+    }
+}

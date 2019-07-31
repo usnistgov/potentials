@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "0bee394c-6121-48ac-8e6d-81351d0bda44", 
+        "id": "2010--Fellinger-M-R-Park-H-Wilkins-J-W--Nb", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.81.144119"
+            }
+        }, 
+        "element": "Nb"
+    }
+}

@@ -1,0 +1,18 @@
+{
+    "interatomic-potential": {
+        "key": "8ae19224-1890-4eb8-ae50-67c5cf76af98", 
+        "id": "2011--Smirnova-D-E-Starikov-S-V-Stegailov-V-V--U", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": [
+                {
+                    "DOI": "10.1088/0953-8984/24/1/015702"
+                }, 
+                {
+                    "DOI": "10.1088/0953-8984/24/14/149501"
+                }
+            ]
+        }, 
+        "element": "U"
+    }
+}

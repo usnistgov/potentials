@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "d71da5f1-db8a-46ad-a78d-c026768200af", 
+        "id": "2009--Purja-Pun-G-P-Mishin-Y--Ni-Al", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1080/14786430903258184"
+            }
+        }, 
+        "element": [
+            "Ni", 
+            "Al"
+        ]
+    }
+}

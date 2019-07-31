@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "522a71ba-bcde-4014-9b84-0b92a28efbc1", 
+        "id": "2012--Park-H-Fellinger-M-R-Lenosky-T-J-et-al--Mo", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.85.214121"
+            }
+        }, 
+        "element": "Mo"
+    }
+}

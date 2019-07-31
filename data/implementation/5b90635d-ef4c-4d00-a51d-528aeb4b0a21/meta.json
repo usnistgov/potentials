@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "5b90635d-ef4c-4d00-a51d-528aeb4b0a21", 
+        "id": "2011--Du-Y-A--Si--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-11-05", 
+        "interatomic-potential-key": "96095f75-52f1-4fe9-8f33-8cca19b6d0fb", 
+        "type": "LAMMPS pair_style meam/spline", 
+        "notes": {
+            "text": "This file was taken from the August 22, 2018 LAMMPS distribution. It is listed as being contributed by Alexander Stukowski (Technische Universit\u00e4t Darmstadt)"
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Du-Y-A-Lenosky-T-J-Hennig-R-G-et-al--Si/1/Si_2.meam.spline", 
+                "link-text": "Si_2.meam.spline"
+            }
+        }
+    }
+}

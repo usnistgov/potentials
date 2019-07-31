@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "ee6e7c54-fd7d-4459-96ca-5898e93053c6", 
+        "id": "2018--Howells-C-A-Mishin-Y--Cr-Ni", 
+        "record-version": "2018-11-05", 
+        "description": {
+            "citation": {
+                "DOI": "10.1088/1361-651x/aae400"
+            }
+        }, 
+        "element": [
+            "Cr", 
+            "Ni"
+        ]
+    }
+}

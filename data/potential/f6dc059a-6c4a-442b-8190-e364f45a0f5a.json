@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "f6dc059a-6c4a-442b-8190-e364f45a0f5a", 
+        "id": "2013--Ravelo-R-Germann-T-C-Guerrero-O-et-al--Ta-2", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.88.134101"
+            }, 
+            "notes": {
+                "text": "This listing is for the reference's potential parameter set Ta2."
+            }
+        }, 
+        "element": "Ta"
+    }
+}

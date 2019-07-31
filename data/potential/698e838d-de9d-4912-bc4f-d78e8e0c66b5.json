@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "698e838d-de9d-4912-bc4f-d78e8e0c66b5", 
+        "id": "2017--Purja-Pun-G-P-Mishin-Y--Si", 
+        "record-version": "2018-11-05", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.95.224103"
+            }
+        }, 
+        "element": "Si"
+    }
+}

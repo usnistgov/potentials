@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "f69c42dc-75b2-4a1b-abf0-bab1a0e9c778", 
+        "id": "2018--Etesami-S-A-Asadi-E--Ni", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1016/j.jpcs.2017.09.001"
+            }, 
+            "notes": {
+                "text": "S. A. Etesami (University of Memphis) noted that \"We added both melting point and high temperature elastic constants into material properties database for MEAM parameter development process.\""
+            }
+        }, 
+        "element": "Ni"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "ff748ef8-f019-42b2-bdda-b5b5cadd6264", 
+        "id": "1987--Ackland-G-J-Thetford-R--Mo", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1080/01418618708204464"
+            }
+        }, 
+        "element": "Mo"
+    }
+}

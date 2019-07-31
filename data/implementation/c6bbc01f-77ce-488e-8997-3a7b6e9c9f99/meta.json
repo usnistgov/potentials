@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "c6bbc01f-77ce-488e-8997-3a7b6e9c9f99", 
+        "id": "2017--Wang-P--TWIP--LAMMPS--ipr1", 
+        "status": "superseded", 
+        "date": "2009-06-30", 
+        "interatomic-potential-key": "4a8890c8-1ff4-4346-bdd7-72250e853a56", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "This file was sent by P. Wang (Zhejiang University) on 24 Feb. 2017 and posted with the permission of Dr. Peng Wang and Prof. Hongtao Wang."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Wang-P-Xu-S-Liu-J-et-al--TWIP/1/Fe.eam.fs", 
+                "link-text": "Fe.eam.fs"
+            }
+        }
+    }
+}

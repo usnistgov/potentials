@@ -1,0 +1,71 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "1bda5691-8a4f-4597-ac00-a471898d27a6", 
+        "id": "2002--Mishin-Y--Ni-Al--table--ipr1", 
+        "status": "active", 
+        "date": "2009-01-01", 
+        "interatomic-potential-key": "cba1f03d-4e0b-4f08-8b52-0aff0a4224b3", 
+        "type": "EAM tabulated functions", 
+        "notes": {
+            "text": "These files were provided by Yuri Mishin."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/1/README.txt", 
+                    "label": "Notes:", 
+                    "link-text": "README.txt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/1/F_al.plt", 
+                    "label": "Al F(&rho;):", 
+                    "link-text": "F_al.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/1/F_ni.plt", 
+                    "label": "Ni F(&rho;):", 
+                    "link-text": "F_ni.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/1/fal.plt", 
+                    "label": "Al &rho;(r):", 
+                    "link-text": "fal.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/1/fni.plt", 
+                    "label": "Ni &rho;(r):", 
+                    "link-text": "fni.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/1/pal.plt", 
+                    "label": "Al &phi;(r):", 
+                    "link-text": "pal.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/1/pni.plt", 
+                    "label": "Ni &phi;(r):", 
+                    "link-text": "pni.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al/1/pnial.plt", 
+                    "label": "Ni-Al &phi;(r):", 
+                    "link-text": "pnial.plt"
+                }
+            }
+        ]
+    }
+}

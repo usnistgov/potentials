@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "23a734ab-b2ca-4a23-a837-144fa03528cb", 
+        "id": "2010--Fellinger-M-R--Nb--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2010-07-14", 
+        "interatomic-potential-key": "0bee394c-6121-48ac-8e6d-81351d0bda44", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "These files were provided by Michael Fellinger, Hyoungki Park, and John Wilkins (The Ohio State University) and posted with their permission on 14 July 2010. Mike Fellinger also provided the additional note: \"The Nb.eam.alloy file is in the setfl format suitable for the <a href=\"http://lammps.sandia.gov\" class=\"external\">LAMMPS</a> MD code. This format requires r*phi and rho to be tabulated from r = 0 to r = r_cut. The domain of phi and rho in the published potential is 1.738 &le; r &le; 4.75 A. For phi, we extend the cubic polynomial for 1.738 &le; r &le; 2.073 A to r = 0. For rho, we linearly extrapolate from r = 1.738 A to r = 0. The potential in the <a name=\"IMD\" href=\"http://www.itap.physik.uni-stuttgart.de/~imd/\" class=\"external\">IMD</a> format is tabulated with 5,001 points for each function. The potential in the LAMMPS setfl format is tabulated with 10,001 points for each function. Comparisons of the two tabulations show very slight differences in some defect energies, probably due to the different numbers of tabulation points.\""
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2010--Fellinger-M-R-Park-H-Wilkins-J-W--Nb/2/Nb.eam.alloy", 
+                "link-text": "Nb.eam.alloy"
+            }
+        }
+    }
+}

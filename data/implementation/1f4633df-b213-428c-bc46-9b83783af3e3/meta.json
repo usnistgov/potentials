@@ -1,0 +1,64 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "1f4633df-b213-428c-bc46-9b83783af3e3", 
+        "id": "2009--Purja-Pun-G-P--Ni-Al--table--ipr1", 
+        "status": "active", 
+        "date": "2009-01-01", 
+        "interatomic-potential-key": "d71da5f1-db8a-46ad-a78d-c026768200af", 
+        "type": "EAM tabulated functions", 
+        "notes": {
+            "text": "These files were provided by Yuri Mishin."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Purja-Pun-G-P-Mishin-Y--Ni-Al/1/F_Al.plt", 
+                    "label": "Al F(&rho;):", 
+                    "link-text": "F_Al.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Purja-Pun-G-P-Mishin-Y--Ni-Al/1/F_Ni.plt", 
+                    "label": "Ni F(&rho;):", 
+                    "link-text": "F_Ni.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Purja-Pun-G-P-Mishin-Y--Ni-Al/1/fAl.plt", 
+                    "label": "Al &rho;(r):", 
+                    "link-text": "fAl.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Purja-Pun-G-P-Mishin-Y--Ni-Al/1/fNi.plt", 
+                    "label": "Ni &rho;(r):", 
+                    "link-text": "fNi.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Purja-Pun-G-P-Mishin-Y--Ni-Al/1/pAl.plt", 
+                    "label": "Al &phi;(r):", 
+                    "link-text": "pAl.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Purja-Pun-G-P-Mishin-Y--Ni-Al/1/pNi.plt", 
+                    "label": "Ni &phi;(r):", 
+                    "link-text": "pNi.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Purja-Pun-G-P-Mishin-Y--Ni-Al/1/pNiAl.plt", 
+                    "label": "Ni-Al &phi;(r):", 
+                    "link-text": "pNiAl.plt"
+                }
+            }
+        ]
+    }
+}

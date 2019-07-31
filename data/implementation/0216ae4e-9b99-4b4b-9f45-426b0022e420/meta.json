@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "0216ae4e-9b99-4b4b-9f45-426b0022e420", 
+        "id": "2013--Bonny-G--Fe-W--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-03-07", 
+        "interatomic-potential-key": "64d55ff4-a0d4-4eb6-897f-56c6d3c0154e", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This file was provided by Giovanni Bonny (Nuclear Materials Science Institute of SCK-CEN, Belgium) on 7 Mar. 2018 and posted with his permission. Dr. Bonny noted that this potential was not stiffened and cannot be used in its present form for collision cascades."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Bullens-J-et-al--Fe-W/1/FeW.eam.alloy", 
+                "link-text": "FeW.eam.alloy"
+            }
+        }
+    }
+}

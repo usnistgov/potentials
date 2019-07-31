@@ -1,0 +1,36 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "9e16d628-87cc-49a0-8ce8-a23097f798e5", 
+        "id": "2006--Chamati-H--Fe--table--ipr1", 
+        "status": "active", 
+        "date": "2009-12-10", 
+        "interatomic-potential-key": "3837b6da-05c4-4148-97cd-90b26a2092df", 
+        "type": "EAM tabulated functions", 
+        "notes": {
+            "text": "These files were provided by Yuri Mishin (George Mason University) and posted on 10 Dec. 2009."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Chamati-H-Papanicolaou-N-I-Mishin-Y-Papaconstantopoulos-D-A--Fe/1/F_fe.plt", 
+                    "label": "F(&rho;):", 
+                    "link-text": "F_fe.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Chamati-H-Papanicolaou-N-I-Mishin-Y-Papaconstantopoulos-D-A--Fe/1/ffe.plt", 
+                    "label": "&rho;(r):", 
+                    "link-text": "ffe.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Chamati-H-Papanicolaou-N-I-Mishin-Y-Papaconstantopoulos-D-A--Fe/1/pfe.plt", 
+                    "label": "&phi;(r):", 
+                    "link-text": "pfe.plt"
+                }
+            }
+        ]
+    }
+}

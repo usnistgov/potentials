@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "dd645cb8-8065-4cdf-96e0-3b0ca893ef60", 
+        "id": "2015--Eich-S-M-Beinke-D-Schmitz-G--Fe-Cr", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1016/j.commatsci.2015.03.047"
+            }
+        }, 
+        "element": [
+            "Fe", 
+            "Cr"
+        ]
+    }
+}

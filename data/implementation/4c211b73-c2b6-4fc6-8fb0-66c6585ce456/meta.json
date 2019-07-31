@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "4c211b73-c2b6-4fc6-8fb0-66c6585ce456", 
+        "id": "2015--Choudhary-K--Al--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-11-09", 
+        "interatomic-potential-key": "9873fcee-4fcc-405b-860b-b6af7ea3c8db", 
+        "type": "LAMMPS pair_style comb3", 
+        "notes": {
+            "text": "This file was obtained from <a href=\"https://www.ctcms.nist.gov/~knc6/periodic.html\">Jarvis-FF (https://www.ctcms.nist.gov/~knc6/periodic.html)</a> on 9 Nov. 2018 and posted at Kamal Choudhary's (NIST) request."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Choudhary-K-Liang-T-Chernatynskiy-A-et-al--Al/1/ffield.comb3.NiAlO", 
+                "link-text": "ffield.comb3.NiAlO"
+            }
+        }
+    }
+}

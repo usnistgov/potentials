@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "b661f788-d285-4fdb-b0c2-0f82a99cb8a1", 
+        "id": "2006--Murdick-D-A-Zhou-X-W-Wadley-H-N-G-et-al--Ga-As", 
+        "record-version": "2018-10-12", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.73.045206"
+            }
+        }, 
+        "element": [
+            "Ga", 
+            "As"
+        ]
+    }
+}

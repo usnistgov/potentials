@@ -1,0 +1,19 @@
+{
+    "interatomic-potential": {
+        "key": "7fda11d2-b6e8-4ffa-9083-fdb702cc5fab", 
+        "id": "2018--Etesami-S-A-Baskes-M-I-Laradji-M-Asadi-E--Pb-Sn", 
+        "record-version": "2018-09-28", 
+        "description": {
+            "citation": {
+                "DOI": "10.1016/j.actamat.2018.09.036"
+            }, 
+            "notes": {
+                "text": "Update 2018-09-28: Reference information updated."
+            }
+        }, 
+        "element": [
+            "Pb", 
+            "Sn"
+        ]
+    }
+}

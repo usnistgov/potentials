@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "c83296e8-ef62-439e-bd8b-f575625f80a3", 
+        "id": "2013--Smirnova-D-E--U-Mo-Xe--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2013-03-14", 
+        "interatomic-potential-key": "fc5a9a34-b8be-4935-aa63-aa02a15d93b8", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This file was sent by Daria Smirnova (Joint Institute for High Temperatures, Russian Academy of Sciences) and posted on 14 March 2013 with her permission."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Smirnova-D-E-Kuksin-A-Y-Starikov-S-V-et-al--U-Mo-Xe/1/U_Mo_Xe.2013.eam.alloy", 
+                "link-text": "U_Mo_Xe.2013.eam.alloy"
+            }
+        }
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "8018facc-a337-4e34-b13f-b293f36a3458", 
+        "id": "1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Au", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1557/jmr.1989.0102"
+            }
+        }, 
+        "element": "Au"
+    }
+}

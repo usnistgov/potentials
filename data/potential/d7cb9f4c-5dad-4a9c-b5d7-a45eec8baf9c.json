@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "d7cb9f4c-5dad-4a9c-b5d7-a45eec8baf9c", 
+        "id": "2016--Mendelev-M-I-Underwood-T-L-Ackland-G-J--Ti-2", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1063/1.4964654"
+            }, 
+            "notes": {
+                "text": "This listing is for the reference's potential parameter set Ti2.  Dr. Mendelev provided Ti_potentials.pdf which gives a short description of the different potentials in the reference and some basic properties."
+            }
+        }, 
+        "element": "Ti"
+    }
+}

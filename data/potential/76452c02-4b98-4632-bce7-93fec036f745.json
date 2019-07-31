@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "76452c02-4b98-4632-bce7-93fec036f745", 
+        "id": "2005--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Fe-Ni", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1016/j.actamat.2005.05.001"
+            }
+        }, 
+        "element": [
+            "Fe", 
+            "Ni"
+        ]
+    }
+}

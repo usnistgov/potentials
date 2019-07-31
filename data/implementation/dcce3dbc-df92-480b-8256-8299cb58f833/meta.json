@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "dcce3dbc-df92-480b-8256-8299cb58f833", 
+        "id": "1990--Tersoff-J--Si-C--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-10-10", 
+        "interatomic-potential-key": "b3b05ea5-7852-4b6f-95b4-f04414a2d9b6", 
+        "type": "LAMMPS pair_style tersoff", 
+        "notes": {
+            "text": "This file was created and verified by Lucas Hale. The parameter values are comparable to the SiC_1990.tersoff file in the August 22, 2018 LAMMPS distribution, with this file having higher numerical precision for the derived mixing parameters."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/1990--Tersoff-J--Si-C/1/1990_SiC.tersoff", 
+                "link-text": "1990_SiC.tersoff"
+            }
+        }
+    }
+}

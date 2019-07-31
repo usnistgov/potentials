@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "9f317e60-ac61-4533-a756-a023996aaee5", 
+        "id": "2016--Tseplyaev-V-I-Starikov-S-V--U-N", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1016/j.jnucmat.2016.07.048"
+            }
+        }, 
+        "element": [
+            "U", 
+            "N"
+        ]
+    }
+}

@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "4054e2cb-fe2c-4bc4-84db-8448ad4bb7f4", 
+        "id": "2018--Setyawan-W-Gao-N-Kurtz-R-J--W-Re", 
+        "record-version": "2019-02-21", 
+        "description": {
+            "citation": {
+                "DOI": "10.1063/1.5030113"
+            }
+        }, 
+        "element": [
+            "W", 
+            "Re"
+        ]
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "14ea91be-a501-4e1e-ac31-83849075aa47", 
+        "id": "2017--Purja-Pun-G-P--Si--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-11-05", 
+        "interatomic-potential-key": "698e838d-de9d-4912-bc4f-d78e8e0c66b5", 
+        "type": "LAMMPS pair_style tersoff/mod/c", 
+        "notes": {
+            "text": "This file was provided by Yuri Mishin (George Mason University) on 2 Nov. 2018. It is identical to the similarly named file in the August 22, 2018 LAMMPS distribution."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Purja-Pun-G-P-Mishin-Y--Si/1/Si.tersoff.modc", 
+                "link-text": "Si.tersoff.modc"
+            }
+        }
+    }
+}

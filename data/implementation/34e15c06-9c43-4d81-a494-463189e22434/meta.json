@@ -1,0 +1,36 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "34e15c06-9c43-4d81-a494-463189e22434", 
+        "id": "2009--Olsson-P-A-T--W--table--ipr1", 
+        "status": "active", 
+        "date": "2018-11-19", 
+        "interatomic-potential-key": "5dc4f7f7-5fec-40ae-9b10-f9f1d243b0eb", 
+        "type": "EAM tabulated functions", 
+        "notes": {
+            "text": "These files were provided by P\u00e4r Olsson (Malmoe University, Sweden) on 11 November 2018 and posted with his permission."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Olsson-P-A-T--W/1/F_w.plt", 
+                    "label": "F(&rho;):", 
+                    "link-text": "F_w.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Olsson-P-A-T--W/1/rho_w.plt", 
+                    "label": "&rho;(r):", 
+                    "link-text": "rho_w.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Olsson-P-A-T--W/1/phi_w.plt", 
+                    "label": "&phi;(r):", 
+                    "link-text": "phi_w.plt"
+                }
+            }
+        ]
+    }
+}

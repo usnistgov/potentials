@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "672d54f8-9f48-4200-af56-8a7378ebbc4a", 
+        "id": "1986--Foiles-S-M-Baskes-M-I-Daw-M-S--Ag", 
+        "record-version": "2018-10-04", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.33.7983"
+            }
+        }, 
+        "element": "Ag"
+    }
+}

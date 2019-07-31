@@ -1,0 +1,39 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "e4c1c5f5-a2e3-4cb4-b071-7e8a47f0e4ff", 
+        "id": "2013--Gao-H--AgTaO3--LAMMPS--ipr2", 
+        "status": "active", 
+        "date": "2017-10-10", 
+        "interatomic-potential-key": "fe333ad8-fd35-4b4d-9eb2-e293806c4d02", 
+        "type": "LAMMPS pair_style meam", 
+        "notes": {
+            "text": "These files were sent by Dr. Ashlie Martini (Univ. California Merced) and approved for distribution on 6 Jul. 2013. The file AgTaO3_40atoms.dat contains atomic coordinates for the 40-atom cell described in the paper. A sample LAMMPS input script to calculate the cohesive energy of that configuration is in in.AgTaO3. This potential was tested on the following versions of LAMMPS: 5Mar12, 12Apr12, 19May12, 4Jul12, 28Oct12, 21Feb13, 5Jun13, 13Jun13, 17Jun13."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Gao-H-Otero-de-la-Roza-A-Aouadi-S-M-et-al--AgTaO3/1/library_AgTaO3.meam", 
+                    "link-text": "library_AgTaO3.meam"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Gao-H-Otero-de-la-Roza-A-Aouadi-S-M-et-al--AgTaO3/1/AgTaO3.meam", 
+                    "link-text": "AgTaO3.meam"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Gao-H-Otero-de-la-Roza-A-Aouadi-S-M-et-al--AgTaO3/1/AgTaO3_40atoms.dat", 
+                    "link-text": "AgTaO3_40atoms.dat"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Gao-H-Otero-de-la-Roza-A-Aouadi-S-M-et-al--AgTaO3/1/in.AgTaO3", 
+                    "link-text": "in.AgTaO3"
+                }
+            }
+        ]
+    }
+}

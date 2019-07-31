@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "c42c513a-f843-41c4-ba4f-3f31316c6a7b", 
+        "id": "2011--Bonny-G-Pasianot-R-C-Terentyev-D-Malerba-L--Fe-Cr", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1080/14786435.2010.545780"
+            }
+        }, 
+        "element": [
+            "Fe", 
+            "Cr"
+        ]
+    }
+}

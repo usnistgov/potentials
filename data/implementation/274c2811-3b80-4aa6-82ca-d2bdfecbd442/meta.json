@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "274c2811-3b80-4aa6-82ca-d2bdfecbd442", 
+        "id": "2003--Mendelev-M-I--Fe-2--LAMMPS--ipr3", 
+        "status": "active", 
+        "date": "2010-12-22", 
+        "interatomic-potential-key": "06bf7ccd-ea6a-4744-bfbc-adefa5bcdd60", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "This file supports radial distances smaller than 0.5 A and gives the proper values of -4.1224351 eV/atom for a = 2.855324 A (LAMMPS 4Aug10). Thanks to Jianyang Wu for bringing this to our attention and Mikhail Mendelev for his help in sorting it out."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Mendelev-M-I-Han-S-Srolovitz-D-J-et-al--Fe-2/3/Fe_2.eam.fs", 
+                "link-text": "Fe_2.eam.fs"
+            }
+        }
+    }
+}

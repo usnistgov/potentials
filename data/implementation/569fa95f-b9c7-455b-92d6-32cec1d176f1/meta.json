@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "569fa95f-b9c7-455b-92d6-32cec1d176f1", 
+        "id": "2013--Bonny-G--Fe-Ni-Cr--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2014-01-13", 
+        "interatomic-potential-key": "e30ac130-16af-4ca8-8685-eacbd145578d", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This file was provided by Giovanni Bonny (Nuclear Materials Science Institute of SCK-CEN, Belgium) on 13 Jan. 2014."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Terentyev-D--Fe-Ni-Cr/1/FeNiCr_Bonny_2013_ptDef.eam.alloy", 
+                "link-text": "FeNiCr_Bonny_2013_ptDef.eam.alloy"
+            }
+        }
+    }
+}

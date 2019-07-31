@@ -1,0 +1,64 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "239e4f9a-145d-4c93-a967-73fb3ba28fea", 
+        "id": "2004--Mishin-Y--Ni-Al--table--ipr1", 
+        "status": "active", 
+        "date": "2009-01-01", 
+        "interatomic-potential-key": "13051c1b-48f7-47f5-bad7-fc627fe10376", 
+        "type": "EAM tabulated functions", 
+        "notes": {
+            "text": "These files were provided by Yuri Mishin."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/1/Fal.plt", 
+                    "label": "Al F(&rho;):", 
+                    "link-text": "Fal.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/1/Fni.plt", 
+                    "label": "Ni F(&rho;):", 
+                    "link-text": "Fni.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/1/fal.plt", 
+                    "label": "Al &rho;(r):", 
+                    "link-text": "fal.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/1/fni.plt", 
+                    "label": "Ni &rho;(r):", 
+                    "link-text": "fni.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/1/pal.plt", 
+                    "label": "Al &phi;(r):", 
+                    "link-text": "pal.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/1/pni.plt", 
+                    "label": "Ni &phi;(r):", 
+                    "link-text": "pni.plt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Mishin-Y--Ni-Al/1/pnial.plt", 
+                    "label": "Ni-Al &phi;(r):", 
+                    "link-text": "pnial.plt"
+                }
+            }
+        ]
+    }
+}

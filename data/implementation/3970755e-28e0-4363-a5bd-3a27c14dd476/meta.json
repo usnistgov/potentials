@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "3970755e-28e0-4363-a5bd-3a27c14dd476", 
+        "id": "2013--Ward-D-K--Cd-Te-Zn--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-10-12", 
+        "interatomic-potential-key": "548dfaed-269b-4525-9ab7-a0c2d66d0c33", 
+        "type": "LAMMPS pair_style bop", 
+        "notes": {
+            "text": "This file was taken from the August 22, 2018 LAMMPS distribution and listed as having been created by X.W. Zhou (Sandia)"
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Ward-D-K-Zhou-X-Wong-B-M-Doty-F-P--Cd-Te-Zn/1/CdZnTe_v2.bop.table", 
+                "link-text": "CdZnTe_v2.bop.table"
+            }
+        }
+    }
+}

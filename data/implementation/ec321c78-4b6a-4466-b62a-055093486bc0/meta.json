@@ -1,0 +1,27 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "ec321c78-4b6a-4466-b62a-055093486bc0", 
+        "id": "2015--Asadi-E--Ni--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2009-06-30", 
+        "interatomic-potential-key": "33020b5f-4d8d-40e8-87a8-6c1f9bf9ab2c", 
+        "type": "LAMMPS pair_style meam", 
+        "notes": {
+            "text": "This file was sent by Prof. Mohsen Zaeem (Missouri S&T) on 12 April 2017 and posted on 5 May 2017."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Asadi-E-Zaeem-M-A-Nouranian-S-Baskes-M-I--Ni/1/Ni.meam", 
+                    "link-text": "Ni.meam"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Asadi-E-Zaeem-M-A-Nouranian-S-Baskes-M-I--Ni/1/library.Ni.meam", 
+                    "link-text": "library.Ni.meam"
+                }
+            }
+        ]
+    }
+}

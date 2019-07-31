@@ -1,0 +1,36 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "d392558b-1d28-4301-b9b5-66875b427f07", 
+        "id": "2005--Grochola-G--Au--table--ipr1", 
+        "status": "active", 
+        "date": "2011-01-01", 
+        "interatomic-potential-key": "92a89043-e2bb-4c37-bd39-d98bf4e1de1e", 
+        "type": "EAM tabulated functions", 
+        "notes": {
+            "text": "These files were approved by G. Grochola."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Grochola-G-Russo-S-P-Snook-I-K--Au/1/Au-Grochola-JCP05-F.table", 
+                    "label": "F(&rho;):", 
+                    "link-text": "Au-Grochola-JCP05-F.table"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Grochola-G-Russo-S-P-Snook-I-K--Au/1/Au-Grochola-JCP05-rou.table", 
+                    "label": "&rho;(r):", 
+                    "link-text": "Au-Grochola-JCP05-rou.table"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Grochola-G-Russo-S-P-Snook-I-K--Au/1/Au-Grochola-JCP05-Phi.table", 
+                    "label": "&phi;(r):", 
+                    "link-text": "Au-Grochola-JCP05-Phi.table"
+                }
+            }
+        ]
+    }
+}

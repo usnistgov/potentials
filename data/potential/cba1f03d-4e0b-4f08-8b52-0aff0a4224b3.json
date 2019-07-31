@@ -1,0 +1,19 @@
+{
+    "interatomic-potential": {
+        "key": "cba1f03d-4e0b-4f08-8b52-0aff0a4224b3", 
+        "id": "2002--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A--Ni-Al", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.65.224114"
+            }, 
+            "notes": {
+                "text": "As described in the reference, this potential was highly optimized for the B2 phase of NiAl. For other phases (including the elements), it does not work nearly as well as other potentials. For additional information, see C.A. Becker, et al., Phil. Mag. 91, 3578 (2011)."
+            }
+        }, 
+        "element": [
+            "Ni", 
+            "Al"
+        ]
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "6aa8fa90-ebf0-48e9-a517-5b0c5e671302", 
+        "id": "2017--Bonny-G--W-Re--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2017-11-02", 
+        "interatomic-potential-key": "57fe7a02-b8ad-4362-b98f-6439c9ad14dd", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "LAMMPS-compatible file sent by Dr. Giovanni Bonny (Nuclear Materials Science Institute of SCK-CEN, Belgium) on 2 November 2017 and posted with his permission."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re/2/WRe.eam.alloy", 
+                "link-text": "WRe.eam.alloy"
+            }
+        }
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "e7649c6c-1a18-4da2-81cc-cd1bba68aa20", 
+        "id": "1995--Angelo-J-E--Ni-Al-H--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2009-07-07", 
+        "interatomic-potential-key": "0b194551-81ba-45ba-b4e1-7e035729f11c", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This file was obtained from the 7 July 2009 <a href=\"http://lammps.sandia.gov\" class=\"external\">LAMMPS</a> distribution and approved by M.I. Baskes."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1995--Angelo-J-E-Moody-N-R-Baskes-M-I--Ni-Al-H/1/NiAlH_jea.eam.alloy", 
+                    "link-text": "NiAlH_jea.eam.alloy"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1995--Angelo-J-E-Moody-N-R-Baskes-M-I--Ni-Al-H/1/NiAlH_properties.pdf", 
+                    "link-text": "NiAlH_properties.pdf"
+                }
+            }
+        ]
+    }
+}

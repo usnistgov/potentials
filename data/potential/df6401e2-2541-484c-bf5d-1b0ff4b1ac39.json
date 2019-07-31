@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "df6401e2-2541-484c-bf5d-1b0ff4b1ac39", 
+        "id": "2000--Landa-A-Wynblatt-P-Siegel-D-J-et-al--Al-Pb", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1016/s1359-6454(00)00002-1"
+            }
+        }, 
+        "element": [
+            "Al", 
+            "Pb"
+        ]
+    }
+}

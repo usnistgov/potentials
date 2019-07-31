@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "ef26cdaf-8b0d-46d8-aa68-41cb2721b67e", 
+        "id": "2003--Los-J-H-Fasolino-A--C", 
+        "record-version": "2018-11-01", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.68.024107"
+            }
+        }, 
+        "element": "C"
+    }
+}

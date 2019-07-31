@@ -1,0 +1,33 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "820b0324-9fc4-4231-8077-6ec7b5b91c92", 
+        "id": "2013--Wang-J--W--table--ipr1", 
+        "status": "active", 
+        "date": "2014-01-24", 
+        "interatomic-potential-key": "98c08cee-aec1-4cbc-ae41-db1ea21be551", 
+        "type": "Finnis-Sinclair tables", 
+        "notes": {
+            "text": "These files were sent by Dr. Jun Wang and Prof. Qing Hou (Sichuan Univ.) and approved on 24 Jan. 2014.  Additional information is found in Wang_W_2014_information.pdf, including a correction to equations 4 and 5 in the publication. Specifically, according to Dr. Wang, \"'f(r)' should be 'V(r)' in equation (4) and in equation (5) 'V(r)' should be 'f(r)'.\""
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Wang-J-Zhou-Y-L-Li-M-Hou-Q--W/1/W-e-dens-Wang-2014.txt", 
+                    "link-text": "W-e-dens-Wang-2014.txt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Wang-J-Zhou-Y-L-Li-M-Hou-Q--W/1/W-pair-Wang-2014.txt", 
+                    "link-text": "W-pair-Wang-2014.txt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Wang-J-Zhou-Y-L-Li-M-Hou-Q--W/1/Wang_W_2014_information.pdf", 
+                    "link-text": "Wang_W_2014_information.pdf"
+                }
+            }
+        ]
+    }
+}

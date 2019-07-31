@@ -1,0 +1,20 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "6242c829-f063-42c8-bbc7-07af8d9906c3", 
+        "id": "2007--Mendelev-M-I--Zr-1--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2007-11-29", 
+        "interatomic-potential-key": "fae5c40d-433c-4209-b70c-e092d7eecf7b", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This file was provided by Mikhail Mendelev."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2007--Mendelev-M-I-Ackland-G-J--Zr-1/1/Zr_1.eam.fs", 
+                "label": "Zr #1:", 
+                "link-text": "Zr_1.eam.fs"
+            }
+        }
+    }
+}

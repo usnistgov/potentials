@@ -1,0 +1,27 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "d94cf624-b84c-42dd-8cd0-b81e12a76a7a", 
+        "id": "2018--Ko-W-S--Sn--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-11-06", 
+        "interatomic-potential-key": "101a3154-12c2-4dce-8f4a-2e1b1ffc1541", 
+        "type": "LAMMPS pair_style meam", 
+        "notes": {
+            "text": "These files were sent by Won-Seok Ko (School of Materials Science and Engineering, University of Ulsan) on 5 Nov. 2018 and posted with his permission."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Ko-W-S-Kim-D-H-Kwon-Y-J-Lee-M--Sn/1/library.meam", 
+                    "link-text": "library.meam"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Ko-W-S-Kim-D-H-Kwon-Y-J-Lee-M--Sn/1/Sn.meam", 
+                    "link-text": "Sn.meam"
+                }
+            }
+        ]
+    }
+}

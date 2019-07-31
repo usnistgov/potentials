@@ -1,0 +1,39 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "501d344b-6bac-48b2-8120-6b9b707208c1", 
+        "id": "2004--Zhou-X-W--Ni--FORTRAN--ipr2", 
+        "status": "active", 
+        "date": "2018-04-01", 
+        "interatomic-potential-key": "063c9331-69e4-40e4-bb6c-cee56d576b60", 
+        "type": "FORTRAN", 
+        "notes": {
+            "text": "The file Zhou04_create_v2.f is an updated version of create.f modified by L.M. Hale (NIST) following advice from X.W. Zhou (Sandia National Laboratory). This version removes spurious fluctuations in the tabulated functions of the original potential files caused by single/double precision floating point number conflicts."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Ni/3/README_v2", 
+                    "link-text": "README_v2"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Ni/3/Zhou04_create_v2.f", 
+                    "link-text": "Zhou04_create_v2.f"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Ni/3/EAM.input.Ni", 
+                    "link-text": "EAM.input.Ni"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Ni/3/EAM_code", 
+                    "link-text": "EAM_code"
+                }
+            }
+        ]
+    }
+}

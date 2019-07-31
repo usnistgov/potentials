@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "491d8ed8-0470-4b45-ab72-d377eaf9ca31", 
+        "id": "2009--Bonny-G--Fe-Ni--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2009-01-22", 
+        "interatomic-potential-key": "d11fb3e1-ada3-4cfd-b755-426607af4716", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This file was provided by Giovanni Bonny on 22 Jan. 2009."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Bonny-G-Pasianot-R-C-Malerba-L--Fe-Ni/1/Fe-Ni.eam.alloy", 
+                "link-text": "Fe-Ni.eam.alloy"
+            }
+        }
+    }
+}

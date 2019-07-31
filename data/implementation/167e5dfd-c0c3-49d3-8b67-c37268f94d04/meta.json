@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "167e5dfd-c0c3-49d3-8b67-c37268f94d04", 
+        "id": "2015--Purja-Pun-G-P--Cu-Ta--LAMMPS--ipr1", 
+        "status": "superseded", 
+        "date": "2009-06-30", 
+        "interatomic-potential-key": "b2cdadf2-6f7a-4cfc-919b-b78904969e6b", 
+        "type": "LAMMPS pair_style adp", 
+        "notes": {
+            "text": "This file was provided by Yuri Mishin (George Mason University) on 11 Sep. 2015."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Purja-Pun-G-P-Darling-K-A-Kecskes-L-J-Mishin-Y--Cu-Ta/1/CuTa_LJ15_2014.angdep", 
+                "link-text": "CuTa_LJ15_2014.angdep"
+            }
+        }
+    }
+}

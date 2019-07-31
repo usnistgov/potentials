@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "e7b1de06-c5f5-44de-9bfe-1cdf769814dc", 
+        "id": "1990--Ackland-G-J-Vitek-V--Cu", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.41.10324"
+            }
+        }, 
+        "element": "Cu"
+    }
+}

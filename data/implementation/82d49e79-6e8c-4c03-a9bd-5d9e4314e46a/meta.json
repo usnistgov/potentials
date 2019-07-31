@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "82d49e79-6e8c-4c03-a9bd-5d9e4314e46a", 
+        "id": "2014--Bonny-G--W-H-He-1--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2016-03-18", 
+        "interatomic-potential-key": "2a924b21-1fec-4b43-8ce0-9ed732be7c1d", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "These files were sent by Giovanni Bonny (Nuclear Materials Science Institute of SCK-CEN, Belgium) on 18 Mar. 2016 and posted with his permission. Giovanni Bonny also noted that only W has electron density function and embedding function. The embedding contributions to the energy from H and He are zero."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2014--Bonny-G-Grigorev-P-Terentyev-D--W-H-He-1/1/potential-WHHe-EAM1.eam.alloy", 
+                "link-text": "potential-WHHe-EAM1.eam.alloy"
+            }
+        }
+    }
+}

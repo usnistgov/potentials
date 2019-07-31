@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "ddd7d77b-7c4d-4de3-b703-97fdd0869457", 
+        "id": "1988--Tersoff-J--Si-c", 
+        "record-version": "2018-10-10", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.38.9902"
+            }, 
+            "notes": {
+                "text": "This is Tersoff's Si(C) potential, which was an alternative parameterization for improved elastic constants."
+            }
+        }, 
+        "element": "Si"
+    }
+}

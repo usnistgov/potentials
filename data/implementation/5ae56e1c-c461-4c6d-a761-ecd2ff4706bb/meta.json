@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "5ae56e1c-c461-4c6d-a761-ecd2ff4706bb", 
+        "id": "2012--Mendelev-M-I--Ni--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2010-10-26", 
+        "interatomic-potential-key": "62289060-2bb5-4fa0-97ed-721404566f81", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "This file was provided by Mikhail Mendelev (Ames Laboratory) and posted with his permission on 26 Oct. 2010. He noted that the potential is designed to simulate liquid properties and melting. 31 May 2013: The parameter file was renamed from Ni1_Mendelev_2010.eam.fs to Ni1_Mendelev_2012.eam.fs and the first line in the file's header was updated to reflect the publication status. Mikhail Mendelev approved this change."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2012--Mendelev-M-I-Kramer-M-J-Hao-S-G-et-al--Ni/1/Ni1_Mendelev_2012.eam.fs", 
+                "link-text": "Ni1_Mendelev_2012.eam.fs"
+            }
+        }
+    }
+}

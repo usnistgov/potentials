@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "19c66fc5-858c-4027-bb3c-feae215bf618", 
+        "id": "2017--Los-J-H--B-N--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2018-11-01", 
+        "interatomic-potential-key": "f416dd7d-6d20-4cbd-9ef9-25d6ac27fa9a", 
+        "type": "LAMMPS pair_style extep", 
+        "notes": {
+            "text": "This file was taken from the August 22, 2018 LAMMPS distribution and listed as having been contributed by J.H. Los and J.M.H. Kroes (Radboud University)"
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Los-J-H-Kroes-J-M-H-Albe-K-et-al--B-N/1/BN.extep", 
+                "link-text": "BN.extep"
+            }
+        }
+    }
+}

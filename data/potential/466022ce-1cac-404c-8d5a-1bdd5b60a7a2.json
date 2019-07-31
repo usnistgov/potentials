@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "466022ce-1cac-404c-8d5a-1bdd5b60a7a2", 
+        "id": "2003--Hoyt-J-J-Garvin-J-W-Webb-E-B-Asta-M--Cu-Pb", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1088/0965-0393/11/3/302"
+            }
+        }, 
+        "element": [
+            "Cu", 
+            "Pb"
+        ]
+    }
+}

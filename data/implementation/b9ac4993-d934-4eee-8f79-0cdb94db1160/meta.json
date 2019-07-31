@@ -1,0 +1,64 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "b9ac4993-d934-4eee-8f79-0cdb94db1160", 
+        "id": "2017--Bonny-G--W-Re--table--ipr1", 
+        "status": "active", 
+        "date": "2017-11-02", 
+        "interatomic-potential-key": "57fe7a02-b8ad-4362-b98f-6439c9ad14dd", 
+        "type": "EAM tabulated functions", 
+        "notes": {
+            "text": "These files were sent by Dr. Giovanni Bonny (Nuclear Materials Science Institute of SCK-CEN, Belgium) on 2 November 2017 and posted with his permission."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re/1/F_W.spt", 
+                    "label": "W F(&rho;):", 
+                    "link-text": "F_W.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re/1/F_Re.spt", 
+                    "label": "Re F(&rho;):", 
+                    "link-text": "F_Re.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re/1/rhoW.spt", 
+                    "label": "W &rho;(r):", 
+                    "link-text": "rhoW.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re/1/rhoRe.spt", 
+                    "label": "Re &rho;(r):", 
+                    "link-text": "rhoRe.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re/1/pWW.spt", 
+                    "label": "W-W &phi;(r):", 
+                    "link-text": "pWW.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re/1/pReRe.spt", 
+                    "label": "Re-Re &phi;(r):", 
+                    "link-text": "pReRe.spt"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Bonny-G-Bakaev-A-Terentyev-D-Mastrikov-Y-A--W-Re/1/pWRe.spt", 
+                    "label": "W-Re &phi;(r):", 
+                    "link-text": "pWRe.spt"
+                }
+            }
+        ]
+    }
+}

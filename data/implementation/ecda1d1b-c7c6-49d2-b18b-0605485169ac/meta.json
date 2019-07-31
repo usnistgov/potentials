@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "ecda1d1b-c7c6-49d2-b18b-0605485169ac", 
+        "id": "2011--Chiesa-S--Fe-33--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2019-05-14", 
+        "interatomic-potential-key": "3af85e6e-db61-4ac1-b211-1fd36768b400", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This file was provided by Sergei Starikov (Ruhr-Universit\u00e4t Bochum, Germany) on 5 May 2019 and posted with permission from him, Dr. Dudarev and Dr. Derlet."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Chiesa-S-Derlet-P-M-Dudarev-S-L-Swygenhoven-H-V--Fe-33/1/Fe_Fe.CS3_33.alloy", 
+                "link-text": "Fe_Fe.CS3_33.alloy"
+            }
+        }
+    }
+}

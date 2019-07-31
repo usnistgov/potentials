@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "f3b91308-31ed-488f-bc55-ae7a7e3fd76e", 
+        "id": "1994--Nakano-A-Kalia-R-K-Vashishta-P--Si-O", 
+        "record-version": "2018-11-01", 
+        "description": {
+            "citation": {
+                "DOI": "10.1016/0022-3093(94)90351-4"
+            }
+        }, 
+        "element": [
+            "Si", 
+            "O"
+        ]
+    }
+}

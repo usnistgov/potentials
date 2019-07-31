@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "27676740-93a0-44a5-93ec-2a3eb6db8379", 
+        "id": "2016--Nichol-A--K--LAMMPS--ipr1", 
+        "status": "superseded", 
+        "date": "2015-12-08", 
+        "interatomic-potential-key": "3957686c-62de-4eee-af2c-435a4527ba4a", 
+        "type": "LAMMPS pair_style eam/fs", 
+        "notes": {
+            "text": "This conversion was performed by G.J. Ackland and submitted on 8 Dec. 2015."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Nichol-A-Ackland-G-J--K/2/K.eam.fs", 
+                "link-text": "K.eam.fs"
+            }
+        }
+    }
+}

@@ -1,0 +1,27 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "8543ed40-90c3-4e0b-b941-2106e522d285", 
+        "id": "2015--Ko-W-S--Ni-Ti--LAMMPS--ipr2", 
+        "status": "active", 
+        "date": "2016-07-24", 
+        "interatomic-potential-key": "904676a4-1559-4205-bc31-b64d5ac26d79", 
+        "type": "LAMMPS pair_style meam", 
+        "notes": {
+            "text": "These files were sent by Won-Seok Ko (University of Ulsan, South Korea) on 24 July 2016 and posted with his permission."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Ko-W-S-Grabowski-B-Neugebauer-J--Ni-Ti/1/NiTi.meam", 
+                    "link-text": "NiTi.meam"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Ko-W-S-Grabowski-B-Neugebauer-J--Ni-Ti/1/library.meam", 
+                    "link-text": "library.meam"
+                }
+            }
+        ]
+    }
+}

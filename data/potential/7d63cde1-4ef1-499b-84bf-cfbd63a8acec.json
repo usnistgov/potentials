@@ -1,0 +1,17 @@
+{
+    "interatomic-potential": {
+        "key": "7d63cde1-4ef1-499b-84bf-cfbd63a8acec", 
+        "id": "2018--Zhou-X-W-Foster-M-E-Sills-R-B--Fe-Ni-Cr", 
+        "record-version": "2019-02-05", 
+        "description": {
+            "citation": {
+                "DOI": "10.1002/jcc.25573"
+            }
+        }, 
+        "element": [
+            "Fe", 
+            "Ni", 
+            "Cr"
+        ]
+    }
+}

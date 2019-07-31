@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "8ca857c2-a6eb-460d-b46a-a40e236c2616", 
+        "id": "2006--Chamati-H--Fe--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2017-08-23", 
+        "interatomic-potential-key": "3837b6da-05c4-4148-97cd-90b26a2092df", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "Professor Mishin provided a LAMMPS-compatible version of the potential, which was posted on 23 Aug. 2017."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2006--Chamati-H-Papanicolaou-N-I-Mishin-Y-Papaconstantopoulos-D-A--Fe/2/Fe_Mishin2006.eam.alloy", 
+                "link-text": "Fe_Mishin2006.eam.alloy"
+            }
+        }
+    }
+}

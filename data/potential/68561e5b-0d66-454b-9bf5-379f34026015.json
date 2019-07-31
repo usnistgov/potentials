@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "68561e5b-0d66-454b-9bf5-379f34026015", 
+        "id": "2015--Asadi-E-Zaeem-M-A-Nouranian-S-Baskes-M-I--Cu", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1016/j.actamat.2014.12.010"
+            }, 
+            "notes": {
+                "text": "Prof. Mohsen Zaeem said that this potential was designed for accurately representing properties from 0K up to the melting point."
+            }
+        }, 
+        "element": "Cu"
+    }
+}

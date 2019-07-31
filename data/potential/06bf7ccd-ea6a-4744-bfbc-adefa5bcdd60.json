@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "06bf7ccd-ea6a-4744-bfbc-adefa5bcdd60", 
+        "id": "2003--Mendelev-M-I-Han-S-Srolovitz-D-J-et-al--Fe-2", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1080/14786430310001613264"
+            }, 
+            "notes": {
+                "text": "This listing is for the reference's Fe #2 interaction parameters."
+            }
+        }, 
+        "element": "Fe"
+    }
+}

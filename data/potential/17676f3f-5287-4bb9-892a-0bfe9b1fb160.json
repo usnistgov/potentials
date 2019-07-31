@@ -1,0 +1,20 @@
+{
+    "interatomic-potential": {
+        "key": "17676f3f-5287-4bb9-892a-0bfe9b1fb160", 
+        "id": "2011--Bonny-G-Terentyev-D-Pasianot-R-C-et-al--Fe-Ni-Cr", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1088/0965-0393/19/8/085008"
+            }, 
+            "notes": {
+                "text": "Notes from Giovanni Bonny: \"The present potential was developed to model <b>dislocations around the Fe-10Ni-20Cr composition</b>.\""
+            }
+        }, 
+        "element": [
+            "Fe", 
+            "Ni", 
+            "Cr"
+        ]
+    }
+}

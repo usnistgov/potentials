@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "10248ab9-24c0-4680-a184-96c05df5900f", 
+        "id": "2015--Asadi-E-Zaeem-M-A-Nouranian-S-Baskes-M-I--Fe", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.91.024105"
+            }, 
+            "notes": {
+                "text": "Prof. Mohsen Zaeem said that this potential was designed for accurately representing properties from 0K up to the melting point."
+            }
+        }, 
+        "element": "Fe"
+    }
+}

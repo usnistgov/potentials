@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "aa895105-ff22-488c-9eba-9c976fcb1ad9", 
+        "id": "2008--Zhou-X-W--Pd-H--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2011-03-24", 
+        "interatomic-potential-key": "d788f3a8-6884-4a89-80ae-c66f0abdfa1a", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This file was supplied by Xiaowang Zhou and Jonathan Zimmerman (Sandia National Laboratories) and posted with their approval on 24 March 2011."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2008--Zhou-X-W-Zimmerman-J-A-Wong-B-M-Hoyt-J-J--Pd-H/1/PdH_Zhou_June29_2007_2.set", 
+                "link-text": "PdH_Zhou_June29_2007_2.set"
+            }
+        }
+    }
+}

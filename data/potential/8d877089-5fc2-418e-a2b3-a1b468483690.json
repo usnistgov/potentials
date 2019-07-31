@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "8d877089-5fc2-418e-a2b3-a1b468483690", 
+        "id": "2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Ti", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.69.144113"
+            }
+        }, 
+        "element": "Ti"
+    }
+}

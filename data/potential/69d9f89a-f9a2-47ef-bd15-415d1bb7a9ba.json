@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "69d9f89a-f9a2-47ef-bd15-415d1bb7a9ba", 
+        "id": "1989--Adams-J-B-Foiles-S-M-Wolfer-W-G--Cu", 
+        "record-version": "2018-10-05", 
+        "description": {
+            "citation": {
+                "DOI": "10.1557/jmr.1989.0102"
+            }
+        }, 
+        "element": "Cu"
+    }
+}

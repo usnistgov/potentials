@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "a51fd82a-2bb5-4d30-9663-5f730c6fab40", 
+        "id": "2012--Purja-Pun-G-P-Mishin-Y--Co", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.86.134116"
+            }
+        }, 
+        "element": "Co"
+    }
+}

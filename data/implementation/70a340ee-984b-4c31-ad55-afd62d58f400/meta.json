@@ -1,0 +1,19 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "70a340ee-984b-4c31-ad55-afd62d58f400", 
+        "id": "2003--Hoyt-J-J--Cu-Pb--LAMMPS--ipr1", 
+        "status": "active", 
+        "date": "2008-10-14", 
+        "interatomic-potential-key": "466022ce-1cac-404c-8d5a-1bdd5b60a7a2", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This file was supplied by J.J. Hoyt on 14 October 2008."
+        }, 
+        "artifact": {
+            "web-link": {
+                "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Hoyt-J-J-Garvin-J-W-Webb-E-B-Asta-M--Cu-Pb/1/pbcu.setfl", 
+                "link-text": "pbcu.setfl"
+            }
+        }
+    }
+}

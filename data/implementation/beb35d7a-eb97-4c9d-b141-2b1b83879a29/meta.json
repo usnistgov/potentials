@@ -1,0 +1,27 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "beb35d7a-eb97-4c9d-b141-2b1b83879a29", 
+        "id": "2015--Purja-Pun-G-P--Ni-Co--LAMMPS--ipr1", 
+        "status": "superseded", 
+        "date": "2013-09-17", 
+        "interatomic-potential-key": "20fa46b5-6b6f-4e6e-9400-66edb643c679", 
+        "type": "LAMMPS pair_style eam/alloy", 
+        "notes": {
+            "text": "This file was sent by Y. Mishin (George Mason Univ.) on 17 Sept. 2013 and was posted on 17 Jan. 2014. This version is compatible with LAMMPS. Validation and usage information can be found in Mishin-Ni-Co-2013_lammps.pdf."
+        }, 
+        "artifact": [
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Purja-Pun-G-P-Yamakov-V-Mishin-Y--Ni-Co/1/Mishin-Ni-Co-2013.eam.alloy", 
+                    "link-text": "Mishin-Ni-Co-2013.eam.alloy"
+                }
+            }, 
+            {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Purja-Pun-G-P-Yamakov-V-Mishin-Y--Ni-Co/1/Mishin-Ni-Co-2013_lammps.pdf", 
+                    "link-text": "Mishin-Ni-Co-2013_lammps.pdf"
+                }
+            }
+        ]
+    }
+}
