@@ -4,3 +4,5 @@ from .Potential import Potential
 from .WebLink import WebLink
 from .Potential import Potential
 from .Implementation import Implementation
+
+from .CitationList import CitationList

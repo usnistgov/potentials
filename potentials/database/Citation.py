@@ -16,8 +16,11 @@ from .. import rootdir
 
 class Citation():
 
-    def __init__(self, doi, localdir=None):
-        self.fetch(doi, localdir=localdir)
+    def __init__(self, doi, localdir=None, verbose=True):
+        if Path(doi).is_file():
+            self.load(doi)
+        else:
+            self.fetch(doi, localdir=localdir, verbose=verbose)
 
     @property
     def doi(self):
@@ -28,6 +31,20 @@ class Citation():
     def content(self):
         """dict : The bibtex content fields"""
         return self.__content
+
+    def load(self, path):
+        with open(path, encoding='UTF-8') as f:
+            entry = f.read()
+
+        # Parse and extract content
+        parser = BibTexParser()
+        parser.customization = convert_to_unicode
+        bibdatabase = bibtexparser.loads(entry, parser=parser)
+        
+        # Set object attributes
+        self.__bibdatabase = bibdatabase
+        self.__content = self.__bibdatabase.entries[0]
+        self.__doi = self.content['doi']
 
     def localfilepath(self, doi=None, localdir=None):
         """
@@ -53,7 +70,7 @@ class Citation():
         if localdir is None:
             localdir = Path(rootdir, '..', 'data', 'bibtex')
 
-        return Path(localdir, doi.replace('/', '_') + '.bib')
+        return Path(localdir, doi.replace('/', '%') + '.bib')
 
     def fetch(self, doi, localdir=None, verbose=True):
         """
