@@ -146,7 +146,7 @@ class Implementation():
         elif isinstance(v, datetime.date):
             self.__date = v
         elif isinstance(v, str):
-            self.__date = datetime.date.fromisoformat(v)
+            self.__date = datetime.datetime.strptime(v, '%Y-%m-%d').date()
         else:
             raise TypeError('Invalid date type')
     
