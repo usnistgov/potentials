@@ -30,6 +30,9 @@ class Artifact():
             self.label = label
             self.url = url
 
+    def __str__(self):
+        return f'Artifact {self.filename}'
+
     @property
     def filename(self):
         return self.__filename
@@ -64,20 +67,20 @@ class Artifact():
             self.__url = str(v)
 
     def load(self, model):
-        archive = model.find('archive')
-        self.url = archive['web-link'].get('URL', None)
-        self.label = archive['web-link'].get('label', None)
-        self.filename = archive['web-link'].get('link-text', None)
+        artifact = model.find('artifact')
+        self.url = artifact['web-link'].get('URL', None)
+        self.label = artifact['web-link'].get('label', None)
+        self.filename = artifact['web-link'].get('link-text', None)
         
     def build(self):
         model = DM()
-        model['archive'] = DM()
-        model['archive']['web-link'] = DM()
+        model['artifact'] = DM()
+        model['artifact']['web-link'] = DM()
         if self.url is not None:
-            model['archive']['web-link']['URL'] = self.url
+            model['artifact']['web-link']['URL'] = self.url
         if self.label is not None:
-            model['archive']['web-link']['label'] = self.label
+            model['artifact']['web-link']['label'] = self.label
         if self.filename is not None:
-            model['archive']['web-link']['link-text'] = self.filename
+            model['artifact']['web-link']['link-text'] = self.filename
         
         return model

@@ -13,11 +13,11 @@ from .. import rootdir
 
 class Potential(object):
     """
-    Class for representing full Potential metadata records.
+    Class for representing Potential metadata records.
     """
     def __init__(self, model=None, dois=None, elements=None, key=None,
                  othername=None, fictional=False, modelname=None,
-                 notes=None, date=None):
+                 notes=None, date=None, citations=None):
         """
         Creates a new Potential object.
 
@@ -32,6 +32,7 @@ class Potential(object):
         modelname
         date
         notes
+        citations
         """
 
         if model is not None:
@@ -48,19 +49,24 @@ class Potential(object):
             except:
                 raise TypeError('model cannot be given with any other parameter')
             else:
-                self.load(model)
+                self.load(model, citations=citations)
             
         else:
             # Build new record
             self.elements = elements
-            self.dois = dois
             self.key = key
             self.date = date
             self.othername = othername
             self.fictional = fictional
             self.modelname = modelname
             self.notes = notes
+            self.citations = citations
+            if dois is not None:
+                self.dois = dois
     
+    def __str__(self):
+        return f'Potential {self.id}'
+
     @property
     def key(self):
         return self.__key
@@ -92,73 +98,100 @@ class Potential(object):
         return self.__dois
 
     @dois.setter
-    def dois(self, value):
-        if value is None:
+    def dois(self, v):
+        if v is None:
             self.__dois = None
+            self.__citations = None
         else:
-            self.__dois = aslist(value)
-        self.load_citations()
+            self.__dois = aslist(v)
+
+            # Get current citations (to avoid reloading)
+            if self.citations is None:
+                oldcitations = []
+            else:
+                oldcitations = self.citations
+
+            # Set citations accordingly
+            self.__citations = []
+            for doi in self.dois:
+                match = False
+                for old in oldcitations:
+                    if old.doi == doi:
+                        self.__citations.append(old)
+                        match = True
+                        break
+                if not match:
+                    self.__citations.append(Citation(doi))
 
     @property
     def elements(self):
         return self.__elements
 
     @elements.setter
-    def elements(self, value):
-        if value is None:
+    def elements(self, v):
+        if v is None:
             self.__elements = None
         else:
-            self.__elements = aslist(value)
+            self.__elements = aslist(v)
     
     @property
     def othername(self):
         return self.__othername
     
     @othername.setter
-    def othername(self, value):
-        if value is None:
+    def othername(self, v):
+        if v is None:
             self.__othername = None
         else:
-            self.__othername = str(value)
+            self.__othername = str(v)
     
     @property
     def fictional(self):
         return self.__fictional
     
     @fictional.setter
-    def fictional(self, value):
-        assert isinstance(value, bool)
-        self.__fictional = value
+    def fictional(self, v):
+        assert isinstance(v, bool)
+        self.__fictional = v
     
     @property
     def modelname(self):
         return self.__modelname
     
     @modelname.setter
-    def modelname(self, value):
-        if value is None:
+    def modelname(self, v):
+        if v is None:
             self.__modelname = None
         else:
-            self.__modelname = str(value)
+            self.__modelname = str(v)
 
     @property
     def notes(self):
         return self.__notes
 
     @notes.setter
-    def notes(self, value):
-        if value is None:
+    def notes(self, v):
+        if v is None:
             self.__notes = None
         else:
-            self.__notes = str(value)
+            self.__notes = str(v)
 
-    def load_citations(self):
-        if self.dois is not None:
-            self.citations = []
-            for doi in self.dois:
-                self.citations.append(Citation(doi))
+    @property
+    def citations(self):
+        return self.__citations
+
+    @citations.setter
+    def citations(self, v):
+        if v is None:
+            self.__citations = None
+            self.__dois = None
         else:
-            self.citations = None
+            self.__citations = aslist(v)
+            
+            # Update dois accordingly
+            self.__dois = []
+            for citation in self.citations:
+                self.__dois.append(citation.doi)
 
     @classmethod
     def fetch(cls, key, localdir=None, verbose=True):
@@ -210,11 +243,30 @@ class Potential(object):
         localfile = Path(localdir, f'{self.key}.json')
 
         with open(localfile, 'w', encoding='UTF-8') as f:
-            self.build().json(fp=f, indent=4)
+            self.asmodel().json(fp=f, indent=4)
 
-    def build(self):
+    def asdict(self):
         """
-        Builds Potential model content.
+        Builds flat dictionary representation of the potential.
+        """
+        data = {}
+        
+        # Copy class attributes to dict
+        data['key'] = self.key
+        data['id'] = self.id
+        data['date'] = self.date
+        data['dois'] = self.dois
+        data['notes'] = self.notes
+        data['fictional'] = self.fictional
+        data['elements'] = self.elements
+        data['othername'] = self.othername
+        data['modelname'] = self.modelname
+        
+        return data
+
+    def asmodel(self):
+        """
+        Builds data model (tree-like JSON/XML) representation for the potential.
         """
         # Initialize model
         model = DM()
@@ -245,7 +297,7 @@ class Potential(object):
 
         return model
 
-    def load(self, model):
+    def load(self, model, citations=None):
         """
         Load a Potential model into the Potential class.
 
@@ -254,9 +306,12 @@ class Potential(object):
         model : str or DataModelDict
             Model content or file path to model content.
         """
+        # Set given citations objects
+        self.citations = citations
+        
         # Load model
-        self.model = DM(model)
-        potential = self.model['interatomic-potential']
+        model = DM(model)
+        potential = model.find('interatomic-potential')
         
         # Extract information
         self.key = potential['key']
@@ -271,8 +326,6 @@ class Potential(object):
             self.notes = description['notes']['text']
         else:
             self.notes = None
-        
-        #self.load_citations()
 
         felements = potential.aslist('fictional-element')
         oelements = potential.aslist('other-element')
@@ -296,7 +349,18 @@ class Potential(object):
         if self.id != potential['id']:
             self.modelname = str(potential['id']).split('-')[-1]
             if self.id != potential['id']:
-                raise ValueError(f"Different ids: {self.id} != {potential['id']}")
+                print(f"Different ids: {self.id} != {potential['id']}")
+
+    @property
+    def html(self):
+        htmlstr = f'<h3>{self.id}</h3>'
+        for citation in self.citations:
+            htmlstr += citation.html + '</br>\n'
+        if self.notes is not None:
+            htmlstr += '</br>\n'
+            htmlstr += f'<b>Notes:</b> {self.notes}'
+        
+        return htmlstr
 
     @property
     def id(self):

@@ -1,22 +1,24 @@
 # Standard libraries
 import uuid
 import datetime
+from pathlib import Path
 
 from DataModelDict import DataModelDict as DM
+
+import requests
 
 from .Citation import Citation
 from .Potential import Potential
 from ..tools import aslist
+from .. import rootdir
 
 from .Artifact import Artifact
 from .Parameter import Parameter
 from .WebLink import WebLink
 
-
-
 class Implementation():
     """
-    Class for representing the implementation portion of Potential metadata
+    Class for representing Implementation metadata records.
     records.
     """
     def __init__(self, model=None, potential=None, style=None, key=None,
@@ -37,7 +39,6 @@ class Implementation():
         if model is not None:
             # Load existing record
             try:
-                assert potential is None
                 assert style is None
                 assert key is None
                 assert id is None
@@ -50,7 +51,7 @@ class Implementation():
             except:
                 raise TypeError('model cannot be given with any other parameter')
             else:
-                self.load(model)
+                self.load(model, potential=potential)
         else:
             # Build new record
             self.potential = potential
@@ -76,6 +77,9 @@ class Implementation():
                 for weblink in aslist(weblinks):
                     self.add_weblink(**weblink)
 
+    def __str__(self):
+        return f'Implementation {self.id}'
+
     @property
     def potential(self):
         return self.__potential
@@ -86,8 +90,8 @@ class Implementation():
             self.__potential = None
         elif isinstance(v, Potential):
             self.__potential = v
-        #elif isinstance(v, str):
-            #FIND POTENTIAL FROM STR VALUE
+        elif isinstance(v, str):
+            self.__potential.fetch(v)
         else:
             raise TypeError('Invalid potential type')
 
@@ -161,14 +165,114 @@ class Implementation():
         else:
             self.__notes = str(v)
 
-    def load(self, model):
+    @property
+    def html(self):
+        htmlstr = self.potential.html
+        htmlstr += '<br/>\n'
+        htmlstr += f'<b>{self.style}</b> ({self.id})<br/>\n'
+        if len(self.artifacts) > 0:
+            htmlstr += '<b>Files:</b><br/>\n'
+            for artifact in self.artifacts:
+                if artifact.label is not None:
+                    htmlstr += f'{artifact.label}: '
+                if artifact.url is not None:
+                    htmlstr += f'<a href="{artifact.url}">{artifact.filename}</a><br/>\n'
+                else:
+                    htmlstr += f'self.filename<br/>\n'
+        
+        if len(self.parameters) > 0:
+            htmlstr += '<b>Parameters:</b><br/>\n'
+            for parameter in self.parameters:
+                htmlstr += f'{parameter.name}'
+                if parameter.value is not None:
+                    htmlstr += f' {parameter.value}'
+                    if parameter.unit is not None:
+                        htmlstr += f' {parameter.unit}'
+                htmlstr += '<br/>\n'
+        
+        if len(self.weblinks) > 0:
+            htmlstr += '<b>Links:</b><br/>\n'
+            for weblink in self.weblinks:
+                if weblink.label is not None:
+                    htmlstr += f'{weblink.label}: '
+                htmlstr += f'<a href="{weblink.url}">{weblink.linktext}</a><br/>\n'
+        
+        return htmlstr
+
+    @classmethod
+    def fetch(cls, key, localdir=None, verbose=True):
+        """
+        Fetches saved potential content.  First checks localdir, then
+        potentials github.
+
+        Parameters
+        ----------
+        key : str
+            The potential key to load.
+        localdir : Path, optional
+            The local directory for the potential JSON files.  If not given,
+            will use the default path in potentials/data/implementation directory.
+        """
+        if localdir is None:
+            localdir = Path(rootdir, '..', 'data', 'implementation')
+        localfile = Path(localdir, key, 'meta.json')
+        
+        if localfile.is_file():
+            if verbose:
+                print('implementation loaded from localdir')
+            return cls(model=localfile)
+            
+        else:
+            r = requests.get(f'https://github.com/lmhale99/potentials/raw/master/data/implementation/{key}/meta.json')
+            try:
+                r.raise_for_status()
+            except:
+                raise ValueError(f'no implementation with key {key} found')
+            else:
+                if verbose:
+                    print('implementation downloaded from github')
+                return cls(model=r.text)
+
+    def save(self, localdir=None):
+        """
+        Saves content locally
+
+        Parameters
+        ----------
+        localdir : Path, optional
+            The local directory for the potential JSON files.  If not given,
+            will use the default path in potentials/data/implementation directory.
+        """
+        if localdir is None:
+            localdir = Path(rootdir, '..', 'data', 'implementation')
+        localfile = Path(localdir, self.key, 'meta.json')
+
+        with open(localfile, 'w', encoding='UTF-8') as f:
+            self.asmodel().json(fp=f, indent=4)
+
+    def load(self, model, potential=None):
+
+        model = DM(model)
         imp = model.find('interatomic-potential-implementation')
         self.key = imp['key']
         self.id = imp.get('id', None)
-        self.status = imp['status']
-        self.date = imp['date']
+        self.status = imp.get('status', None)
+        self.date = imp.get('date', None)
         self.style = imp.get('style', None)
         self.notes = imp.get('notes', None)
+        try:
+            pot_key = imp['interatomic-potential-key']
+            if potential is not None:
+                match = False
+                for pot in aslist(potential):
+                    if pot.key == pot_key:
+                        self.potential = pot
+                        match = True
+                        break
+                if match is False:
+                    self.potential = pot_key
+        except:
+            print(f'No pot key {self.id} {self.key}')
 
         self.artifacts = []
         for artifact in imp.iteraslist('artifact'):
@@ -182,9 +286,31 @@ class Implementation():
         for weblink in imp.iteraslist('web-link'):
             self.add_weblink(model=DM([('web-link', weblink)]))
 
-    def build(self):
+    def asdict(self):
         """
+        Builds flat dictionary representation of the potential.
         """
+        data = {}
+        
+        # Copy class attributes to dict
+        data['key'] = self.key
+        data['id'] = self.id
+        data['date'] = self.date
+        data['potential'] = self.potential
+        data['status'] = self.status
+        data['notes'] = self.notes
+        data['style'] = self.style
+        data['artifacts'] = self.artifacts
+        data['parameters'] = self.parameters
+        data['weblinks'] = self.weblinks
+        
+        return data
+
+    def asmodel(self):
+        """
+        Builds data model (tree-like JSON/XML) representation for the potential.
+        """
+
         model = DM()
         model['interatomic-potential-implementation'] = imp = DM()
         imp['key'] = self.key
@@ -192,6 +318,7 @@ class Implementation():
             imp['id'] = self.id
         imp['status'] = self.status
         imp['date'] = str(self.date)
+        imp['interatomic-potential-key'] = self.potential.key
         if self.style is not None:
             imp['style'] = self.style
         if self.notes is not None:

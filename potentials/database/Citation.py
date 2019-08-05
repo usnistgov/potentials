@@ -22,6 +22,9 @@ class Citation():
         else:
             self.fetch(doi, localdir=localdir, verbose=verbose)
 
+    def __str__(self):
+        return f'Citation doi:{self.doi}'
+
     @property
     def doi(self):
         """str : The citation's doi"""
@@ -70,7 +73,7 @@ class Citation():
         if localdir is None:
             localdir = Path(rootdir, '..', 'data', 'bibtex')
 
-        return Path(localdir, doi.replace('/', '%') + '.bib')
+        return Path(localdir, doi.replace('/', '_') + '.bib')
 
     def fetch(self, doi, localdir=None, verbose=True):
         """
@@ -91,19 +94,19 @@ class Citation():
             with open(localfile, encoding='UTF-8') as f:
                 entry = f.read()
             if verbose:
-                print('bibtex loaded from localdir')
+                print(f'bibtex loaded {doi} from localdir')
         else:
             try:
                 r = requests.get(f'https://github.com/lmhale99/potentials/raw/master/data/bibtex/{localfile.name}')
                 r.raise_for_status()
                 entry = r.text
                 if verbose:
-                    print('bibtex downloaded from github')
+                    print(f'bibtex downloaded {doi} from github')
             except:
                 # Download using habanero
                 entry = cn.content_negotiation(ids=doi, format="bibtex")
                 if verbose:
-                    print('bibtex downloaded from CrossRef')
+                    print(f'bibtex downloaded {doi} from CrossRef')
 
         # Parse and extract content
         parser = BibTexParser()
@@ -177,7 +180,7 @@ class Citation():
         htmlstr += f'DOI: <a href="https://doi.org/{self.doi}">{self.doi}</a>'
 
         if 'abstract' in self.content:
-            htmlstr += f'<br/>Abstract: {self.content["abstract"]}'
+            htmlstr += f'<br/><b>Abstract:</b> {self.content["abstract"]}'
 
         return htmlstr
 
