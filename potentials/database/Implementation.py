@@ -170,6 +170,11 @@ class Implementation():
         htmlstr = self.potential.html
         htmlstr += '<br/>\n'
         htmlstr += f'<b>{self.style}</b> ({self.id})<br/>\n'
+        
+        if self.notes is not None:
+            htmlstr += '</br>\n'
+            htmlstr += f'<b>Notes:</b> {self.notes}'
+        
         if len(self.artifacts) > 0:
             htmlstr += '<b>Files:</b><br/>\n'
             for artifact in self.artifacts:
@@ -324,11 +329,11 @@ class Implementation():
         if self.notes is not None:
             imp['notes'] = DM([('text', self.notes)])
         for artifact in self.artifacts:
-            model.append('artifact', artifact['artifact'])
+            model.append('artifact', artifact.asmodel()['artifact'])
         for parameter in self.parameters:
-            model.append('parameter', parameter['parameter'])
+            model.append('parameter', parameter.asmodel()['parameter'])
         for weblink in self.weblinks:
-            model.append('web-link', weblink['web-link'])
+            model.append('web-link', weblink.asmodel()['web-link'])
 
     def add_artifact(self, model=None, filename=None, label=None, url=None):
         self.artifacts.append(Artifact(model=model, filename=filename, label=label, url=url))

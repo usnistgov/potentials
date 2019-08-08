@@ -72,7 +72,7 @@ class Artifact():
         self.label = artifact['web-link'].get('label', None)
         self.filename = artifact['web-link'].get('link-text', None)
         
-    def build(self):
+    def asmodel(self):
         model = DM()
         model['artifact'] = DM()
         model['artifact']['web-link'] = DM()

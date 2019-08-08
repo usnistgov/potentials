@@ -70,7 +70,7 @@ class Parameter():
         self.unit = parameter.get('unit', None)
         self.name = parameter.get('name', None)
         
-    def build(self):
+    def asmodel(self):
         model = DM()
         model['parameter'] = DM()
         if self.value is not None:

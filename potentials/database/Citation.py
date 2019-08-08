@@ -69,7 +69,7 @@ class Citation():
             The path for the local .bib file
         """
         if doi is None:
-            doi = self.doi
+            doi = self.doi.lower()
         if localdir is None:
             localdir = Path(rootdir, '..', 'data', 'bibtex')
 

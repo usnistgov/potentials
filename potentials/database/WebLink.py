@@ -68,7 +68,7 @@ class WebLink():
         self.label = weblink.get('label', None)
         self.linktext = weblink.get('link-text', None)
         
-    def build(self):
+    def asmodel(self):
         model = DM()
         model['archive'] = DM()
         if self.url is not None:
