@@ -5,7 +5,7 @@
         "status": "active", 
         "date": "2019-08-09", 
         "interatomic-potential-key": "b2299c5a-b606-435f-af30-0172f04119bb", 
-        "style": "OpenKIM", 
+        "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
         }

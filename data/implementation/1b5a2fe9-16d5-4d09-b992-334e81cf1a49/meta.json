@@ -5,7 +5,7 @@
         "status": "active", 
         "date": "2019-08-09", 
         "interatomic-potential-key": "d0d348ef-47e3-4d59-a066-bec02d0525f7", 
-        "style": "OpenKIM", 
+        "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential corresponds to the CdTe.sw distributed with the LAMMPS package, but the parameter file format is different."
         }

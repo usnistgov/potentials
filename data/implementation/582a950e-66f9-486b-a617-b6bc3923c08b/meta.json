@@ -5,7 +5,7 @@
         "status": "active", 
         "date": "2019-08-08", 
         "interatomic-potential-key": "6fbc40e6-1388-4988-87d5-88805b1b3690", 
-        "style": "OpenKIM", 
+        "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 1987--Ackland-G-J--Ni--LAMMPS--ipr1."
         }

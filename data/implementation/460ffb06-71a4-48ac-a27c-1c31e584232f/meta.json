@@ -5,7 +5,7 @@
         "status": "active", 
         "date": "2019-08-08", 
         "interatomic-potential-key": "92a89043-e2bb-4c37-bd39-d98bf4e1de1e", 
-        "style": "OpenKIM", 
+        "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2005--Grochola-G--Au--LAMMPS--ipr1."
         }

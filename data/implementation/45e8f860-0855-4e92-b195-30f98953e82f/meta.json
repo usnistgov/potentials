@@ -5,7 +5,7 @@
         "status": "active", 
         "date": "2019-08-09", 
         "interatomic-potential-key": "cfe3a54f-c3b2-4b61-8b03-165613bdd829", 
-        "style": "OpenKIM", 
+        "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2006--Williams-P-L--Cu-Ag--LAMMPS--ipr1."
         }

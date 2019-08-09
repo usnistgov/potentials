@@ -5,7 +5,7 @@
         "status": "active", 
         "date": "2019-08-08", 
         "interatomic-potential-key": "0c463dfe-3bf7-47be-9d13-041cc425ec10", 
-        "style": "OpenKIM", 
+        "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  The potential was smoothed by Laurent Dupuy to obtain consistent and continuous derivatives."
         }

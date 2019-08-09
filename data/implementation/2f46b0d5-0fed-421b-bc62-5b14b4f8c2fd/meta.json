@@ -5,7 +5,7 @@
         "status": "active", 
         "date": "2019-08-09", 
         "interatomic-potential-key": "4fc0f7d5-dff6-4de7-8567-d9e87746cb2c", 
-        "style": "OpenKIM", 
+        "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2016--Borovikov-V--Cu-Zr--LAMMPS--ipr1."
         }

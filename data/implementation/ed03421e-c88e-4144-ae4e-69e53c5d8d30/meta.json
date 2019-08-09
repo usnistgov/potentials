@@ -5,7 +5,7 @@
         "status": "active", 
         "date": "2019-08-08", 
         "interatomic-potential-key": "bdd76724-0693-4e46-8a9a-39e1bc2204ce", 
-        "style": "OpenKIM", 
+        "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the same files as 2012--Schopf-D--Al-Mn-Pd--IMD--ipr1."
         }

@@ -5,7 +5,7 @@
         "status": "active", 
         "date": "2019-08-09", 
         "interatomic-potential-key": "bd58ae4c-dc17-40e4-91f0-db3eae46f933", 
-        "style": "OpenKIM", 
+        "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2007--Mendelev-M-I--Zr-3--LAMMPS--ipr2."
         }

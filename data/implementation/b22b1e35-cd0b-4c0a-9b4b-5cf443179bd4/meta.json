@@ -5,7 +5,7 @@
         "status": "superseded", 
         "date": "2019-08-09", 
         "interatomic-potential-key": "5e0ecfb9-e942-4098-bbd7-7c30ed948e11", 
-        "style": "OpenKIM", 
+        "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the Al_zhou.eam.alloy file from the LAMMPS potentials folder dated 2007-10-12 and listed as having been contributed by G. Ziegenhain."
         }

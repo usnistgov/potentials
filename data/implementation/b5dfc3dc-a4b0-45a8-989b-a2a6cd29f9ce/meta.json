@@ -5,7 +5,7 @@
         "status": "active", 
         "date": "2019-08-08", 
         "interatomic-potential-key": "9549a404-171a-4469-8fc3-2de77c99f7e7", 
-        "style": "OpenKIM", 
+        "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the Al_jnp.eam file from the LAMMPS potentials folder dated 2007-06-11."
         }
