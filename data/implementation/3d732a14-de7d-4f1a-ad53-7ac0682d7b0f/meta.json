@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "3d732a14-de7d-4f1a-ad53-7ac0682d7b0f", 
+        "id": "MO_466808877130", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "9155f279-c246-4108-bfe4-1db2fcf21959", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2010--Malerba-L--Fe--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_Marinica_2007_Fe__MO_466808877130_000", 
+        "link-text": "EAM_Dynamo_Marinica_2007_Fe__MO_466808877130_000"
+    }
+}

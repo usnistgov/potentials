@@ -172,8 +172,7 @@ class Implementation():
         htmlstr += f'<b>{self.style}</b> ({self.id})<br/>\n'
         
         if self.notes is not None:
-            htmlstr += '</br>\n'
-            htmlstr += f'<b>Notes:</b> {self.notes}'
+            htmlstr += f'<b>Notes:</b> {self.notes}</br>\n'
         
         if len(self.artifacts) > 0:
             htmlstr += '<b>Files:</b><br/>\n'
@@ -250,7 +249,10 @@ class Implementation():
         """
         if localdir is None:
             localdir = Path(rootdir, '..', 'data', 'implementation')
-        localfile = Path(localdir, self.key, 'meta.json')
+        impdir = Path(localdir, self.key)
+        if not impdir.is_dir():
+            impdir.mkdir(parents=True)
+        localfile = Path(impdir, 'meta.json')
 
         with open(localfile, 'w', encoding='UTF-8') as f:
             self.asmodel().json(fp=f, indent=4)
@@ -334,6 +336,8 @@ class Implementation():
             model.append('parameter', parameter.asmodel()['parameter'])
         for weblink in self.weblinks:
             model.append('web-link', weblink.asmodel()['web-link'])
+        
+        return model
 
     def add_artifact(self, model=None, filename=None, label=None, url=None):
         self.artifacts.append(Artifact(model=model, filename=filename, label=label, url=url))

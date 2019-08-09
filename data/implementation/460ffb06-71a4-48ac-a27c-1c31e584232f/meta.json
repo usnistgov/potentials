@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "460ffb06-71a4-48ac-a27c-1c31e584232f", 
+        "id": "MO_557267801129", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "92a89043-e2bb-4c37-bd39-d98bf4e1de1e", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2005--Grochola-G--Au--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_GrocholaRusso_2005_Au__MO_557267801129_000", 
+        "link-text": "EAM_Dynamo_GrocholaRusso_2005_Au__MO_557267801129_000"
+    }
+}

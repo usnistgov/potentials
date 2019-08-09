@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "30883a4e-1fcc-43da-8442-d5e73a8f0bc8", 
+        "id": "MO_324507536345", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "2ce1cf6d-9c87-4b29-89d2-9885a928fbe7", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_ErcolessiAdams_1994_Al__MO_324507536345_002", 
+        "link-text": "EAM_ErcolessiAdams_1994_Al__MO_324507536345_002"
+    }
+}

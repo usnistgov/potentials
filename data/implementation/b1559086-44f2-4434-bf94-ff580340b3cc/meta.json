@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "b1559086-44f2-4434-bf94-ff580340b3cc", 
+        "id": "MO_703849496106", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "7d6b30cb-0120-4a4d-906e-285b4d38a379", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/Morse_EIP_GuthikondaElliott_2011_AuCd__MO_703849496106_002", 
+        "link-text": "Morse_EIP_GuthikondaElliott_2011_AuCd__MO_703849496106_002"
+    }
+}

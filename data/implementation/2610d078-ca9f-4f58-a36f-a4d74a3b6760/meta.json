@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "2610d078-ca9f-4f58-a36f-a4d74a3b6760", 
+        "id": "MO_681640899874", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "d1e36148-f138-4ee0-ab7d-1fb5442805d8", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 1989--Adams-J-B--Ag--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_AdamsFoilesWolfer_1989Universal6_Ag__MO_681640899874_000", 
+        "link-text": "EAM_Dynamo_AdamsFoilesWolfer_1989Universal6_Ag__MO_681640899874_000"
+    }
+}

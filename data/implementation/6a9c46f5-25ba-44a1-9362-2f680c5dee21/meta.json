@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "6a9c46f5-25ba-44a1-9362-2f680c5dee21", 
+        "id": "MO_831121933939", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "301f04ce-9082-4542-8590-489300cd19e8", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the Cu file from 1985--Foiles-S-M--Ni-Cu--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_Foiles_1985_Cu__MO_831121933939_000", 
+        "link-text": "EAM_Dynamo_Foiles_1985_Cu__MO_831121933939_000"
+    }
+}

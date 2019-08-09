@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "f29d4405-f860-49ff-ba1b-d16d35f76eac", 
+        "id": "MO_751354403791", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "d71da5f1-db8a-46ad-a78d-c026768200af", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2009--Purja-Pun-G-P--Ni-Al--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_PunMishin_2009_NiAl__MO_751354403791_005", 
+        "link-text": "EAM_Dynamo_PunMishin_2009_NiAl__MO_751354403791_005"
+    }
+}

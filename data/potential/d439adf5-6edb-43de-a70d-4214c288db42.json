@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "d439adf5-6edb-43de-a70d-4214c288db42", 
+        "id": "1959--Girifalco-L-A-Weizer-V-G--Cr", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrev.114.687"
+            }
+        }, 
+        "element": "Cr"
+    }
+}

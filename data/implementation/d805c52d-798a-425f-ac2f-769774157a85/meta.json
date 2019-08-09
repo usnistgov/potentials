@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "d805c52d-798a-425f-ac2f-769774157a85", 
+        "id": "MO_626183701337", 
+        "status": "active", 
+        "date": "2019-08-09", 
+        "interatomic-potential-key": "60cf81d5-aa01-4f59-aaa0-8ce26fc1395b", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2014--Bonny-G--W-H-He-2--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_BonnyTerentyev_2014EAM2_W__MO_626183701337_000", 
+        "link-text": "EAM_Dynamo_BonnyTerentyev_2014EAM2_W__MO_626183701337_000"
+    }
+}

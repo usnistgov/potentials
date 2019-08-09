@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "55748421-c25c-43a8-9d26-343028a64a6a", 
+        "id": "MO_699137396381", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "df6401e2-2541-484c-bf5d-1b0ff4b1ac39", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2000--Landa-A--Al-Pb--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_LandaWynblattSiegel_2000_AlPb__MO_699137396381_005", 
+        "link-text": "EAM_Dynamo_LandaWynblattSiegel_2000_AlPb__MO_699137396381_005"
+    }
+}

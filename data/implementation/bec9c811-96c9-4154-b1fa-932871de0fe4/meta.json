@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "bec9c811-96c9-4154-b1fa-932871de0fe4", 
+        "id": "MO_103054252769", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "f981e581-ca81-43ba-9c24-dc5f8ef0a908", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2003--Li-Y-H--Ta--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_LiSiegelAdams_2003_Ta__MO_103054252769_005", 
+        "link-text": "EAM_Dynamo_LiSiegelAdams_2003_Ta__MO_103054252769_005"
+    }
+}

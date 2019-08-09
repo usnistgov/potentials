@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "b962b4a1-e8f9-4334-8ad2-8db946a5060c", 
+        "id": "MO_534363225491", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "1b3c2a68-da27-47d1-8844-b0e28f3c3d6c", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is the \"medium cutoff\" variation."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/Morse_Shifted_GirifalcoWeizer_1959MedCutoff_Mo__MO_534363225491_002", 
+        "link-text": "Morse_Shifted_GirifalcoWeizer_1959MedCutoff_Mo__MO_534363225491_002"
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "71468e98-a477-492a-babe-a04d99764ace", 
+        "id": "MO_128037485276", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "2073965d-e0d0-4aaf-a4cc-d5e98fc32a81", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_IMD_BrommerGaehler_2006B_AlNiCo__MO_128037485276_003", 
+        "link-text": "EAM_IMD_BrommerGaehler_2006B_AlNiCo__MO_128037485276_003"
+    }
+}

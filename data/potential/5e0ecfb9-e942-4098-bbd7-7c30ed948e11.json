@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "5e0ecfb9-e942-4098-bbd7-7c30ed948e11", 
+        "id": "2001--Zhou-X-W-Wadley-H-N-G-Johnson-R-A-et-al--Al", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "DOI": "10.1016/s1359-6454(01)00287-7"
+            }, 
+            "notes": {
+                "text": "This is superseded by 2004--Zhou-X-W-Johnson-R-A-Wadley-H-N-G--Al, which gives a slightly different parameterization."
+            }
+        }, 
+        "element": "Al"
+    }
+}

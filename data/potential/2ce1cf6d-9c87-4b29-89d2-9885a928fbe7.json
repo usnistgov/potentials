@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "2ce1cf6d-9c87-4b29-89d2-9885a928fbe7", 
+        "id": "1994--Ercolessi-F-B-Adams-J--Al", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "DOI": "10.1209/0295-5075/26/8/005"
+            }, 
+            "notes": {
+                "text": "By design, this potential is not expected to be accurate for geometries with extremely low coordination -- such as small molecules -- which were not included in the training set."
+            }
+        }, 
+        "element": "Al"
+    }
+}

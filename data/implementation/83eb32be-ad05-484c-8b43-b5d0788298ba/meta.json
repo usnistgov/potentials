@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "83eb32be-ad05-484c-8b43-b5d0788298ba", 
+        "id": "MO_101214310689", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "13051c1b-48f7-47f5-bad7-fc627fe10376", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2004--Mishin-Y--Ni-Al--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_Mishin_2004_NiAl__MO_101214310689_005", 
+        "link-text": "EAM_Dynamo_Mishin_2004_NiAl__MO_101214310689_005"
+    }
+}

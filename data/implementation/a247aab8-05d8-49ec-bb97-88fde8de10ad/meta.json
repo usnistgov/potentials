@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "a247aab8-05d8-49ec-bb97-88fde8de10ad", 
+        "id": "MO_960699513424", 
+        "status": "active", 
+        "date": "2019-08-09", 
+        "interatomic-potential-key": "3837b6da-05c4-4148-97cd-90b26a2092df", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2006--Chamati-H--Fe--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_ChamatiPapanicolaouMishin_2006_Fe__MO_960699513424_000", 
+        "link-text": "EAM_Dynamo_ChamatiPapanicolaouMishin_2006_Fe__MO_960699513424_000"
+    }
+}

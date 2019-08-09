@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "c7b673be-fd7a-45ca-9a46-87cec9c3933a", 
+        "id": "MO_034823476734", 
+        "status": "active", 
+        "date": "2019-08-09", 
+        "interatomic-potential-key": "fb99607d-b4cf-44bf-a39b-b48aaefd335b", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/Pair_Morse_Modified_MacDonaldMacDonald_Cu__MO_034823476734_000", 
+        "link-text": "Pair_Morse_Modified_MacDonaldMacDonald_Cu__MO_034823476734_000"
+    }
+}

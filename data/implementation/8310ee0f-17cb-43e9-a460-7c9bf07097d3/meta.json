@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "8310ee0f-17cb-43e9-a460-7c9bf07097d3", 
+        "id": "MO_046576227003", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "30656327-03f8-4bc5-ae74-aa3ed1788ce2", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2013--Marinica-M-C--W-4--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_MarinicaVentelonGilbert_2013EAM4__MO_046576227003_000", 
+        "link-text": "EAM_Dynamo_MarinicaVentelonGilbert_2013EAM4__MO_046576227003_000"
+    }
+}

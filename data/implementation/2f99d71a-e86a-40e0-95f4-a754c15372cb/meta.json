@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "2f99d71a-e86a-40e0-95f4-a754c15372cb", 
+        "id": "MO_010613863288", 
+        "status": "active", 
+        "date": "2019-08-09", 
+        "interatomic-potential-key": "20fa46b5-6b6f-4e6e-9400-66edb643c679", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2015--Purja-Pun-G-P--Ni-Co--LAMMPS--ipr2."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_PunYamakovMishin_2015_NiCo__MO_010613863288_000", 
+        "link-text": "EAM_Dynamo_PunYamakovMishin_2015_NiCo__MO_010613863288_000"
+    }
+}

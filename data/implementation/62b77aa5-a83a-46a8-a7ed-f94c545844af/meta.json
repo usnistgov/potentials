@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "62b77aa5-a83a-46a8-a7ed-f94c545844af", 
+        "id": "MO_119135752160", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "466022ce-1cac-404c-8d5a-1bdd5b60a7a2", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2003--Hoyt-J-J--Cu-Pb--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_HoytGarvinWebb_2003_PbCu__MO_119135752160_005", 
+        "link-text": "EAM_Dynamo_HoytGarvinWebb_2003_PbCu__MO_119135752160_005"
+    }
+}

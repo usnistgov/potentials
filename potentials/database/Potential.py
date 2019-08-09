@@ -194,7 +194,7 @@ class Potential(object):
                 self.__dois.append(citation.doi)
 
     @classmethod
-    def fetch(cls, key, localdir=None, verbose=True):
+    def fetch(cls, key, localdir=None, verbose=True, citations=None):
         """
         Fetches saved potential content.  First checks localdir, then
         potentials github.
@@ -214,7 +214,7 @@ class Potential(object):
         if localfile.is_file():
             if verbose:
                 print('potential loaded from localdir')
-            return cls(model=localfile)
+            return cls(model=localfile, citations=citations)
             
         else:
             r = requests.get(f'https://github.com/lmhale99/potentials/raw/master/data/potential/{key}.json')
@@ -225,7 +225,7 @@ class Potential(object):
             else:
                 if verbose:
                     print('potential downloaded from github')
-                return cls(model=r.text)
+                return cls(model=r.text, citations=citations)
 
     def save(self, localdir=None):
         """
@@ -281,7 +281,7 @@ class Potential(object):
         potential['description'] = description = DM()
         if self.dois is not None:
             for doi in self.dois:
-                description['citation'] = DM([('DOI', doi)])
+                description.append('citation', DM([('DOI', doi)]))
         if self.notes is not None:
             description['notes'] = DM([('text', self.notes)])
         

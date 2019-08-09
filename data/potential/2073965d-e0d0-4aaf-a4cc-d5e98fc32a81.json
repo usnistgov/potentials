@@ -1,0 +1,17 @@
+{
+    "interatomic-potential": {
+        "key": "2073965d-e0d0-4aaf-a4cc-d5e98fc32a81", 
+        "id": "2006--Brommer-P-Gahler-F--Al-Ni-Co", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "DOI": "10.1080/14786430500333349"
+            }
+        }, 
+        "element": [
+            "Al", 
+            "Ni", 
+            "Co"
+        ]
+    }
+}

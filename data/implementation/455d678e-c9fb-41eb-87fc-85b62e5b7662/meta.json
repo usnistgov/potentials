@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "455d678e-c9fb-41eb-87fc-85b62e5b7662", 
+        "id": "MO_169434419764", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "71aee357-27ef-4b79-af47-046b3d8119c8", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/Morse_Shifted_Glyde_1970_Ne__MO_169434419764_002", 
+        "link-text": "Morse_Shifted_Glyde_1970_Ne__MO_169434419764_002"
+    }
+}

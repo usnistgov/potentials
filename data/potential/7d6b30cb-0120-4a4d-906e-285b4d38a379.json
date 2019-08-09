@@ -1,0 +1,21 @@
+{
+    "interatomic-potential": {
+        "key": "7d6b30cb-0120-4a4d-906e-285b4d38a379", 
+        "id": "2009--Guthikonda-V-S-Elliott-R-S--Au-Cd", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": [
+                {
+                    "DOI": "10.1007/s00161-009-0109-1"
+                }, 
+                {
+                    "DOI": "10.1007/s00161-010-0169-2"
+                }
+            ]
+        }, 
+        "element": [
+            "Au", 
+            "Cd"
+        ]
+    }
+}

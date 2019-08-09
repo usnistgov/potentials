@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "2cd215db-ef49-424a-9087-9a7460eca9fa", 
+        "id": "MO_649864794085", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "8ae19224-1890-4eb8-ae50-67c5cf76af98", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2012--Smirnova-D-E--U--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_SmirnovaStarikovStegailov_2012_U__MO_649864794085_000", 
+        "link-text": "EAM_Dynamo_SmirnovaStarikovStegailov_2012_U__MO_649864794085_000"
+    }
+}

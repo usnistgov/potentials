@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "ac9b428d-b7ec-4df4-a22d-f1ce4c65b9fd", 
+        "id": "2008--Morris-J-R-Aga-R-S-Levashov-V-Egami-T--Fe", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.77.174201"
+            }
+        }, 
+        "element": "Fe"
+    }
+}

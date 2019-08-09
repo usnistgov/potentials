@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "d9df676c-0fa2-4a2f-9249-456490d61dc7", 
+        "id": "MO_080526771943", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "f50bc327-ef12-434c-9869-0e538f48211a", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/MFF_MistriotisFlytzanisFarantos_1989_Si__MO_080526771943_001", 
+        "link-text": "MFF_MistriotisFlytzanisFarantos_1989_Si__MO_080526771943_001"
+    }
+}

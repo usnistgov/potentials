@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "cd2b53ef-290d-4d04-8220-d595095de919", 
+        "id": "MO_149104665840", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "2d5b5a05-a57f-4986-95ea-c5940c51d4d7", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2012--Mendelev-M-I--Ni-Zr--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_MendelevKramerHao_2012_NiZr__MO_149104665840_005", 
+        "link-text": "EAM_Dynamo_MendelevKramerHao_2012_NiZr__MO_149104665840_005"
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "93557022-3e5d-4499-ab93-62868c34d0ba", 
+        "id": "MO_201919462778", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "52f709be-824b-4a23-ad87-955b95db4792", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/SW_MX2_WenShirodkarPlechac_2017_MoS__MO_201919462778_001", 
+        "link-text": "SW_MX2_WenShirodkarPlechac_2017_MoS__MO_201919462778_001"
+    }
+}

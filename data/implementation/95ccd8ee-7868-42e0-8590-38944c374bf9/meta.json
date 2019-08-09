@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "95ccd8ee-7868-42e0-8590-38944c374bf9", 
+        "id": "MO_754413982908", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "25899e46-6992-460a-b1c7-fb2704629e9f", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 1987--Ackland-G-J--Au--LAMMPS--ipr2."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_Ackland_1987_Au__MO_754413982908_000", 
+        "link-text": "EAM_Dynamo_Ackland_1987_Au__MO_754413982908_000"
+    }
+}

@@ -1,0 +1,19 @@
+{
+    "interatomic-potential": {
+        "key": "25ca22d1-ef58-4c65-9398-8cf65f0bb11d", 
+        "id": "2009--Brommer-P-Boissieu-M-Euchner-H-et-al--Mg-Zn", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "DOI": "10.1524/zkri.2009.1085"
+            }, 
+            "notes": {
+                "text": "The EAM potential used in the simulations was fitted to the vibrational properties of the MgZn2 Laves phase."
+            }
+        }, 
+        "element": [
+            "Mg", 
+            "Zn"
+        ]
+    }
+}

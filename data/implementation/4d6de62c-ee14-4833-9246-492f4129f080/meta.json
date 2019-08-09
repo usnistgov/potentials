@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "4d6de62c-ee14-4833-9246-492f4129f080", 
+        "id": "MO_946046425752", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "4891e4ab-3d04-4820-acc3-1fa75d14878d", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/Exp6_KongChakrabarty_1973_ArNe__MO_946046425752_002", 
+        "link-text": "Exp6_KongChakrabarty_1973_ArNe__MO_946046425752_002"
+    }
+}

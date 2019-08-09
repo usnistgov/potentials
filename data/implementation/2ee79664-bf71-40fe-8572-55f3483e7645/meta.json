@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "2ee79664-bf71-40fe-8572-55f3483e7645", 
+        "id": "MO_942551040047", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "c6699783-22bb-40e4-8605-e4babb0feb99", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_CaiYe_1996_AlCu__MO_942551040047_005", 
+        "link-text": "EAM_Dynamo_CaiYe_1996_AlCu__MO_942551040047_005"
+    }
+}

@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "b5dfc3dc-a4b0-45a8-989b-a2a6cd29f9ce", 
+        "id": "MO_411692133366", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "9549a404-171a-4469-8fc3-2de77c99f7e7", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the Al_jnp.eam file from the LAMMPS potentials folder dated 2007-06-11."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_JacobsenNorskovPuska_1987_Al__MO_411692133366_000", 
+        "link-text": "EAM_Dynamo_JacobsenNorskovPuska_1987_Al__MO_411692133366_000"
+    }
+}

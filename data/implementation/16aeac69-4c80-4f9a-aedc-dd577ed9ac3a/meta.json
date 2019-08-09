@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "16aeac69-4c80-4f9a-aedc-dd577ed9ac3a", 
+        "id": "MO_796748253903", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "d6b56970-f7f5-428a-8830-499e8d0e2715", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is the \"high cutoff\" variation."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/LJ_Shifted_Bernardes_1958HighCutoff_Xe__MO_796748253903_003", 
+        "link-text": "LJ_Shifted_Bernardes_1958HighCutoff_Xe__MO_796748253903_003"
+    }
+}

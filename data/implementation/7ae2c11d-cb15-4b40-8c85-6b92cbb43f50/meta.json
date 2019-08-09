@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "7ae2c11d-cb15-4b40-8c85-6b92cbb43f50", 
+        "id": "MO_114077951467", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "8a94f366-a892-461e-9d3d-e30a76276727", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2008--Fortini-A--Ru--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_FortiniMendelevBuldyrev_2008_Ru__MO_114077951467_005", 
+        "link-text": "EAM_Dynamo_FortiniMendelevBuldyrev_2008_Ru__MO_114077951467_005"
+    }
+}

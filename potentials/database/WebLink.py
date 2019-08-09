@@ -70,7 +70,7 @@ class WebLink():
         
     def asmodel(self):
         model = DM()
-        model['archive'] = DM()
+        model['web-link'] = DM()
         if self.url is not None:
             model['web-link']['URL'] = self.url
         if self.label is not None:

@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "d4aae854-9766-48cf-87ba-64fe8f6bf86c", 
+        "id": "MO_757342646688", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "87657840-e5e6-4378-94ea-381a90608142", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the same files as 1986--Foiles-S-M--Pt--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_FoilesBaskesDaw_1986Universal3_Pt__MO_757342646688_000", 
+        "link-text": "EAM_Dynamo_FoilesBaskesDaw_1986Universal3_Pt__MO_757342646688_000"
+    }
+}

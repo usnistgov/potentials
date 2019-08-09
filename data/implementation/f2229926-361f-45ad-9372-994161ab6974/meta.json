@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "f2229926-361f-45ad-9372-994161ab6974", 
+        "id": "MO_535504325462", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "8280ac8a-8dd7-42c1-8873-eb38cd82f009", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_TehranchiCurtin_2010_NiH__MO_535504325462_003", 
+        "link-text": "EAM_Dynamo_TehranchiCurtin_2010_NiH__MO_535504325462_003"
+    }
+}

@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "81935581-5d5e-4a1a-8dc5-e0bfb97bf4b4", 
+        "id": "2007--Derlet-P-M-Nguyen-Manh-D-Dudarev-S-L--Nb", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.76.054107"
+            }
+        }, 
+        "element": "Nb"
+    }
+}

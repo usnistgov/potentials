@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "6b10be8a-93a8-4e71-83e3-f2c32bec5e6b", 
+        "id": "MO_130046220009", 
+        "status": "superseded", 
+        "date": "2019-08-09", 
+        "interatomic-potential-key": "04aa4a53-9229-4c6a-8a03-1e8836fd8712", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2004--Zhou-X-W--Ta--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_ZhouJohnsonWadley_2004_Ta__MO_130046220009_005", 
+        "link-text": "EAM_Dynamo_ZhouJohnsonWadley_2004_Ta__MO_130046220009_005"
+    }
+}

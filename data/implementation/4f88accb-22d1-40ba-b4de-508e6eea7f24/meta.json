@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "4f88accb-22d1-40ba-b4de-508e6eea7f24", 
+        "id": "MO_380822813353", 
+        "status": "superseded", 
+        "date": "2019-08-09", 
+        "interatomic-potential-key": "f4b1a594-ff7b-492e-98d9-a693a4a3b66b", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the Cu_zhou.eam.alloy file from the LAMMPS potentials folder dated 2007-10-12 and listed as having been contributed by G. Ziegenhain."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_ZhouWadleyJohnson_2001_Cu__MO_380822813353_000", 
+        "link-text": "EAM_Dynamo_ZhouWadleyJohnson_2001_Cu__MO_380822813353_000"
+    }
+}

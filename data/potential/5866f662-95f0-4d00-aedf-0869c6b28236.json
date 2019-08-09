@@ -1,0 +1,13 @@
+{
+    "interatomic-potential": {
+        "key": "5866f662-95f0-4d00-aedf-0869c6b28236", 
+        "id": "1959--Girifalco-L-A-Weizer-V-G--Na", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrev.114.687"
+            }
+        }, 
+        "element": "Na"
+    }
+}

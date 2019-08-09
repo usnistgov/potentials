@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "fd3219ea-f6cf-4a8f-be46-e83db237246e", 
+        "id": "MO_469343973171", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "38d0b8d9-5e5d-426a-9d70-b5a7e501528b", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2009--Bonny-G--Fe-Cu-Ni--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_BonnyPasianotCastin_2009_FeCuNi__MO_469343973171_005", 
+        "link-text": "EAM_Dynamo_BonnyPasianotCastin_2009_FeCuNi__MO_469343973171_005"
+    }
+}

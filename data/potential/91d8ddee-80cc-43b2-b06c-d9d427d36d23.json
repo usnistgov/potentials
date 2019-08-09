@@ -1,0 +1,21 @@
+{
+    "interatomic-potential": {
+        "key": "91d8ddee-80cc-43b2-b06c-d9d427d36d23", 
+        "id": "1992--Balamane-H-Halicioglu-T-Tiller-W-A--Si", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": [
+                {
+                    "DOI": "10.1103/physrevb.46.2250"
+                }, 
+                {
+                    "DOI": "10.1103/physrevb.31.5262"
+                }
+            ], 
+            "notes": {
+                "text": "This is a Stillinger-Weber (SW) parameterization for Si with a rescaled value of the epsilon parameter used in the original SW potential. The original epsilon value is 2.1682 eV. Balamane, Halicioglu and Tiller (1992) rescaled it to 2.315 eV to obtain the experimental cohesive energy E_coh = 4.63 eV. The original SW potential gives E_coh = 4.3364 eV."
+            }
+        }, 
+        "element": "Si"
+    }
+}

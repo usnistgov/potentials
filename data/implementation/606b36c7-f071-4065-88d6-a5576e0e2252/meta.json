@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "606b36c7-f071-4065-88d6-a5576e0e2252", 
+        "id": "MO_418978237058", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "0b194551-81ba-45ba-b4e1-7e035729f11c", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 1995--Angelo-J-E-Moody-N-R-Baskes-M-I--Ni-Al-H."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_AngeloMoodyBaskes_1995_NiAlH__MO_418978237058_005", 
+        "link-text": "EAM_Dynamo_AngeloMoodyBaskes_1995_NiAlH__MO_418978237058_005"
+    }
+}

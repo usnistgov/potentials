@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "4ce832ec-c01b-40af-9153-98e0023955e2", 
+        "id": "MO_816821594689", 
+        "status": "active", 
+        "date": "2019-08-09", 
+        "interatomic-potential-key": "90f90347-9851-4950-9776-f32583162b20", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2013--Ravelo-R--Ta-1--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_RaveloGermannGuerrero_2013Ta1_Ta__MO_816821594689_000", 
+        "link-text": "EAM_Dynamo_RaveloGermannGuerrero_2013Ta1_Ta__MO_816821594689_000"
+    }
+}

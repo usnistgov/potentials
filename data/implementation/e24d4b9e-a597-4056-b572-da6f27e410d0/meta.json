@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "e24d4b9e-a597-4056-b572-da6f27e410d0", 
+        "id": "MO_261274272789", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "f048f40b-0183-4428-84d8-8f48b725fe41", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_MagneticCubic_DerletNguyenDudarev_2007_Ta__MO_261274272789_002", 
+        "link-text": "EAM_MagneticCubic_DerletNguyenDudarev_2007_Ta__MO_261274272789_002"
+    }
+}

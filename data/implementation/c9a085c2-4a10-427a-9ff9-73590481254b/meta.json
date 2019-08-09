@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "c9a085c2-4a10-427a-9ff9-73590481254b", 
+        "id": "MO_592013496703", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "31a90189-5dd6-43bc-ba69-78c94fca1bd1", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the same files as 2013--Onat-B--Cu-Ni--LAMMPS--ipr2."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_OnatDurukanoglu_2014_CuNi__MO_592013496703_005", 
+        "link-text": "EAM_Dynamo_OnatDurukanoglu_2014_CuNi__MO_592013496703_005"
+    }
+}

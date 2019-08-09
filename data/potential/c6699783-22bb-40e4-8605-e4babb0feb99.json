@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "c6699783-22bb-40e4-8605-e4babb0feb99", 
+        "id": "1996--Cai-J-Ye-Y-Y--Al-Cu", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "DOI": "10.1103/physrevb.54.8398"
+            }
+        }, 
+        "element": [
+            "Al", 
+            "Cu"
+        ]
+    }
+}

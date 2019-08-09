@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "86ce5d1d-e753-4b66-91cc-1414730afbfc", 
+        "id": "MO_801083489225", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "bcff1447-1cee-4672-a6b1-b61d299cb69a", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is the \"low cutoff\" variation."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/Morse_Shifted_GirifalcoWeizer_1959LowCutoff_Sr__MO_801083489225_002", 
+        "link-text": "Morse_Shifted_GirifalcoWeizer_1959LowCutoff_Sr__MO_801083489225_002"
+    }
+}

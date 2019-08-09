@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "ad57eff6-6a74-4375-9525-74d2e42e2803", 
+        "id": "MO_154399806462", 
+        "status": "active", 
+        "date": "2019-08-09", 
+        "interatomic-potential-key": "f5a5b993-0d2f-450e-ba26-59c5b148c700", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/model_ArCHHeXe_BOP_AIREBO__MO_154399806462_001", 
+        "link-text": "model_ArCHHeXe_BOP_AIREBO__MO_154399806462_001"
+    }
+}

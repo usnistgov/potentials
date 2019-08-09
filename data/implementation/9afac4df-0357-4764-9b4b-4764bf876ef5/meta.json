@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "9afac4df-0357-4764-9b4b-4764bf876ef5", 
+        "id": "MO_160637895352", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "90c2411b-6b91-41a9-a562-7544e1bea780", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is the \"medium cutoff\" variation."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/LJ_Shifted_Bernardes_1958MedCutoff_Ne__MO_160637895352_003", 
+        "link-text": "LJ_Shifted_Bernardes_1958MedCutoff_Ne__MO_160637895352_003"
+    }
+}

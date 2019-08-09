@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "4532953e-2a22-4cf4-bf99-2aad6741382a", 
+        "id": "MO_051157671505", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "8f71b887-b4c5-42c0-b06c-9456153725d9", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2004--Liu-X-Y--Al--LAMMPS--ipr1."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_LiuErcolessiAdams_2004_Al__MO_051157671505_000", 
+        "link-text": "EAM_Dynamo_LiuErcolessiAdams_2004_Al__MO_051157671505_000"
+    }
+}

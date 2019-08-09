@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "6a441b88-aa30-482d-8fcf-f73d661de9aa", 
+        "id": "MO_762798677854", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "41ea33df-5737-4c25-b94c-a708f063f26f", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 1987--Ackland-G-J--Cu--LAMMPS--ipr2."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_Dynamo_AcklandTichyVitek_1987v2_Cu__MO_762798677854_000", 
+        "link-text": "EAM_Dynamo_AcklandTichyVitek_1987v2_Cu__MO_762798677854_000"
+    }
+}

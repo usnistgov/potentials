@@ -1,0 +1,16 @@
+{
+    "interatomic-potential": {
+        "key": "c58451db-440a-4c87-bbc6-4bef483a3a71", 
+        "id": "1997--Vailhe-C-Farkas-D--Co-Al", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "DOI": "10.1557/jmr.1997.0340"
+            }
+        }, 
+        "element": [
+            "Co", 
+            "Al"
+        ]
+    }
+}

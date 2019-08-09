@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "a4e7ad15-6e79-475b-a098-318b44a51443", 
+        "id": "MO_710767216198", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "25ca22d1-ef58-4c65-9398-8cf65f0bb11d", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/EAM_IMD_BrommerBoissieuEuchner_2009_MgZn__MO_710767216198_003", 
+        "link-text": "EAM_IMD_BrommerBoissieuEuchner_2009_MgZn__MO_710767216198_003"
+    }
+}

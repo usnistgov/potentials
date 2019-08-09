@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "53909a14-fd53-404a-af9b-e1ff2c5e44fd", 
+        "id": "MO_126942667206", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "d49346a8-e05a-4e6b-89bb-8e8073a0620a", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/TT_Modified_HellmannBichVogel_2007_He__MO_126942667206_002", 
+        "link-text": "TT_Modified_HellmannBichVogel_2007_He__MO_126942667206_002"
+    }
+}

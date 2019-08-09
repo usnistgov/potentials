@@ -1,0 +1,17 @@
+{
+    "interatomic-potential-implementation": {
+        "key": "ef7c2f21-0449-430a-b18a-8a30b363234c", 
+        "id": "MO_857282754307", 
+        "status": "active", 
+        "date": "2019-08-08", 
+        "interatomic-potential-key": "ac9b428d-b7ec-4df4-a22d-f1ce4c65b9fd", 
+        "style": "OpenKIM", 
+        "notes": {
+            "text": "Taken from https://openkim.org."
+        }
+    }, 
+    "web-link": {
+        "URL": "https://openkim.org/id/MJ_MorrisAgaLevashov_2008_Fe__MO_857282754307_003", 
+        "link-text": "MJ_MorrisAgaLevashov_2008_Fe__MO_857282754307_003"
+    }
+}
