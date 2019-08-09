@@ -1,5 +1,6 @@
 from pathlib import Path
 import pandas as pd
+import numpy as np
 
 from .. import rootdir
 from .Citation import Citation
@@ -14,7 +15,7 @@ class Database():
 
     @property
     def citations(self):
-        return self.__citations
+        return np.array(self.__citations)
     
     @property
     def citations_df(self):
@@ -25,7 +26,7 @@ class Database():
 
     @property
     def potentials(self):
-        return self.__potentials
+        return np.array(self.__potentials)
     
     @property
     def potentials_df(self):
@@ -36,7 +37,7 @@ class Database():
     
     @property
     def implementations(self):
-        return self.__implementations
+        return np.array(self.__implementations)
     
     @property
     def implementations_df(self):

@@ -351,14 +351,12 @@ class Potential(object):
             if self.id != potential['id']:
                 print(f"Different ids: {self.id} != {potential['id']}")
 
-    @property
     def html(self):
         htmlstr = f'<h3>{self.id}</h3>'
         for citation in self.citations:
-            htmlstr += citation.html + '</br>\n'
+            htmlstr += f'<b>Citation:</b> {citation.html()}</br>\n'
         if self.notes is not None:
-            htmlstr += '</br>\n'
-            htmlstr += f'<b>Notes:</b> {self.notes}'
+            htmlstr += f'<b>Notes:</b> {self.notes}</br>\n'
         
         return htmlstr
 

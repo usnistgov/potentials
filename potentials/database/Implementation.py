@@ -96,15 +96,15 @@ class Implementation():
             raise TypeError('Invalid potential type')
 
     @property
-    def style(self):
-        return self.__style
+    def type(self):
+        return self.__type
     
-    @style.setter
-    def style(self, v):
+    @type.setter
+    def type(self, v):
         if v is None:
-            self.__style = None
+            self.__type = None
         else:
-            self.__style = str(v)
+            self.__type = str(v)
 
     @property
     def key(self):
@@ -165,11 +165,14 @@ class Implementation():
         else:
             self.__notes = str(v)
 
-    @property
-    def html(self):
-        htmlstr = self.potential.html
-        htmlstr += '<br/>\n'
-        htmlstr += f'<b>{self.style}</b> ({self.id})<br/>\n'
+    def html(self, full=True):
+        htmlstr = ''
+        if full:
+            htmlstr += f'{self.potential.html()}<br/>\n'
+        
+        htmlstr += f'<b>{self.type}</b> ({self.id})<br/>\n'
+        if self.status != 'active':
+            htmlstr += f'<b>{self.status}</b><br/>\n'
         
         if self.notes is not None:
             htmlstr += f'<b>Notes:</b> {self.notes}</br>\n'
@@ -177,29 +180,17 @@ class Implementation():
         if len(self.artifacts) > 0:
             htmlstr += '<b>Files:</b><br/>\n'
             for artifact in self.artifacts:
-                if artifact.label is not None:
-                    htmlstr += f'{artifact.label}: '
-                if artifact.url is not None:
-                    htmlstr += f'<a href="{artifact.url}">{artifact.filename}</a><br/>\n'
-                else:
-                    htmlstr += f'self.filename<br/>\n'
+                htmlstr += f'{artifact.html()}<br/>\n'
         
         if len(self.parameters) > 0:
             htmlstr += '<b>Parameters:</b><br/>\n'
             for parameter in self.parameters:
-                htmlstr += f'{parameter.name}'
-                if parameter.value is not None:
-                    htmlstr += f' {parameter.value}'
-                    if parameter.unit is not None:
-                        htmlstr += f' {parameter.unit}'
-                htmlstr += '<br/>\n'
+                htmlstr += f'{parameter.html()}<br/>\n'
         
         if len(self.weblinks) > 0:
             htmlstr += '<b>Links:</b><br/>\n'
             for weblink in self.weblinks:
-                if weblink.label is not None:
-                    htmlstr += f'{weblink.label}: '
-                htmlstr += f'<a href="{weblink.url}">{weblink.linktext}</a><br/>\n'
+                htmlstr += f'{weblink.html()}<br/>\n'
         
         return htmlstr
 
@@ -265,8 +256,12 @@ class Implementation():
         self.id = imp.get('id', None)
         self.status = imp.get('status', None)
         self.date = imp.get('date', None)
-        self.style = imp.get('style', None)
-        self.notes = imp.get('notes', None)
+        self.type = imp.get('type', None)
+        if 'notes' in imp:
+            self.notes = imp['notes']['text']
+        else:
+            self.notes = None
+        
         try:
             pot_key = imp['interatomic-potential-key']
             if potential is not None:
@@ -306,7 +301,7 @@ class Implementation():
         data['potential'] = self.potential
         data['status'] = self.status
         data['notes'] = self.notes
-        data['style'] = self.style
+        data['type'] = self.type
         data['artifacts'] = self.artifacts
         data['parameters'] = self.parameters
         data['weblinks'] = self.weblinks
@@ -323,7 +318,7 @@ class Implementation():
         imp['key'] = self.key
         if self.id is not None:
             imp['id'] = self.id
-        imp['status'] = self.status
+        imp['type'] = self.type
         imp['date'] = str(self.date)
         imp['interatomic-potential-key'] = self.potential.key
         if self.style is not None:

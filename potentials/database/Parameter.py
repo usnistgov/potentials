@@ -81,3 +81,12 @@ class Parameter():
             model['parameter']['name'] = self.name
         
         return model
+
+    def html(self):
+        htmlstr = f'{self.name}'
+        if self.value is not None:
+            htmlstr += f' {self.value}'
+            if self.unit is not None:
+                htmlstr += f' {self.unit}'
+        
+        return htmlstr

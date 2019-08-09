@@ -84,3 +84,14 @@ class Artifact():
             model['artifact']['web-link']['link-text'] = self.filename
         
         return model
+
+    def html(self):
+        htmlstr = ''
+        if self.label is not None:
+            htmlstr += f'{self.label}: '
+        if self.url is not None:
+            htmlstr += f'<a href="{self.url}">{self.filename}</a>'
+        else:
+            htmlstr += f'{self.filename}'
+        
+        return htmlstr

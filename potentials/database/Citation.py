@@ -133,7 +133,6 @@ class Citation():
         with open(localfile, 'w', encoding='UTF-8') as f:
             bibtexparser.dump(self.__bibdatabase, f)
 
-    @property
     def html(self):
         """str : Formatted html of citation"""
         
