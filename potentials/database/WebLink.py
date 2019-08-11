@@ -85,3 +85,5 @@ class WebLink():
         if self.label is not None:
             htmlstr += f'{self.label}: '
         htmlstr += f'<a href="{self.url}">{self.linktext}</a>'
+
+        return htmlstr
