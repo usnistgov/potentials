@@ -218,7 +218,7 @@ class Implementation():
             return cls(model=localfile)
             
         else:
-            r = requests.get(f'https://github.com/lmhale99/potentials/raw/master/data/implementation/{key}/meta.json')
+            r = requests.get(f'https://github.com/usnistgov/potentials/raw/master/data/implementation/{key}/meta.json')
             try:
                 r.raise_for_status()
             except:
