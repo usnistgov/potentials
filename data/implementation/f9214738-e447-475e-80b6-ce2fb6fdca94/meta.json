@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 1996--Farkas-D--Nb-Ti-Al--LAMMPS--ipr1."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_FarkasJones_1996_NbTiAl__MO_042691367780_000", 
+            "link-text": "EAM_Dynamo_FarkasJones_1996_NbTiAl__MO_042691367780_000"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_FarkasJones_1996_NbTiAl__MO_042691367780_000", 
-        "link-text": "EAM_Dynamo_FarkasJones_1996_NbTiAl__MO_042691367780_000"
     }
 }

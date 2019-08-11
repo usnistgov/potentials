@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2004--Ackland-G-J--Fe-P--LAMMPS--ipr1."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_AcklandMendelevSrolovitz_2004_FeP__MO_884343146310_005", 
+            "link-text": "EAM_Dynamo_AcklandMendelevSrolovitz_2004_FeP__MO_884343146310_005"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_AcklandMendelevSrolovitz_2004_FeP__MO_884343146310_005", 
-        "link-text": "EAM_Dynamo_AcklandMendelevSrolovitz_2004_FeP__MO_884343146310_005"
     }
 }

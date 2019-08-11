@@ -1,0 +1,96 @@
+{
+    "interatomic-potential": {
+        "key": "41f2bbbd-bc48-420e-8c2b-6bec9cf00afc", 
+        "id": "2013--Hale-L-M-Wong-B-M-Zimmerman-J-A-Zhou-X-W--Pd-Ag-H-Hybrid", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Atomistic potentials for palladium-silver hydrides", 
+                "author": [
+                    {
+                        "givenname": "L.M.", 
+                        "surname": "Hale"
+                    }, 
+                    {
+                        "givenname": "B.M.", 
+                        "surname": "Wong"
+                    }, 
+                    {
+                        "givenname": "J.A.", 
+                        "surname": "Zimmerman"
+                    }, 
+                    {
+                        "givenname": "X.W.", 
+                        "surname": "Zhou"
+                    }
+                ], 
+                "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                "publication-date": {
+                    "year": "2013"
+                }, 
+                "volume": "21", 
+                "issue": "4", 
+                "abstract": "New embedded-atom method potentials for the ternary palladium\u2013silver\u2013hydrogen system are developed by extending a previously developed palladium\u2013hydrogen potential. The ternary potentials accurately capture the heat of mixing and structural properties associated with solid solution alloys of palladium\u2013silver. Stable hydrides are produced with properties that smoothly transition across the compositions. Additions of silver to palladium are predicted to alter the properties of the hydrides by decreasing the miscibility gap and increasing the likelihood of hydrogen atoms occupying tetrahedral interstitial sites over octahedral interstitial sites.", 
+                "pages": "045005", 
+                "DOI": "10.1088/0965-0393/21/4/045005"
+            }, 
+            "notes": {
+                "text": "This listing is for the potential with the hybrid-style Pd-Ag interaction as described in the article."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "d4dfb98d-87dc-4647-8ab6-87378120456f", 
+                "id": "2013--Hale-L-M--Pd-Ag-H-Hybrid--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2014-04-09", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was supplied by Jonathan Zimmerman (Sandia National Laboratories) and posted with his approval on 9 April 2014. Dr. Zimmerman noted that this file is the version that used the Hybrid style for the Pd-Ag interaction. This file has also been modified to include the citation in the header information and include '.alloy' in the file name for clarity."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Hale-L-M-Wong-B-M-Zimmerman-J-A-Zhou-X-W--Pd-Ag-H-Hybrid/1/PdAgH_HybridPd3Ag.eam.alloy", 
+                        "link-text": "PdAgH_HybridPd3Ag.eam.alloy"
+                    }
+                }
+            }, 
+            {
+                "key": "13e18d4a-6c8a-4ba2-8400-d1f3780e59cc", 
+                "id": "MO_104806802344_000", 
+                "status": "active", 
+                "date": "2014-04-09", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Link to the KIM-compliant version of the Hybrid-based interatomic potential. <a href=\"https://openkim.org/projects-using-kim/\" class=\"external\">https://openkim.org/projects-using-kim/</a> provides links to instructions for the use of KIM-compliant versions of these potentials.</a> Links to the KIM-related content were provided by Prof. Ryan Elliott (U. Minnesota, KIM Editor)."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://openkim.org/cite/MO_104806802344_000", 
+                        "link-text": "https://openkim.org/cite/MO_104806802344_000"
+                    }
+                }
+            }, 
+            {
+                "key": "e434b2ff-b3ff-4a53-ac6d-5d5e138935ca", 
+                "id": "MO_104806802344", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2013--Hale-L-M--Pd-Ag-H-Hybrid--LAMMPS--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_HaleWongZimmerman_2008PairHybrid_PdAgH__MO_104806802344_005", 
+                    "link-text": "EAM_Dynamo_HaleWongZimmerman_2008PairHybrid_PdAgH__MO_104806802344_005"
+                }
+            }
+        ], 
+        "element": [
+            "Pd", 
+            "Ag", 
+            "H"
+        ]
+    }
+}

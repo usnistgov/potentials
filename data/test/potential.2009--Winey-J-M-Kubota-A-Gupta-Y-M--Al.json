@@ -1,0 +1,97 @@
+{
+    "interatomic-potential": {
+        "key": "880e9ae4-d244-4333-8d8a-924700c90084", 
+        "id": "2009--Winey-J-M-Kubota-A-Gupta-Y-M--Al", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": [
+                {
+                    "document-type": "journal", 
+                    "title": "A thermodynamic approach to determine accurate potentials for molecular dynamics simulations: thermoelastic response of aluminum", 
+                    "author": [
+                        {
+                            "givenname": "J.M.", 
+                            "surname": "Winey"
+                        }, 
+                        {
+                            "givenname": "A.", 
+                            "surname": "Kubota"
+                        }, 
+                        {
+                            "givenname": "Y.M.", 
+                            "surname": "Gupta"
+                        }
+                    ], 
+                    "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                    "publication-date": {
+                        "year": "2009"
+                    }, 
+                    "volume": "17", 
+                    "issue": "5", 
+                    "abstract": "An accurate description of the thermoelastic response of solids is central to classical simulations of compression- and deformation-induced condensed matter phenomena. To achieve the correct thermoelastic description in classical simulations, a new approach is presented for determining interatomic potentials. In this two-step approach, values of atomic volume and the second- and third-order elastic constants measured at room temperature are extrapolated to T = 0 K using classical thermo-mechanical relations that are thermodynamically consistent. Next, the interatomic potentials are fitted to these T = 0 K pseudo-values. This two-step approach avoids the low-temperature quantum regime, providing consistency with the assumptions of classical simulations and enabling the correct thermoelastic response to be recovered in simulations at room temperature and higher. As an example of our approach, an EAM potential was developed for aluminum, providing significantly better agreement with thermoelastic data compared with previous EAM potentials. The approach presented here is quite general and can be used for other potential types as well, the key restriction being the inapplicability of classical atomistic simulations when quantum effects are important.", 
+                    "pages": "055004", 
+                    "DOI": "10.1088/0965-0393/17/5/055004"
+                }, 
+                {
+                    "document-type": "journal", 
+                    "title": "Thermodynamic approach to determine accurate potentials for molecular dynamics simulations: thermoelastic response of aluminum", 
+                    "author": [
+                        {
+                            "givenname": "J.M.", 
+                            "surname": "Winey"
+                        }, 
+                        {
+                            "givenname": "A.", 
+                            "surname": "Kubota"
+                        }, 
+                        {
+                            "givenname": "Y.M.", 
+                            "surname": "Gupta"
+                        }
+                    ], 
+                    "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                    "publication-date": {
+                        "year": "2010"
+                    }, 
+                    "volume": "18", 
+                    "issue": "2", 
+                    "pages": "029801", 
+                    "DOI": "10.1088/0965-0393/18/2/029801"
+                }
+            ]
+        }, 
+        "implementation": [
+            {
+                "key": "76bc6647-bfbe-401b-a327-b0c0e770098a", 
+                "id": "2010--Winey-J-M--Al--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2011-03-16", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was sent by Jonathan Zimmerman (Sandia National Laboratory) and approved for distribution by Michael Winey (Washington State University). It was posted on 16 March 2011."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Winey-J-M-Kubota-A-Gupta-Y-M--Al/1/Al_wkg_MSMSE_2009.set", 
+                        "link-text": "Al_wkg_MSMSE_2009.set"
+                    }
+                }
+            }, 
+            {
+                "key": "e10f87a2-0a0b-4808-96c9-4b8083934a26", 
+                "id": "MO_149316865608", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2010--Winey-J-M--Al--LAMMPS--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_WineyKubotaGupta_2010_Al__MO_149316865608_005", 
+                    "link-text": "EAM_Dynamo_WineyKubotaGupta_2010_Al__MO_149316865608_005"
+                }
+            }
+        ], 
+        "element": "Al"
+    }
+}

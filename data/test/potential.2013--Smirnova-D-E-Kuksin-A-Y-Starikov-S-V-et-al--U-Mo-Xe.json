@@ -1,0 +1,89 @@
+{
+    "interatomic-potential": {
+        "key": "fc5a9a34-b8be-4935-aa63-aa02a15d93b8", 
+        "id": "2013--Smirnova-D-E-Kuksin-A-Y-Starikov-S-V-et-al--U-Mo-Xe", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "A ternary EAM interatomic potential for U-Mo alloys with xenon", 
+                "author": [
+                    {
+                        "givenname": "D.E.", 
+                        "surname": "Smirnova"
+                    }, 
+                    {
+                        "givenname": "A.Y.", 
+                        "surname": "Kuksin"
+                    }, 
+                    {
+                        "givenname": "S.V.", 
+                        "surname": "Starikov"
+                    }, 
+                    {
+                        "givenname": "V.V.", 
+                        "surname": "Stegailov"
+                    }, 
+                    {
+                        "givenname": "Z.", 
+                        "surname": "Insepov"
+                    }, 
+                    {
+                        "givenname": "J.", 
+                        "surname": "Rest"
+                    }, 
+                    {
+                        "givenname": "A.M.", 
+                        "surname": "Yacout"
+                    }
+                ], 
+                "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                "publication-date": {
+                    "year": "2013"
+                }, 
+                "volume": "21", 
+                "issue": "3", 
+                "abstract": "A new interatomic potential for a uranium\u2013molybdenum system with xenon is developed in the framework of an embedded atom model using a force-matching technique and a dataset of ab initio atomic forces. The verification of the potential proves that it is suitable for the investigation of various compounds existing in the system as well as for simulation of pure elements: U, Mo and Xe. Computed lattice constants, thermal expansion coefficients, elastic properties and melting temperatures of U, Mo and Xe are consistent with the experimentally measured values. The energies of the point defect formation in pure U and Mo are proved to be comparable to the density-functional theory calculations. We compare this new U\u2013Mo\u2013Xe potential with the previously developed U and Mo\u2013Xe potentials. A comparative study between the different potential functions is provided. The key purpose of the new model is to study the atomistic processes of defect evolution taking place in the U\u2013Mo nuclear fuel. Here we use the potential to simulate bcc alloys containing 10 wt% of intermetallic Mo and U2Mo.", 
+                "pages": "035011", 
+                "DOI": "10.1088/0965-0393/21/3/035011"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "c83296e8-ef62-439e-bd8b-f575625f80a3", 
+                "id": "2013--Smirnova-D-E--U-Mo-Xe--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2013-03-14", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was sent by Daria Smirnova (Joint Institute for High Temperatures, Russian Academy of Sciences) and posted on 14 March 2013 with her permission."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Smirnova-D-E-Kuksin-A-Y-Starikov-S-V-et-al--U-Mo-Xe/1/U_Mo_Xe.2013.eam.alloy", 
+                        "link-text": "U_Mo_Xe.2013.eam.alloy"
+                    }
+                }
+            }, 
+            {
+                "key": "4083c6f9-dce9-4b8f-9d7a-23aeb341eb5b", 
+                "id": "MO_679329885632", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2013--Smirnova-D-E--U-Mo-Xe--LAMMPS--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_SmirnovaKuskinStarikov_2013_UMoXe__MO_679329885632_005", 
+                    "link-text": "EAM_Dynamo_SmirnovaKuskinStarikov_2013_UMoXe__MO_679329885632_005"
+                }
+            }
+        ], 
+        "element": [
+            "U", 
+            "Mo", 
+            "Xe"
+        ]
+    }
+}

@@ -1,0 +1,74 @@
+{
+    "interatomic-potential": {
+        "key": "7d6b30cb-0120-4a4d-906e-285b4d38a379", 
+        "id": "2009--Guthikonda-V-S-Elliott-R-S--Au-Cd", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": [
+                {
+                    "document-type": "journal", 
+                    "title": "An effective interaction potential model for the shape memory alloy AuCd", 
+                    "author": [
+                        {
+                            "givenname": "V.S.", 
+                            "surname": "Guthikonda"
+                        }, 
+                        {
+                            "givenname": "R.S.", 
+                            "surname": "Elliott"
+                        }
+                    ], 
+                    "publication-name": "Continuum Mechanics and Thermodynamics", 
+                    "publication-date": {
+                        "year": "2009"
+                    }, 
+                    "volume": "21", 
+                    "issue": "4", 
+                    "abstract": "The unusual properties of shape memory alloys (SMAs) result from a lattice level martensitic transformation (MT) corresponding to an instability of the SMAs crystal structure. Currently, there exists a shortage of material models that can capture the details of lattice level MTs occurring in SMAs and that can be used for efficient computational investigations of the interaction between MTs and larger-scale features found in typical materials. These larger-scale features could include precipitates, dislocation networks, voids, and even cracks. In this article, one such model is developed for the SMA AuCd. The model is based on effective interaction potentials (EIPs). These are atomic interaction potentials that are explicit functions of temperature. In particular, the Morse pair potential is used and its adjustable coefficients are taken to be temperature dependent. An extensive exploration of the Morse pair potential is performed to identify an appropriate functional form for the temperature dependence of the potential parameters. A fitting procedure is developed for the EIPs that matches, at suitable temperatures, the stress-free equilibrium lattice parameters, instantaneous bulk moduli, cohesive energies, thermal expansion coefficients, and heat capacities of FCC Au, HCP Cd, and the B2 cubic austenite phase of the Au-47.5at%Cd alloy. The resulting model is explored using branch-following and bifurcation techniques. A hysteretic temperature-induced MT between the B2 cubic and B19 orthorhombic crystal structures is predicted. This is the behavior that is observed in the real material. In addition to reproducing the important properties mentioned above, the model predicts, to reasonable accuracy, the transformation strain tensor and captures the latent heat and thermal hysteresis to within an order of magnitude.", 
+                    "pages": "269-295", 
+                    "DOI": "10.1007/s00161-009-0109-1"
+                }, 
+                {
+                    "document-type": "journal", 
+                    "title": "Erratum to: An effective interaction potential model for the shape memory alloy AuCd", 
+                    "author": [
+                        {
+                            "givenname": "V.S.", 
+                            "surname": "Guthikonda"
+                        }, 
+                        {
+                            "givenname": "R.S.", 
+                            "surname": "Elliott"
+                        }
+                    ], 
+                    "publication-name": "Continuum Mechanics and Thermodynamics", 
+                    "publication-date": {
+                        "year": "2010"
+                    }, 
+                    "volume": "23", 
+                    "issue": "2", 
+                    "pages": "177-183", 
+                    "DOI": "10.1007/s00161-010-0169-2"
+                }
+            ]
+        }, 
+        "implementation": {
+            "key": "b1559086-44f2-4434-bf94-ff580340b3cc", 
+            "id": "MO_703849496106", 
+            "status": "active", 
+            "date": "2019-08-08", 
+            "type": "OpenKIM", 
+            "notes": {
+                "text": "Taken from https://openkim.org."
+            }, 
+            "web-link": {
+                "URL": "https://openkim.org/id/Morse_EIP_GuthikondaElliott_2011_AuCd__MO_703849496106_002", 
+                "link-text": "Morse_EIP_GuthikondaElliott_2011_AuCd__MO_703849496106_002"
+            }
+        }, 
+        "element": [
+            "Au", 
+            "Cd"
+        ]
+    }
+}

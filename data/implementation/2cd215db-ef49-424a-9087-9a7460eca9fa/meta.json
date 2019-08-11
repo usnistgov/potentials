@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2012--Smirnova-D-E--U--LAMMPS--ipr1."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_SmirnovaStarikovStegailov_2012_U__MO_649864794085_000", 
+            "link-text": "EAM_Dynamo_SmirnovaStarikovStegailov_2012_U__MO_649864794085_000"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_SmirnovaStarikovStegailov_2012_U__MO_649864794085_000", 
-        "link-text": "EAM_Dynamo_SmirnovaStarikovStegailov_2012_U__MO_649864794085_000"
     }
 }

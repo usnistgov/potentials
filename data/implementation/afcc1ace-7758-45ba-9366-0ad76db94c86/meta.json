@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2008--Zhou-X-W--Pd-H--LAMMPS--ipr1."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_ZhouZimmermanWong_2008_PdH__MO_114797992931_000", 
+            "link-text": "EAM_Dynamo_ZhouZimmermanWong_2008_PdH__MO_114797992931_000"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_ZhouZimmermanWong_2008_PdH__MO_114797992931_000", 
-        "link-text": "EAM_Dynamo_ZhouZimmermanWong_2008_PdH__MO_114797992931_000"
     }
 }

@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/Pair_Morse_Modified_MacDonaldMacDonald_Cu__MO_034823476734_000", 
+            "link-text": "Pair_Morse_Modified_MacDonaldMacDonald_Cu__MO_034823476734_000"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/Pair_Morse_Modified_MacDonaldMacDonald_Cu__MO_034823476734_000", 
-        "link-text": "Pair_Morse_Modified_MacDonaldMacDonald_Cu__MO_034823476734_000"
     }
 }

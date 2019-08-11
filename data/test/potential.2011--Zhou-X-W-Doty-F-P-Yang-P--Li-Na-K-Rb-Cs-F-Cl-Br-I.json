@@ -1,0 +1,63 @@
+{
+    "interatomic-potential": {
+        "key": "49f401da-b208-401f-a629-0ed1cababd20", 
+        "id": "2011--Zhou-X-W-Doty-F-P-Yang-P--Li-Na-K-Rb-Cs-F-Cl-Br-I", 
+        "record-version": "2018-11-01", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Atomistic simulation study of atomic size effects on B1 (NaCl), B2 (CsCl), and B3 (zinc-blende) crystal stability of binary ionic compounds", 
+                "author": [
+                    {
+                        "givenname": "X.W.", 
+                        "surname": "Zhou"
+                    }, 
+                    {
+                        "givenname": "F.P.", 
+                        "surname": "Doty"
+                    }, 
+                    {
+                        "givenname": "P.", 
+                        "surname": "Yang"
+                    }
+                ], 
+                "publication-name": "Computational Materials Science", 
+                "publication-date": {
+                    "year": "2011"
+                }, 
+                "volume": "50", 
+                "issue": "8", 
+                "abstract": "Ionic compounds exhibit a variety of crystal structures that can critically affect their applications. Traditionally, relative sizes of cations and anions have been used to explain coordination of ions within the crystals. Such approaches assume atoms to be hard spheres and they cannot explain the observed structures of some crystals. Here we develop an atomistic method and use it to explore the structure-determining factors beyond the limitations of the hard sphere approach. Our approach is based upon a calibrated interatomic potential database that uses independent intrinsic bond lengths to measure atomic sizes. By carrying out extensive atomistic simulations, striking relationships among intrinsic bond lengths are discovered to determine the B1 (NaCl), B2 (CsCl), and B3 (zinc-blende) structure of binary ionic compounds.", 
+                "pages": "2470-2481", 
+                "DOI": "10.1016/j.commatsci.2011.03.028"
+            }
+        }, 
+        "implementation": {
+            "key": "61b4794b-9cff-41e0-84cf-f9437f365648", 
+            "id": "2011--Zhou-X-W--Li-Na-K-Rb-Cs-F-Cl-Br-I--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-11-01", 
+            "type": "LAMMPS pair_style eim", 
+            "notes": {
+                "text": "This file was taken from the August 22, 2018 LAMMPS distribution. It is listed as being contributed by Xiaowang Zhou (Sandia)"
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2011--Zhou-X-W-Doty-F-P-Yang-P--Li-Na-K-Rb-Cs-F-Cl-Br-I/1/ffield.eim", 
+                    "link-text": "ffield.eim"
+                }
+            }
+        }, 
+        "element": [
+            "Li", 
+            "Na", 
+            "K", 
+            "Rb", 
+            "Cs", 
+            "F", 
+            "Cl", 
+            "Br", 
+            "I"
+        ]
+    }
+}

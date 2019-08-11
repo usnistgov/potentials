@@ -1,0 +1,59 @@
+{
+    "interatomic-potential": {
+        "key": "452741a4-a317-4c18-b781-1262b43b65c5", 
+        "id": "2015--Zhou-X-W-Ward-D-K-Foster-M-Zimmerman-J-A--Cu-H", 
+        "record-version": "2018-10-12", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "An analytical bond-order potential for the copper\u2013hydrogen binary system", 
+                "author": [
+                    {
+                        "givenname": "X.W.", 
+                        "surname": "Zhou"
+                    }, 
+                    {
+                        "givenname": "D.K.", 
+                        "surname": "Ward"
+                    }, 
+                    {
+                        "givenname": "M.", 
+                        "surname": "Foster"
+                    }, 
+                    {
+                        "givenname": "J.A.", 
+                        "surname": "Zimmerman"
+                    }
+                ], 
+                "publication-name": "Journal of Materials Science", 
+                "publication-date": {
+                    "year": "2015"
+                }, 
+                "volume": "50", 
+                "issue": "7", 
+                "pages": "2859-2875", 
+                "DOI": "10.1007/s10853-015-8848-9"
+            }
+        }, 
+        "implementation": {
+            "key": "95360419-23ed-488a-857a-fe8c71f2758e", 
+            "id": "2015--Zhou-X-W--Cu-H--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-10-12", 
+            "type": "LAMMPS pair_style bop", 
+            "notes": {
+                "text": "This file was taken from the August 22, 2018 LAMMPS distribution and listed as having been created by X.W. Zhou (Sandia)"
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Zhou-X-W-Ward-D-K-Foster-M-Zimmerman-J-A--Cu-H/1/CuH.bop.table", 
+                    "link-text": "CuH.bop.table"
+                }
+            }
+        }, 
+        "element": [
+            "Cu", 
+            "H"
+        ]
+    }
+}

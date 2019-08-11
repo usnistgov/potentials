@@ -1,0 +1,66 @@
+{
+    "interatomic-potential": {
+        "key": "52f709be-824b-4a23-ad87-955b95db4792", 
+        "id": "2017--Wen-M-Shirodkar-S-N-Plechac-P-et-al--Mo-S", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "A force-matching Stillinger-Weber potential for MoS2: Parameterization and Fisher information theory based sensitivity analysis", 
+                "author": [
+                    {
+                        "givenname": "M.", 
+                        "surname": "Wen"
+                    }, 
+                    {
+                        "givenname": "S.N.", 
+                        "surname": "Shirodkar"
+                    }, 
+                    {
+                        "givenname": "P.", 
+                        "surname": "Plech\u00e1\u010d"
+                    }, 
+                    {
+                        "givenname": "E.", 
+                        "surname": "Kaxiras"
+                    }, 
+                    {
+                        "givenname": "R.S.", 
+                        "surname": "Elliott"
+                    }, 
+                    {
+                        "givenname": "E.B.", 
+                        "surname": "Tadmor"
+                    }
+                ], 
+                "publication-name": "Journal of Applied Physics", 
+                "publication-date": {
+                    "year": "2017"
+                }, 
+                "volume": "122", 
+                "issue": "24", 
+                "abstract": "Two-dimensional molybdenum disulfide (MoS<sub>2</sub>) is a promising material for the next generation of switchable transistors and photodetectors. In order to perform large-scale molecular simulations of the mechanical and thermal behavior of MoS<sub>2</sub>-based devices, an accurate interatomic potential is required. To this end, we have developed a Stillinger-Weber potential for monolayer MoS<sub>2</sub>. The potential parameters are optimized to reproduce the geometry (bond lengths and bond angles) of MoS<sub>2</sub> in its equilibrium state and to match as closely as possible the forces acting on the atoms along a dynamical trajectory obtained from <i>ab initio</i> molecular dynamics. Verification calculations indicate that the new potential accurately predicts important material properties including the strain dependence of the cohesive energy, the elastic constants, and the linear thermal expansion coefficient. The uncertainty in the potential parameters is determined using a Fisher information theory analysis. It is found that the parameters are fully identified, and none are redundant. In addition, the Fisher information matrix provides uncertainty bounds for predictions of the potential for new properties. As an example, bounds on the average vibrational thickness of a MoS<sub>2</sub> monolayer at finite temperature are computed and found to be consistent with the results from a molecular dynamics simulation. The new potential is available through the OpenKIM interatomic potential repository at https://openkim.org/cite/MO_201919462778_000.", 
+                "pages": "244301", 
+                "DOI": "10.1063/1.5007842"
+            }
+        }, 
+        "implementation": {
+            "key": "93557022-3e5d-4499-ab93-62868c34d0ba", 
+            "id": "MO_201919462778", 
+            "status": "active", 
+            "date": "2019-08-08", 
+            "type": "OpenKIM", 
+            "notes": {
+                "text": "Taken from https://openkim.org."
+            }, 
+            "web-link": {
+                "URL": "https://openkim.org/id/SW_MX2_WenShirodkarPlechac_2017_MoS__MO_201919462778_001", 
+                "link-text": "SW_MX2_WenShirodkarPlechac_2017_MoS__MO_201919462778_001"
+            }
+        }, 
+        "element": [
+            "Mo", 
+            "S"
+        ]
+    }
+}

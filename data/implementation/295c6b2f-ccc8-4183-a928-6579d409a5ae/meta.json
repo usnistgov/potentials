@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2008--Mendelev-M-I--Al--LAMMPS--ipr1."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_MendelevKramerBecker_2008_Al__MO_106969701023_005", 
+            "link-text": "EAM_Dynamo_MendelevKramerBecker_2008_Al__MO_106969701023_005"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_MendelevKramerBecker_2008_Al__MO_106969701023_005", 
-        "link-text": "EAM_Dynamo_MendelevKramerBecker_2008_Al__MO_106969701023_005"
     }
 }

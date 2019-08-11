@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_VailheFarkas_1997_CoAl__MO_284963179498_005", 
+            "link-text": "EAM_Dynamo_VailheFarkas_1997_CoAl__MO_284963179498_005"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_VailheFarkas_1997_CoAl__MO_284963179498_005", 
-        "link-text": "EAM_Dynamo_VailheFarkas_1997_CoAl__MO_284963179498_005"
     }
 }

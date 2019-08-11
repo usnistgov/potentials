@@ -3,7 +3,10 @@
         "key": "ef908258-25d1-439e-8223-3bf4df924ed0", 
         "id": "2017--Purja-Pun-G-P--Au", 
         "record-version": "2018-08-15", 
-        "description": {}, 
+        "description": {
+            "developers": "G. P. Purja Pun", 
+            "year": "2017"
+        }, 
         "element": "Au"
     }
 }

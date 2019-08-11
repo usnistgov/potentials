@@ -1,0 +1,66 @@
+{
+    "interatomic-potential": {
+        "key": "521acab0-00b4-4534-884b-218db3cb92ff", 
+        "id": "2019--Byggmastar-J-Nagel-M-Albe-K-et-al--Fe-O", 
+        "record-version": "2019-03-22", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Analytical interatomic bond-order potential for simulations of oxygen defects in iron", 
+                "author": [
+                    {
+                        "givenname": "J.", 
+                        "surname": "Byggm\u00e4star"
+                    }, 
+                    {
+                        "givenname": "M.", 
+                        "surname": "Nagel"
+                    }, 
+                    {
+                        "givenname": "K.", 
+                        "surname": "Albe"
+                    }, 
+                    {
+                        "givenname": "K.", 
+                        "surname": "Henriksson"
+                    }, 
+                    {
+                        "givenname": "K.", 
+                        "surname": "Nordlund"
+                    }
+                ], 
+                "publication-name": "Journal of Physics: Condensed Matter", 
+                "publication-date": {
+                    "year": "2019"
+                }, 
+                "volume": "31", 
+                "abstract": "We present an analytical bond-order potential for the Fe\u2013O system, capable of reproducing the basic properties of w\u00fcstite as well as the energetics of oxygen impurities in \u03b1-iron. The potential predicts binding energies of various small oxygen-vacancy clusters in \u03b1-iron in good agreement with density functional theory results, and is therefore suitable for simulations of oxygen-based defects in iron. We apply the potential in simulations of the stability and structure of Fe/FeO interfaces and FeO precipitates in iron, and observe that the shape of FeO precipitates can change due to formation of well-defined Fe/FeO interfaces. The interface with crystalline Fe also ensures that the precipitates never become fully amorphous, no matter how small they are.", 
+                "pages": "215401", 
+                "DOI": "10.1088/1361-648x/ab0931"
+            }, 
+            "notes": {
+                "text": "The potential is not suitable for simulations of the Fe2O3 and Fe3O4 phases."
+            }
+        }, 
+        "implementation": {
+            "key": "957b3de5-bc9d-413f-a117-4a5f929431e8", 
+            "id": "2019--Byggmastar-J--Fe-O--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2019-03-22", 
+            "type": "LAMMPS pair_style tersoff/zbl", 
+            "notes": {
+                "text": "This file was provided by Jesper Byggm\u00e4star (University of Helsinki) on 20 March 2019 and posted with his permission."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2019--Byggmastar-J-Nagel-M-Albe-K-et-al--Fe-O/1/Fe-O.tersoff.zbl", 
+                    "link-text": "Fe-O.tersoff.zbl"
+                }
+            }
+        }, 
+        "element": [
+            "Fe", 
+            "O"
+        ]
+    }
+}

@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2013--Zhou-X-W--Zn-Cd-Hg-S-Se-Te--LAMMPS--ipr1."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/SW_ZhouWardMartin_2013_CdTeZnSeHgS__MO_503261197030_002", 
+            "link-text": "SW_ZhouWardMartin_2013_CdTeZnSeHgS__MO_503261197030_002"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/SW_ZhouWardMartin_2013_CdTeZnSeHgS__MO_503261197030_002", 
-        "link-text": "SW_ZhouWardMartin_2013_CdTeZnSeHgS__MO_503261197030_002"
     }
 }

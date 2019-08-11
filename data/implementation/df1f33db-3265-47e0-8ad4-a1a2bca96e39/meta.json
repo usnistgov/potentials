@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EDIP_JustoBazantKaxiras_1998_Si__MO_958932894036_002", 
+            "link-text": "EDIP_JustoBazantKaxiras_1998_Si__MO_958932894036_002"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EDIP_JustoBazantKaxiras_1998_Si__MO_958932894036_002", 
-        "link-text": "EDIP_JustoBazantKaxiras_1998_Si__MO_958932894036_002"
     }
 }

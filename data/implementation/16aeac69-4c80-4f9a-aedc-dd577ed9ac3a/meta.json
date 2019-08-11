@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is the \"high cutoff\" variation."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/LJ_Shifted_Bernardes_1958HighCutoff_Xe__MO_796748253903_003", 
+            "link-text": "LJ_Shifted_Bernardes_1958HighCutoff_Xe__MO_796748253903_003"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/LJ_Shifted_Bernardes_1958HighCutoff_Xe__MO_796748253903_003", 
-        "link-text": "LJ_Shifted_Bernardes_1958HighCutoff_Xe__MO_796748253903_003"
     }
 }

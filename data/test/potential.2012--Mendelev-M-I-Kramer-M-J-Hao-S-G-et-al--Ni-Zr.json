@@ -1,0 +1,83 @@
+{
+    "interatomic-potential": {
+        "key": "2d5b5a05-a57f-4986-95ea-c5940c51d4d7", 
+        "id": "2012--Mendelev-M-I-Kramer-M-J-Hao-S-G-et-al--Ni-Zr", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Development of interatomic potentials appropriate for simulation of liquid and glass properties of NiZr2 alloy", 
+                "author": [
+                    {
+                        "givenname": "M.I.", 
+                        "surname": "Mendelev"
+                    }, 
+                    {
+                        "givenname": "M.J.", 
+                        "surname": "Kramer"
+                    }, 
+                    {
+                        "givenname": "S.G.", 
+                        "surname": "Hao"
+                    }, 
+                    {
+                        "givenname": "K.M.", 
+                        "surname": "Ho"
+                    }, 
+                    {
+                        "givenname": "C.Z.", 
+                        "surname": "Wang"
+                    }
+                ], 
+                "publication-name": "Philosophical Magazine", 
+                "publication-date": {
+                    "year": "2012"
+                }, 
+                "volume": "92", 
+                "issue": "35", 
+                "abstract": "A new interatomic potential for the Ni\u2013Zr system is presented. This potential was developed specifically to match experimental scattering data from Ni, Zr and NiZr2 liquids. Both ab initio and published thermodynamic data were used to optimise the potential to study the liquid and amorphous structure of the NiZr2 alloy. This potential has the C16 phase, being more stable than C11b phase in the NiZr2 alloy, consistent with experiments. The potential leads to the correct glass structure in the molecular dynamics simulation and, therefore, can be used to study the liquid\u2013glass transformation in the NiZr2 alloy.", 
+                "pages": "4454-4469", 
+                "DOI": "10.1080/14786435.2012.712220"
+            }, 
+            "notes": {
+                "text": "Mikhail Mendelev (Ames Laboratory) noted that the potential is designed to simulate liquid/glass properties and solidification in the NiZr2 alloy. The potential utilizes the following interactions from other potentials: Ni = <a href=\"../../entry/2012--Mendelev-M-I-Kramer-M-J-Hao-S-G-et-al--Ni\">2012--Mendelev-M-I-Kramer-M-J-Hao-S-G-et-al--Ni</a> and Zr = <a href=\"../../entry/2007--Mendelev-M-I-Ackland-G-J--Zr-2\">2007--Mendelev-M-I-Ackland-G-J--Zr-2</a>. 31 May 2013: The reference was updated to reflect the publication status."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "1beb611f-e2ea-4404-961d-0dbfe58ebaac", 
+                "id": "2012--Mendelev-M-I--Ni-Zr--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2010-10-26", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "This file was provided by Mikhail Mendelev (Ames Laboratory) and posted with his permission on 26 Oct. 2010. 31 May 2013: The parameter file was renamed from Ni-Zr_Mendelev_2010.eam.fs to Ni-Zr_Mendelev_2012.eam.fs and the first line in the file's header was updated to reflect the publication status. Mikhail Mendelev approved this change."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2012--Mendelev-M-I-Kramer-M-J-Hao-S-G-et-al--Ni-Zr/1/Ni-Zr_Mendelev_2012.eam.fs", 
+                        "link-text": "Ni-Zr_Mendelev_2012.eam.fs"
+                    }
+                }
+            }, 
+            {
+                "key": "cd2b53ef-290d-4d04-8220-d595095de919", 
+                "id": "MO_149104665840", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2012--Mendelev-M-I--Ni-Zr--LAMMPS--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_MendelevKramerHao_2012_NiZr__MO_149104665840_005", 
+                    "link-text": "EAM_Dynamo_MendelevKramerHao_2012_NiZr__MO_149104665840_005"
+                }
+            }
+        ], 
+        "element": [
+            "Ni", 
+            "Zr"
+        ]
+    }
+}

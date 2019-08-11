@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2016--Zhang-Y--Ni-Nb--LAMMPS--ipr1."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_ZhangAshcraftMendelev_2016_NiNb__MO_047308317761_000", 
+            "link-text": "EAM_Dynamo_ZhangAshcraftMendelev_2016_NiNb__MO_047308317761_000"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_ZhangAshcraftMendelev_2016_NiNb__MO_047308317761_000", 
-        "link-text": "EAM_Dynamo_ZhangAshcraftMendelev_2016_NiNb__MO_047308317761_000"
     }
 }

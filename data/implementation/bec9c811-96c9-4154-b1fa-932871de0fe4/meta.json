@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2003--Li-Y-H--Ta--LAMMPS--ipr1."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_LiSiegelAdams_2003_Ta__MO_103054252769_005", 
+            "link-text": "EAM_Dynamo_LiSiegelAdams_2003_Ta__MO_103054252769_005"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_LiSiegelAdams_2003_Ta__MO_103054252769_005", 
-        "link-text": "EAM_Dynamo_LiSiegelAdams_2003_Ta__MO_103054252769_005"
     }
 }

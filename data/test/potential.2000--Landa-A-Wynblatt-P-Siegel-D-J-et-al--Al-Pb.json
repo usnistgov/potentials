@@ -1,0 +1,100 @@
+{
+    "interatomic-potential": {
+        "key": "df6401e2-2541-484c-bf5d-1b0ff4b1ac39", 
+        "id": "2000--Landa-A-Wynblatt-P-Siegel-D-J-et-al--Al-Pb", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Development of glue-type potentials for the Al-Pb system: phase diagram calculation", 
+                "author": [
+                    {
+                        "givenname": "A.", 
+                        "surname": "Landa"
+                    }, 
+                    {
+                        "givenname": "P.", 
+                        "surname": "Wynblatt"
+                    }, 
+                    {
+                        "givenname": "D.J.", 
+                        "surname": "Siegel"
+                    }, 
+                    {
+                        "givenname": "J.B.", 
+                        "surname": "Adams"
+                    }, 
+                    {
+                        "givenname": "O.N.", 
+                        "surname": "Mryasov"
+                    }, 
+                    {
+                        "givenname": "X.-Y.", 
+                        "surname": "Liu"
+                    }
+                ], 
+                "publication-name": "Acta Materialia", 
+                "publication-date": {
+                    "year": "2000"
+                }, 
+                "volume": "48", 
+                "issue": "8", 
+                "abstract": "Empirical many-body potentials of the glue-type have been constructed for the Al\u2013Pb system using the \"force matching\" method. The potentials are fitted to experimental data, physical quantities derived from ab initio linear muffin-tin orbitals calculations and a massive quantum mechanical database of atomic forces generated using ultrasoft pseudopotentials in conjunction with ab initio molecular statics simulations. Monte Carlo simulations using these potentials have been employed to compute an Al\u2013Pb phase diagram which is in fair agreement with experimental data.", 
+                "pages": "1753-1761", 
+                "DOI": "10.1016/s1359-6454(00)00002-1"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "536398a4-c74f-473d-b738-968bf97519f0", 
+                "id": "2000--Landa-A--Al-Pb--table--ipr1", 
+                "status": "active", 
+                "date": "2010-03-25", 
+                "type": "EAM setfl", 
+                "notes": {
+                    "text": "alpb.set was sent by Alexander Landa (Lawrence Livermore National Laboratory) on 25 Mar. 2010 and posted with his permission and that of Don Siegel (University of Michigan)."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2000--Landa-A-Wynblatt-P-Siegel-D-J-et-al--Al-Pb/1/alpb.set", 
+                        "link-text": "alpb.set"
+                    }
+                }
+            }, 
+            {
+                "key": "6aa30d73-b21a-4e1d-8126-cb5901ca4716", 
+                "id": "2000--Landa-A--Al-Pb--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2010-03-30", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "alpb-setfl.eam.alloy is a version of the same potential which has been formatted for use in LAMMPS (\"D\" was replaced by \"E\" and \"Al Pb\" was added on line 4). It successfully ran with the 20Feb10 version of LAMMPS."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2000--Landa-A-Wynblatt-P-Siegel-D-J-et-al--Al-Pb/2/alpb-setfl.eam.alloy", 
+                        "link-text": "alpb-setfl.eam.alloy"
+                    }
+                }
+            }, 
+            {
+                "key": "55748421-c25c-43a8-9d26-343028a64a6a", 
+                "id": "MO_699137396381", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2000--Landa-A--Al-Pb--LAMMPS--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_LandaWynblattSiegel_2000_AlPb__MO_699137396381_005", 
+                    "link-text": "EAM_Dynamo_LandaWynblattSiegel_2000_AlPb__MO_699137396381_005"
+                }
+            }
+        ], 
+        "element": [
+            "Al", 
+            "Pb"
+        ]
+    }
+}

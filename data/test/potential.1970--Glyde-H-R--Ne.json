@@ -1,0 +1,41 @@
+{
+    "interatomic-potential": {
+        "key": "71aee357-27ef-4b79-af47-046b3d8119c8", 
+        "id": "1970--Glyde-H-R--Ne", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Anharmonicity and potentials for the solidified inert gases", 
+                "author": {
+                    "givenname": "H.R.", 
+                    "surname": "Glyde"
+                }, 
+                "publication-name": "Journal of Physics C: Solid State Physics", 
+                "publication-date": {
+                    "year": "1970"
+                }, 
+                "volume": "3", 
+                "issue": "4", 
+                "abstract": "The parameters for a representative two-body Morse potential are determined for the solidified inert gases by fitting to 0 degrees K solid data. This is done using first the harmonic approximation and subsequently the first-order self-consistent harmonic approximation, to describe the solid at 0 degrees K. On comparing the two cases, the effect on the potential of neglecting anharmonicity is found to be insignificant for xenon and krypton, small for argon but most important for neon. For neon, dispersion curves are calculated using the potentials found in the two cases and other Lennard-Jones potentials determined using various solid models to fit the 0 degrees K properties. The effect of the potential changes on the dispersion curve is marked.", 
+                "pages": "810-819", 
+                "DOI": "10.1088/0022-3719/3/4/009"
+            }
+        }, 
+        "implementation": {
+            "key": "455d678e-c9fb-41eb-87fc-85b62e5b7662", 
+            "id": "MO_169434419764", 
+            "status": "active", 
+            "date": "2019-08-08", 
+            "type": "OpenKIM", 
+            "notes": {
+                "text": "Taken from https://openkim.org."
+            }, 
+            "web-link": {
+                "URL": "https://openkim.org/id/Morse_Shifted_Glyde_1970_Ne__MO_169434419764_002", 
+                "link-text": "Morse_Shifted_Glyde_1970_Ne__MO_169434419764_002"
+            }
+        }, 
+        "element": "Ne"
+    }
+}

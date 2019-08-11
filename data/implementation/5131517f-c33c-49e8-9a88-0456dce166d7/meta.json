@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2003--Han-S--W--LAMMPS--ipr1."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_HanZepedaAckland_2003_W__MO_286137913440_000", 
+            "link-text": "EAM_Dynamo_HanZepedaAckland_2003_W__MO_286137913440_000"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_HanZepedaAckland_2003_W__MO_286137913440_000", 
-        "link-text": "EAM_Dynamo_HanZepedaAckland_2003_W__MO_286137913440_000"
     }
 }

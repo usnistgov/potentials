@@ -1,0 +1,60 @@
+{
+    "interatomic-potential": {
+        "key": "0d0d9313-b0ff-4c3b-9e2f-622f7b0f9b0d", 
+        "id": "1997--Broughton-J-Q-Meli-C-A-Vashishta-P-Kalia-R-K--Si-O", 
+        "record-version": "2018-11-01", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Direct atomistic simulation of quartz crystal oscillators: Bulk properties and nanoscale devices", 
+                "author": [
+                    {
+                        "givenname": "J.Q.", 
+                        "surname": "Broughton"
+                    }, 
+                    {
+                        "givenname": "C.A.", 
+                        "surname": "Meli"
+                    }, 
+                    {
+                        "givenname": "P.", 
+                        "surname": "Vashishta"
+                    }, 
+                    {
+                        "givenname": "R.K.", 
+                        "surname": "Kalia"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": "1997"
+                }, 
+                "volume": "56", 
+                "issue": "2", 
+                "abstract": "Current experimental research aims to reduce the size of quartz crystal oscillators into the submicrometer range. Devices then comprise multimillion atoms and operating frequencies will be in the gigahertz regime. Such characteristics make direct atomic scale simulation feasible using large scale parallel computing. Here, we describe molecular-dynamics simulations on bulk and nanoscale device systems focusing on elastic constants and flexural frequencies. Here we find (a) in order to achieve elastic constants within 1% of those of the bulk requires approximately one million atoms; precisely the experimental regime of interest; (b) differences from continuum mechanical frequency predictions are observable for 17 nm devices; (c) devices with 1% defects exhibit dramatic anharmonicity. A subsequent paper describes the direct atomistic simulation of operating characteristics of a micrometer scale device. A PAPS cosubmission gives algorithmic details.", 
+                "pages": "611-618", 
+                "DOI": "10.1103/physrevb.56.611"
+            }
+        }, 
+        "implementation": {
+            "key": "7ac10a7e-235f-4d29-ae89-3bfffbf7906c", 
+            "id": "1997--Broughton-J-Q--Si-O--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-11-01", 
+            "type": "LAMMPS pair_style vashishta", 
+            "notes": {
+                "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1997--Broughton-J-Q-Meli-C-A-Vashishta-P-Kalia-R-K--Si-O/1/SiO.1997.vashishta", 
+                    "link-text": "SiO.1997.vashishta"
+                }
+            }
+        }, 
+        "element": [
+            "Si", 
+            "O"
+        ]
+    }
+}

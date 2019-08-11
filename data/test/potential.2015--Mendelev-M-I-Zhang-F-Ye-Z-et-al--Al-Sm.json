@@ -1,0 +1,95 @@
+{
+    "interatomic-potential": {
+        "key": "82be9397-2466-47ee-89d5-6f8b55dd7b5d", 
+        "id": "2015--Mendelev-M-I-Zhang-F-Ye-Z-et-al--Al-Sm", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Development of interatomic potentials appropriate for simulation of devitrification of Al90Sm10alloy", 
+                "author": [
+                    {
+                        "givenname": "M.I.", 
+                        "surname": "Mendelev"
+                    }, 
+                    {
+                        "givenname": "F.", 
+                        "surname": "Zhang"
+                    }, 
+                    {
+                        "givenname": "Z.", 
+                        "surname": "Ye"
+                    }, 
+                    {
+                        "givenname": "Y.", 
+                        "surname": "Sun"
+                    }, 
+                    {
+                        "givenname": "M.C.", 
+                        "surname": "Nguyen"
+                    }, 
+                    {
+                        "givenname": "S.R.", 
+                        "surname": "Wilson"
+                    }, 
+                    {
+                        "givenname": "C.Z.", 
+                        "surname": "Wang"
+                    }, 
+                    {
+                        "givenname": "K.M.", 
+                        "surname": "Ho"
+                    }
+                ], 
+                "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                "publication-date": {
+                    "year": "2015"
+                }, 
+                "volume": "23", 
+                "issue": "4", 
+                "abstract": "A semi-empirical potential for the Al90Sm10 alloy is presented. The potential provides satisfactory reproduction of pure Al properties, the formation energies of a set of Al\u2013Sm crystal phases with Sm content about 10%, and the structure of the liquid Al90Sm10 alloy. During molecular dynamics simulation in which the liquid alloy is cooled at a rate of 1010\u2009K\u2009s\u22121, the developed potential produces a glass structure with lower ab initio energy than that produced by ab initio molecular dynamics (AIMD) itself using a typical AIMD cooling rate of 8*10^13\u2009K\u2009s\u22121. Based on these facts the developed potential should be suitable for simulations of phase transformations in the Al90Sm10 alloy.", 
+                "pages": "045013", 
+                "DOI": "10.1088/0965-0393/23/4/045013"
+            }, 
+            "notes": {
+                "text": "Mikhail Mendelev (Ames Laboratory) noted that the potential \"was developed to simulate the solidification/devitrification in the Al<sub>90</sub>Sm<sub>10</sub> alloy.\" The reference was updated on 13 June 2015."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "5551afde-8e3f-41a4-93f7-f56d9a6a7044", 
+                "id": "2015--Mendelev-M-I--Al-Sm--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2014-10-24", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "This file was provided by Mikhail Mendelev (Ames Laboratory) and posted with his permission on 24 Oct. 2014."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Mendelev-M-I-Zhang-F-Ye-Z-et-al--Al-Sm/1/Al90Sm10_MendelevM_2014.eam.fs", 
+                        "link-text": "Al90Sm10_MendelevM_2014.eam.fs"
+                    }
+                }
+            }, 
+            {
+                "key": "c8299459-0b3f-469a-a746-f7e620eb4684", 
+                "id": "MO_338600200739", 
+                "status": "active", 
+                "date": "2019-08-09", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2015--Mendelev-M-I--Al-Sm--LAMMPS--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_MendelevFangYe_2015_AlSm__MO_338600200739_000", 
+                    "link-text": "EAM_Dynamo_MendelevFangYe_2015_AlSm__MO_338600200739_000"
+                }
+            }
+        ], 
+        "element": [
+            "Al", 
+            "Sm"
+        ]
+    }
+}

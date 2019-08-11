@@ -1,0 +1,76 @@
+{
+    "interatomic-potential": {
+        "key": "d49346a8-e05a-4e6b-89bb-8e8073a0620a", 
+        "id": "2007--Hellmann-R-Bich-E-Vogel-E--He", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": [
+                {
+                    "document-type": "journal", 
+                    "title": "<i>Ab initio</i> potential energy curve for the helium atom pair and thermophysical properties of dilute helium gas. I. Helium\u2013helium interatomic potential", 
+                    "author": [
+                        {
+                            "givenname": "R.", 
+                            "surname": "Hellmann"
+                        }, 
+                        {
+                            "givenname": "E.", 
+                            "surname": "Bich"
+                        }, 
+                        {
+                            "givenname": "E.", 
+                            "surname": "Vogel"
+                        }
+                    ], 
+                    "publication-name": "Molecular Physics", 
+                    "publication-date": {
+                        "year": "2007"
+                    }, 
+                    "volume": "105", 
+                    "issue": "23-24", 
+                    "abstract": "A helium\u2013helium interatomic potential energy curve was determined from quantum-mechanical <i>ab initio</i> calculations. Very large atom-centred basis sets including a newly developed d-aug-cc-pV8Z basis set supplemented with bond functions and <i>ab initio</i> methods up to full CI were applied. The aug-cc-pV7Z basis set of Gdanitz (J. Chem. Phys. <b>113</b>, 5145 (2000)) was modified to be more consistent with the aug-cc-pV5Z and aug-cc-pV6Z basis sets. The diagonal Born\u2013Oppenheimer corrections as well as corrections for relativistic effects were also calculated. A new analytical representation of the interatomic potential energy was fitted to the <i>ab initio</i> calculated values. In a following paper this potential model will be used in the framework of quantum-statistical mechanics and of the corresponding kinetic theory to calculate the most important thermophysical properties of helium governed by two-body and three-body interactions.", 
+                    "pages": "3013-3023", 
+                    "DOI": "10.1080/00268970701730096"
+                }, 
+                {
+                    "document-type": "journal", 
+                    "title": "An improved simple model for the van der Waals potential based on universal damping functions for the dispersion coefficients", 
+                    "author": [
+                        {
+                            "givenname": "K.T.", 
+                            "surname": "Tang"
+                        }, 
+                        {
+                            "givenname": "J.", 
+                            "surname": "Peter Toennies"
+                        }
+                    ], 
+                    "publication-name": "The Journal of Chemical Physics", 
+                    "publication-date": {
+                        "year": "1984"
+                    }, 
+                    "volume": "80", 
+                    "issue": "8", 
+                    "abstract": "Starting from our earlier model [J. Chem. Phys. <b>66</b>, 1496 (1977)] a simple expression is derived for the radial dependent damping functions for the individual dispersion coefficients C<sub>2n</sub> for arbitrary even orders 2n. The damping functions are only a function of the Born\u2013Mayer range parameter b and thus can be applied to all systems for which this is known or can be estimated. For H(1S)\u2013H(1S) the results are in almost perfect agreement with the very accurate recent <i>ab initio</i> damping functions of Koide, Meath, and Allnatt. Comparisons with less accurate previous calculations for other systems also show a satisfactory agreement. By adding a Born\u2013Mayer repulsive term [A\u2009exp(\u2212bR)] to the damped dispersion potential, a simple universal expression is obtained for the well region of the atom\u2013atom van der Waals potential with only five essential parameters A, b, C<sub>6</sub>, C<sub>8</sub>, and C<sub>10</sub>. The model has been tested for the following representative systems: H<sub>2</sub> <sup>3</sup>\u03a3, He<sub>2</sub>, and Ar<sub>2</sub> as well as NaK <sup>3</sup>\u03a3 and LiHg, which include four chemically different types of van der Waals interactions for which either very precise theoretical or experimental data is available. For each system the <i>ab initio</i> dispersion coefficients together with the well\u2010known parameters \u03b5 and Rm were used to determine A and b from the model potential. With these values the reduced potentials were calculated and found to agree with the experimental potentials to better than 1% and always less than the experimental uncertainties. Some of the implications of the new model are discussed.", 
+                    "pages": "3726-3741", 
+                    "DOI": "10.1063/1.447150"
+                }
+            ]
+        }, 
+        "implementation": {
+            "key": "53909a14-fd53-404a-af9b-e1ff2c5e44fd", 
+            "id": "MO_126942667206", 
+            "status": "active", 
+            "date": "2019-08-08", 
+            "type": "OpenKIM", 
+            "notes": {
+                "text": "Taken from https://openkim.org."
+            }, 
+            "web-link": {
+                "URL": "https://openkim.org/id/TT_Modified_HellmannBichVogel_2007_He__MO_126942667206_002", 
+                "link-text": "TT_Modified_HellmannBichVogel_2007_He__MO_126942667206_002"
+            }
+        }, 
+        "element": "He"
+    }
+}

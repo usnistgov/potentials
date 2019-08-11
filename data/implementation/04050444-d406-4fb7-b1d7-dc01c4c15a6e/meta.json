@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2003--Mendelev-M-I--Fe-2--LAMMPS--ipr3."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_MendelevHanSrolovitz_2003Potential2_Fe__MO_769582363439_005", 
+            "link-text": "EAM_Dynamo_MendelevHanSrolovitz_2003Potential2_Fe__MO_769582363439_005"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_MendelevHanSrolovitz_2003Potential2_Fe__MO_769582363439_005", 
-        "link-text": "EAM_Dynamo_MendelevHanSrolovitz_2003Potential2_Fe__MO_769582363439_005"
     }
 }

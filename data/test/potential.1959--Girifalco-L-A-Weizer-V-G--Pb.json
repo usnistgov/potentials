@@ -1,0 +1,77 @@
+{
+    "interatomic-potential": {
+        "key": "4dc4b4ea-0590-4990-930b-03eee8de3c09", 
+        "id": "1959--Girifalco-L-A-Weizer-V-G--Pb", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Application of the Morse Potential Function to Cubic Metals", 
+                "author": [
+                    {
+                        "givenname": "L.A.", 
+                        "surname": "Girifalco"
+                    }, 
+                    {
+                        "givenname": "V.G.", 
+                        "surname": "Weizer"
+                    }
+                ], 
+                "publication-name": "Physical Review", 
+                "publication-date": {
+                    "year": "1959"
+                }, 
+                "volume": "114", 
+                "issue": "3", 
+                "abstract": "The Morse parameters were calculated using experimental values for the energy of vaporization, the lattice constant, and the compressibility. The equation of state and the elastic constants which were computed using the Morse parameters, agreed with experiment for both face-centered and body-centered cubic metals. All stability conditions were also satisfied for both the face-centered and the body-centered metals. This shows that the Morse function can be applied validly to problems involving any type of deformation of the cubic metals.", 
+                "pages": "687-690", 
+                "DOI": "10.1103/physrev.114.687"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "6d198a35-1257-4c10-bb6e-5ee2914329d2", 
+                "id": "MO_370271093517", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is the \"high cutoff\" variation."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/Morse_Shifted_GirifalcoWeizer_1959HighCutoff_Pb__MO_370271093517_002", 
+                    "link-text": "Morse_Shifted_GirifalcoWeizer_1959HighCutoff_Pb__MO_370271093517_002"
+                }
+            }, 
+            {
+                "key": "0bc5bde1-54c3-430b-9fb6-7ab3447454dd", 
+                "id": "MO_534638645497", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is the \"low cutoff\" variation."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/Morse_Shifted_GirifalcoWeizer_1959LowCutoff_Pb__MO_534638645497_002", 
+                    "link-text": "Morse_Shifted_GirifalcoWeizer_1959LowCutoff_Pb__MO_534638645497_002"
+                }
+            }, 
+            {
+                "key": "c62ecfb3-9465-4933-8cef-ff755f73d0dc", 
+                "id": "MO_958424213898", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is the \"medium cutoff\" variation."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/Morse_Shifted_GirifalcoWeizer_1959MedCutoff_Pb__MO_958424213898_002", 
+                    "link-text": "Morse_Shifted_GirifalcoWeizer_1959MedCutoff_Pb__MO_958424213898_002"
+                }
+            }
+        ], 
+        "element": "Pb"
+    }
+}

@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This Model corresponds to the Si.sw parameter file distributed with the LAMMPS package except that Si.sw uses epsilon=2.1683 and the KIM model uses 2.1682 (converted more precisely from 50 kcal/mol given in the SW paper). However, given the low accuracy of the source data, either is acceptable. Due to this difference, the Si.sw file from LAMMPS and the KIM model give slightly different results scaled by 2.1683/2.1682."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/SW_StillingerWeber_1985_Si__MO_405512056662_005", 
+            "link-text": "SW_StillingerWeber_1985_Si__MO_405512056662_005"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/SW_StillingerWeber_1985_Si__MO_405512056662_005", 
-        "link-text": "SW_StillingerWeber_1985_Si__MO_405512056662_005"
     }
 }

@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/Dipole_Umeno_YSZ__MO_394669891912_001", 
+            "link-text": "Dipole_Umeno_YSZ__MO_394669891912_001"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/Dipole_Umeno_YSZ__MO_394669891912_001", 
-        "link-text": "Dipole_Umeno_YSZ__MO_394669891912_001"
     }
 }

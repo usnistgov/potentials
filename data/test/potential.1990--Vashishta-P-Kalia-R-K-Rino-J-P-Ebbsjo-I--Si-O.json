@@ -1,0 +1,60 @@
+{
+    "interatomic-potential": {
+        "key": "cb2ed094-032f-4e20-bb3b-a32bdb173697", 
+        "id": "1990--Vashishta-P-Kalia-R-K-Rino-J-P-Ebbsjo-I--Si-O", 
+        "record-version": "2018-11-01", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Interaction potential for SiO<sub>2</sub>: A molecular-dynamics study of structural correlations", 
+                "author": [
+                    {
+                        "givenname": "P.", 
+                        "surname": "Vashishta"
+                    }, 
+                    {
+                        "givenname": "R.K.", 
+                        "surname": "Kalia"
+                    }, 
+                    {
+                        "givenname": "J.P.", 
+                        "surname": "Rino"
+                    }, 
+                    {
+                        "givenname": "I.", 
+                        "surname": "Ebbsj\u00f6"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": "1990"
+                }, 
+                "volume": "41", 
+                "issue": "17", 
+                "abstract": "An interaction potential consisting of two-body and three-body covalent interactions is proposed for SiO<sub>2</sub>. The interaction potential is used in molecular-dynamics studies of structural and dynamical correlations of crystalline, molten, and vitreous states under various conditions of densities and temperatures. The two-body contribution to the interaction potential consists of steric repulsion due to atomic sizes, Coulomb interactions resulting from charge transfer, and charge-dipole interaction to include the effects of large electronic polarizability of anions. The three-body covalent contributions include O-Si-O and Si-O-Si interactions which are angle dependent and functions of Si-O distance. In lattice-structure calculations with the total potential function, \u03b1-cristobalite and \u03b1-quartz are found to have the lowest and almost degenerate energies, in agreement with experiments. The energies for \u03b2-cristobalite, \u03b2-quartz, and keatite are found to be higher than those for \u03b1-cristobalite and \u03b1-quartz. Molecular-dynamics calculations with this potential function correctly describe the short- and intermediate-range order in molten and vitreous states.\nIn the latter, partial pair-distribution functions give Si-O, O-O, and Si-Si bond lengths of 1.62, 2.65, and 3.05 \u00c5, respectively. The vitreous state consists of nearly ideal Si(O<sub>1/2</sub>)<sub>4</sub> tetrahedra in corner-sharing configurations. The Si-O-Si bond-angle distribution has a peak at 142\u00b0 and a full width at half maximum (FWHM) of 25\u00b0 in good agreement with nuclear magnetic resonance experiments. The calculated static structure factor is also in agreement with neutron-diffraction experiments. Partial static structure factors reveal that intermediate-range Si-Si, O-O, and Si-O correlations between 4 and 8 \u00c5 give rise to the first sharp diffraction peak (FSDP). The FSDP is absent in charge-charge structure factor, which indicates that charge neutrality prevails over length scales between 4 and 8 \u00c5. Dynamical correlations in vitreous and molten states, phonon densities of states of crystalline and vitreous SiO<sub>2</sub>, infrared spectra of crystalline, vitreous and molten states, isotope effect, distribution of rings and their structure in molten and vitreous states, and structural transformations at high pressures will be discussed in subsequent papers.", 
+                "pages": "12197-12209", 
+                "DOI": "10.1103/physrevb.41.12197"
+            }
+        }, 
+        "implementation": {
+            "key": "1b27c797-2fa3-455a-8d24-8ef7d5814424", 
+            "id": "1990--Vashishta-P--Si-O--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-11-01", 
+            "type": "LAMMPS pair_style vashishta", 
+            "notes": {
+                "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1990--Vashishta-P-Kalia-R-K-Rino-J-P-Ebbsjo-I--Si-O/1/SiO.1990.vashishta", 
+                    "link-text": "SiO.1990.vashishta"
+                }
+            }
+        }, 
+        "element": [
+            "Si", 
+            "O"
+        ]
+    }
+}

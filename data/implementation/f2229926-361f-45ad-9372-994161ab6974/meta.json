@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_TehranchiCurtin_2010_NiH__MO_535504325462_003", 
+            "link-text": "EAM_Dynamo_TehranchiCurtin_2010_NiH__MO_535504325462_003"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_TehranchiCurtin_2010_NiH__MO_535504325462_003", 
-        "link-text": "EAM_Dynamo_TehranchiCurtin_2010_NiH__MO_535504325462_003"
     }
 }

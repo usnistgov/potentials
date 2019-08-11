@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the same files as 1989--Adams-J-B--Au--LAMMPS--ipr1."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_AdamsFoilesWolfer_1989_Au__MO_087738844640_000", 
+            "link-text": "EAM_Dynamo_AdamsFoilesWolfer_1989_Au__MO_087738844640_000"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_AdamsFoilesWolfer_1989_Au__MO_087738844640_000", 
-        "link-text": "EAM_Dynamo_AdamsFoilesWolfer_1989_Au__MO_087738844640_000"
     }
 }

@@ -1,0 +1,71 @@
+{
+    "interatomic-potential": {
+        "key": "e62cbc12-99ba-469b-8d4e-e26ad40cb15a", 
+        "id": "1958--Bernardes-N--Kr", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Theory of Solid Ne, A, Kr, and Xe at 0\u00b0K", 
+                "author": {
+                    "givenname": "N.", 
+                    "surname": "Bernardes"
+                }, 
+                "publication-name": "Physical Review", 
+                "publication-date": {
+                    "year": "1958"
+                }, 
+                "volume": "112", 
+                "issue": "5", 
+                "abstract": "A quantum-mechanical variational technique is applied to an Einstein model of a solid, and the heats of sublimation and equations of state of solid Ne, A, Kr, and Xe are calculated at 0\u00b0K. Mie-Lennard-Jones 6-12 potentials appropriate to the gas-phase data are used throughout, and the importance of quantum-mechanical effects is discussed; in general, good agreement with experiment is obtained. From the theoretical zero-point energies equivalent Debye temperatures, \u03b8, are calculated, and from the dependence of these \u03b8 on volume, Gr\u00fcneisen constants are computed in good agreement with experiment. Theoretical compressibility curves (at 0\u00b0K) are presented, and compared with the available experimental data; in the case of Ne, the only substance for which high-pressure data are available, the agreement is rather good up to 20 k atmos.", 
+                "pages": "1534-1539", 
+                "DOI": "10.1103/physrev.112.1534"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "0ed1e106-2ce0-4b9c-8d09-6b1fb0e02f60", 
+                "id": "MO_923895531627", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is the \"high cutoff\" variation."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/LJ_Shifted_Bernardes_1958HighCutoff_Kr__MO_923895531627_003", 
+                    "link-text": "LJ_Shifted_Bernardes_1958HighCutoff_Kr__MO_923895531627_003"
+                }
+            }, 
+            {
+                "key": "f04b0d49-ede0-4f24-831f-119b1bd2438c", 
+                "id": "MO_984281096460", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is the \"medium cutoff\" variation."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/LJ_Shifted_Bernardes_1958MedCutoff_Kr__MO_984281096460_003", 
+                    "link-text": "LJ_Shifted_Bernardes_1958MedCutoff_Kr__MO_984281096460_003"
+                }
+            }, 
+            {
+                "key": "be07eb49-d6fd-4677-8a6a-6ee6a764fbac", 
+                "id": "MO_995724792024", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is the \"low cutoff\" variation."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/LJ_Shifted_Bernardes_1958LowCutoff_Kr__MO_995724792024_003", 
+                    "link-text": "LJ_Shifted_Bernardes_1958LowCutoff_Kr__MO_995724792024_003"
+                }
+            }
+        ], 
+        "element": "Kr"
+    }
+}

@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_IMD_BrommerGaehlerMihalkovic_2007_CaCd__MO_145183423516_003", 
+            "link-text": "EAM_IMD_BrommerGaehlerMihalkovic_2007_CaCd__MO_145183423516_003"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_IMD_BrommerGaehlerMihalkovic_2007_CaCd__MO_145183423516_003", 
-        "link-text": "EAM_IMD_BrommerGaehlerMihalkovic_2007_CaCd__MO_145183423516_003"
     }
 }

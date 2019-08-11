@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/Exp6_KongChakrabarty_1973_ArNe__MO_946046425752_002", 
+            "link-text": "Exp6_KongChakrabarty_1973_ArNe__MO_946046425752_002"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/Exp6_KongChakrabarty_1973_ArNe__MO_946046425752_002", 
-        "link-text": "Exp6_KongChakrabarty_1973_ArNe__MO_946046425752_002"
     }
 }

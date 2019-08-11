@@ -1,0 +1,51 @@
+{
+    "interatomic-potential": {
+        "key": "9549a404-171a-4469-8fc3-2de77c99f7e7", 
+        "id": "1987--Jacobsen-K-W-Norskov-J-K-Puska-M-J--Al", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Interatomic interactions in the effective-medium theory", 
+                "author": [
+                    {
+                        "givenname": "K.W.", 
+                        "surname": "Jacobsen"
+                    }, 
+                    {
+                        "givenname": "J.K.", 
+                        "surname": "Norskov"
+                    }, 
+                    {
+                        "givenname": "M.J.", 
+                        "surname": "Puska"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": "1987"
+                }, 
+                "volume": "35", 
+                "issue": "14", 
+                "abstract": "An expression is derived for the total energy of a system of interacting atoms based on an ansatz for the total electron density of the system as a superposition of atom densities taken from calculations for the atoms embedded in a homogeneous electron gas. This leads to an expression for the interaction energy in terms of the embedding energy of the atoms in a homogeneous electron gas, and corrections accounting, for instance, for the d-d hybridization in the transition metals. The density of the homogeneous electron gas is chosen as the average of the density from the surrounding atoms. Due to the variational property of the total-energy functional, the errors in the interaction energy are second order in the deviation of the ansatz density from the true ground-state value. The applicability of the approach is illustrated by calculations of the cohesive properties of some simple metals and all the 3d transition metals. The interaction energy can be expressed in a form simple enough to allow calculations for low-symmetry systems and is very well suited for simulations of time-dependent and finite-temperature problems. Preliminary results for the phonon-dispersion relations and the surface energies and relaxations for Al are used to illustrate the versatility of the approach. The division of the total energy into a density-dependent part, an electrostatic \"pair-potential\" part, and a hybridization part provides a very simple way of understanding a number of these phenomena.", 
+                "pages": "7423-7442", 
+                "DOI": "10.1103/physrevb.35.7423"
+            }
+        }, 
+        "implementation": {
+            "key": "b5dfc3dc-a4b0-45a8-989b-a2a6cd29f9ce", 
+            "id": "MO_411692133366", 
+            "status": "active", 
+            "date": "2019-08-08", 
+            "type": "OpenKIM", 
+            "notes": {
+                "text": "Taken from https://openkim.org.  This KIM potential is based on the Al_jnp.eam file from the LAMMPS potentials folder dated 2007-06-11."
+            }, 
+            "web-link": {
+                "URL": "https://openkim.org/id/EAM_Dynamo_JacobsenNorskovPuska_1987_Al__MO_411692133366_000", 
+                "link-text": "EAM_Dynamo_JacobsenNorskovPuska_1987_Al__MO_411692133366_000"
+            }
+        }, 
+        "element": "Al"
+    }
+}

@@ -1,0 +1,84 @@
+{
+    "interatomic-potential": {
+        "key": "3e8333b6-bc3a-470e-99cc-abb8a422403e", 
+        "id": "2003--Mendelev-M-I-Han-S-Srolovitz-D-J-et-al--Fe-5", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Development of new interatomic potentials appropriate for crystalline and liquid iron", 
+                "author": [
+                    {
+                        "givenname": "M.I.", 
+                        "surname": "Mendelev"
+                    }, 
+                    {
+                        "givenname": "S.", 
+                        "surname": "Han"
+                    }, 
+                    {
+                        "givenname": "D.J.", 
+                        "surname": "Srolovitz"
+                    }, 
+                    {
+                        "givenname": "G.J.", 
+                        "surname": "Ackland"
+                    }, 
+                    {
+                        "givenname": "D.Y.", 
+                        "surname": "Sun"
+                    }, 
+                    {
+                        "givenname": "M.", 
+                        "surname": "Asta"
+                    }
+                ], 
+                "publication-name": "Philosophical Magazine", 
+                "publication-date": {
+                    "year": "2003"
+                }, 
+                "volume": "83", 
+                "issue": "35", 
+                "abstract": "Two procedures were developed to fit interatomic potentials of the embedded-atom method (EAM) form and applied to determine a potential which describes crystalline and liquid iron. While both procedures use perfect crystal and crystal defect data, the first procedure also employs the first-principles forces in a model liquid and the second procedure uses experimental liquid structure factor data. These additional types of information were incorporated to ensure more reasonable descriptions of atomic interactions at small separations than is provided using standard approaches, such as fitting to the universal binding energy relation. The new potentials (provided herein) are, on average, in better agreement with the experimental or first-principles lattice parameter, elastic constants, point-defect energies, bcc\u2013fcc transformation energy, liquid density, liquid structure factor, melting temperature and other properties than other existing EAM iron potentials.", 
+                "pages": "3977-3994", 
+                "DOI": "10.1080/14786430310001613264"
+            }, 
+            "notes": {
+                "text": "This listing is for the reference's Fe #5 interaction parameters."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "c4147f45-37dd-4558-9af0-e4efd0d5e70d", 
+                "id": "2003--Mendelev-M-I--Fe-5--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2007-06-10", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "This file was provided by Mikhail Mendelev on Jun 10, 2007."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Mendelev-M-I-Han-S-Srolovitz-D-J-et-al--Fe-5/1/Fe_5.eam.fs", 
+                        "link-text": "Fe_5.eam.fs"
+                    }
+                }
+            }, 
+            {
+                "key": "d66cb75e-0ccc-4917-aee4-a148ee38812a", 
+                "id": "MO_942420706858", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2003--Mendelev-M-I--Fe-5--LAMMPS--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_MendelevHanSrolovitz_2003Potential5_Fe__MO_942420706858_005", 
+                    "link-text": "EAM_Dynamo_MendelevHanSrolovitz_2003Potential5_Fe__MO_942420706858_005"
+                }
+            }
+        ], 
+        "element": "Fe"
+    }
+}

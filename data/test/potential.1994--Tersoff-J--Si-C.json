@@ -1,0 +1,49 @@
+{
+    "interatomic-potential": {
+        "key": "e114e23c-d2ee-4a53-b34b-f02e740f1bd6", 
+        "id": "1994--Tersoff-J--Si-C", 
+        "record-version": "2018-10-10", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Chemical order in amorphous silicon carbide", 
+                "author": {
+                    "givenname": "J.", 
+                    "surname": "Tersoff"
+                }, 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": "1994"
+                }, 
+                "volume": "49", 
+                "issue": "23", 
+                "abstract": "While ordering in alloy crystals is well understood, short-range ordering in amorphous alloys remains controversial. Here, by studying computer-generated models of amorphous SiC, we show that there are two principal factors controlling the degree of chemical order in amorphous covalent alloys. One, the chemical preference for mixed bonds, is much the same in crystalline and amorphous materials. However, the other factor, the atomic size difference, is far less effective at driving ordering in amorphous material than in the crystal. As a result, the amorphous phase may show either strong ordering (as in GaAs), or weaker ordering (as in SiC), depending upon the relative importance of these two factors.", 
+                "pages": "16349-16352", 
+                "DOI": "10.1103/physrevb.49.16349"
+            }, 
+            "notes": {
+                "text": "This parameterization uses the interactions of 1990--Tersoff-J--Si-C and the cutoff of 1989--Tersoff-J--Si-C, with a slight correction for heat of mixing."
+            }
+        }, 
+        "implementation": {
+            "key": "e9b63400-4c3e-4db7-8ab1-b50e7408f36b", 
+            "id": "1994--Tersoff-J--Si-C--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-10-10", 
+            "type": "LAMMPS pair_style tersoff", 
+            "notes": {
+                "text": "This file was created and verified by Lucas Hale. The parameter values are comparable to the SiC_1994.tersoff file in the August 22, 2018 LAMMPS distribution, with this file having higher numerical precision for the derived mixing parameters."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1994--Tersoff-J--Si-C/1/1994_SiC.tersoff", 
+                    "link-text": "1994_SiC.tersoff"
+                }
+            }
+        }, 
+        "element": [
+            "Si", 
+            "C"
+        ]
+    }
+}

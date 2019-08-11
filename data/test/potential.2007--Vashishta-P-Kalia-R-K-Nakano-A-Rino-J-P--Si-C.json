@@ -1,0 +1,60 @@
+{
+    "interatomic-potential": {
+        "key": "d9495b9a-ff7a-4c4f-bb25-de2062e794d9", 
+        "id": "2007--Vashishta-P-Kalia-R-K-Nakano-A-Rino-J-P--Si-C", 
+        "record-version": "2018-11-01", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Interaction potential for silicon carbide: A molecular dynamics study of elastic constants and vibrational density of states for crystalline and amorphous silicon carbide", 
+                "author": [
+                    {
+                        "givenname": "P.", 
+                        "surname": "Vashishta"
+                    }, 
+                    {
+                        "givenname": "R.K.", 
+                        "surname": "Kalia"
+                    }, 
+                    {
+                        "givenname": "A.", 
+                        "surname": "Nakano"
+                    }, 
+                    {
+                        "givenname": "J.P.", 
+                        "surname": "Rino"
+                    }
+                ], 
+                "publication-name": "Journal of Applied Physics", 
+                "publication-date": {
+                    "year": "2007"
+                }, 
+                "volume": "101", 
+                "issue": "10", 
+                "abstract": "An effective interatomic interaction potential for SiC is proposed. The potential consists of two-body and three-body covalent interactions. The two-body potential includes steric repulsions due to atomic sizes, Coulomb interactions resulting from charge transfer between atoms, charge-induced dipole-interactions due to the electronic polarizability of ions, and induced dipole-dipole (van der Waals) interactions. The covalent characters of the Si\u2013C\u2013Si and C\u2013Si\u2013C bonds are described by the three-body potential. The proposed three-body interaction potential is a modification of the Stillinger-Weber form proposed to describe Si. Using the molecular dynamics method, the interaction potential is used to study structural, elastic, and dynamical properties of crystalline (3C), amorphous, and liquid states of SiC for several densities and temperatures. The structural energy for cubic (3C) structure has the lowest energy, followed by the wurtzite (2H) and rock-salt (RS) structures. The pressure for the structural transformation from 3C-to-RS from the common tangent is found to be 90 GPa. For 3C-SiC, our computed elastic constants (C<sub>11</sub>, C<sub>12</sub>, and C<sub>44</sub>), melting temperature, vibrational density-of-states, and specific heat agree well with the experiments. Predictions are made for the elastic constant as a function of density for the crystalline and amorphous phase. Structural correlations, such as pair distribution function and neutron and x-ray static structure factors are calculated for the amorphous and liquid state.", 
+                "pages": "103515", 
+                "DOI": "10.1063/1.2724570"
+            }
+        }, 
+        "implementation": {
+            "key": "da3a62f4-c17b-4119-a65f-deb47c842f69", 
+            "id": "2007--Vashishta-P--Si-C--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-11-01", 
+            "type": "LAMMPS pair_style vashishta", 
+            "notes": {
+                "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2007--Vashishta-P-Kalia-R-K-Nakano-A-Rino-J-P--Si-C/1/SiC.vashishta", 
+                    "link-text": "SiC.vashishta"
+                }
+            }
+        }, 
+        "element": [
+            "Si", 
+            "C"
+        ]
+    }
+}

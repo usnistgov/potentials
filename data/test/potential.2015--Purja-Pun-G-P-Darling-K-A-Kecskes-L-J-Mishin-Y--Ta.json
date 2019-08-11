@@ -1,0 +1,56 @@
+{
+    "interatomic-potential": {
+        "key": "bdec0325-b66a-456f-98f1-cb2db88fd247", 
+        "id": "2015--Purja-Pun-G-P-Darling-K-A-Kecskes-L-J-Mishin-Y--Ta", 
+        "record-version": "2018-11-05", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Angular-dependent interatomic potential for the Cu-Ta system and its application to structural stability of nano-crystalline alloys", 
+                "author": [
+                    {
+                        "givenname": "G.P.", 
+                        "surname": "Purja Pun"
+                    }, 
+                    {
+                        "givenname": "K.A.", 
+                        "surname": "Darling"
+                    }, 
+                    {
+                        "givenname": "L.J.", 
+                        "surname": "Kecskes"
+                    }, 
+                    {
+                        "givenname": "Y.", 
+                        "surname": "Mishin"
+                    }
+                ], 
+                "publication-name": "Acta Materialia", 
+                "publication-date": {
+                    "year": "2015"
+                }, 
+                "volume": "100", 
+                "abstract": "Atomistic computer simulations are capable of providing insights into physical mechanisms responsible for the extraordinary structural stability and strength of immiscible Cu\u2013Ta alloys. To enable reliable simulations of these alloys, we have developed an angular-dependent potential (ADP) for the Cu\u2013Ta system by fitting to a large database of first-principles and experimental data. This, in turn, required the development of a new ADP potential for elemental Ta, which accurately reproduces a wide range of properties of Ta and is transferable to severely deformed states and diverse atomic environments. The new Cu\u2013Ta potential is applied for studying the kinetics of grain growth in nano-crystalline Cu\u2013Ta alloys with different chemical compositions. Ta atoms form nanometer-scale clusters preferentially located at grain boundaries (GBs) and triple junctions. These clusters pin some of the GBs in place and cause a drastic decrease in grain growth by the Zener pinning mechanism. The results of the simulations are well consistent with experimental observations and suggest possible mechanisms of the stabilization effect of Ta.", 
+                "pages": "377-391", 
+                "DOI": "10.1016/j.actamat.2015.08.052"
+            }
+        }, 
+        "implementation": {
+            "key": "d5d0fe1b-a2d4-43ca-99ea-039766dd32ad", 
+            "id": "2015--Purja-Pun-G-P--Ta--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-11-05", 
+            "type": "LAMMPS pair_style adp", 
+            "notes": {
+                "text": "This file was provided by Yuri Mishin (George Mason University) on 2 Nov. 2018."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Purja-Pun-G-P-Darling-K-A-Kecskes-L-J-Mishin-Y--Ta/1/Ta.adp.txt", 
+                    "link-text": "Ta.adp.txt"
+                }
+            }
+        }, 
+        "element": "Ta"
+    }
+}

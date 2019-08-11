@@ -1,0 +1,80 @@
+{
+    "interatomic-potential": {
+        "key": "6c80d706-991c-4696-a552-89f2df2368f5", 
+        "id": "2016--Zhang-Y-Ashcraft-R-Mendelev-M-I-et-al--Ni-Nb", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Experimental and molecular dynamics simulation study of structure of liquid and amorphous Ni62Nb38 alloy", 
+                "author": [
+                    {
+                        "givenname": "Y.", 
+                        "surname": "Zhang"
+                    }, 
+                    {
+                        "givenname": "R.", 
+                        "surname": "Ashcraft"
+                    }, 
+                    {
+                        "givenname": "M.I.", 
+                        "surname": "Mendelev"
+                    }, 
+                    {
+                        "givenname": "C.Z.", 
+                        "surname": "Wang"
+                    }, 
+                    {
+                        "givenname": "K.F.", 
+                        "surname": "Kelton"
+                    }
+                ], 
+                "publication-name": "The Journal of Chemical Physics", 
+                "publication-date": {
+                    "year": "2016"
+                }, 
+                "volume": "145", 
+                "issue": "20", 
+                "abstract": "The state-of-the-art experimental and atomistic simulation techniques were utilized to study the structure of the liquid and amorphous Ni62Nb38 alloy. First, the ab initio molecular dynamics (AIMD) simulation was performed at rather high temperature where the time limitations of the AIMD do not prevent to reach the equilibrium liquid structure. A semi-empirical potential of the Finnis-Sinclair (FS) type was developed to almost exactly reproduce the AIMD partial pair correlation functions (PPCFs) in a classical molecular dynamics simulation. This simulation also showed that the FS potential well reproduces the bond angle distributions. The FS potential was then employed to elongate the AIMD PPCFs and determine the total structure factor (TSF) which was found to be in excellent agreement with X-ray TSF obtained within the present study demonstrating the reliability of the AIMD for the simulation of the structure of the liquid Ni\u2013Nb alloys as well as the reliability of the developed FS potential. The glass structure obtained with the developed potential was also found to be in excellent agreement with the X-ray data. The analysis of the structure revealed that a network of the icosahedra clusters centered on Ni atoms is forming during cooling the liquid alloy down to Tg and the Nb Z14, Z15, and Z16 clusters are attached to this network. This network is the main feature of the Ni62Nb38 alloy and further investigations of the properties of this alloy should be based on study of the behavior of this network.", 
+                "pages": "204505", 
+                "DOI": "10.1063/1.4968212"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "f7c953fb-11f7-4a81-91b6-c28dfcc945ee", 
+                "id": "2016--Zhang-Y--Ni-Nb--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2016-12-13", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "This file was sent by M.I. Mendelev (Ames Laboratory) on 13 December 2016 and posted with his permission."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Zhang-Y-Ashcraft-R-Mendelev-M-I-et-al--Ni-Nb/1/Ni-Nb_1.eam.fs", 
+                        "link-text": "Ni-Nb_1.eam.fs"
+                    }
+                }
+            }, 
+            {
+                "key": "a113c316-8859-457e-9de9-a04e9c183adf", 
+                "id": "MO_047308317761", 
+                "status": "active", 
+                "date": "2019-08-09", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2016--Zhang-Y--Ni-Nb--LAMMPS--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_ZhangAshcraftMendelev_2016_NiNb__MO_047308317761_000", 
+                    "link-text": "EAM_Dynamo_ZhangAshcraftMendelev_2016_NiNb__MO_047308317761_000"
+                }
+            }
+        ], 
+        "element": [
+            "Ni", 
+            "Nb"
+        ]
+    }
+}

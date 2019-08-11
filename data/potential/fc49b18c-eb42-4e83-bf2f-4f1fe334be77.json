@@ -4,6 +4,7 @@
         "id": "1988--Tersoff-J--Si-b", 
         "record-version": "2018-10-10", 
         "description": {
+            "model-name": "b", 
             "citation": {
                 "DOI": "10.1103/physrevb.37.6991"
             }, 

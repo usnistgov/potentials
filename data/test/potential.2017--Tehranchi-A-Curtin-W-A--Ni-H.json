@@ -1,0 +1,49 @@
+{
+    "interatomic-potential": {
+        "key": "8280ac8a-8dd7-42c1-8873-eb38cd82f009", 
+        "id": "2017--Tehranchi-A-Curtin-W-A--Ni-H", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Atomistic study of hydrogen embrittlement of grain boundaries in nickel: I. Fracture", 
+                "author": [
+                    {
+                        "givenname": "A.", 
+                        "surname": "Tehranchi"
+                    }, 
+                    {
+                        "givenname": "W.A.", 
+                        "surname": "Curtin"
+                    }
+                ], 
+                "publication-name": "Journal of the Mechanics and Physics of Solids", 
+                "publication-date": {
+                    "year": "2017"
+                }, 
+                "volume": "101", 
+                "abstract": "Hydrogen ingress into a metal is a persistent source of embrittlement. Fracture surfaces are often intergranular, suggesting favorable cleave crack growth along grain boundaries (GBs) as one driver for embrittlement. Here, atomistic simulations are used to investigate the effects of segregated hydrogen on the behavior of cracks along various symmetric tilt grain boundaries in fcc Nickel. An atomistic potential for Ni\u2013H is first recalibrated against new quantum level computations of the energy of H in specific sites within the Ni\u03a35(120)\u27e8100\u27e9 GB. The binding energy of H atoms to various atomic sites in the Ni\u03a33(111) (twin), Ni\u03a35(120)\u27e8100\u27e9, Ni\u03a399(557)\u27e8110\u27e9, and Ni\u03a39(221)\u27e8110\u27e9 GBs, and to various surfaces created by separating these GBs into two possible fracture surfaces, are computed and used to determine equilibrium H concentrations at bulk H concentrations typical of embrittlement in Ni. Mode I fracture behavior is then studied, examining the influence of H in altering the competition between dislocation emission (crack blunting; \u201cductile\u201d behavior) and cleavage fracture (\u201cbrittle\u201d behavior) for intergranular cracks. Simulation results are compared with theoretical predictions (Griffith theory for cleavage; Rice theory for emission) using the computed surface energies. The deformation behavior at the GBs is, however, generally complex and not as simple as cleavage or emission at a sharp crack tip, which is not unexpected due to the complexity of the GB structures. In cases predicted to emit dislocations from the crack tip, the presence of H atoms reduces the critical load for emission of the dislocations and no cleavage is found. In the cases predicted to cleave, the presence of H atoms reduces the cleavage stress intensity and makes cleavage easier, including Ni\u03a39(221)\u27e8110\u27e9 which emits dislocations in the absence of H. Aside from the one unusual Ni\u03a39(221)\u27e8110\u27e9 case, no tendency is found for H to cause a ductile-to-brittle transformation for cracks along GBs in Ni, either according to theory or simulation for initial equilibrium H segregation and with no, or limited, H diffusion near the newly-created fracture surfaces. The Ni\u03a33(111) twin boundary does not absorb H at all, suggesting that embrittlement is more difficult in materials with higher fraction of such twin boundaries, as found experimentally. Experimental observations of cleavage-like failure are thus presumably caused by mechanisms involving H diffusion or dynamic crack growth.", 
+                "pages": "150-165", 
+                "DOI": "10.1016/j.jmps.2017.01.020"
+            }
+        }, 
+        "implementation": {
+            "key": "f2229926-361f-45ad-9372-994161ab6974", 
+            "id": "MO_535504325462", 
+            "status": "active", 
+            "date": "2019-08-08", 
+            "type": "OpenKIM", 
+            "notes": {
+                "text": "Taken from https://openkim.org."
+            }, 
+            "web-link": {
+                "URL": "https://openkim.org/id/EAM_Dynamo_TehranchiCurtin_2010_NiH__MO_535504325462_003", 
+                "link-text": "EAM_Dynamo_TehranchiCurtin_2010_NiH__MO_535504325462_003"
+            }
+        }, 
+        "element": [
+            "Ni", 
+            "H"
+        ]
+    }
+}

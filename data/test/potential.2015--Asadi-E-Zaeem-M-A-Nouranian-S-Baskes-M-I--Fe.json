@@ -1,0 +1,68 @@
+{
+    "interatomic-potential": {
+        "key": "10248ab9-24c0-4680-a184-96c05df5900f", 
+        "id": "2015--Asadi-E-Zaeem-M-A-Nouranian-S-Baskes-M-I--Fe", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Quantitative modeling of the equilibration of two-phase solid-liquid Fe by atomistic simulations on diffusive time scales", 
+                "author": [
+                    {
+                        "givenname": "E.", 
+                        "surname": "Asadi"
+                    }, 
+                    {
+                        "givenname": "M.A.", 
+                        "surname": "Zaeem"
+                    }, 
+                    {
+                        "givenname": "S.", 
+                        "surname": "Nouranian"
+                    }, 
+                    {
+                        "givenname": "M.I.", 
+                        "surname": "Baskes"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": "2015"
+                }, 
+                "volume": "91", 
+                "issue": "2", 
+                "abstract": "In this paper, molecular dynamics (MD) simulations based on the modified-embedded atom method (MEAM) and a phase-field crystal (PFC) model are utilized to quantitatively investigate the solid-liquid properties of Fe. A set of second nearest-neighbor MEAM parameters for high-temperature applications are developed for Fe, and the solid-liquid coexisting approach is utilized in MD simulations to accurately calculate the melting point, expansion in melting, latent heat, and solid-liquid interface free energy, and surface anisotropy. The required input properties to determine the PFC model parameters, such as liquid structure factor and fluctuations of atoms in the solid, are also calculated from MD simulations. The PFC parameters are calculated utilizing an iterative procedure from the inputs of MD simulations. The solid-liquid interface free energy and surface anisotropy are calculated using the PFC simulations. Very good agreement is observed between the results of our calculations from MEAM-MD and PFC simulations and the available modeling and experimental results in the literature. As an application of the developed model, the grain boundary free energy of Fe is calculated using the PFC model and the results are compared against experiments.", 
+                "pages": "024105", 
+                "DOI": "10.1103/physrevb.91.024105"
+            }, 
+            "notes": {
+                "text": "Prof. Mohsen Zaeem said that this potential was designed for accurately representing properties from 0K up to the melting point."
+            }
+        }, 
+        "implementation": {
+            "key": "46d9e00e-682e-496d-b757-791ecc61b9e0", 
+            "id": "2015--Asadi-E--Fe--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2017-05-12", 
+            "type": "LAMMPS pair_style meam", 
+            "notes": {
+                "text": "This file was sent by Prof. Mohsen Zaeem (Missouri S&T) on 12 April 2017 and posted on 5 May 2017."
+            }, 
+            "artifact": [
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Asadi-E-Zaeem-M-A-Nouranian-S-Baskes-M-I--Fe/1/Fe.meam", 
+                        "link-text": "Fe.meam"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2015--Asadi-E-Zaeem-M-A-Nouranian-S-Baskes-M-I--Fe/1/library.Fe.meam", 
+                        "link-text": "library.Fe.meam"
+                    }
+                }
+            ]
+        }, 
+        "element": "Fe"
+    }
+}

@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2006--Chamati-H--Fe--LAMMPS--ipr1."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_ChamatiPapanicolaouMishin_2006_Fe__MO_960699513424_000", 
+            "link-text": "EAM_Dynamo_ChamatiPapanicolaouMishin_2006_Fe__MO_960699513424_000"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_ChamatiPapanicolaouMishin_2006_Fe__MO_960699513424_000", 
-        "link-text": "EAM_Dynamo_ChamatiPapanicolaouMishin_2006_Fe__MO_960699513424_000"
     }
 }
