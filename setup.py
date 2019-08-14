@@ -23,7 +23,7 @@ setup(name = 'potentials',
         'interatomic potential',
         'force field'
       ], 
-      url = 'https://github.com/lmhale99/potentials',
+      url = 'https://github.com/usnistgov/potentials',
       author = 'Lucas Hale',
       author_email = 'lucas.hale@nist.gov',
       packages = find_packages(),
