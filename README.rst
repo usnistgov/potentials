@@ -45,4 +45,4 @@ Notebooks stored in the main git directory.
   add and edit the database content.
 
 .. |ColabLink| image:: https://colab.research.google.com/assets/colab-badge.svg
-.. _ColabLink: https://colab.research.google.com/github/lmhale99/potentials/blob/master/Database%20Exploration.ipynb
+.. _ColabLink: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Database%20Exploration.ipynb
