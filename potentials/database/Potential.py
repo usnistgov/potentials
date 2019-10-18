@@ -244,7 +244,7 @@ class Potential(object):
             return cls(model=localfile, citations=citations)
             
         else:
-            r = requests.get(f'https://github.com/lmhale99/potentials/raw/master/data/potential/{key}.json')
+            r = requests.get(f'https://github.com/usnistgov/potentials/raw/master/data/potential/{key}.json')
             try:
                 r.raise_for_status()
             except:

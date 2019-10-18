@@ -99,7 +99,7 @@ class Citation():
                 print(f'bibtex loaded {doi} from localdir')
         else:
             try:
-                r = requests.get(f'https://github.com/lmhale99/potentials/raw/master/data/bibtex/{localfile.name}')
+                r = requests.get(f'https://github.com/usnistgov/potentials/raw/master/data/bibtex/{localfile.name}')
                 r.raise_for_status()
                 entry = r.text
                 if verbose:
