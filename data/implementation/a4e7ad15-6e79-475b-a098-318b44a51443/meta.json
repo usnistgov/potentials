@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_IMD_BrommerBoissieuEuchner_2009_MgZn__MO_710767216198_003", 
+            "link-text": "EAM_IMD_BrommerBoissieuEuchner_2009_MgZn__MO_710767216198_003"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_IMD_BrommerBoissieuEuchner_2009_MgZn__MO_710767216198_003", 
-        "link-text": "EAM_IMD_BrommerBoissieuEuchner_2009_MgZn__MO_710767216198_003"
     }
 }

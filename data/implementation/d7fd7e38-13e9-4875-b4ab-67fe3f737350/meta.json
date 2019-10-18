@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/SW_HauchHollandMarder_1999Brittle_Si__MO_119167353542_004", 
+            "link-text": "SW_HauchHollandMarder_1999Brittle_Si__MO_119167353542_004"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/SW_HauchHollandMarder_1999Brittle_Si__MO_119167353542_004", 
-        "link-text": "SW_HauchHollandMarder_1999Brittle_Si__MO_119167353542_004"
     }
 }

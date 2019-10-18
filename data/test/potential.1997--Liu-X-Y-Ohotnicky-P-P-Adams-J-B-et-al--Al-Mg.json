@@ -1,0 +1,96 @@
+{
+    "interatomic-potential": {
+        "key": "b702ae33-5d66-40fb-84e6-f2840555459a", 
+        "id": "1997--Liu-X-Y-Ohotnicky-P-P-Adams-J-B-et-al--Al-Mg", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Anisotropic surface segregation in Al-Mg alloys", 
+                "author": [
+                    {
+                        "givenname": "X.-Y.", 
+                        "surname": "Liu"
+                    }, 
+                    {
+                        "givenname": "P.P.", 
+                        "surname": "Ohotnicky"
+                    }, 
+                    {
+                        "givenname": "J.B.", 
+                        "surname": "Adams"
+                    }, 
+                    {
+                        "givenname": "C.", 
+                        "surname": "Lane Rohrer"
+                    }, 
+                    {
+                        "givenname": "R.W.", 
+                        "surname": "Hyland"
+                    }
+                ], 
+                "publication-name": "Surface Science", 
+                "publication-date": {
+                    "year": "1997"
+                }, 
+                "volume": "373", 
+                "issue": "2-3", 
+                "abstract": "A set of embedded-atom method (EAM) potentials for Al-Mg alloys are developed using the \"force matching\" method. The potentials are fitted to both experimental data and a massive quantum mechanical database of atomic forces at finite temperatures. Using the potentials, Monte Carlo simulations are performed to study Mg segregation at different low-index surfaces of an Al alloy with 1\u201310 at% Mg. Surface enrichments of Mg of the order of 80% are found, and the segregation behavior is generally anisotropic. A set of discrete lattice-plane calculations, based on the nearest-neighbor broken-bond model corrected for strain energy, are shown to drastically reduce the anisotropy of surface segregation.", 
+                "pages": "357-370", 
+                "DOI": "10.1016/s0039-6028(96)01154-5"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "b1ff183e-7729-40c1-ac34-5164a31691d1", 
+                "id": "1997--Liu-X-Y--Al-Mg--table--ipr1", 
+                "status": "active", 
+                "date": "1995-05-22", 
+                "type": "EAM setfl", 
+                "notes": {
+                    "text": "mg-al-set.txt was obtained from <a href=\"http://enpub.fulton.asu.edu/cms/potentials/main/main.htm\" class=\"external\">http://enpub.fulton.asu.edu/cms/potentials/main/main.htm</a> and posted with the permission of J.B. Adams and X.-Y. Liu."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1997--Liu-X-Y-Ohotnicky-P-P-Adams-J-B-et-al--Al-Mg/1/mg-al-set.txt", 
+                        "link-text": "mg-al-set.txt"
+                    }
+                }
+            }, 
+            {
+                "key": "50ecee50-a150-4fc6-8fb3-2e31846792bf", 
+                "id": "1997--Liu-X-Y--Al-Mg--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2010-01-01", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "To make the mg-al-set.txt file compatible with the eam/alloy style in LAMMPS, replace line 4 with \"2 Mg Al\" and the \"D\"s with \"E\"s in the numbers. This has been done in mg-al-set.eam.alloy."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/1997--Liu-X-Y-Ohotnicky-P-P-Adams-J-B-et-al--Al-Mg/2/mg-al-set.eam.alloy", 
+                        "link-text": "mg-al-set.eam.alloy"
+                    }
+                }
+            }, 
+            {
+                "key": "935c8abc-1b93-43a8-83ad-1f006e32e6a7", 
+                "id": "MO_559870613549", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 1997--Liu-X-Y--Al-Mg--LAMMPS--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_LiuOhotnickyAdams_1997_AlMg__MO_559870613549_000", 
+                    "link-text": "EAM_Dynamo_LiuOhotnickyAdams_1997_AlMg__MO_559870613549_000"
+                }
+            }
+        ], 
+        "element": [
+            "Al", 
+            "Mg"
+        ]
+    }
+}

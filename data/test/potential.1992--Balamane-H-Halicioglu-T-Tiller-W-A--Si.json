@@ -1,0 +1,79 @@
+{
+    "interatomic-potential": {
+        "key": "91d8ddee-80cc-43b2-b06c-d9d427d36d23", 
+        "id": "1992--Balamane-H-Halicioglu-T-Tiller-W-A--Si", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": [
+                {
+                    "document-type": "journal", 
+                    "title": "Comparative study of silicon empirical interatomic potentials", 
+                    "author": [
+                        {
+                            "givenname": "H.", 
+                            "surname": "Balamane"
+                        }, 
+                        {
+                            "givenname": "T.", 
+                            "surname": "Halicioglu"
+                        }, 
+                        {
+                            "givenname": "W.A.", 
+                            "surname": "Tiller"
+                        }
+                    ], 
+                    "publication-name": "Physical Review B", 
+                    "publication-date": {
+                        "year": "1992"
+                    }, 
+                    "volume": "46", 
+                    "issue": "4", 
+                    "abstract": "We have performed a comparative study of six classical many-body potentials for silicon (Pearson, Takai, Halicioglu, and Tiller; Biswas and Hamann; Stillinger and Weber; Dodson, Tersoff 2, and Tersoff 3). Extensive static calculations have been performed using these potentials on Si<sub>n</sub> clusters (n=2\u20136), bulk point defects, elastic constants, polytypes, pressure-induced phase transformations, and surfaces [(111), (100), and (110)]. Similarities and differences between the six potentials have been identified, and their transferability as well as their accuracy with respect to experiment and first-principles methods have been assessed. In general, all of these potentials do a relatively poor job of modeling the energetics of small clusters as well as the various reconstructions of the Si(111) surface. They provide a fair to good description of the properties of bulk diamond cubic silicon, its intrinsic defects, and the Si(100) surface. Besides the fact that none of them models \u03c0 bonding, their inability to be more transferable lies in their inadequate description of the angular forces. Each potential has its strengths and limitations, but none of them appears to be clearly superior to the others, and none is totally transferrable. However, despite their shortcomings we feel that some of these potentials will be useful in large-scale simulations of materials-related problems. They can give valuable insights into phenomena that are otherwise intractable to investigate either experimentally or via first-principles methods.", 
+                    "pages": "2250-2279", 
+                    "DOI": "10.1103/physrevb.46.2250"
+                }, 
+                {
+                    "document-type": "journal", 
+                    "title": "Computer simulation of local order in condensed phases of silicon", 
+                    "author": [
+                        {
+                            "givenname": "F.H.", 
+                            "surname": "Stillinger"
+                        }, 
+                        {
+                            "givenname": "T.A.", 
+                            "surname": "Weber"
+                        }
+                    ], 
+                    "publication-name": "Physical Review B", 
+                    "publication-date": {
+                        "year": "1985"
+                    }, 
+                    "volume": "31", 
+                    "issue": "8", 
+                    "abstract": "A model potential-energy function comprising both two- and three-atom contributions is proposed to describe interactions in solid and liquid forms of Si. Implications of this potential are then explored by molecular-dynamics computer simulation, using 216 atoms with periodic boundary conditions. Starting with the diamond-structure crystal at low temperature, heating causes spontaneous nucleation and melting. The resulting liquid structurally resembles the real Si melt. By carrying out steepest-descent mappings of system configurations onto potential-energy minima, two main conclusions emerge: (1) a temperature-independent inherent structure underlies the liquid phase, just as for \"simple\" liquids with only pair interactions; (2) the Lindemann melting criterion for the crystal apparently can be supplemented by a freezing criterion for the liquid, where both involve critical values of appropriately defined mean displacements from potential minima.", 
+                    "pages": "5262-5271", 
+                    "DOI": "10.1103/physrevb.31.5262"
+                }
+            ], 
+            "notes": {
+                "text": "This is a Stillinger-Weber (SW) parameterization for Si with a rescaled value of the epsilon parameter used in the original SW potential. The original epsilon value is 2.1682 eV. Balamane, Halicioglu and Tiller (1992) rescaled it to 2.315 eV to obtain the experimental cohesive energy E_coh = 4.63 eV. The original SW potential gives E_coh = 4.3364 eV."
+            }
+        }, 
+        "implementation": {
+            "key": "a7e76785-9ea1-4ef6-b3dc-73634723d2c4", 
+            "id": "MO_113686039439", 
+            "status": "active", 
+            "date": "2019-08-09", 
+            "type": "OpenKIM", 
+            "notes": {
+                "text": "Taken from https://openkim.org."
+            }, 
+            "web-link": {
+                "URL": "https://openkim.org/id/SW_BalamaneHaliciogluTiller_1992_Si__MO_113686039439_004", 
+                "link-text": "SW_BalamaneHaliciogluTiller_1992_Si__MO_113686039439_004"
+            }
+        }, 
+        "element": "Si"
+    }
+}

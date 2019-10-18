@@ -1,0 +1,69 @@
+{
+    "interatomic-potential": {
+        "key": "8d55ef4d-6451-453e-b636-5ff1e2552d18", 
+        "id": "2012--Proville-L-Rodney-D-Marinica-M-C--Fe", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Quantum effect on thermally activated glide of dislocations", 
+                "author": [
+                    {
+                        "givenname": "L.", 
+                        "surname": "Proville"
+                    }, 
+                    {
+                        "givenname": "D.", 
+                        "surname": "Rodney"
+                    }, 
+                    {
+                        "givenname": "M.-C.", 
+                        "surname": "Marinica"
+                    }
+                ], 
+                "publication-name": "Nature Materials", 
+                "publication-date": {
+                    "year": "2012"
+                }, 
+                "volume": "11", 
+                "issue": "10", 
+                "abstract": "Crystal plasticity involves the motion of dislocations under stress. So far, atomistic simulations of this process have predicted Peierls stresses, the stress needed to overcome the crystal resistance in the absence of thermal fluctuations, of more than twice the experimental values, a discrepancy best-known in body-centred cubic crystals. Here we show that a large contribution arises from the crystal zero-point vibrations, which ease dislocation motion below typically half the Debye temperature. Using Wigner\u2019s quantum transition state theory in atomistic models of crystals, we found a large decrease of the kink-pair formation enthalpy due to the quantization of the crystal vibrational modes. Consequently, the flow stress predicted by Orowan\u2019s law is strongly reduced when compared with its classical approximation and in much closer agreement with experiments. This work advocates that quantum mechanics should be accounted for in simulations of materials and not only at very low temperatures or in light-atom systems.", 
+                "pages": "845-849", 
+                "DOI": "10.1038/nmat3401"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "98713310-57ee-4917-93b5-af7f9ece7b3f", 
+                "id": "2012--Proville-L--Fe--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2017-01-10", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "This file was sent by M.-C. Marinica (CEA, France) on 10 January 2017 and posted with his permission."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2012--Proville-L-Rodney-D-Marinica-M-C--Fe/1/MCM2011_eam.fs", 
+                        "link-text": "MCM2011_eam.fs"
+                    }
+                }
+            }, 
+            {
+                "key": "cafb1474-11e3-4c13-926f-ae1cc2940d94", 
+                "id": "MO_255315407910", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2012--Proville-L--Fe--LAMMPS--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_Marinica_2011_Fe__MO_255315407910_000", 
+                    "link-text": "EAM_Dynamo_Marinica_2011_Fe__MO_255315407910_000"
+                }
+            }
+        ], 
+        "element": "Fe"
+    }
+}

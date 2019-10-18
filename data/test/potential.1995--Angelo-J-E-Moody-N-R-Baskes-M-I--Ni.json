@@ -1,0 +1,51 @@
+{
+    "interatomic-potential": {
+        "key": "0c463dfe-3bf7-47be-9d13-041cc425ec10", 
+        "id": "1995--Angelo-J-E-Moody-N-R-Baskes-M-I--Ni", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Trapping of hydrogen to lattice defects in nickel", 
+                "author": [
+                    {
+                        "givenname": "J.E.", 
+                        "surname": "Angelo"
+                    }, 
+                    {
+                        "givenname": "N.R.", 
+                        "surname": "Moody"
+                    }, 
+                    {
+                        "givenname": "M.I.", 
+                        "surname": "Baskes"
+                    }
+                ], 
+                "publication-name": "Modelling and Simulation in Materials Science and Engineering", 
+                "publication-date": {
+                    "year": "1995"
+                }, 
+                "volume": "3", 
+                "issue": "3", 
+                "abstract": "This paper addresses the energy associated with the trapping of hydrogen to defects in a nickel lattice. Several dislocations and grain boundaries which occur in nickel are studied. The dislocations include an edge, a screw, and a Lomer dislocation in the locked configuration, i.e. a Lomer-Cottrell lock (LCL). For both the edge and screw dislocations, the maximum trap site energy is approximately 0.1 eV occurring in the region where the lattice is in tension approximately 3-4 angstroms from the dislocation core. For the Lomer-Cottrell lock, the maximum binding energy is 0.33 eV and is located at the core of the a/6(110) dislocation. Several low-index coincident site lattice grain boundaries are investigated, specifically the Sigma 3(112), Sigma 9(221) and Sigma 11(113) tilt boundaries. The boundaries all show a maximum binding energy of approximately 0.25 eV at the tilt boundary. Relaxation of the boundary structures produces an asymmetric atomic structure for both the Sigma 3 and Sigma 9 boundaries and a symmetric structure for the Sigma 11 tilt boundary. The results of this study can be compared to recent experimental studies showing that the activation energy for hydrogen-initiated failure is approximately 0.3-0.4 eV in the Fe-based superalloy IN903. From the results of this comparison it can be concluded that the embrittlement process is likely associated with the trapping of hydrogen to grain boundaries and Lomer-Cottrell locks.", 
+                "pages": "289-307", 
+                "DOI": "10.1088/0965-0393/3/3/001"
+            }
+        }, 
+        "implementation": {
+            "key": "7e762c90-5ab0-4d49-a435-29b48218fbe3", 
+            "id": "MO_800536961967", 
+            "status": "active", 
+            "date": "2019-08-08", 
+            "type": "OpenKIM", 
+            "notes": {
+                "text": "Taken from https://openkim.org.  The potential was smoothed by Laurent Dupuy to obtain consistent and continuous derivatives."
+            }, 
+            "web-link": {
+                "URL": "https://openkim.org/id/EAM_CubicNaturalSpline_AngeloMoody_1995_Ni__MO_800536961967_002", 
+                "link-text": "EAM_CubicNaturalSpline_AngeloMoody_1995_Ni__MO_800536961967_002"
+            }
+        }, 
+        "element": "Ni"
+    }
+}

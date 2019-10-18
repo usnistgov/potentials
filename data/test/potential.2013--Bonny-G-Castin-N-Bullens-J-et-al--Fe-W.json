@@ -1,0 +1,84 @@
+{
+    "interatomic-potential": {
+        "key": "64d55ff4-a0d4-4eb6-897f-56c6d3c0154e", 
+        "id": "2013--Bonny-G-Castin-N-Bullens-J-et-al--Fe-W", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "On the mobility of vacancy clusters in reduced activation steels: an atomistic study in the Fe-Cr-W model alloy", 
+                "author": [
+                    {
+                        "givenname": "G.", 
+                        "surname": "Bonny"
+                    }, 
+                    {
+                        "givenname": "N.", 
+                        "surname": "Castin"
+                    }, 
+                    {
+                        "givenname": "J.", 
+                        "surname": "Bullens"
+                    }, 
+                    {
+                        "givenname": "A.", 
+                        "surname": "Bakaev"
+                    }, 
+                    {
+                        "givenname": "T.C.P.", 
+                        "surname": "Klaver"
+                    }, 
+                    {
+                        "givenname": "D.", 
+                        "surname": "Terentyev"
+                    }
+                ], 
+                "publication-name": "Journal of Physics: Condensed Matter", 
+                "publication-date": {
+                    "year": "2013"
+                }, 
+                "volume": "25", 
+                "issue": "31", 
+                "abstract": "Reduced activation steels are considered as structural materials for future fusion reactors. Besides iron and the main alloying element chromium, these steels contain other minor alloying elements, typically tungsten, vanadium and tantalum. In this work we study the impact of chromium and tungsten, being major alloying elements of ferritic Fe\u2013Cr\u2013W-based steels, on the stability and mobility of vacancy defects, typically formed under irradiation in collision cascades. For this purpose, we perform ab initio calculations, develop a many-body interatomic potential (EAM formalism) for large-scale calculations, validate the potential and apply it using an atomistic kinetic Monte Carlo method to characterize the lifetime and diffusivity of vacancy clusters. To distinguish the role of Cr and W we perform atomistic kinetic Monte Carlo simulations in Fe\u2013Cr, Fe\u2013W and Fe\u2013Cr\u2013W alloys. Within the limitation of transferability of the potentials it is found that both Cr and W enhance the diffusivity of vacancy clusters, while only W strongly reduces their lifetime. The cluster lifetime reduction increases with W concentration and saturates at about 1-2 at.%. The obtained results imply that W acts as an efficient 'breaker' of small migrating vacancy clusters and therefore the short-term annealing process of cascade debris is modified by the presence of W, even in small concentrations.", 
+                "pages": "315401", 
+                "DOI": "10.1088/0953-8984/25/31/315401"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "0216ae4e-9b99-4b4b-9f45-426b0022e420", 
+                "id": "2013--Bonny-G--Fe-W--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2018-03-07", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was provided by Giovanni Bonny (Nuclear Materials Science Institute of SCK-CEN, Belgium) on 7 Mar. 2018 and posted with his permission. Dr. Bonny noted that this potential was not stiffened and cannot be used in its present form for collision cascades."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2013--Bonny-G-Castin-N-Bullens-J-et-al--Fe-W/1/FeW.eam.alloy", 
+                        "link-text": "FeW.eam.alloy"
+                    }
+                }
+            }, 
+            {
+                "key": "f2cdb3a7-5cd2-4d5e-9d02-a845c8ebcd1e", 
+                "id": "MO_737567242631", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2013--Bonny-G--Fe-W--LAMMPS--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_BonnyCastinBullens_2013_FeW__MO_737567242631_000", 
+                    "link-text": "EAM_Dynamo_BonnyCastinBullens_2013_FeW__MO_737567242631_000"
+                }
+            }
+        ], 
+        "element": [
+            "Fe", 
+            "W"
+        ]
+    }
+}

@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential corresponds to the GaN.sw distributed with the LAMMPS package, but the parameter file format is different."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/SW_BereSerra_2006_GaN__MO_861114678890_000", 
+            "link-text": "SW_BereSerra_2006_GaN__MO_861114678890_000"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/SW_BereSerra_2006_GaN__MO_861114678890_000", 
-        "link-text": "SW_BereSerra_2006_GaN__MO_861114678890_000"
     }
 }

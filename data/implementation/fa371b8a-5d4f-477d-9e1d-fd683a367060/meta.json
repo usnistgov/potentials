@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_ErcolessiAdams_1994_Al__MO_123629422045_005", 
+            "link-text": "EAM_Dynamo_ErcolessiAdams_1994_Al__MO_123629422045_005"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_ErcolessiAdams_1994_Al__MO_123629422045_005", 
-        "link-text": "EAM_Dynamo_ErcolessiAdams_1994_Al__MO_123629422045_005"
     }
 }

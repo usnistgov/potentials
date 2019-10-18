@@ -1,0 +1,60 @@
+{
+    "interatomic-potential": {
+        "key": "21fd9cb3-626b-4c40-b049-ecccd27f4646", 
+        "id": "2003--Nord-J-Albe-K-Erhart-P-Nordlund-K--Ga-N", 
+        "record-version": "2018-10-10", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Modelling of compound semiconductors: analytical bond-order potential for gallium, nitrogen and gallium nitride", 
+                "author": [
+                    {
+                        "givenname": "J.", 
+                        "surname": "Nord"
+                    }, 
+                    {
+                        "givenname": "K.", 
+                        "surname": "Albe"
+                    }, 
+                    {
+                        "givenname": "P.", 
+                        "surname": "Erhart"
+                    }, 
+                    {
+                        "givenname": "K.", 
+                        "surname": "Nordlund"
+                    }
+                ], 
+                "publication-name": "Journal of Physics: Condensed Matter", 
+                "publication-date": {
+                    "year": "2003"
+                }, 
+                "volume": "15", 
+                "issue": "32", 
+                "abstract": "An analytical bond-order potential for GaN is presented that describes a wide range of structural properties of GaN as well as bonding and structure of the pure constituents. For the systematic fit of the potential parameters reference data are taken from total-energy calculations within the density functional theory if not available from experiments. Although long-range interactions are not explicitly included in the potential, the present model provides a good fit to different structural geometries including defects and high-pressure phases of GaN.", 
+                "pages": "5649-5662", 
+                "DOI": "10.1088/0953-8984/15/32/324"
+            }
+        }, 
+        "implementation": {
+            "key": "89f7ead2-e5d1-4f01-a325-405b0b35a108", 
+            "id": "2003--Nord-J--Ga-N--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-10-10", 
+            "type": "LAMMPS pair_style tersoff", 
+            "notes": {
+                "text": "This file was created and verified by Lucas Hale. The parameter values are comparable to those in the GaN.tersoff file in the August 22, 2018 LAMMPS distribution with this file using higher precision for the derived parameters. The parameter values are identical to the ones in the parameter file used by openKIM model MO_612061685362_001."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Nord-J-Albe-K-Erhart-P-Nordlund-K--Ga-N/1/2003_GaN.tersoff", 
+                    "link-text": "2003_GaN.tersoff"
+                }
+            }
+        }, 
+        "element": [
+            "Ga", 
+            "N"
+        ]
+    }
+}

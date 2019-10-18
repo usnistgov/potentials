@@ -1,0 +1,76 @@
+{
+    "interatomic-potential": {
+        "key": "f8613831-ee3a-431f-b9bd-468a0ee05664", 
+        "id": "2005--Mendelev-M-I-Srolovitz-D-J-Ackland-G-J-Han-S--Al-Fe", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Effect of Fe Segregation on the Migration of a Non-Symmetric \u03a35 Tilt Grain Boundary in Al", 
+                "author": [
+                    {
+                        "givenname": "M.I.", 
+                        "surname": "Mendelev"
+                    }, 
+                    {
+                        "givenname": "D.J.", 
+                        "surname": "Srolovitz"
+                    }, 
+                    {
+                        "givenname": "G.J.", 
+                        "surname": "Ackland"
+                    }, 
+                    {
+                        "givenname": "S.", 
+                        "surname": "Han"
+                    }
+                ], 
+                "publication-name": "Journal of Materials Research", 
+                "publication-date": {
+                    "year": "2005"
+                }, 
+                "volume": "20", 
+                "issue": "01", 
+                "abstract": "We present an analysis, based upon atomistic simulation data, of the effect of Fe impurities on grain boundary migration in Al. The first step is the development of a new interatomic potential for Fe in Al. This potential provides an accurate description of Al\u2013Fe liquid diffraction data and the bulk diffusivity of Fe in Al. We use this potential to determine the physical parameters in the Cahn\u2013L\u00fccke\u2013St\u00fcwe (CLS) model for the effect of impurities on grain boundary mobility. These include the heat of segregation of Fe to grain boundaries in Al and the diffusivity of Fe in Al. Using the simulation-parameterized CLS model, we predict the grain boundary mobility in Al in the presence of Fe as a function of temperature and Fe concentration. The order of magnitude and the trends in the mobility from the simulations are in agreement with existing experimental results.", 
+                "pages": "208-218", 
+                "DOI": "10.1557/jmr.2005.0024"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "28c0fe14-f6f2-4a0c-ac95-9d0e34c1534a", 
+                "id": "2005--Mendelev-M-I--Al-Fe--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2007-01-01", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "This file was provided by Mikhail Mendelev.  Except for the comment lines, this file is identical to \"AlFe_mm.eam.fs\" in the August 22, 2018 LAMMPS distribution."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2005--Mendelev-M-I-Srolovitz-D-J-Ackland-G-J-Han-S--Al-Fe/1/Al-Fe.eam.fs", 
+                        "link-text": "Al-Fe.eam.fs"
+                    }
+                }
+            }, 
+            {
+                "key": "c2225882-97b6-4cfa-9abb-c31693eeaea2", 
+                "id": "MO_577453891941", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2005--Mendelev-M-I--Al-Fe--LAMMPS--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_MendelevSrolovitzAckland_2005_AlFe__MO_577453891941_005", 
+                    "link-text": "EAM_Dynamo_MendelevSrolovitzAckland_2005_AlFe__MO_577453891941_005"
+                }
+            }
+        ], 
+        "element": [
+            "Al", 
+            "Fe"
+        ]
+    }
+}

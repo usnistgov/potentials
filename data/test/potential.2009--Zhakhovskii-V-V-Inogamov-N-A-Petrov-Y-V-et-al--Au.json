@@ -1,0 +1,80 @@
+{
+    "interatomic-potential": {
+        "key": "dd5ace05-9089-4586-a1a9-a8a7ac3f4695", 
+        "id": "2009--Zhakhovskii-V-V-Inogamov-N-A-Petrov-Y-V-et-al--Au", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Molecular dynamics simulation of femtosecond ablation and spallation with different interatomic potentials", 
+                "author": [
+                    {
+                        "givenname": "V.V.", 
+                        "surname": "Zhakhovskii"
+                    }, 
+                    {
+                        "givenname": "N.A.", 
+                        "surname": "Inogamov"
+                    }, 
+                    {
+                        "givenname": "Y.V.", 
+                        "surname": "Petrov"
+                    }, 
+                    {
+                        "givenname": "S.I.", 
+                        "surname": "Ashitkov"
+                    }, 
+                    {
+                        "givenname": "K.", 
+                        "surname": "Nishihara"
+                    }
+                ], 
+                "publication-name": "Applied Surface Science", 
+                "publication-date": {
+                    "year": "2009"
+                }, 
+                "volume": "255", 
+                "issue": "24", 
+                "abstract": "Fast heating of target material by femtosecond laser pulse (fsLP) with duration \u03c4L~40\u2013100fs results in the formation of thermomechanically stressed state. Its unloading may cause frontal cavitation of subsurface layer at a depth of 50nm for Al and 100nm for Au. The compression wave propagating deep into material hits the rear-side of the target with the formation of rarefaction wave. The last may produce cracks and rear-side spallation. Results of MD simulations of ablation and spallation of Al and Au metals under action fsLP are presented. It is shown that the used EAM potentials (Mishin et al. and our new one) predict the different ablation and spallation thresholds on absorbed fluence in Al: ablation Fa=6065mJ/cm2 and spallation Fs=120190mJ/cm2, where numbers in brackets  show the corresponding values for Mishin potential. The strain rate in spallation zone was 4.3\u00d710^9 1/s at spallation threshold. Simulated spall strength of Al is 7.48.7GPa, that is noticeably less than 10.314GPa obtained from acoustic approximation with the use of velocity pullback on velocity profile of free rear surface. The ablation threshold Fa\u2248120mJ/cm2 and crater depth of 110nm are obtained in MD simulations of gold with the new EAM potential. They agree well with experiment.", 
+                "pages": "9592-9596", 
+                "DOI": "10.1016/j.apsusc.2009.04.082"
+            }, 
+            "notes": {
+                "text": "Dr. Zhakhovsky noted that the potential was used in several works related to MD simulations of laser ablation and shock-wave loading, and that the potential was designed to reproduce the cold stress curves, the shock Hugoniot, and the melting point with good accuracy."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "bc67e191-32b2-4001-b4f6-3f860bdc70c7", 
+                "id": "2009--Zhakhovskii-V-V--Au--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2017-02-25", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "These files were sent by V.V. Zhakhovsky (VNIIA) on 25 Feb. 2017 and posted with his permission."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2009--Zhakhovskii-V-V-Inogamov-N-A-Petrov-Y-V-et-al--Au/1/Au-2009.eam.alloy", 
+                        "link-text": "Au-2009.eam.alloy"
+                    }
+                }
+            }, 
+            {
+                "key": "35c11226-2455-4d73-b78a-702fb5bafcfa", 
+                "id": "MO_173248269481", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2009--Zhakhovskii-V-V--Au--LAMMPS--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_Zhakhovsky_2009_Au__MO_173248269481_000", 
+                    "link-text": "EAM_Dynamo_Zhakhovsky_2009_Au__MO_173248269481_000"
+                }
+            }
+        ], 
+        "element": "Au"
+    }
+}

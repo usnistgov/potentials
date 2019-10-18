@@ -13,6 +13,8 @@ from bibtexparser.customization import convert_to_unicode
 from bibtexparser.bibdatabase import BibDatabase
 
 from .. import rootdir
+from ..tools import parse_authors
+
 
 class Citation():
 
@@ -139,7 +141,7 @@ class Citation():
         htmlstr = ''
 
         if 'author' in self.content:
-            author_dicts = self.author_dicts()
+            author_dicts = parse_authors(self.content['author'])
             numauthors = len(author_dicts)
             for i, author_dict in enumerate(author_dicts):
 
@@ -183,47 +185,4 @@ class Citation():
 
         return htmlstr
 
-    def author_dicts(self, initials=True):
-        """
-        Parse bibtex authors field.
-        """
-        author_dicts = []
-        authors = self.content['author']
-
-        # Split authors using 'and'
-        authorlist = authors.split(' and ') 
-        
-        for author in authorlist:
-            author_dict = {}
-            
-            # split given, surname using comma
-            if ',' in author:
-                index = author.rindex(',')
-                author_dict['givenname'] = author[index + 1:].strip()
-                author_dict['surname'] = author[:index].strip()
-
-            # split given, surname using rightmost initial
-            if '.' in author:  
-                index = author.rindex(".")
-                author_dict['givenname'] = author[:index + 1].strip()
-                author_dict['surname'] = author[index + 1:].strip()
-            
-            # split given, surname using rightmost space
-            else: 
-                index = author.rindex(" ")
-                author_dict['givenname'] = author[:index + 1].strip()
-                author_dict['surname'] = author[index + 1:].strip()
-            
-            # Change given-name just into initials
-            if initials:
-                givenname = ''
-                for letter in author_dict['givenname'].replace(' ', '').replace('.', ''):
-                    if letter in string.ascii_uppercase:
-                        givenname += letter +'.'
-                    elif letter in ['-']:
-                        givenname += letter
-                author_dict['givenname'] = givenname
-            
-            author_dicts.append(author_dict)
-        
-        return author_dicts
+    

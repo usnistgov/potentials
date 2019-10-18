@@ -1,0 +1,59 @@
+{
+    "interatomic-potential": {
+        "key": "6c0f6df2-88e4-451b-833e-b9a0d3ccdc34", 
+        "id": "2018--Etesami-S-A-Asadi-E--Fe", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Molecular dynamics for near melting temperatures simulations of metals using modified embedded-atom method", 
+                "author": [
+                    {
+                        "givenname": "S.A.", 
+                        "surname": "Etesami"
+                    }, 
+                    {
+                        "givenname": "E.", 
+                        "surname": "Asadi"
+                    }
+                ], 
+                "publication-name": "Journal of Physics and Chemistry of Solids", 
+                "publication-date": {
+                    "year": "2018"
+                }, 
+                "volume": "112", 
+                "abstract": "Availability of a reliable interatomic potential is one of the major challenges in utilizing molecular dynamics (MD) for simulations of metals at near the melting temperatures and melting point (MP). Here, we propose a novel approach to address this challenge in the concept of modified-embedded-atom (MEAM) interatomic potential; also, we apply the approach on iron, nickel, copper, and aluminum as case studies. We propose adding experimentally available high temperature elastic constants and MP of the element to the list of typical low temperature properties used for the development of MD interatomic potential parameters. We show that the proposed approach results in a reasonable agreement between the MD calculations of melting properties such as latent heat, expansion in melting, liquid structure factor, and solid-liquid interface stiffness and their experimental/computational counterparts. Then, we present the physical properties of mentioned elements near melting temperatures using the new MEAM parameters. We observe that the behavior of elastic constants, heat capacity and thermal linear expansion coefficient at room temperature compared to MP follows an empirical linear relation (\u03b1\u00b1\u03b2 \u00d7 MP) for transition metals. Furthermore, a linear relation between the tetragonal shear modulus and the enthalpy change from room temperature to MP is observed for face-centered cubic materials.", 
+                "pages": "61-72", 
+                "DOI": "10.1016/j.jpcs.2017.09.001"
+            }, 
+            "notes": {
+                "text": "S. A. Etesami (University of Memphis) noted that \"We added both melting point and high temperature elastic constants into material properties database for MEAM parameter development process.\""
+            }
+        }, 
+        "implementation": {
+            "key": "5796a72b-bcf4-4dd4-a0f3-ee5f462b7f7c", 
+            "id": "2018--Etesami-S-A--Fe--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-04-23", 
+            "type": "LAMMPS pair_style meam", 
+            "notes": {
+                "text": "These files were sent by S. A. Etesami (University of Memphis) on 23 April 2018 and posted with his permission. This version is compatible with LAMMPS."
+            }, 
+            "artifact": [
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Etesami-S-A-Asadi-E--Fe/1/Fe.meam", 
+                        "link-text": "Fe.meam"
+                    }
+                }, 
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Etesami-S-A-Asadi-E--Fe/1/library.Fe.meam", 
+                        "link-text": "library.Fe.meam"
+                    }
+                }
+            ]
+        }, 
+        "element": "Fe"
+    }
+}

@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_MagneticCubic_DudarevDerlet_2005_Fe__MO_135034229282_002", 
+            "link-text": "EAM_MagneticCubic_DudarevDerlet_2005_Fe__MO_135034229282_002"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_MagneticCubic_DudarevDerlet_2005_Fe__MO_135034229282_002", 
-        "link-text": "EAM_MagneticCubic_DudarevDerlet_2005_Fe__MO_135034229282_002"
     }
 }

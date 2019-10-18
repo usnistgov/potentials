@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/SW_ZhangXieHu_2014OptimizedSW2_Si__MO_475612090600_004", 
+            "link-text": "SW_ZhangXieHu_2014OptimizedSW2_Si__MO_475612090600_004"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/SW_ZhangXieHu_2014OptimizedSW2_Si__MO_475612090600_004", 
-        "link-text": "SW_ZhangXieHu_2014OptimizedSW2_Si__MO_475612090600_004"
     }
 }

@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the same files as 1986--Foiles-S-M--Cu--LAMMPS--ipr1."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_FoilesBaskesDaw_1986Universal3_Cu__MO_666348409573_004", 
+            "link-text": "EAM_Dynamo_FoilesBaskesDaw_1986Universal3_Cu__MO_666348409573_004"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_FoilesBaskesDaw_1986Universal3_Cu__MO_666348409573_004", 
-        "link-text": "EAM_Dynamo_FoilesBaskesDaw_1986Universal3_Cu__MO_666348409573_004"
     }
 }

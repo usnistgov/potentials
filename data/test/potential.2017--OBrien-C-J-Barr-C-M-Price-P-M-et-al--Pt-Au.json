@@ -1,0 +1,88 @@
+{
+    "interatomic-potential": {
+        "key": "702f778d-fe20-45b2-8494-910be7453f48", 
+        "id": "2017--OBrien-C-J-Barr-C-M-Price-P-M-et-al--Pt-Au", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Grain boundary phase transformations in PtAu and relevance to thermal stabilization of bulk nanocrystalline metals", 
+                "author": [
+                    {
+                        "givenname": "C.J.", 
+                        "surname": "O'Brien"
+                    }, 
+                    {
+                        "givenname": "C.M.", 
+                        "surname": "Barr"
+                    }, 
+                    {
+                        "givenname": "P.M.", 
+                        "surname": "Price"
+                    }, 
+                    {
+                        "givenname": "K.", 
+                        "surname": "Hattar"
+                    }, 
+                    {
+                        "givenname": "S.M.", 
+                        "surname": "Foiles"
+                    }
+                ], 
+                "publication-name": "Journal of Materials Science", 
+                "publication-date": {
+                    "year": "2017"
+                }, 
+                "volume": "53", 
+                "issue": "4", 
+                "abstract": "There has recently been a great deal of interest in employing immiscible solutes to stabilize nanocrystalline microstructures. Existing modeling efforts largely rely on mesoscale Monte Carlo approaches that employ a simplified model of the microstructure and result in highly homogeneous segregation to grain boundaries. However, there is ample evidence from experimental and modeling studies that demonstrates segregation to grain boundaries is highly non-uniform and sensitive to boundary character. This work employs a realistic nanocrystalline microstructure with experimentally relevant global solute concentrations to illustrate inhomogeneous boundary segregation. Experiments quantifying segregation in thin films are reported that corroborate the prediction that grain boundary segregation is highly inhomogeneous. In addition to grain boundary structure modifying the degree of segregation, the existence of a phase transformation between low and high solute content grain boundaries is predicted. In order to conduct this study, new embedded atom method interatomic potentials are developed for Pt, Au, and the PtAu binary alloy.", 
+                "pages": "2911-2927", 
+                "DOI": "10.1007/s10853-017-1706-1"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "d8796b09-6939-4707-b44b-c8036fd2fddc", 
+                "id": "2017--OBrien-C-J--Pt-Au--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2018-05-07", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This file was submitted by Dr. C.J. O'Brien (Sandia National Laboratories) on 07 May 2018. Dr. O'Brien also provided a description of the potential and its implementation, which can be found in OBrien-SI.pdf."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--OBrien-C-J-Barr-C-M-Price-P-M-et-al--Pt-Au/1/PtAu.eam.alloy", 
+                            "link-text": "PtAu.eam.alloy"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--OBrien-C-J-Barr-C-M-Price-P-M-et-al--Pt-Au/1/OBrien-SI.pdf", 
+                            "link-text": "OBrien-SI.pdf"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "4b939b81-ce16-4d0c-bae6-81316f8b0a06", 
+                "id": "MO_946831081299", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2017--OBrien-C-J--Pt-Au--LAMMPS--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_OBrienBarrPrice_2018_PtAu__MO_946831081299_000", 
+                    "link-text": "EAM_Dynamo_OBrienBarrPrice_2018_PtAu__MO_946831081299_000"
+                }
+            }
+        ], 
+        "element": [
+            "Pt", 
+            "Au"
+        ]
+    }
+}

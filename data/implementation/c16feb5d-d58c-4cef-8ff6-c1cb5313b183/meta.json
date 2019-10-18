@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2012--Purja-Pun-G-P--Co--LAMMPS--ipr1."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_PunMishin_2012_Co__MO_885079680379_005", 
+            "link-text": "EAM_Dynamo_PunMishin_2012_Co__MO_885079680379_005"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_PunMishin_2012_Co__MO_885079680379_005", 
-        "link-text": "EAM_Dynamo_PunMishin_2012_Co__MO_885079680379_005"
     }
 }

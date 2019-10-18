@@ -1,0 +1,48 @@
+{
+    "interatomic-potential": {
+        "key": "c37d42e0-1455-4e73-a862-6547a82d99a4", 
+        "id": "2017--Mahdizadeh-S-J-Akhlamadi-G--Ge", 
+        "record-version": "2018-10-10", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Optimized Tersoff empirical potential for germanene", 
+                "author": [
+                    {
+                        "givenname": "S.J.", 
+                        "surname": "Mahdizadeh"
+                    }, 
+                    {
+                        "givenname": "G.", 
+                        "surname": "Akhlamadi"
+                    }
+                ], 
+                "publication-name": "Journal of Molecular Graphics and Modelling", 
+                "publication-date": {
+                    "year": "2017"
+                }, 
+                "volume": "72", 
+                "abstract": "In the current work, the issue of re-parameterization of Tersoff empirical potential model was addressed for 2D nanomaterial \u2018germanene\u2019 to be applied in molecular dynamics simulation based studies. The well-known chi-square minimization procedure was used to optimize the original Tersoff potential parameters. Many properties of germanene were extracted using both original and optimized Tersoff potentials and they compared with the corresponding density functional theory data. According to the results, the optimized Tersoff potential provides a significant improvement in many structural, thermodynamic, mechanical, and thermal properties of geramanene.", 
+                "pages": "1-5", 
+                "DOI": "10.1016/j.jmgm.2016.11.009"
+            }
+        }, 
+        "implementation": {
+            "key": "e0ee48bf-642c-49fb-a0ef-ea8283d1d5e2", 
+            "id": "2017--Mahdizadeh-S-J--Ge--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-10-10", 
+            "type": "LAMMPS pair_style tersoff", 
+            "notes": {
+                "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2017--Mahdizadeh-S-J-Akhlamadi-G--Ge/1/Ge.tersoff", 
+                    "link-text": "Ge.tersoff"
+                }
+            }
+        }, 
+        "element": "Ge"
+    }
+}

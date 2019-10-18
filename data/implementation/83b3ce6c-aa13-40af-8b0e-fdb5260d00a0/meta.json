@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 1990--Ackland-G-J--Cu--LAMMPS--ipr1."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_AcklandVitek_1990_Cu__MO_642748370624_000", 
+            "link-text": "EAM_Dynamo_AcklandVitek_1990_Cu__MO_642748370624_000"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_AcklandVitek_1990_Cu__MO_642748370624_000", 
-        "link-text": "EAM_Dynamo_AcklandVitek_1990_Cu__MO_642748370624_000"
     }
 }

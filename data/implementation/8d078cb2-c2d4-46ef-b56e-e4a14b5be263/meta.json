@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/LJ_Truncated_Nguyen_2005_Ar__MO_398194508715_001", 
+            "link-text": "LJ_Truncated_Nguyen_2005_Ar__MO_398194508715_001"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/LJ_Truncated_Nguyen_2005_Ar__MO_398194508715_001", 
-        "link-text": "LJ_Truncated_Nguyen_2005_Ar__MO_398194508715_001"
     }
 }

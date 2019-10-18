@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/TT_Modified_HellmannBichVogel_2007_He__MO_126942667206_002", 
+            "link-text": "TT_Modified_HellmannBichVogel_2007_He__MO_126942667206_002"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/TT_Modified_HellmannBichVogel_2007_He__MO_126942667206_002", 
-        "link-text": "TT_Modified_HellmannBichVogel_2007_He__MO_126942667206_002"
     }
 }

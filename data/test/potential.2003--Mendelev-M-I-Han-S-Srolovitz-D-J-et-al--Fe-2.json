@@ -1,0 +1,158 @@
+{
+    "interatomic-potential": {
+        "key": "06bf7ccd-ea6a-4744-bfbc-adefa5bcdd60", 
+        "id": "2003--Mendelev-M-I-Han-S-Srolovitz-D-J-et-al--Fe-2", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Development of new interatomic potentials appropriate for crystalline and liquid iron", 
+                "author": [
+                    {
+                        "givenname": "M.I.", 
+                        "surname": "Mendelev"
+                    }, 
+                    {
+                        "givenname": "S.", 
+                        "surname": "Han"
+                    }, 
+                    {
+                        "givenname": "D.J.", 
+                        "surname": "Srolovitz"
+                    }, 
+                    {
+                        "givenname": "G.J.", 
+                        "surname": "Ackland"
+                    }, 
+                    {
+                        "givenname": "D.Y.", 
+                        "surname": "Sun"
+                    }, 
+                    {
+                        "givenname": "M.", 
+                        "surname": "Asta"
+                    }
+                ], 
+                "publication-name": "Philosophical Magazine", 
+                "publication-date": {
+                    "year": "2003"
+                }, 
+                "volume": "83", 
+                "issue": "35", 
+                "abstract": "Two procedures were developed to fit interatomic potentials of the embedded-atom method (EAM) form and applied to determine a potential which describes crystalline and liquid iron. While both procedures use perfect crystal and crystal defect data, the first procedure also employs the first-principles forces in a model liquid and the second procedure uses experimental liquid structure factor data. These additional types of information were incorporated to ensure more reasonable descriptions of atomic interactions at small separations than is provided using standard approaches, such as fitting to the universal binding energy relation. The new potentials (provided herein) are, on average, in better agreement with the experimental or first-principles lattice parameter, elastic constants, point-defect energies, bcc\u2013fcc transformation energy, liquid density, liquid structure factor, melting temperature and other properties than other existing EAM iron potentials.", 
+                "pages": "3977-3994", 
+                "DOI": "10.1080/14786430310001613264"
+            }, 
+            "notes": {
+                "text": "This listing is for the reference's Fe #2 interaction parameters."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "e75dc1ae-b430-4ad5-9731-f6e2c8944d08", 
+                "id": "2003--Mendelev-M-I--Fe-2--LAMMPS--ipr1", 
+                "status": "superseded", 
+                "date": "2007-06-10", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "This file was provided by Mikhail Mendelev on Jun 10, 2007.  Except for comments, this file is identical to \"Fe_mm.eam.fs\" in the August 22, 2018 LAMMPS distribution."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Mendelev-M-I-Han-S-Srolovitz-D-J-et-al--Fe-2/1/Fe_2.eam.fs", 
+                        "link-text": "Fe_2.eam.fs"
+                    }
+                }
+            }, 
+            {
+                "key": "d7065ba6-3386-4793-9ab9-6a5d83c4fa25", 
+                "id": "2003--Mendelev-M-I--Fe-2--LAMMPS--ipr2", 
+                "status": "retracted", 
+                "date": "2009-03-09", 
+                "type": "LAMMPS pair_style eam", 
+                "notes": {
+                    "text": "Update 09 Mar 2009: The file for Fe #2 (Feb 22, 2009) was sent as a replacement for the Jun 10, 2007 file above. It better treats radial distances smaller than 0.5 A for use in radiation damage simulations. Update 22 Dec 2010: The file Fe_2.eam was removed because it was found to have an energy of 11.31356 eV/atom for bcc with a=2.855324 A. For archival purposes, the file can be found here. Thanks to Jianyang Wu for bringing this to our attention and Mikhail Mendelev for his help in sorting it out."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Mendelev-M-I-Han-S-Srolovitz-D-J-et-al--Fe-2/2/Fe_2.eam", 
+                        "link-text": "Fe_2.eam"
+                    }
+                }
+            }, 
+            {
+                "key": "274c2811-3b80-4aa6-82ca-d2bdfecbd442", 
+                "id": "2003--Mendelev-M-I--Fe-2--LAMMPS--ipr3", 
+                "status": "active", 
+                "date": "2010-12-22", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "This file supports radial distances smaller than 0.5 A and gives the proper values of -4.1224351 eV/atom for a = 2.855324 A (LAMMPS 4Aug10). Thanks to Jianyang Wu for bringing this to our attention and Mikhail Mendelev for his help in sorting it out."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2003--Mendelev-M-I-Han-S-Srolovitz-D-J-et-al--Fe-2/3/Fe_2.eam.fs", 
+                        "link-text": "Fe_2.eam.fs"
+                    }
+                }
+            }, 
+            {
+                "key": "04050444-d406-4fb7-b1d7-dc01c4c15a6e", 
+                "id": "MO_769582363439", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2003--Mendelev-M-I--Fe-2--LAMMPS--ipr3."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_MendelevHanSrolovitz_2003Potential2_Fe__MO_769582363439_005", 
+                    "link-text": "EAM_Dynamo_MendelevHanSrolovitz_2003Potential2_Fe__MO_769582363439_005"
+                }
+            }, 
+            {
+                "key": "53be5d59-ca36-4d0a-82d5-5eada0857b87", 
+                "id": "MO_856295952425", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_MagneticCubic_MendelevHanSrolovitz_2003_Fe__MO_856295952425_002", 
+                    "link-text": "EAM_MagneticCubic_MendelevHanSrolovitz_2003_Fe__MO_856295952425_002"
+                }
+            }, 
+            {
+                "key": "dee74ca4-149d-4e32-8409-17b08e074c0a", 
+                "id": "MO_546673549085", 
+                "status": "active", 
+                "date": "2019-08-09", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2003--Mendelev-M-I--Fe-2--LAMMPS--ipr3."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_Mendelev_2003_Fe__MO_546673549085_000", 
+                    "link-text": "EAM_Dynamo_Mendelev_2003_Fe__MO_546673549085_000"
+                }
+            }, 
+            {
+                "key": "6514bb54-8d2e-49e2-8d0f-0b5275ecf0b6", 
+                "id": "MO_807997826449", 
+                "status": "superseded", 
+                "date": "2019-08-09", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2003--Mendelev-M-I--Fe-2--LAMMPS--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_MendelevHanSrolovitz_2003_Fe__MO_807997826449_000", 
+                    "link-text": "EAM_Dynamo_MendelevHanSrolovitz_2003_Fe__MO_807997826449_000"
+                }
+            }
+        ], 
+        "element": "Fe"
+    }
+}

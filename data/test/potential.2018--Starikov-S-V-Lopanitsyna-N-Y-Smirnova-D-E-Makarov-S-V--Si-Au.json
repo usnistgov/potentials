@@ -1,0 +1,77 @@
+{
+    "interatomic-potential": {
+        "key": "a467c165-fb49-40e6-88ff-644eb1b639bd", 
+        "id": "2018--Starikov-S-V-Lopanitsyna-N-Y-Smirnova-D-E-Makarov-S-V--Si-Au", 
+        "record-version": "2018-10-03", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Atomistic simulation of Si-Au melt crystallization with novel interatomic potential", 
+                "author": [
+                    {
+                        "givenname": "S.V.", 
+                        "surname": "Starikov"
+                    }, 
+                    {
+                        "givenname": "N.Y.", 
+                        "surname": "Lopanitsyna"
+                    }, 
+                    {
+                        "givenname": "D.E.", 
+                        "surname": "Smirnova"
+                    }, 
+                    {
+                        "givenname": "S.V.", 
+                        "surname": "Makarov"
+                    }
+                ], 
+                "publication-name": "Computational Materials Science", 
+                "publication-date": {
+                    "year": "2018"
+                }, 
+                "volume": "142", 
+                "abstract": "In this work we studied crystallization of the liquid Si-Au system at rapid cooling. For this purpose we performed atomistic simulation with novel interatomic potential. Results of the simulations showed that crystallization proceeds in different ways for pure silicon and Si-Au melt. For the studied binary system, the main factor limiting crystallization is diffusion of Au atoms in the liquid state. Threshold cooling rate for crystallization significantly depends on the Au content.", 
+                "pages": "303-311", 
+                "DOI": "10.1016/j.commatsci.2017.09.054"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "feb47afc-760d-4d8a-9ea1-2bd0018f7de9", 
+                "id": "2018--Starikov-S-V--Si-Au--LAMMPS--ipr1", 
+                "status": "superseded", 
+                "date": "2017-11-06", 
+                "type": "LAMMPS pair_style adp", 
+                "notes": {
+                    "text": "These files were sent by Dr. Sergey Starikov (Joint Institute for High Temperatures, Russia) on 6 November 2017 and posted with his permission."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Starikov-S-V-Lopanitsyna-N-Y-Smirnova-D-E-Makarov-S-V--Si-Au/1/Si_Au.adp.txt", 
+                        "link-text": "Si_Au.adp.txt"
+                    }
+                }
+            }, 
+            {
+                "key": "c6a02263-d6f5-47cd-9e45-c85ce4c017b2", 
+                "id": "2018--Starikov-S-V--Si-Au--LAMMPS--ipr2", 
+                "status": "active", 
+                "date": "2018-10-01", 
+                "type": "LAMMPS pair_style adp", 
+                "notes": {
+                    "text": "A new implementation was sent by Dr. Sergey Starikov on 1 October 2018 and posted with his permission with the following comments: \"The old version of the potential (above) could not correctly describe several dense structures of silicon (like fcc and hcp) as the explored values of density (rho) exceeded those tabulated.  As such, many structures incorrectly had energy lower than diamond lattice. This version fixes the bug by increasing the maximum tabulated rho from 1.0 to 2.0, and gives the right hierarchy of the crystal structures.\""
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Starikov-S-V-Lopanitsyna-N-Y-Smirnova-D-E-Makarov-S-V--Si-Au/2/Si_Au.mod.adp.txt", 
+                        "link-text": "Si_Au.mod.adp.txt"
+                    }
+                }
+            }
+        ], 
+        "element": [
+            "Si", 
+            "Au"
+        ]
+    }
+}

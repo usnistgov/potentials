@@ -1,0 +1,57 @@
+{
+    "interatomic-potential": {
+        "key": "0dcce013-aa73-49bc-bb6d-d1ec28a31b52", 
+        "id": "2018--Zhou-X-W-Ward-D-K-Foster-M-E--Al-Cu-H", 
+        "record-version": "2018-10-04", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "A bond-order potential for the Al\u2013Cu\u2013H ternary system", 
+                "author": [
+                    {
+                        "givenname": "X.W.", 
+                        "surname": "Zhou"
+                    }, 
+                    {
+                        "givenname": "D.K.", 
+                        "surname": "Ward"
+                    }, 
+                    {
+                        "givenname": "M.E.", 
+                        "surname": "Foster"
+                    }
+                ], 
+                "publication-name": "New Journal of Chemistry", 
+                "publication-date": {
+                    "year": "2018"
+                }, 
+                "volume": "42", 
+                "issue": "7", 
+                "abstract": "Al-Based Al\u2013Cu alloys have a very high strength to density ratio, and are therefore important materials for transportation systems including vehicles and aircrafts. These alloys also appear to have a high resistance to hydrogen embrittlement, and as a result, are being explored for hydrogen related applications. To enable fundamental studies of mechanical behavior of Al\u2013Cu alloys under hydrogen environments, we have developed an Al\u2013Cu\u2013H bond-order potential according to the formalism implemented in the molecular dynamics code LAMMPS. Our potential not only fits well to properties of a variety of elemental and compound configurations (with coordination varying from 1 to 12) including small clusters, bulk lattices, defects, and surfaces, but also passes stringent molecular dynamics simulation tests that sample chaotic configurations. Careful studies verified that this Al\u2013Cu\u2013H potential predicts structural property trends close to experimental results and quantum-mechanical calculations; in addition, it properly captures Al\u2013Cu, Al\u2013H, and Cu\u2013H phase diagrams and enables simulations of H2 dissociation, chemisorption, and absorption on Al\u2013Cu surfaces.", 
+                "pages": "5215-5228", 
+                "DOI": "10.1039/c8nj00513c"
+            }
+        }, 
+        "implementation": {
+            "key": "5f0b07da-04e8-40ba-a193-47c2a79883c5", 
+            "id": "2018--Zhou-X-W--Al-Cu-H--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-09-19", 
+            "type": "LAMMPS pair_style bop", 
+            "notes": {
+                "text": "This file was sent by Dr. Xiaowang Zhou (Sandia National Laboratories) on September 9, 2018 and posted with his permission."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Zhou-X-W-Ward-D-K-Foster-M-E--Al-Cu-H/1/AlCuH_Dec3.t", 
+                    "link-text": "AlCuH_Dec3.t"
+                }
+            }
+        }, 
+        "element": [
+            "Al", 
+            "Cu", 
+            "H"
+        ]
+    }
+}

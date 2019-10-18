@@ -4,6 +4,7 @@
         "id": "2016--Mendelev-M-I-Underwood-T-L-Ackland-G-J--Ti-Tdep", 
         "record-version": "2018-08-15", 
         "description": {
+            "model-name": "Tdep", 
             "citation": {
                 "DOI": "10.1063/1.4964654"
             }, 

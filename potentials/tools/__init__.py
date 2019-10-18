@@ -1,3 +1,3 @@
 from .aslist import iaslist, aslist
-
-__all__ = ['aslist', 'iaslist']
+from .parse_authors import parse_authors
+__all__ = ['aslist', 'iaslist', 'parse_authors']

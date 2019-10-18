@@ -8,7 +8,7 @@ from DataModelDict import DataModelDict as DM
 import requests
 
 from .Citation import Citation
-from ..tools import aslist
+from ..tools import aslist, parse_authors
 from .. import rootdir
 
 class Potential(object):
@@ -17,7 +17,8 @@ class Potential(object):
     """
     def __init__(self, model=None, dois=None, elements=None, key=None,
                  othername=None, fictional=False, modelname=None,
-                 notes=None, date=None, citations=None):
+                 notes=None, recorddate=None, citations=None,
+                 developers=None, year=None):
         """
         Creates a new Potential object.
 
@@ -30,7 +31,7 @@ class Potential(object):
         othername
         fictional
         modelname
-        date
+        recorddate
         notes
         citations
         """
@@ -44,8 +45,10 @@ class Potential(object):
                 assert othername is None
                 assert fictional is False
                 assert modelname is None
-                assert date is None
+                assert recorddate is None
                 assert notes is None
+                assert developers is None
+                assert year is None
             except:
                 raise TypeError('model cannot be given with any other parameter')
             else:
@@ -55,12 +58,14 @@ class Potential(object):
             # Build new record
             self.elements = elements
             self.key = key
-            self.date = date
+            self.recorddate = recorddate
             self.othername = othername
             self.fictional = fictional
             self.modelname = modelname
             self.notes = notes
             self.citations = citations
+            self.developers = developers
+            self.year = year
             if dois is not None:
                 self.dois = dois
     
@@ -79,17 +84,17 @@ class Potential(object):
             self.__key = str(v)
 
     @property
-    def date(self):
-        return self.__date
+    def recorddate(self):
+        return self.__recorddate
     
-    @date.setter
-    def date(self, v):
+    @recorddate.setter
+    def recorddate(self, v):
         if v is None:
-            self.__date = datetime.date.today()
+            self.__recorddate = datetime.date.today()
         elif isinstance(v, datetime.date):
-            self.__date = v
+            self.__recorddate = v
         elif isinstance(v, str):
-            self.__date = datetime.datetime.strptime(v, '%Y-%m-%d').date()
+            self.__recorddate = datetime.datetime.strptime(v, '%Y-%m-%d').date()
         else:
             raise TypeError('Invalid date type')
 
@@ -177,6 +182,28 @@ class Potential(object):
             self.__notes = str(v)
 
     @property
+    def developers(self):
+        return self.__developers
+
+    @developers.setter
+    def developers(self, v):
+        if v is None:
+            self.__developers = None
+        else:
+            self.__developers = str(v)
+
+    @property
+    def year(self):
+        return self.__year
+
+    @year.setter
+    def year(self, v):
+        if v is None:
+            self.__year = None
+        else:
+            self.__year = str(v)
+        
+    @property
     def citations(self):
         return self.__citations
 
@@ -254,13 +281,15 @@ class Potential(object):
         # Copy class attributes to dict
         data['key'] = self.key
         data['id'] = self.id
-        data['date'] = self.date
+        data['recorddate'] = self.recorddate
         data['dois'] = self.dois
         data['notes'] = self.notes
         data['fictional'] = self.fictional
         data['elements'] = self.elements
         data['othername'] = self.othername
         data['modelname'] = self.modelname
+        data['developers'] = self.developers
+        data['year'] = self.year
         
         return data
 
@@ -275,10 +304,16 @@ class Potential(object):
         # Build identifiers
         potential['key'] = self.key
         potential['id'] = self.id
-        potential['record-version'] = str(self.date)
-
+        potential['record-version'] = str(self.recorddate)
+        
         # Build description
         potential['description'] = description = DM()
+        if self.developers is not None:
+            description['developers'] = self.developers
+        if self.year is not None:
+            description['year'] = self.year
+        if self.modelname is not None:
+            description['model-name'] = self.modelname
         if self.dois is not None:
             for doi in self.dois:
                 description.append('citation', DM([('DOI', doi)]))
@@ -315,9 +350,14 @@ class Potential(object):
         
         # Extract information
         self.key = potential['key']
-        self.date = potential['record-version']
+        self.recorddate = potential['record-version']
+        self.developers = potential.get('developers', None)
+        self.year = potential.get('year', None)
         
         description = potential['description']
+        self.developers = description.get('developers', None)
+        self.year = description.get('year', None)
+        self.modelname = description.get('model-name', None)
         dois = []
         for citation in description.iteraslist('citation'):
             dois.append(citation['DOI'])
@@ -345,11 +385,8 @@ class Potential(object):
         else:
             self.othername = None
         
-        self.modelname = None
         if self.id != potential['id']:
-            self.modelname = str(potential['id']).split('-')[-1]
-            if self.id != potential['id']:
-                print(f"Different ids: {self.id} != {potential['id']}")
+            print(f"Different ids: {self.id} != {potential['id']} {self.key}")
 
     def html(self):
         htmlstr = f'<h3>{self.id}</h3>'
@@ -362,12 +399,15 @@ class Potential(object):
 
     @property
     def id(self):
-        try:
+        if self.citations is not None and len(self.citations) > 0:
             first_citation = self.citations[0]
-        except:
+            authors = parse_authors(first_citation.content['author'])
+            year = first_citation.content['year']
+        elif self.developers is not None and self.year is not None:
+            authors = parse_authors(self.developers)
+            year = self.year
+        else:
             return None
-        authors = first_citation.author_dicts()
-        year = first_citation.content['year']
         
         potential_id = str(year) + '-'
         

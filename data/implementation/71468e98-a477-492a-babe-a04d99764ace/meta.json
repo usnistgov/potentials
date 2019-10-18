@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_IMD_BrommerGaehler_2006B_AlNiCo__MO_128037485276_003", 
+            "link-text": "EAM_IMD_BrommerGaehler_2006B_AlNiCo__MO_128037485276_003"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_IMD_BrommerGaehler_2006B_AlNiCo__MO_128037485276_003", 
-        "link-text": "EAM_IMD_BrommerGaehler_2006B_AlNiCo__MO_128037485276_003"
     }
 }

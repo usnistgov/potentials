@@ -1,0 +1,54 @@
+{
+    "interatomic-potential": {
+        "key": "d9d45ceb-90db-4c90-b538-265b83b3e412", 
+        "id": "2006--Brommer-P-Gahler-F--Al-Ni-Co-a", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Effective potentials for quasicrystals fromab-initiodata", 
+                "author": [
+                    {
+                        "givenname": "P.", 
+                        "surname": "Brommer"
+                    }, 
+                    {
+                        "givenname": "F.", 
+                        "surname": "G\u00e4hler"
+                    }
+                ], 
+                "publication-name": "Philosophical Magazine", 
+                "publication-date": {
+                    "year": "2006"
+                }, 
+                "volume": "86", 
+                "issue": "6-8", 
+                "abstract": "Classical effective potentials are indispensable for any large-scale atomistic simulations, and the relevance of simulation results crucially depends on the quality of the potentials used. For complex alloys such as quasicrystals, however, realistic effective potentials are almost non-existent. We report here our efforts to develop effective potentials especially for quasicrystalline alloy systems. We use the so-called force-matching method, in which the potential parameters are adapted so as to reproduce the forces and energies optimally in a set of suitably chosen reference configurations. These reference data are calculated with <i>ab-initio</i> methods. As a first application, embedded-atom method potentials for decagonal Al\u2013Ni\u2013Co, icosahedral Ca\u2013Cd, and both icosahedral and decagonal Mg\u2013Zn quasicrystals have been constructed. The influence of the potential range and degree of specialization on the accuracy and other properties is discussed and compared.", 
+                "pages": "753-758", 
+                "DOI": "10.1080/14786430500333349"
+            }, 
+            "notes": {
+                "text": "This is for the Potential A model described in the reference"
+            }
+        }, 
+        "implementation": {
+            "key": "f2dad143-fbda-413f-950f-2b5dfe90bd81", 
+            "id": "MO_122703700223", 
+            "status": "active", 
+            "date": "2019-08-08", 
+            "type": "OpenKIM", 
+            "notes": {
+                "text": "Taken from https://openkim.org."
+            }, 
+            "web-link": {
+                "URL": "https://openkim.org/id/EAM_IMD_BrommerGaehler_2006A_AlNiCo__MO_122703700223_003", 
+                "link-text": "EAM_IMD_BrommerGaehler_2006A_AlNiCo__MO_122703700223_003"
+            }
+        }, 
+        "element": [
+            "Al", 
+            "Ni", 
+            "Co"
+        ]
+    }
+}

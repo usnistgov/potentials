@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_CaiYe_1996_AlCu__MO_942551040047_005", 
+            "link-text": "EAM_Dynamo_CaiYe_1996_AlCu__MO_942551040047_005"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_CaiYe_1996_AlCu__MO_942551040047_005", 
-        "link-text": "EAM_Dynamo_CaiYe_1996_AlCu__MO_942551040047_005"
     }
 }

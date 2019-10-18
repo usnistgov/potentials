@@ -1,11 +1,15 @@
 {
     "interatomic-potential": {
         "key": "d9d45ceb-90db-4c90-b538-265b83b3e412", 
-        "id": "2006--Brommer-P-Gahler-F--Al-Ni-Co", 
+        "id": "2006--Brommer-P-Gahler-F--Al-Ni-Co-a", 
         "record-version": "2019-08-08", 
         "description": {
+            "model-name": "a", 
             "citation": {
                 "DOI": "10.1080/14786430500333349"
+            }, 
+            "notes": {
+                "text": "This is for the Potential A model described in the reference"
             }
         }, 
         "element": [

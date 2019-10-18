@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/SW_MX2_WenShirodkarPlechac_2017_MoS__MO_201919462778_001", 
+            "link-text": "SW_MX2_WenShirodkarPlechac_2017_MoS__MO_201919462778_001"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/SW_MX2_WenShirodkarPlechac_2017_MoS__MO_201919462778_001", 
-        "link-text": "SW_MX2_WenShirodkarPlechac_2017_MoS__MO_201919462778_001"
     }
 }

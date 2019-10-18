@@ -1,0 +1,81 @@
+{
+    "interatomic-potential": {
+        "key": "0363c268-9d42-4d82-9cc7-5a610c707c6c", 
+        "id": "2018--Starikov-S-V-Kolotova-L-N-Kuksin-A-Y-et-al--U-Mo", 
+        "record-version": "2018-08-19", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Atomistic simulation of cubic and tetragonal phases of U-Mo alloy: Structure and thermodynamic properties", 
+                "author": [
+                    {
+                        "givenname": "S.V.", 
+                        "surname": "Starikov"
+                    }, 
+                    {
+                        "givenname": "L.N.", 
+                        "surname": "Kolotova"
+                    }, 
+                    {
+                        "givenname": "A.Y.", 
+                        "surname": "Kuksin"
+                    }, 
+                    {
+                        "givenname": "D.E.", 
+                        "surname": "Smirnova"
+                    }, 
+                    {
+                        "givenname": "V.I.", 
+                        "surname": "Tseplyaev"
+                    }
+                ], 
+                "publication-name": "Journal of Nuclear Materials", 
+                "publication-date": {
+                    "year": "2018"
+                }, 
+                "volume": "499", 
+                "abstract": "We studied structure and thermodynamic properties of cubic and tetragonal phases of pure uranium and U-Mo alloys using atomistic simulations: molecular dynamics and density functional theory. The main attention was paid to the metastable \u03b30-phase that is formed in U-Mo alloys at low temperature. Structure of \u03b30-phase is similar to body-centered tetragonal (bct) lattice with displacement of a central atom in the basic cell along [001] direction. Such displacements have opposite orientations for part of the neighbouring basic cells. In this case, such ordering of the displacements can be designated as antiferro-displacement. Formation of such complex structure may be interpreted through forming of short U-U bonds. At heating, the tetragonal structure transforms into cubic \u03b3s-phase, still showing ordering of central atom displacements. With rise in temperature, \u03b3s-phase transforms to \u03b3-phase with a quasi body-centered cubic (q-bcc) lattice. The local positions of uranium atoms in \u03b3-phase correspond to \u03b3s-phase, however, orientations of the central atom displacements become disordered. Transition from \u03b30 to \u03b3 can be considered as antiferro-to paraelastic transition of order-disorder type. \n\nThis approach to the structure description of uranium alloy allows to explain a number of unusual features found in the experiments: anisotropy of lattice at low temperature; remarkably high self-diffusion mobility in \u03b3-phase; decreasing of electrical resistivity at heating for some alloys. In addition, important part of this work is the development of new interatomic potential for U-Mo system made with taking into account details of studied structures.", 
+                "pages": "451-463", 
+                "DOI": "10.1016/j.jnucmat.2017.11.047"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "dde865b2-0583-4369-92fb-4319eabdc6f6", 
+                "id": "2018--Starikov-S-V--U-Mo--LAMMPS--ipr1", 
+                "status": "superseded", 
+                "date": "2017-12-03", 
+                "type": "LAMMPS pair_style adp", 
+                "notes": {
+                    "text": "These files were sent by S.V. Starikov (Joint Institute for High Temperatures, Russian Academy of Sciences) on 3 Dec. 2017 and posted with his permission."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Starikov-S-V-Kolotova-L-N-Kuksin-A-Y-et-al--U-Mo/1/U_Mo.adp.txt", 
+                        "link-text": "U_Mo.adp.txt"
+                    }
+                }
+            }, 
+            {
+                "key": "e302c10f-298b-4618-9444-007b0fb6eb72", 
+                "id": "2018--Starikov-S-V--U-Mo--LAMMPS--ipr2", 
+                "status": "active", 
+                "date": "2018-08-19", 
+                "type": "LAMMPS pair_style adp", 
+                "notes": {
+                    "text": "This file was recieved by Sergei Starikov on August 2, 2018. He noted: \"In the previous version, one function for Mo-Mo interaction had poor smoothing with r=r_cut. This \"bug\" led to the sake of the energy conservation during high-temperature (or long) calculations for pure Mo or U-Mo alloy. I made an additional check and found a small potential compilation issue leading to this energy drift. I fixed the file, so now it can be safely used with the time-step = 0.5 fs, even for long runs at high temperatures (the test was made for 1500K).\""
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2018--Starikov-S-V-Kolotova-L-N-Kuksin-A-Y-et-al--U-Mo/2/U_Mo.alloy.adp_cor.txt", 
+                        "link-text": "U_Mo.alloy.adp_cor.txt"
+                    }
+                }
+            }
+        ], 
+        "element": [
+            "U", 
+            "Mo"
+        ]
+    }
+}

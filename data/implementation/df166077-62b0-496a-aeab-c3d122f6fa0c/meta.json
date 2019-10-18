@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2006--Williams-P-L--Ag--LAMMPS--ipr1."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_WilliamsMishinHamilton_2006_Ag__MO_131620013077_005", 
+            "link-text": "EAM_Dynamo_WilliamsMishinHamilton_2006_Ag__MO_131620013077_005"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_WilliamsMishinHamilton_2006_Ag__MO_131620013077_005", 
-        "link-text": "EAM_Dynamo_WilliamsMishinHamilton_2006_Ag__MO_131620013077_005"
     }
 }

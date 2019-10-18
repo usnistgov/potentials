@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/SW_BalamaneHauchShi_2017Brittle_Si__MO_381114941873_002", 
+            "link-text": "SW_BalamaneHauchShi_2017Brittle_Si__MO_381114941873_002"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/SW_BalamaneHauchShi_2017Brittle_Si__MO_381114941873_002", 
-        "link-text": "SW_BalamaneHauchShi_2017Brittle_Si__MO_381114941873_002"
     }
 }

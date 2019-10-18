@@ -21,7 +21,7 @@ class Implementation():
     Class for representing Implementation metadata records.
     records.
     """
-    def __init__(self, model=None, potential=None, style=None, key=None,
+    def __init__(self, model=None, potential=None, type=None, key=None,
                  id=None, status=None, date=None, notes=None,
                  artifacts=None, parameters=None, weblinks=None):
         """
@@ -39,7 +39,7 @@ class Implementation():
         if model is not None:
             # Load existing record
             try:
-                assert style is None
+                assert type is None
                 assert key is None
                 assert id is None
                 assert status is None
@@ -55,7 +55,7 @@ class Implementation():
         else:
             # Build new record
             self.potential = potential
-            self.style = style
+            self.type = type
             self.key = key
             self.id = id
             self.status = status
@@ -91,7 +91,7 @@ class Implementation():
         elif isinstance(v, Potential):
             self.__potential = v
         elif isinstance(v, str):
-            self.__potential.fetch(v)
+            self.__potential = Potential.fetch(v)
         else:
             raise TypeError('Invalid potential type')
 
@@ -273,6 +273,7 @@ class Implementation():
                         break
                 if match is False:
                     self.potential = pot_key
+        
         except:
             print(f'No pot key {self.id} {self.key}')
 
@@ -318,11 +319,11 @@ class Implementation():
         imp['key'] = self.key
         if self.id is not None:
             imp['id'] = self.id
-        imp['type'] = self.type
+        imp['status'] = self.status
         imp['date'] = str(self.date)
         imp['interatomic-potential-key'] = self.potential.key
-        if self.style is not None:
-            imp['style'] = self.style
+        if self.type is not None:
+            imp['type'] = self.type
         if self.notes is not None:
             imp['notes'] = DM([('text', self.notes)])
         for artifact in self.artifacts:
@@ -341,4 +342,4 @@ class Implementation():
         self.weblinks.append(WebLink(model=model, url=url, label=label, linktext=linktext))
 
     def add_parameter(self, model=None, name=None, value=None, unit=None):
-        self.artifacts.append(Parameter(model=model, name=name, value=value, unit=unit))
+        self.parameters.append(Parameter(model=model, name=name, value=value, unit=unit))

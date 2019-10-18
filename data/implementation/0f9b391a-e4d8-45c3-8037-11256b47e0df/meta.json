@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_QuinticClampedSpline_ErcolessiAdams_1994_Al__MO_450093727396_002", 
+            "link-text": "EAM_QuinticClampedSpline_ErcolessiAdams_1994_Al__MO_450093727396_002"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_QuinticClampedSpline_ErcolessiAdams_1994_Al__MO_450093727396_002", 
-        "link-text": "EAM_QuinticClampedSpline_ErcolessiAdams_1994_Al__MO_450093727396_002"
     }
 }

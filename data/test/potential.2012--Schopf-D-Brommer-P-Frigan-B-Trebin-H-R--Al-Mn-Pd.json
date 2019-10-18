@@ -1,0 +1,124 @@
+{
+    "interatomic-potential": {
+        "key": "bdd76724-0693-4e46-8a9a-39e1bc2204ce", 
+        "id": "2012--Schopf-D-Brommer-P-Frigan-B-Trebin-H-R--Al-Mn-Pd", 
+        "record-version": "2018-08-15", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Embedded atom method potentials for Al-Pd-Mn phases", 
+                "author": [
+                    {
+                        "givenname": "D.", 
+                        "surname": "Schopf"
+                    }, 
+                    {
+                        "givenname": "P.", 
+                        "surname": "Brommer"
+                    }, 
+                    {
+                        "givenname": "B.", 
+                        "surname": "Frigan"
+                    }, 
+                    {
+                        "givenname": "H.-R.", 
+                        "surname": "Trebin"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": "2012"
+                }, 
+                "volume": "85", 
+                "issue": "5", 
+                "abstract": "A novel embedded atom method (EAM) potential for the \u039e phases of Al-Pd-Mn has been determined with the force-matching method. Different combinations of analytic functions were tested for the pair and transfer part. The best results are obtained if one allows for oscillations on two different length scales. These potentials stabilize structure models of the \u039e phases and describe their energy with high accuracy. Simulations at temperatures up to 1200 K show very good agreement with ab initio results with respect to stability and dynamics of the system.", 
+                "pages": "054201", 
+                "DOI": "10.1103/physrevb.85.054201"
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "f28bd6e6-3d0b-4e9c-b4f0-3ea3d59c5b4d", 
+                "id": "2012--Schopf-D--Al-Mn-Pd--IMD--ipr1", 
+                "status": "active", 
+                "date": "2012-04-26", 
+                "type": "IMD option EAM", 
+                "notes": {
+                    "text": "These files were provided by Daniel Schopf."
+                }, 
+                "artifact": [
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2012--Schopf-D-Brommer-P-Frigan-B-Trebin-H-R--Al-Mn-Pd/2/AlMnPd_Schopf_2012_imd_F.imd.pt", 
+                            "label": "F(&rho;):", 
+                            "link-text": "AlMnPd_Schopf_2012_imd_F.imd.pt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2012--Schopf-D-Brommer-P-Frigan-B-Trebin-H-R--Al-Mn-Pd/2/AlMnPd_Schopf_2012_imd_phi.imd.pt", 
+                            "label": "&phi;(r):", 
+                            "link-text": "AlMnPd_Schopf_2012_imd_phi.imd.pt"
+                        }
+                    }, 
+                    {
+                        "web-link": {
+                            "URL": "https://www.ctcms.nist.gov/potentials/Download/2012--Schopf-D-Brommer-P-Frigan-B-Trebin-H-R--Al-Mn-Pd/2/AlMnPd_Schopf_2012_imd_rho.imd.pt", 
+                            "label": "&rho;(r):", 
+                            "link-text": "AlMnPd_Schopf_2012_imd_rho.imd.pt"
+                        }
+                    }
+                ]
+            }, 
+            {
+                "key": "7e1cbe71-de45-4ac4-8302-254673261341", 
+                "id": "2012--Schopf-D--Al-Mn-Pd--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2012-04-26", 
+                "type": "LAMMPS pair_style eam/alloy", 
+                "notes": {
+                    "text": "This version is compatible with LAMMPS. UPDATE 11 June 2012: The version posted on 26 April 2012 had an extra line in the header and did not work with LAMMPS. This was brought to our attention by Daniel Schopf and the correct version has been posted. Original note: This file was provided by Daniel Schopf (Stuttgart University) and posted with his permission on 26 April 2012."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2012--Schopf-D-Brommer-P-Frigan-B-Trebin-H-R--Al-Mn-Pd/1/AlMnPd_Schopf_2012.lammps.EAM_CORRECT", 
+                        "link-text": "AlMnPd_Schopf_2012.lammps.EAM_CORRECT"
+                    }
+                }
+            }, 
+            {
+                "key": "ed03421e-c88e-4144-ae4e-69e53c5d8d30", 
+                "id": "MO_878712978062", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the same files as 2012--Schopf-D--Al-Mn-Pd--IMD--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_IMD_SchopfBrommerFrigan_2012_AlMnPd__MO_878712978062_003", 
+                    "link-text": "EAM_IMD_SchopfBrommerFrigan_2012_AlMnPd__MO_878712978062_003"
+                }
+            }, 
+            {
+                "key": "c10c117b-e5a6-408f-a7fb-b58549f9d8cf", 
+                "id": "MO_137572817842", 
+                "status": "active", 
+                "date": "2019-08-09", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2012--Schopf-D--Al-Mn-Pd--LAMMPS--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_SchopfBrommerFrigan_2012_AlMnPd__MO_137572817842_000", 
+                    "link-text": "EAM_Dynamo_SchopfBrommerFrigan_2012_AlMnPd__MO_137572817842_000"
+                }
+            }
+        ], 
+        "element": [
+            "Al", 
+            "Mn", 
+            "Pd"
+        ]
+    }
+}

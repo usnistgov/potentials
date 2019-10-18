@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is the \"high cutoff\" variation."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/Morse_Shifted_GirifalcoWeizer_1959HighCutoff_W__MO_646516726498_002", 
+            "link-text": "Morse_Shifted_GirifalcoWeizer_1959HighCutoff_W__MO_646516726498_002"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/Morse_Shifted_GirifalcoWeizer_1959HighCutoff_W__MO_646516726498_002", 
-        "link-text": "Morse_Shifted_GirifalcoWeizer_1959HighCutoff_W__MO_646516726498_002"
     }
 }

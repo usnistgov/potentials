@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential corresponds to the CdTe.sw distributed with the LAMMPS package, but the parameter file format is different."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/SW_WangStroudMarkworth_1989_CdTe__MO_786496821446_000", 
+            "link-text": "SW_WangStroudMarkworth_1989_CdTe__MO_786496821446_000"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/SW_WangStroudMarkworth_1989_CdTe__MO_786496821446_000", 
-        "link-text": "SW_WangStroudMarkworth_1989_CdTe__MO_786496821446_000"
     }
 }

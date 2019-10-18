@@ -1,0 +1,50 @@
+{
+    "interatomic-potential": {
+        "key": "c6699783-22bb-40e4-8605-e4babb0feb99", 
+        "id": "1996--Cai-J-Ye-Y-Y--Al-Cu", 
+        "record-version": "2019-08-08", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Simple analytical embedded-atom-potential model including a long-range force for fcc metals and their alloys", 
+                "author": [
+                    {
+                        "givenname": "J.", 
+                        "surname": "Cai"
+                    }, 
+                    {
+                        "givenname": "Y.Y.", 
+                        "surname": "Ye"
+                    }
+                ], 
+                "publication-name": "Physical Review B", 
+                "publication-date": {
+                    "year": "1996"
+                }, 
+                "volume": "54", 
+                "issue": "12", 
+                "abstract": "A simple analytical embedded-atom method (EAM) model is developed. The model includes a long-range force. In this model, the electron-density function is taken as a decreasing exponential function, the two-body potential is defined as a function like a form given by Rose <i>et al.</i> [Phys. Rev. B <b>33</b>, 7983 (1986)], and the embedding energy is assumed to be an universal form recently suggested by Banerjea and Smith. The embedding energy has a positive curvature. The model is applied to seven fcc metals (Al, Ag, Au, Cu, Ni, Pd, and Pt) and their binary alloys. All the considered properties, whether for pure metal systems or for alloy systems, are predicted to be satisfactory at least qualitatively. The model resolves the problems of Johnson\u2019s model for predicting the properties of the alloys involving metal Pd. However, more importantly, (i) by investigating the structure stability of seven fcc metals using the present model, we found that the stability energy is dominated by both the embedding energy and the pair potential for fcc-bcc stability while the pair potential dominates and is underestimated for fcc-hcp stability; and (ii) we find that the predicted total energy as a function of lattice parameter is in good agreement with the equation of state of Rose et al. for all seven fcc metals, and that this agreement is closely related to the electron density, i.e., the lower the contribution from atoms of the second-nearest neighbor to host density, the better the agreement becomes. We conclude the following: (i) for an EAM, where angle force is not considered, the long-range force is necessary for a prediction of the structure stability; or (ii) the dependence of the electron density on angle should be considered so as to improve the structure-stability energy. The conclusions are valid for all EAM models where an angle force is not considered.", 
+                "pages": "8398-8410", 
+                "DOI": "10.1103/physrevb.54.8398"
+            }
+        }, 
+        "implementation": {
+            "key": "2ee79664-bf71-40fe-8572-55f3483e7645", 
+            "id": "MO_942551040047", 
+            "status": "active", 
+            "date": "2019-08-08", 
+            "type": "OpenKIM", 
+            "notes": {
+                "text": "Taken from https://openkim.org."
+            }, 
+            "web-link": {
+                "URL": "https://openkim.org/id/EAM_Dynamo_CaiYe_1996_AlCu__MO_942551040047_005", 
+                "link-text": "EAM_Dynamo_CaiYe_1996_AlCu__MO_942551040047_005"
+            }
+        }, 
+        "element": [
+            "Al", 
+            "Cu"
+        ]
+    }
+}

@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is the \"medium cutoff\" variation."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/Morse_Shifted_GirifalcoWeizer_1959MedCutoff_Na__MO_636041334617_002", 
+            "link-text": "Morse_Shifted_GirifalcoWeizer_1959MedCutoff_Na__MO_636041334617_002"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/Morse_Shifted_GirifalcoWeizer_1959MedCutoff_Na__MO_636041334617_002", 
-        "link-text": "Morse_Shifted_GirifalcoWeizer_1959MedCutoff_Na__MO_636041334617_002"
     }
 }

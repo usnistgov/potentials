@@ -1,0 +1,75 @@
+{
+    "interatomic-potential": {
+        "key": "fbb1e782-509e-4103-a735-db0050ad7477", 
+        "id": "2007--Mendelev-M-I-Sordelet-D-J-Kramer-M-J--Cu-Zr", 
+        "record-version": "2018-10-05", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Using atomistic computer simulations to analyze x-ray diffraction data from metallic glasses", 
+                "author": [
+                    {
+                        "givenname": "M.I.", 
+                        "surname": "Mendelev"
+                    }, 
+                    {
+                        "givenname": "D.J.", 
+                        "surname": "Sordelet"
+                    }, 
+                    {
+                        "givenname": "M.J.", 
+                        "surname": "Kramer"
+                    }
+                ], 
+                "publication-name": "Journal of Applied Physics", 
+                "publication-date": {
+                    "year": "2007"
+                }, 
+                "volume": "102", 
+                "issue": "4", 
+                "abstract": "We propose a method of using atomistic computer simulations to obtain partial pair correlation functions from wide angle diffraction experiments with metallic liquids and their glasses. In this method, a model is first created using a semiempirical interatomic potential and then an additional atomic force is added to improve the agreement with experimental diffraction data. To illustrate this approach, the structure of an amorphous Cu64.5Zr35.5 alloy is highlighted, where we present the results for the semiempirical many-body potential and fitting to x-ray diffraction data. While only x-ray diffraction data were used in the present work, the method can be easily adapted to the case when there are also data from neutron diffraction or even in combination. Moreover, this method can be employed in the case of multicomponent systems when the data of several diffraction experiments can be combined.", 
+                "pages": "043501", 
+                "DOI": "10.1063/1.2769157"
+            }, 
+            "notes": {
+                "text": "Update 14 Oct. 2010: the Cu part of this potential is available separately as <a href=\"../../entry/2008--Mendelev-M-I-Kramer-M-J-Becker-C-A-Asta-M--Cu\">2008--Mendelev-M-I-Kramer-M-J-Becker-C-A-Asta-M--Cu</a>."
+            }
+        }, 
+        "implementation": [
+            {
+                "key": "ae5f9b23-95bf-4f3a-83d8-0c3daac46992", 
+                "id": "2007--Mendelev-M-I--Cu-Zr--LAMMPS--ipr1", 
+                "status": "active", 
+                "date": "2007-06-10", 
+                "type": "LAMMPS pair_style eam/fs", 
+                "notes": {
+                    "text": "This file was supplied by Mikhail Mendelev. Except for comments, this file is equivalent to \"CuZr_mm.eam.fs\" in the August 22, 2018 LAMMPS distribution."
+                }, 
+                "artifact": {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2007--Mendelev-M-I-Sordelet-D-J-Kramer-M-J--Cu-Zr/1/Cu-Zr.eam.fs", 
+                        "link-text": "Cu-Zr.eam.fs"
+                    }
+                }
+            }, 
+            {
+                "key": "7d12c9e6-6d67-42ce-bff2-b43cde33c13b", 
+                "id": "MO_120596890176", 
+                "status": "active", 
+                "date": "2019-08-08", 
+                "type": "OpenKIM", 
+                "notes": {
+                    "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2007--Mendelev-M-I--Cu-Zr--LAMMPS--ipr1."
+                }, 
+                "web-link": {
+                    "URL": "https://openkim.org/id/EAM_Dynamo_MendelevSordeletKramer_2007_CuZr__MO_120596890176_005", 
+                    "link-text": "EAM_Dynamo_MendelevSordeletKramer_2007_CuZr__MO_120596890176_005"
+                }
+            }
+        ], 
+        "element": [
+            "Cu", 
+            "Zr"
+        ]
+    }
+}

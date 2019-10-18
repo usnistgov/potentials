@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 2006--Sun-D-Y--Mg--LAMMPS--ipr1."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_SunMendelevBecker_2006_Mg__MO_848345414202_005", 
+            "link-text": "EAM_Dynamo_SunMendelevBecker_2006_Mg__MO_848345414202_005"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_SunMendelevBecker_2006_Mg__MO_848345414202_005", 
-        "link-text": "EAM_Dynamo_SunMendelevBecker_2006_Mg__MO_848345414202_005"
     }
 }

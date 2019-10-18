@@ -1,0 +1,56 @@
+{
+    "interatomic-potential": {
+        "key": "3046773c-2119-47e8-8301-f72caabe2f8c", 
+        "id": "1998--Devanathan-R-Diaz-de-la-Rubia-T-Weber-W-J--Si-C", 
+        "record-version": "2018-11-01", 
+        "description": {
+            "citation": {
+                "document-type": "journal", 
+                "title": "Displacement threshold energies in \u03b2-SiC", 
+                "author": [
+                    {
+                        "givenname": "R.", 
+                        "surname": "Devanathan"
+                    }, 
+                    {
+                        "givenname": "T.", 
+                        "surname": "Diaz de la Rubia"
+                    }, 
+                    {
+                        "givenname": "W.J.", 
+                        "surname": "Weber"
+                    }
+                ], 
+                "publication-name": "Journal of Nuclear Materials", 
+                "publication-date": {
+                    "year": "1998"
+                }, 
+                "volume": "253", 
+                "issue": "1-3", 
+                "abstract": "We have calculated the displacement threshold energies (E<sub>d</sub>) for C and Si primary knock-on atoms (PKA) in \u03b2-SiC using molecular dynamic simulations. The interactions between atoms were modeled using a modified form of the Tersoff potential in combination with a realistic repulsive potential obtained from density-functional theory calculations. The simulation cell was cubic, contained 8000 atoms and had periodic boundaries. The temperature of the simulation was about 150 K. Our results indicate strong anisotropy in the E<sub>d</sub> values for both Si and C PKA. The displacement threshold for Si varies from about 36 eV along [001] to 113 eV along [111], while E<sub>d</sub> for C varies from 28 eV along [111] to 71 eV along [111]. These results are in good agreement with experimental observations.", 
+                "pages": "47-52", 
+                "DOI": "10.1016/s0022-3115(97)00304-8"
+            }
+        }, 
+        "implementation": {
+            "key": "5a4f4b3b-248a-40ba-8285-85ba7a98fa74", 
+            "id": "1998--Devanathan-R--Si-C--LAMMPS--ipr1", 
+            "status": "active", 
+            "date": "2018-11-01", 
+            "type": "LAMMPS pair_style tersoff/zbl", 
+            "notes": {
+                "text": "This file was taken from the August 22, 2018 LAMMPS distribution."
+            }, 
+            "artifact": {
+                "web-link": {
+                    "URL": "https://www.ctcms.nist.gov/potentials/Download/1998--Devanathan-R-Diaz-de-la-Rubia-T-Weber-W-J--Si-C/1/SiC.tersoff.zbl", 
+                    "link-text": "SiC.tersoff.zbl"
+                }
+            }
+        }, 
+        "element": [
+            "Si", 
+            "C"
+        ]
+    }
+}

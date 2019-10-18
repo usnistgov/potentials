@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is the \"smoothed\" variation."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/LJ_Smoothed_Bernardes_1958_Ar__MO_764178710049_001", 
+            "link-text": "LJ_Smoothed_Bernardes_1958_Ar__MO_764178710049_001"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/LJ_Smoothed_Bernardes_1958_Ar__MO_764178710049_001", 
-        "link-text": "LJ_Smoothed_Bernardes_1958_Ar__MO_764178710049_001"
     }
 }

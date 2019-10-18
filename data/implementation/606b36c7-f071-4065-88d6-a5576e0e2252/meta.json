@@ -8,10 +8,10 @@
         "type": "OpenKIM", 
         "notes": {
             "text": "Taken from https://openkim.org.  This KIM potential is based on the files from 1995--Angelo-J-E-Moody-N-R-Baskes-M-I--Ni-Al-H."
+        }, 
+        "web-link": {
+            "URL": "https://openkim.org/id/EAM_Dynamo_AngeloMoodyBaskes_1995_NiAlH__MO_418978237058_005", 
+            "link-text": "EAM_Dynamo_AngeloMoodyBaskes_1995_NiAlH__MO_418978237058_005"
         }
-    }, 
-    "web-link": {
-        "URL": "https://openkim.org/id/EAM_Dynamo_AngeloMoodyBaskes_1995_NiAlH__MO_418978237058_005", 
-        "link-text": "EAM_Dynamo_AngeloMoodyBaskes_1995_NiAlH__MO_418978237058_005"
     }
 }
