@@ -30,7 +30,7 @@ def get_models(name=None, status='active', database_dir=None):
     """
     # Set default potentials database path
     if database_dir is None:
-        database_dir = Path(rootdir, '..', 'data', 'atomman.lammps.Potential models', 'NIST IPR').resolve()
+        database_dir = Path(rootdir, '..', 'data', 'potential_LAMMPS').resolve()
 
     name = aslist(name)
 
