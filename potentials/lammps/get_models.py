@@ -32,7 +32,8 @@ def get_models(name=None, status='active', database_dir=None):
     if database_dir is None:
         database_dir = Path(rootdir, '..', 'data', 'potential_LAMMPS').resolve()
 
-    name = aslist(name)
+    if name is not None:
+        name = aslist(name)
 
     models = []
     for modelfile in database_dir.glob('*.json'):
@@ -43,7 +44,7 @@ def get_models(name=None, status='active', database_dir=None):
         pot_id = model[['potential-LAMMPS', 'potential', 'id']]
         pot_status = model['potential-LAMMPS'].get('status', 'active')
 
-        if imp_key in name or imp_id in name or pot_key in name or pot_id in name:
+        if name is None or imp_key in name or imp_id in name or pot_key in name or pot_id in name:
             if status is None or status == pot_status:
                 models.append(model)
     
