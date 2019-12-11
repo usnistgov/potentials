@@ -33,9 +33,14 @@ Jupyter Notebooks
 -----------------
 
 Currently, examples and documentation for using potentials is given as Jupyter
-Notebooks stored in the main git directory.
+Notebooks stored in the main git directory.  Click on the colab badges to
+run from the cloud
 
-- **Database Exploration** |ColabLink|_ provides simple examples of search
+- **Potential Search** |ColabLink1|_ provides a widget-based interface for
+  searching the database for potential citation information and available
+  implementations.
+
+- **Database Exploration** |ColabLink2|_ provides simple examples of search
   capabilities to easily find interatomic potentials and implementations.
 
 - **Database Description** provides descriptions of the different components
@@ -44,5 +49,8 @@ Notebooks stored in the main git directory.
 - **Add and edit...** Notebooks are meant to be assistant tools to help others
   add and edit the database content.
 
-.. |ColabLink| image:: https://colab.research.google.com/assets/colab-badge.svg
-.. _ColabLink: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Database%20Exploration.ipynb
+.. |ColabLink1| image:: https://colab.research.google.com/assets/colab-badge.svg
+.. _ColabLink1: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Potential%Search.ipynb
+
+.. |ColabLink2| image:: https://colab.research.google.com/assets/colab-badge.svg
+.. _ColabLink2: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Database%20Exploration.ipynb
