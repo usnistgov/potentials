@@ -2,6 +2,9 @@ from pathlib import Path
 import pandas as pd
 import numpy as np
 
+import ipywidgets as widgets
+from IPython.display import display, clear_output, HTML
+
 from .. import rootdir
 from ..tools import aslist
 from .Citation import Citation
@@ -199,9 +202,9 @@ class Database():
             else:
                 if isinstance(series[columnname], list):
                     for val in aslist(listvals):
-                        if val in series[columnname]:
-                            return True
-                    return False
+                        if val not in series[columnname]:
+                            return False
+                    return True
                 else:
                     return False
 
@@ -220,3 +223,96 @@ class Database():
             ].sort_values('id').index
         
         return self.potentials[indices]
+
+    def widget_select_potential_metadata(self):
+        """
+        Builds ipywidgets for selecting an interatomic potential from the database
+        and displaying its full html representation (citation plus implementations)
+        """
+        # Build list of all unique elements
+        unique_elements = set()
+        for elements in self.potentials_df.elements.values:
+            unique_elements.update(elements)
+        unique_elements = [''] + list(sorted(unique_elements))
+        
+        # Build list of all potentials
+        all_potentials = self.search_potentials()
+        
+        # Create selection widgets
+        element1_dropdown = widgets.Dropdown(options=unique_elements, description='Element1:')
+        element2_dropdown = widgets.Dropdown(options=unique_elements, description='Element2:')
+        element3_dropdown = widgets.Dropdown(options=unique_elements, description='Element3:')
+        year_dropdown = widgets.Dropdown(options=[''] + [str(i) for i in range(1985,2020)], description='Year:')
+        author_text = widgets.Text(value='', description='Author:')
+        potential_dropdown = widgets.Dropdown(options=[pot.id for pot in all_potentials],
+                                            description='Potential:')
+        
+        # Initialize output for selected potential
+        potential_output = widgets.Output()  
+        with potential_output:
+            display(HTML(self.full_html(all_potentials[0])))
+        
+        # Define function for updating list of potentials
+        def update_potential_dropdown_options(change):
+            """
+            Updates the list of potentials in potential_dropdown based on values in
+            the other widgets.
+            """
+            # Set elements value
+            elements = []
+            if element1_dropdown.value != '':
+                elements.append(element1_dropdown.value)
+            if element2_dropdown.value != '':
+                elements.append(element2_dropdown.value)
+            if element3_dropdown.value != '':
+                elements.append(element3_dropdown.value)
+            if len(elements) == 0:
+                elements = None
+
+            # Set year value
+            if year_dropdown != '':
+                year = year_dropdown.value
+            else:
+                year = None
+
+            # Set author value
+            if author_text != '':
+                author = author_text.value
+            else:
+                author = None
+
+            # Call search_potentials with author, year, elements
+            potentials = self.search_potentials(author, year, elements)
+            
+            # Update potential dropdown accordingly
+            potential_dropdown.options = [pot.id for pot in potentials]
+
+        # Tie elements, year and text widgets to above function
+        element1_dropdown.observe(update_potential_dropdown_options, 'value')
+        element2_dropdown.observe(update_potential_dropdown_options, 'value')
+        element3_dropdown.observe(update_potential_dropdown_options, 'value')
+        year_dropdown.observe(update_potential_dropdown_options, 'value')
+        author_text.observe(update_potential_dropdown_options, 'value')
+        
+        # Define function for updating selected potential
+        def display_selected_potential(change):
+            
+            # Select potential based on dropdown value
+            try:
+                potential = self.potentials[self.potentials_df.id == potential_dropdown.value][0]
+            except:
+                with potential_output:
+                    clear_output()
+                    display(HTML('<b>No matching potentials found: try different selectors</b>'))
+            else:
+                # Update potential output
+                with potential_output:
+                    clear_output()
+                    display(HTML(self.full_html(potential)))
+
+        # Tie potential widget to above function
+        potential_dropdown.observe(display_selected_potential, 'value')
+
+        # Display widgets and output
+        display(element1_dropdown, element2_dropdown, element3_dropdown,
+                year_dropdown, author_text, potential_dropdown, potential_output)
