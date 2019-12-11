@@ -50,7 +50,7 @@ run from the cloud
   add and edit the database content.
 
 .. |ColabLink1| image:: https://colab.research.google.com/assets/colab-badge.svg
-.. _ColabLink1: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Potential%Search.ipynb
+.. _ColabLink1: https://colab.research.google.com/github/lmhale99/potentials/blob/redesign/Potential%Search.ipynb
 
 .. |ColabLink2| image:: https://colab.research.google.com/assets/colab-badge.svg
 .. _ColabLink2: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Database%20Exploration.ipynb
