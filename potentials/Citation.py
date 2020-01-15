@@ -15,7 +15,7 @@ class Citation():
     """
     Class for representing Citation metadata records.
     """
-    def __init__(self, model):
+    def __init__(self, model=None, **kwargs):
         """
         Class initializer
         
@@ -24,7 +24,13 @@ class Citation():
         model : str or DataModelDict, optional
             Model content or file path to model content.
         """
-        self.load(model)
+        if model is not None:
+            if len(kwargs) > 0:
+                raise TypeError('model cannot be given with any other parameter')
+            self.load(model)
+        else:
+            for key, value in kwargs.items():
+                setattr(self, key, value)
     
     @property
     def bibtex(self):

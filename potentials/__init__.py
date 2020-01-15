@@ -1,15 +1,18 @@
 # coding: utf-8
 from . import tools
+from .FAQ import FAQ
+from .Request import Request
 from .Citation import Citation
 from .Artifact import Artifact
 from .Parameter import Parameter
 from .WebLink import WebLink
 from .Implementation import Implementation
 from .Potential import Potential
+from .Action import Action
 from .PotentialLAMMPS import PotentialLAMMPS
 from .Database import Database
 
 #from . import convert
 
-__all__ = sorted(['tools', 'Citation', 'Artifact', 'Parameter', 'Weblink',
-           'Implementation', 'Potential', 'PotentialLAMMPS', 'Database'])
+__all__ = sorted(['tools', 'FAQ', 'Request', 'Citation', 'Artifact', 'Parameter', 'Weblink',
+           'Implementation', 'Potential', 'Action', 'PotentialLAMMPS', 'Database'])

@@ -143,7 +143,7 @@ def get_citation(self, doi, localpath=None, verbose=False):
         print(f'Citation retrieved from CrossRef')
     return Citation(bibtex)
 
-def save_citations(self, localpath=None, citations=None, format='bib'):
+def download_citations(self, localpath=None, citations=None, format='bib'):
     
     # Handle localpath value
     if localpath is None:
@@ -184,3 +184,16 @@ def save_citations(self, localpath=None, citations=None, format='bib'):
         elif format == 'json':
             with open(fname, 'w', encoding='UTF-8') as f:
                 citation.asmodel().json(fp=f)
+
+def save_citation(self, citation, verbose=False):
+    title = citation.doifname
+    content = citation.asmodel().xml()
+    template = 'Citation'
+    try:
+        self.cdcs.upload_record(content=content, template=template, title=title)
+        if verbose:
+            print('Citation added to database')
+    except:
+        self.cdcs.update_record(content=content, template=template, title=title)
+        if verbose:
+            print('Citation updated in database')

@@ -8,7 +8,8 @@ class Database():
     """
     # Class imports
     from ._citation import (citations, citations_df, load_citations,
-                            get_citation, _no_load_citations, save_citations)
+                            get_citation, _no_load_citations, download_citations,
+                            save_citation)
     from ._potential import (potentials, potentials_df, load_potentials,
                              get_potential, get_potentials, _no_load_potentials)
     from ._potential_lammps import (potential_LAMMPS, potential_LAMMPS_df,

@@ -205,3 +205,16 @@ def get_potential(self, id=None, author=None, year=None, element=None,
         raise ValueError('No matching potentials found')
     else:
         raise ValueError('Multiple matching potentials found')
+
+def save_citation(self, potential, verbose=False):
+    title = 'potential.' + potential.id
+    content = potential.asmodel().xml()
+    template = 'Potential'
+    try:
+        self.cdcs.upload_record(content=content, template=template, title=title)
+        if verbose:
+            print('Potential added to database')
+    except:
+        self.cdcs.update_record(content=content, template=template, title=title)
+        if verbose:
+            print('Potential updated in database')

@@ -64,7 +64,7 @@ class Potential(object):
             self.notes = notes
             self.recorddate = recorddate
             
-            self.citations = []
+            self.__citations = []
             if citations is not None:
                 for citation in aslist(citations):
                     if isinstance(citation, dict):
@@ -72,7 +72,7 @@ class Potential(object):
                     elif isinstance(citation, Citation):
                         self.citations.append(citation)
             
-            self.implementations = []
+            self.__implementations = []
             if implementations is not None:
                 for implementation in aslist(implementations):
                     if isinstance(implementation, dict):
@@ -132,6 +132,14 @@ class Potential(object):
             self.__recorddate = datetime.datetime.strptime(v, '%Y-%m-%d').date()
         else:
             raise TypeError('Invalid date type')
+
+    @property
+    def citations(self):
+        return self.__citations
+
+    @property
+    def implementations(self):
+        return self.__implementations
 
     @property
     def elements(self):
@@ -277,7 +285,7 @@ class Potential(object):
         
         description = potential['description']
 
-        self.citations = []
+        self.__citations = []
         for citation in description.iteraslist('citation'):
             self.add_citation(model=DM([('citation', citation)]))
         if 'notes' in description:
@@ -285,7 +293,7 @@ class Potential(object):
         else:
             self.notes = None
 
-        self.implementations = []
+        self.__implementations = []
         for implementation in potential.iteraslist('implementation'):
             self.add_implementation(model=DM([('implementation', implementation)]))
 

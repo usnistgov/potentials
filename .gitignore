@@ -3,11 +3,9 @@
 potentials.egg-info/
 
 # Jupyter Notebook checkpoints
-.ipynb_checkpoints/
-*/.ipynb_checkpoints/
-*/*/.ipynb_checkpoints/
-*/*/*/.ipynb_checkpoints/
-*/*/*/*/.ipynb_checkpoints/
+*.ipynb_checkpoints/
 
 # Virtual Studio Code metadata
 .vscode/
+
+test/
