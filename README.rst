@@ -5,52 +5,70 @@ potentials
 Introduction
 ------------
 
-*Note: this site is still early alpha and changes are expected based on needs*
-*and and suggestions*.
+*Note: this package is still in development and substantial changes may*
+*occur.*
 
-Potentials provides a lightweight database of interatomic potentials and
-force fields.  Right now, the database contains listings for the
-potentials stored in the NIST Interatomic Potentials Repository, as well as
-about 75% of OpenKIM models.
+The potentials package provides a Python-based interface to the content hosted
+on the `NIST Interatomic Potentials Repository`_. The package directly
+interacts with the underlying database hosted at `https://potentials.nist.gov/`_
+allowing for the metadata for the hosted interatomic potentials to be searched
+and explored.
 
-In part, this project came about as a means to foster easier incorporation
-of the potentials hosted at NIST into external projects.  It also provides a
-means to catalogue interatomic potential content that is otherwise missing from
-the various open-source repositories.
+Search Tools
+------------
 
-- Known published potentials with no known implementations.
-- Personal "unauthorized" implementations of potentials that were used for
-  publications, which may behave differently than the preferred "authorized"
-  files from the potential developers.
-- Links to sites that host potentials that are not open-source, so users can
-  find the terms of use for said potentials.
-- As the git database can be cloned, any proprietary or in-development
-  potentials can be added to a personal instance of the database without the
-  content being accessible to outsiders.  Thus, the same framework can be used
-  for both public and private models.
+**`Potential Search.ipynb`_** |ColabLink1|_ provides a user-friendly interface
+for searching and exploring the known interatomic potentials.
 
-Jupyter Notebooks
------------------
+**`LAMMPS Search.ipynb`_** |ColabLink2|_ provides a user-friendly interface
+for searching and exploring the known LAMMPS interatomic potentials.  Parameter
+files can be downloaded, and the associated LAMMPS command lines shown.
 
-Currently, examples and documentation for using potentials is given as Jupyter
-Notebooks stored in the main git directory.  Click on the colab badges to
-run from the cloud
+**`Database Exploration.ipynb`_** |ColabLink3|_ provides details for how to
+perform more complicated searches directly in Python.
 
-- **Potential Search** |ColabLink1|_ provides a widget-based interface for
-  searching the database for potential citation information and available
-  implementations.
+Package Features
+----------------
 
-- **Database Exploration** |ColabLink2|_ provides simple examples of search
-  capabilities to easily find interatomic potentials and implementations.
+Implemented
+```````````
 
-- **Database Description** provides descriptions of the different components
-  of potentials to assist others in implementing new features.
+- Anyone can use the Database class to explore hosted records.
+- Publication citations are handled with the Citation class that can
+  read/write citation data as bibtex, JSON, or XML.  New citations can be
+  constructed, existing ones updated, and can be rendered as HTML.
+- Metadata descriptions of interatomic potentials (citation info, notes, and
+  a list of known implementations) are handled with the Potential class. New
+  potentials can be constructed, existing ones updated, saved/loaded from XML
+  or JSON, and can be rendered as HTML.
+- The PotentialLAMMPS class can be used to generate proper LAMMPS input
+  commands for the hosted LAMMPS-compatible interatomic potentials.  Any
+  LAMMPS parameter files can also be downloaded.
+- Any record can be copied, and all records can be downloaded to a local
+  directory.  If the path to the local directory is given, the Database class
+  can interact with the local copy in a manner comparable to the remote
+  database.
+- Classes for interacting with FAQ, Requests, and Action records used by the
+  Interatomic Potentials Repository.
 
-- **Add and edit...** Notebooks are meant to be assistant tools to help others
-  add and edit the database content.
+Planned
+```````
+- Tools supporting the construction of the records used by PotentialLAMMPS for
+  different LAMMPS pair styles. (in iprbuild, needs to be moved over.)
+- Tools supporting the construction of parameter files in different LAMMPS
+  styles.  (EAM-oriented tools exist, but need to be integrated in.)
 
+Record status
+`````````````
+- NIST: 100%
+- OpenKIM: 0% (75% in local files, to be merged)
+- Additional metadata fields to be added to records...
+
+.. _NIST Interatomic Potentials Repository: https://www.ctcms.nist.gov/potentials/
+.. _https://potentials.nist.gov/: https://potentials.nist.gov/
 .. |ColabLink1| image:: https://colab.research.google.com/assets/colab-badge.svg
 .. _ColabLink1: https://colab.research.google.com/github/lmhale99/potentials/blob/master/Potential%20Search.ipynb
-
 .. |ColabLink2| image:: https://colab.research.google.com/assets/colab-badge.svg
-.. _ColabLink2: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Database%20Exploration.ipynb
+.. _ColabLink2: https://colab.research.google.com/github/usnistgov/potentials/blob/master/LAMMPS%20Search.ipynb
+.. |ColabLink3| image:: https://colab.research.google.com/assets/colab-badge.svg
+.. _ColabLink3: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Database%20Exploration.ipynb

@@ -5,14 +5,15 @@ def getreadme():
         return readme_file.read()
    
 setup(name = 'potentials',
-      version = '0.0.1',
-      description = 'Interatomic Potential Repository Python Property Calculations and Tools',
+      version = '0.1',
+      description = 'Tools supporting finding and using interatomic potentials hosted on the NIST Interatomic Potentials Repository, as well as tools for building new potentials.',
       long_description = getreadme(),
       classifiers=[
         'Development Status :: 3 - Alpha',
         'Intended Audience :: Science/Research',
         'Natural Language :: English',
         'Programming Language :: Python :: 3.6',
+        'Programming Language :: Python :: 3.7',
         'Topic :: Scientific/Engineering :: Physics'
       ],
       keywords = [
