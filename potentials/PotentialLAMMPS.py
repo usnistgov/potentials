@@ -199,6 +199,10 @@ class PotentialLAMMPS(object):
         """str : Indicates the status of the implementation (active, superseded, retracted)"""
         return self.__status
 
+    @property
+    def model(self):
+        return self.__dm
+
     def elements(self, symbols=None):
         """
         Returns a list of element names associated with atom-model symbols.
