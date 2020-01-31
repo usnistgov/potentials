@@ -12,7 +12,10 @@ from .Action import Action
 from .PotentialLAMMPS import PotentialLAMMPS
 from .Database import Database
 
+from . import build
+from .build_potential_LAMMPS import build_potential_LAMMPS
 #from . import convert
 
 __all__ = sorted(['tools', 'FAQ', 'Request', 'Citation', 'Artifact', 'Parameter', 'Weblink',
-           'Implementation', 'Potential', 'Action', 'PotentialLAMMPS', 'Database'])
+           'Implementation', 'Potential', 'Action', 'PotentialLAMMPS', 'Database', 'build',
+           'build_potential_LAMMPS'])
