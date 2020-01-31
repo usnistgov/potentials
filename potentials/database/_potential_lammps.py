@@ -190,7 +190,7 @@ def download_LAMMPS_files(self, potential_LAMMPS, targetdir='.'):
 
     for lmppot in aslist(potential_LAMMPS):
         pot = self.get_potential(id=lmppot.potid)
-        potdir = Path(targetdir, pot.id)
+        potdir = Path(targetdir, lmppot.id)
         if not potdir.is_dir():
             potdir.mkdir()
 
