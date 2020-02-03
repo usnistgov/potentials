@@ -206,7 +206,7 @@ def get_potential(self, id=None, author=None, year=None, element=None,
     else:
         raise ValueError('Multiple matching potentials found')
 
-def save_citation(self, potential, verbose=False):
+def save_potential(self, potential, verbose=False):
     title = 'potential.' + potential.id
     content = potential.asmodel().xml()
     template = 'Potential'
