@@ -5,27 +5,37 @@ potentials
 Introduction
 ------------
 
-*Note: this package is still in development and substantial changes may*
-*occur.*
-
 The potentials package provides a Python-based interface to the content hosted
 on the `NIST Interatomic Potentials Repository`_. The package directly
 interacts with the underlying database hosted at `https://potentials.nist.gov/`_
 allowing for the metadata for the hosted interatomic potentials to be searched
 and explored.
 
+Jupyter Notebooks
+-----------------
+
 Search Tools
-------------
+````````````
 
-**`Potential Search.ipynb`_** |ColabLink1|_ provides a user-friendly interface
-for searching and exploring the known interatomic potentials.
+- `Search Potential Entries.ipynb`_ |colab1| provides a user-friendly interface
+  for searching and exploring the known interatomic potentials.
 
-**`LAMMPS Search.ipynb`_** |ColabLink2|_ provides a user-friendly interface
-for searching and exploring the known LAMMPS interatomic potentials.  Parameter
-files can be downloaded, and the associated LAMMPS command lines shown.
+- `Search LAMMPS Potentials.ipynb`_ |colab2| provides a user-friendly interface
+  for searching and exploring the known LAMMPS interatomic potentials.
+  Parameter files can be downloaded, and the associated LAMMPS command lines
+  shown.
 
-**`Database Exploration.ipynb`_** |ColabLink3|_ provides details for how to
-perform more complicated searches directly in Python.
+- `Database Exploration.ipynb`_ |colab3| provides details for how to
+  perform more complicated searches directly in Python.
+
+Adding Content
+``````````````
+
+- Add LAMMPS Potentials.ipynb shows how users can integrate their own LAMMPS
+  potential implementations with the Python code.
+
+- Content Manager.ipynb provides a working document for those with access to
+  add and modify repository content.
 
 Package Features
 ----------------
@@ -48,13 +58,15 @@ Implemented
   directory.  If the path to the local directory is given, the Database class
   can interact with the local copy in a manner comparable to the remote
   database.
+- BTools supporting the construction of the records used by PotentialLAMMPS for
+  different LAMMPS pair styles so that users can integrate their personal
+  LAMMPS potentials with the code and database records.
 - Classes for interacting with FAQ, Requests, and Action records used by the
   Interatomic Potentials Repository.
 
 Planned
 ```````
-- Tools supporting the construction of the records used by PotentialLAMMPS for
-  different LAMMPS pair styles. (in iprbuild, needs to be moved over.)
+
 - Tools supporting the construction of parameter files in different LAMMPS
   styles.  (EAM-oriented tools exist, but need to be integrated in.)
 
@@ -66,9 +78,21 @@ Record status
 
 .. _NIST Interatomic Potentials Repository: https://www.ctcms.nist.gov/potentials/
 .. _https://potentials.nist.gov/: https://potentials.nist.gov/
-.. |ColabLink1| image:: https://colab.research.google.com/assets/colab-badge.svg
-.. _ColabLink1: https://colab.research.google.com/github/lmhale99/potentials/blob/master/Potential%20Search.ipynb
-.. |ColabLink2| image:: https://colab.research.google.com/assets/colab-badge.svg
-.. _ColabLink2: https://colab.research.google.com/github/usnistgov/potentials/blob/master/LAMMPS%20Search.ipynb
-.. |ColabLink3| image:: https://colab.research.google.com/assets/colab-badge.svg
-.. _ColabLink3: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Database%20Exploration.ipynb
+
+.. _Search Potential Entries.ipynb: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Search%20Potential%20Entries.ipynb
+.. |colab1| image:: https://colab.research.google.com/assets/colab-badge.svg
+ #
+ :alt: colab logo
+ :target: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Search%20Potential%20Entries.ipynb
+
+.. _Search LAMMPS Potentials.ipynb: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Search%20LAMMPS%20Potentials.ipynb
+.. |colab2| image:: https://colab.research.google.com/assets/colab-badge.svg
+ #
+ :alt: colab logo
+ :target: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Search%20LAMMPS%20Potentials.ipynb
+
+.. _Database Exploration.ipynb: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Database%20Exploration.ipynb
+.. |colab3| image:: https://colab.research.google.com/assets/colab-badge.svg
+ #
+ :alt: colab logo
+ :target: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Database%20Exploration.ipynb
