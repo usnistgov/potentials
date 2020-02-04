@@ -2,6 +2,12 @@
 *.pyc
 potentials.egg-info/
 
+#PyPI dist and build
+dist/
+build/
+dist-old/
+upload_package.bash
+
 # Jupyter Notebook checkpoints
 *.ipynb_checkpoints/
 
