@@ -178,6 +178,8 @@ def get_potentials(self, id=None, key=None, author=None, year=None, element=None
         # Add year query
         if year is not None:
             year = aslist(year)
+            for i in range(len(year)):
+                year[i] = int(year[i])
             mquery['interatomic-potential.description.citation.publication-date.year'] = {'$in': year}
             
         # Add year query
@@ -185,13 +187,20 @@ def get_potentials(self, id=None, key=None, author=None, year=None, element=None
             element = aslist(element)
             mquery['interatomic-potential.element'] = {'$all': element}
 
-        matches = self.cdcs.query(template='Potential', mongoquery=mquery).sort_values('title')
-        def makepotentials(series):
-            return Potential(model=series.xml_content)
+        matches = self.cdcs.query(template='Potential', mongoquery=mquery)
 
         if verbose:
             print(len(matches), 'matching potentials found from remote database')
-        return matches.apply(makepotentials, axis=1)
+
+        if len(matches) > 0:
+            matches = matches.sort_values('title').reset_index(drop=True)
+
+            def makepotentials(series):
+                return Potential(model=series.xml_content)
+
+            return matches.apply(makepotentials, axis=1).values
+        else:
+            return np.array([])
 
 
 def get_potential(self, id=None, author=None, year=None, element=None,

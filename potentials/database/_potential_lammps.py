@@ -159,22 +159,29 @@ def get_potential_LAMMPS(self, id=None, key=None, potid=None, potkey=None,
         # Add status query
         if status is not None:
             status = aslist(status)
-            #mquery['potential-LAMMPS.status'] = {'$in': status}
+            if 'active' in status:
+                status.append(None)
+            mquery['potential-LAMMPS.status'] = {'$in':status}
 
         # Add pair_style query
         if pair_style is not None:
             pair_style = aslist(pair_style)
-            mquery['potential-LAMMPS.pair_style'] = {'$in': pair_style}
+            mquery['potential-LAMMPS.pair_style.type'] = {'$in': pair_style}
         
         # Add element query
         if element is not None:
             element = aslist(element)
             mquery['potential-LAMMPS.atom.element'] = {'$all': element}
-        
+
         # Add symbol query
         if symbol is not None:
             symbol = aslist(symbol)
-            mquery['potential-LAMMPS.atom.symbol'] = {'$all': symbol}
+            mquery['$or'] = []
+            # Check symbols
+            mquery['$or'].append({'potential-LAMMPS.atom.symbol': {'$all': symbol}})
+            # if symbols not in model, check elements
+            mquery['$or'].append({'potential-LAMMPS.atom.symbol': {'$exists': False},
+                                'potential-LAMMPS.atom.element':{'$all': symbol}})
 
         matches = self.cdcs.query(template='potential_LAMMPS', mongoquery=mquery)
         if len(matches) > 0:
@@ -192,7 +199,7 @@ def download_LAMMPS_files(self, potential_LAMMPS, targetdir='.'):
         pot = self.get_potential(id=lmppot.potid)
         potdir = Path(targetdir, lmppot.id)
         if not potdir.is_dir():
-            potdir.mkdir()
+            potdir.mkdir(parents=True)
 
         match = False
         for imp in pot.implementations:
@@ -200,7 +207,7 @@ def download_LAMMPS_files(self, potential_LAMMPS, targetdir='.'):
                 match = True
                 break
         if not match:
-            raise ValueError('No matching potential implementation found {imp.id} ({imp.key})')
+            raise ValueError(f'No matching potential implementation found {imp.id} ({imp.key})')
         
         for artifact in imp.artifacts:
             r = requests.get(artifact.url)
