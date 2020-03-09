@@ -200,7 +200,7 @@ class Potential(object):
         for citation in self.citations:
             htmlstr += f'<b>Citation:</b> {citation.html()}</br>\n'
         if self.notes is not None:
-            htmlstr += f'<b>Notes:</b> {self.notes}</br>\n'
+            htmlstr += f'</br><b>Notes:</b> {self.notes}</br>\n'
         
         for implementation in self.implementations:
             htmlstr += '</br>' + implementation.html()
