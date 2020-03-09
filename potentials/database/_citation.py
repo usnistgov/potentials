@@ -30,7 +30,7 @@ def _no_load_citations(self):
     self.__citations = None
     self.__citations_df = None
 
-def load_citations(self, localpath=None, verbose=False):
+def load_citations(self, localpath=None, local=None, remote=None, verbose=False):
     """
     Loads citations from the database, first checking localpath, then
     trying to download from host.
@@ -42,19 +42,31 @@ def load_citations(self, localpath=None, verbose=False):
         will check localpath value set during object initialization.  If not
         given or set during initialization, then only the remote database will
         be loaded.
+    local : bool, optional
+        Indicates if records in localpath are to be loaded.  If not given,
+        will use the local value set during initialization.
+    remote : bool, optional
+        Indicates if the records in the remote database are to be loaded.
+        Setting this to be False is useful/faster if a local copy of the
+        database exists.  If not given, will use the local value set during
+        initialization.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
-    
     """
     citations = []
     dois = []
-    # Set localpath as given here or during init
+    
+    # Set localpath, local, and remote as given here or during init
     if localpath is None:
         localpath = self.localpath
+    if local is None:
+        local = self.local
+    if remote is None:
+        remote = self.remote
     
     # Check localpath first
-    if localpath is not None:
+    if local is True and localpath is not None:
         for citfile in Path(localpath, 'Citation').glob('*'):
             if citfile.suffix in ['.xml', '.json', '.bib']:
                 
@@ -69,26 +81,27 @@ def load_citations(self, localpath=None, verbose=False):
             print(f'Loaded {len(citations)} local citations')
     
     # Load remote
-    try:
-        records = self.cdcs.query(template='Citation')
-    except:
-        if verbose:
-            print('Failed to load citations from remote')
-    else:
-        if verbose:
-            print(f'Loaded {len(records)} remote citations')
-        for i in range(len(records)):
-            record = records.iloc[i]
-            cit = Citation(record.xml_content)
-            if hasattr(cit, 'doi'):
-                if cit.doi not in dois:
-                    citations.append(cit)
-            else:
-                if cit.note not in dois:
-                    citations.append(cit)
+    if remote is True:
+        try:
+            records = self.cdcs.query(template='Citation')
+        except:
+            if verbose:
+                print('Failed to load citations from remote')
+        else:
+            if verbose:
+                print(f'Loaded {len(records)} remote citations')
+            for i in range(len(records)):
+                record = records.iloc[i]
+                cit = Citation(record.xml_content)
+                if hasattr(cit, 'doi'):
+                    if cit.doi not in dois:
+                        citations.append(cit)
+                else:
+                    if cit.note not in dois:
+                        citations.append(cit)
 
-        if verbose and len(dois) > 0:
-            print(f' - {len(citations) - len(dois)} new')
+            if verbose and len(dois) > 0:
+                print(f' - {len(citations) - len(dois)} new')
     
     # Build citations and citations_df
     if len(citations) > 0:
@@ -98,6 +111,8 @@ def load_citations(self, localpath=None, verbose=False):
         self.__citations = np.array(citations)
         self.__citations_df = pd.DataFrame(citdicts)
     else:
+        if verbose:
+            print('No citations loaded')
         self.__citations = None
         self.__citations_df = None
         
@@ -143,7 +158,8 @@ def get_citation(self, doi, localpath=None, verbose=False):
         print(f'Citation retrieved from CrossRef')
     return Citation(bibtex)
 
-def download_citations(self, localpath=None, citations=None, format='bib'):
+def copy_citations(self, localpath=None, citations=None, format='bib',
+                   verbose=False):
     
     # Handle localpath value
     if localpath is None:
@@ -184,6 +200,8 @@ def download_citations(self, localpath=None, citations=None, format='bib'):
         elif format == 'json':
             with open(fname, 'w', encoding='UTF-8') as f:
                 citation.asmodel().json(fp=f)
+    if verbose:
+        print(f'{len(citations)} citation records copied to localpath')
 
 def save_citation(self, citation, verbose=False):
     title = citation.doifname

@@ -14,17 +14,20 @@ from ..tools import aslist
 
 @property
 def potentials(self):
+    """list or None: Loaded Potential objects"""
     return self.__potentials
 
 @property
 def potentials_df(self):
+    """pandas.DataFrame or None: Metadata for loaded Potential objects"""
     return self.__potentials_df
 
 def _no_load_potentials(self):
+    """Initializes properties if load_potentials is not called"""
     self.__potentials = None
     self.__potentials_df = None
 
-def load_potentials(self, localpath=None, verbose=False):
+def load_potentials(self, localpath=None, local=None, remote=None, verbose=False):
     """
     Loads potentials from the database, first checking localpath, then
     trying to download from host.
@@ -33,9 +36,16 @@ def load_potentials(self, localpath=None, verbose=False):
     ----------
     localpath : str, optional
         Path to a local directory to check for records first.  If not given,
-        will check localpath value set during object initialization.  If not
-        given or set during initialization, then only the remote database will
-        be loaded.
+        will check localpath value set during object initialization.  If
+        neither, then no local records will be loaded.
+    local : bool, optional
+        Indicates if records in localpath are to be loaded.  If not given,
+        will use the local value set during initialization.
+    remote : bool, optional
+        Indicates if the records in the remote database are to be loaded.
+        Setting this to be False is useful/faster if a local copy of the
+        database exists.  If not given, will use the local value set during
+        initialization.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
@@ -43,12 +53,16 @@ def load_potentials(self, localpath=None, verbose=False):
     potentials = []
     potnames = []
 
-    # Set localpath as given here or during init
+    # Set localpath, local, and remote as given here or during init
     if localpath is None:
         localpath = self.localpath
+    if local is None:
+        local = self.local
+    if remote is None:
+        remote = self.remote
     
     # Check localpath first
-    if localpath is not None:
+    if local is True and localpath is not None:
         for potfile in Path(localpath, 'Potential').glob('*'):
             if potfile.suffix in ['.xml', '.json']:
                 potentials.append(Potential(potfile))
@@ -58,21 +72,22 @@ def load_potentials(self, localpath=None, verbose=False):
             print(f'Loaded {len(potentials)} local potentials')
     
     # Load remote
-    try:
-        records = self.cdcs.query(template='Potential')
-    except:
-        if verbose:
-            print('Failed to load potentials from remote')
-    else:
-        if verbose:
-            print(f'Loaded {len(records)} remote potentials')
-        for i in range(len(records)):
-            record = records.iloc[i]
-            if record.title not in potnames:
-                potentials.append(Potential(record.xml_content))
+    if remote is True:
+        try:
+            records = self.cdcs.query(template='Potential')
+        except:
+            if verbose:
+                print('Failed to load potentials from remote')
+        else:
+            if verbose:
+                print(f'Loaded {len(records)} remote potentials')
+            for i in range(len(records)):
+                record = records.iloc[i]
+                if record.title not in potnames:
+                    potentials.append(Potential(record.xml_content))
 
-        if verbose and len(potnames) > 0:
-            print(f' - {len(potentials) - len(potnames)} new')
+            if verbose and len(potnames) > 0:
+                print(f' - {len(potentials) - len(potnames)} new')
     
     # Build potentials and potentials_df
     if len(potentials) > 0:
@@ -84,12 +99,34 @@ def load_potentials(self, localpath=None, verbose=False):
         self.__potentials_df.reset_index(drop=True)
 
     else:
+        if verbose:
+            print('No potentials loaded')
         self.__potentials = None
         self.__potentials_df = None
 
 def get_potentials(self, id=None, key=None, author=None, year=None, element=None,
                   localpath=None, verbose=False):
+    """
+    Selects potentials matching the given parameters.  If 
     
+    Parameters
+    ----------
+    id : str or list, optional
+    key : str or list, optional
+    author : str or list, optional
+    year : str or list, optional
+    element : str or list, optional
+    localpath : str, optional
+        
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    
+    Returns
+    -------
+    list of Potential
+        The matching potentials
+    """
     # Check loaded values if available
     if self.potentials_df is not None:
         
@@ -205,7 +242,22 @@ def get_potentials(self, id=None, key=None, author=None, year=None, element=None
 
 def get_potential(self, id=None, author=None, year=None, element=None,
                   localpath=None, verbose=False):
+    """
+    Loads potential from the database, first checking localpath, then
+    trying to download from host.
     
+    Parameters
+    ----------
+    localpath : str, optional
+        Path to a local directory to check for records first.  If not given,
+        will check localpath value set during object initialization.  If not
+        given or set during initialization, then only the remote database will
+        be loaded.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    
+    """
     potentials = self.get_potentials(id=id, author=author, year=year, element=element,
                                      localpath=localpath, verbose=verbose)
     if len(potentials) == 1:
@@ -215,15 +267,112 @@ def get_potential(self, id=None, author=None, year=None, element=None,
     else:
         raise ValueError('Multiple matching potentials found')
 
-def save_potential(self, potential, verbose=False):
+def copy_potentials(self, localpath=None, potentials=None, format='xml',
+                    verbose=False):
+    """
+    Copies loaded potentials to the localpath directory.
+
+    Parameters
+    ----------
+    localpath : str, optional
+        Path to a local directory where the records are to be copied to.
+        If not given, will check localpath value set during object
+        initialization.
+    potentials : list of Potential, optional
+        Specifies a subset of potentials to copy to localpath.  If not given, 
+        all loaded potentials will be copied.
+    format : str, optional
+        The file format to save the results locally as.  Allowed values are
+        'xml' and 'json'.  Default value is 'xml'.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    
+    Raises
+    ------
+    ValueError
+        If no localpath, no potentials, invalid format, or records in a
+        different format already exist in localpath.    
+    """
+
+    # Handle localpath value
+    if localpath is None:
+        localpath = self.localpath
+    if localpath is None:
+        raise ValueError('No local path set to save files to')
+    if not Path(localpath, 'Potential').is_dir():
+        Path(localpath, 'Potential').mkdir(parents=True)
+
+    # Handle potentials value
+    if potentials is None:
+        if self.potentials is None:
+            raise ValueError('No potentials specified or loaded to copy')
+        potentials = self.potentials
+    else:
+        potentials = aslist(potentials)
+
+    # Handle format value
+    allowed_formats = ['xml', 'json']
+    format = format.lower()
+    if format not in allowed_formats:
+        raise ValueError('Invalid format style: allowed values are "xml" and "json"')
+    for fmt in allowed_formats:
+        if fmt == format:
+            continue
+        count = len(list(Path(localpath, 'Potential').glob(f'*.{fmt}')))
+        if count > 0:
+            raise ValueError(f'{count} potentials already exist in {fmt} format')
+
+    for potential in potentials:
+        potname = potential.id
+
+        fname = Path(localpath, 'Potential', f'potential.{potname}.{format}')
+        if format == 'xml':
+            with open(fname, 'w', encoding='UTF-8') as f:
+                potential.asmodel().xml(fp=f)
+        elif format == 'json':
+            with open(fname, 'w', encoding='UTF-8') as f:
+                potential.asmodel().json(fp=f)
+    
+    if verbose:
+        print(f'{len(potentials)} potential records copied to localpath')
+
+
+def save_potential(self, potential, verbose=False, localpath=None):
+    """
+    Saves a new potential to the database.
+
+    Parameters
+    ----------
+    localpath : str, optional
+        Path to a local directory where the records are to be copied to.
+        If not given, will check localpath value set during object
+        initialization.
+    potentials : list of Potential, optional
+        Specifies a subset of potentials to copy to localpath.  If not given, 
+        potentials will be loaded if needed, and all loaded potentials will be
+        copied.
+    format : str, optional
+        The file format to save the results locally as.  Allowed values are
+        'xml' and 'json'.  Default value is 'xml'.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    """
+    
+    
     title = 'potential.' + potential.id
     content = potential.asmodel().xml()
     template = 'Potential'
     try:
-        self.cdcs.upload_record(content=content, template=template, title=title)
-        if verbose:
-            print('Potential added to database')
+        try:
+            self.cdcs.upload_record(content=content, template=template, title=title)
+            if verbose:
+                print('Potential added to database')
+        except:
+            self.cdcs.update_record(content=content, template=template, title=title)
+            if verbose:
+                print('Potential updated in database')
     except:
-        self.cdcs.update_record(content=content, template=template, title=title)
         if verbose:
-            print('Potential updated in database')
+            print('Failed to upload potential to database')

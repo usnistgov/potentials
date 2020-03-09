@@ -27,7 +27,8 @@ def _no_load_potential_LAMMPS(self):
     self.__potential_LAMMPS = None
     self.__potential_LAMMPS_df = None
 
-def load_potential_LAMMPS(self, localpath=None, verbose=False):
+def load_potential_LAMMPS(self, localpath=None, local=None, remote=None,
+                          verbose=False):
     """
     Loads LAMMPS potentials from the database, first checking localpath, then
     trying to download from host.
@@ -39,6 +40,14 @@ def load_potential_LAMMPS(self, localpath=None, verbose=False):
         will check localpath value set during object initialization.  If not
         given or set during initialization, then only the remote database will
         be loaded.
+    local : bool, optional
+        Indicates if records in localpath are to be loaded.  If not given,
+        will use the local value set during initialization.
+    remote : bool, optional
+        Indicates if the records in the remote database are to be loaded.
+        Setting this to be False is useful/faster if a local copy of the
+        database exists.  If not given, will use the local value set during
+        initialization.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
@@ -46,12 +55,16 @@ def load_potential_LAMMPS(self, localpath=None, verbose=False):
     potentials = {}
     localloaded = 0
 
-    # Set localpath as given here or during init
+    # Set localpath, local, and remote as given here or during init
     if localpath is None:
         localpath = self.localpath
+    if local is None:
+        local = self.local
+    if remote is None:
+        remote = self.remote
     
     # Check localpath first
-    if localpath is not None:
+    if local is True and localpath is not None:
         for potfile in Path(localpath, 'potential_LAMMPS').glob('*'):
             if potfile.suffix in ['.xml', '.json']:
                 potentials[potfile.stem] = PotentialLAMMPS(potfile)
@@ -61,21 +74,22 @@ def load_potential_LAMMPS(self, localpath=None, verbose=False):
             print(f'Loaded {localloaded} local LAMMPS potentials')
     
     # Load remote
-    try:
-        records = self.cdcs.query(template='potential_LAMMPS')
-    except:
-        if verbose:
-            print('Failed to load LAMMPS potentials from remote')
-    else:
-        if verbose:
-            print(f'Loaded {len(records)} remote LAMMPS potentials')
-        for i in range(len(records)):
-            record = records.iloc[i]
-            if record.title not in potentials:
-                potentials[record.title] = PotentialLAMMPS(record.xml_content)
+    if remote is True:
+        try:
+            records = self.cdcs.query(template='potential_LAMMPS')
+        except:
+            if verbose:
+                print('Failed to load LAMMPS potentials from remote')
+        else:
+            if verbose:
+                print(f'Loaded {len(records)} remote LAMMPS potentials')
+            for i in range(len(records)):
+                record = records.iloc[i]
+                if record.title not in potentials:
+                    potentials[record.title] = PotentialLAMMPS(record.xml_content)
 
-        if verbose and localloaded > 0:
-            print(f' - {len(potentials) - localloaded} new')
+            if verbose and localloaded > 0:
+                print(f' - {len(potentials) - localloaded} new')
     
     # Build potential_LAMMPS and potential_LAMMPS_df
     if len(potentials) > 0:
@@ -89,6 +103,8 @@ def load_potential_LAMMPS(self, localpath=None, verbose=False):
         self.__potential_LAMMPS_df.reset_index(drop=True)
 
     else:
+        if verbose:
+            print('No LAMMPS potentials loaded')
         self.__potential_LAMMPS = None
         self.__potential_LAMMPS_df = None
 
@@ -192,6 +208,90 @@ def get_potential_LAMMPS(self, id=None, key=None, potid=None, potkey=None,
         if verbose:
             print(len(matches), 'matching LAMMPS potentials found from remote database')
         return matches.apply(makepotentials, axis=1)
+
+def copy_potential_LAMMPS(self, localpath=None, potential_LAMMPS=None,
+                          format='xml', verbose=False, download_files=True):
+    """
+    Copies loaded LAMMPS potentials to the localpath directory.
+
+    Parameters
+    ----------
+    localpath : str, optional
+        Path to a local directory where the records are to be copied to.
+        If not given, will check localpath value set during object
+        initialization.
+    potential_LAMMPS : list of PotentialLAMMPS, optional
+        Specifies a subset of LAMMPS potentials to copy to localpath.  If
+        not given, all loaded LAMMPS potentials will be copied.
+    format : str, optional
+        The file format to save the results locally as.  Allowed values are
+        'xml' and 'json'.  Default value is 'xml'.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    download_files : bool, optional
+        If True (default), the parameter files for the LAMMPS potentials will
+        be downloaded as well.
+    
+    Raises
+    ------
+    ValueError
+        If no localpath, no potential_LAMMPS, invalid format, or records in a
+        different format already exist in localpath.
+    """
+
+    # Handle localpath value
+    if localpath is None:
+        localpath = self.localpath
+    if localpath is None:
+        raise ValueError('No local path set to save files to')
+    if not Path(localpath, 'potential_LAMMPS').is_dir():
+        Path(localpath, 'potential_LAMMPS').mkdir(parents=True)
+
+    # Handle potential_LAMMPS value
+    if potential_LAMMPS is None:
+        if self.potential_LAMMPS is None:
+            raise ValueError('No LAMMPS potentials specified or loaded to copy')
+        potential_LAMMPS = self.potential_LAMMPS
+    else:
+        potential_LAMMPS = aslist(potential_LAMMPS)
+
+    # Handle format value
+    allowed_formats = ['xml', 'json']
+    format = format.lower()
+    if format not in allowed_formats:
+        raise ValueError('Invalid format style: allowed values are "xml" and "json"')
+    for fmt in allowed_formats:
+        if fmt == format:
+            continue
+        count = len(list(Path(localpath, 'potential_LAMMPS').glob(f'*.{fmt}')))
+        if count > 0:
+            raise ValueError(f'{count} LAMMMPS potentials already exist in {fmt} format')
+    successful_downloads = 0
+    for potential in potential_LAMMPS:
+        potname = potential.id
+
+        fname = Path(localpath, 'potential_LAMMPS', f'{potname}.{format}')
+        if format == 'xml':
+            with open(fname, 'w', encoding='UTF-8') as f:
+                potential.asmodel().xml(fp=f)
+        elif format == 'json':
+            with open(fname, 'w', encoding='UTF-8') as f:
+                potential.asmodel().json(fp=f)
+        
+        if download_files is True:
+            
+            try:
+                self.download_LAMMPS_files(potential, targetdir=Path(localpath, 'potential_LAMMPS'))
+            except:
+                pass
+            else:
+                successful_downloads += 1
+
+    if verbose:
+        print(f'{len(potential_LAMMPS)} potential_LAMMPS records copied to localpath')
+        if download_files is True:
+            print(f'{successful_downloads} parameter file sets for potential_LAMMPS records downloaded')
 
 def download_LAMMPS_files(self, potential_LAMMPS, targetdir='.'):
 
