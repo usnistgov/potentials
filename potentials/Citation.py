@@ -249,7 +249,8 @@ class Citation():
             htmlstr += f'{bibdict["pages"]} '
         htmlstr = htmlstr.strip() +'. '
 
-        htmlstr += f'DOI: <a href="https://doi.org/{bibdict["doi"]}">{bibdict["doi"]}</a>'
+        if 'doi' in bibdict:
+            htmlstr += f'DOI: <a href="https://doi.org/{bibdict["doi"]}">{bibdict["doi"]}</a>'
 
         if 'abstract' in bibdict:
             htmlstr += f'<br/><b>Abstract:</b> {bibdict["abstract"]}'
