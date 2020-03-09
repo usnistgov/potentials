@@ -314,6 +314,9 @@ class PotentialLAMMPS(object):
 
         return d
 
+    def asmodel(self):
+        return DM([('potential-LAMMPS', self.__dm)])
+
     def pair_info(self, symbols=None, masses=None):
         """
         Generates the LAMMPS input command lines associated with the Potential
