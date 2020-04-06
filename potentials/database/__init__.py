@@ -7,22 +7,29 @@ class Database():
     Class for interacting with potential records hosted from potentials.nist.gov
     """
     # Class imports
-    from ._citation import (citations, citations_df, load_citations,
-                            get_citation, _no_load_citations, copy_citations,
-                            save_citation)
-    from ._potential import (potentials, potentials_df, load_potentials,
-                             copy_potentials, save_potential,
-                             get_potential, get_potentials, _no_load_potentials)
-    from ._potential_lammps import (potential_LAMMPS, potential_LAMMPS_df,
-                                    load_potential_LAMMPS, _no_load_potential_LAMMPS,
-                                    get_potential_LAMMPS, copy_potential_LAMMPS,
-                                    download_LAMMPS_files)
+    from ._citation import (citations, citations_df, 
+                            load_citations, _no_load_citations,
+                            get_citations, get_citation,
+                            download_citations, upload_citation)
+
+    from ._potential import (potentials, potentials_df,
+                             load_potentials, _no_load_potentials,
+                             get_potentials, get_potential,
+                             download_potentials, upload_potential)
+
+    from ._lammps_potential import (lammps_potentials, lammps_potentials_df,
+                                    load_lammps_potentials, _no_load_lammps_potentials,
+                                    get_lammps_potentials, get_lammps_potential,
+                                    download_lammps_potentials, upload_lammps_potential,
+                                    get_lammps_potentials_files, save_lammps_potential)
+
+    from ._records import get_record, download_records
     from ._widgets import (widget_search_potentials, widget_lammps_potential)
 
     def __init__(self, host=None, username=None, password=None, certification=None,
-                 localpath=None, verbose=True, local=True, remote=True, 
+                 localpath=None, verbose=False, local=True, remote=True, 
                  load_citations=False, load_potentials=False,
-                 load_potential_LAMMPS=False):
+                 load_lammps_potentials=False):
         """
         Class initializer
 
@@ -58,7 +65,7 @@ class Database():
         load_potentials : bool, optional
             If True, the potentials will be loaded during initialization.
             Default value is False.
-        load_potential_LAMMPS : bool, optional
+        load_lammps_potentials : bool, optional
             If True, the LAMMPS potentials will be loaded during initialization.
             Default value is False.
         """
@@ -88,10 +95,10 @@ class Database():
             self.load_potentials(verbose=verbose)
         else:
             self._no_load_potentials()
-        if load_potential_LAMMPS:
-            self.load_potential_LAMMPS(verbose=verbose)
+        if load_lammps_potentials:
+            self.load_lammps_potentials(verbose=verbose)
         else:
-            self._no_load_potential_LAMMPS()
+            self._no_load_lammps_potentials()
     
     @property
     def cdcs(self):
@@ -139,11 +146,12 @@ class Database():
         """
         self.load_citations(localpath=localpath, local=local, remote=remote, verbose=verbose)
         self.load_potentials(localpath=localpath, local=local, remote=remote, verbose=verbose)
-        self.load_potential_LAMMPS(localpath=localpath, local=local, remote=remote, verbose=verbose)
+        self.load_lammps_potentials(localpath=localpath, local=local, remote=remote, verbose=verbose)
 
-    def copy_all(self, localpath=None, format='xml', citeformat='bib', verbose=False):
+    def download_all(self, localpath=None, format='xml', citeformat='bib',
+                     indent=None, verbose=False, get_files=True):
         """
-        Copies all loaded records to localhost.
+        Downloads all records from the remote to localhost.
 
         Parameters
         ----------
@@ -157,9 +165,15 @@ class Database():
         citeformat : str, optional
             The file format to save Citation records locally as.  Allowed
             values are 'xml', 'json', and 'bib'.  Default value is 'bib'.
+        indent : int, optional
+            The indentation spacing size to use for the locally saved record files.
+            If not given, the JSON/XML content will be compact.
         verbose : bool, optional
             If True, info messages will be printed during operations.  Default
             value is False.
+        get_files : bool, optional
+            If True, the parameter files associated with the potential_LAMMPS
+            record will also be downloaded.
         
         Raises
         ------
@@ -167,6 +181,12 @@ class Database():
             If no localpath, no potentials, invalid format, or records in a
             different format already exist in localpath.
         """
-        self.copy_citations(localpath=localpath, format=citeformat, verbose=verbose)
-        self.copy_potentials(localpath=localpath, format=format, verbose=verbose)
-        self.copy_potential_LAMMPS(localpath=localpath, format=format, verbose=verbose)
+        self.download_citations(localpath=localpath, format=citeformat,
+                                indent=indent, verbose=verbose)
+
+        self.download_potentials(localpath=localpath, format=format,
+                                 indent=indent, verbose=verbose)
+
+        self.download_lammps_potentials(localpath=localpath, format=format,
+                                        indent=indent, verbose=verbose,
+                                        get_files=get_files)

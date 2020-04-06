@@ -8,6 +8,8 @@ import numpy as np
 # https://pandas.pydata.org/
 import pandas as pd
 
+from DataModelDict import DataModelDict as DM
+
 # Local imports
 from .. import Potential
 from ..tools import aslist
@@ -239,7 +241,6 @@ def get_potentials(self, id=None, key=None, author=None, year=None, element=None
         else:
             return np.array([])
 
-
 def get_potential(self, id=None, author=None, year=None, element=None,
                   localpath=None, verbose=False):
     """
@@ -267,10 +268,10 @@ def get_potential(self, id=None, author=None, year=None, element=None,
     else:
         raise ValueError('Multiple matching potentials found')
 
-def copy_potentials(self, localpath=None, potentials=None, format='xml',
-                    verbose=False):
+def download_potentials(self, localpath=None, potentials=None, format='xml',
+                        indent=None, verbose=False):
     """
-    Copies loaded potentials to the localpath directory.
+    Download all potentials from the remote to the localpath directory.
 
     Parameters
     ----------
@@ -279,11 +280,14 @@ def copy_potentials(self, localpath=None, potentials=None, format='xml',
         If not given, will check localpath value set during object
         initialization.
     potentials : list of Potential, optional
-        Specifies a subset of potentials to copy to localpath.  If not given, 
-        all loaded potentials will be copied.
+        A list of potentials to download. If not given, all potentials will
+        be downloaded.
     format : str, optional
-        The file format to save the results locally as.  Allowed values are
-        'xml' and 'json'.  Default value is 'xml'.
+        The file format to save the file as.  Allowed values are 'xml'
+        (default) and 'json'.
+    indent : int, optional
+        The indentation spacing size to use for the locally saved file.  If not
+        given, the JSON/XML content will be compact.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
@@ -295,71 +299,75 @@ def copy_potentials(self, localpath=None, potentials=None, format='xml',
         different format already exist in localpath.    
     """
 
-    # Handle localpath value
+    template = 'Potential'
+
+    # Check localpath values
     if localpath is None:
         localpath = self.localpath
     if localpath is None:
         raise ValueError('No local path set to save files to')
-    if not Path(localpath, 'Potential').is_dir():
-        Path(localpath, 'Potential').mkdir(parents=True)
 
-    # Handle potentials value
-    if potentials is None:
-        if self.potentials is None:
-            raise ValueError('No potentials specified or loaded to copy')
-        potentials = self.potentials
-    else:
-        potentials = aslist(potentials)
-
-    # Handle format value
-    allowed_formats = ['xml', 'json']
+    # Check format value
     format = format.lower()
+    allowed_formats = ['xml', 'json']
     if format not in allowed_formats:
-        raise ValueError('Invalid format style: allowed values are "xml" and "json"')
-    for fmt in allowed_formats:
-        if fmt == format:
-            continue
-        count = len(list(Path(localpath, 'Potential').glob(f'*.{fmt}')))
-        if count > 0:
-            raise ValueError(f'{count} potentials already exist in {fmt} format')
-
-    for potential in potentials:
-        potname = potential.id
-
-        fname = Path(localpath, 'Potential', f'potential.{potname}.{format}')
-        if format == 'xml':
-            with open(fname, 'w', encoding='UTF-8') as f:
-                potential.asmodel().xml(fp=f)
-        elif format == 'json':
-            with open(fname, 'w', encoding='UTF-8') as f:
-                potential.asmodel().json(fp=f)
+        raise ValueError("Format must be 'xml' or 'json'")
     
-    if verbose:
-        print(f'{len(potentials)} potential records copied to localpath')
+    # Create save directory if needed
+    save_directory = Path(localpath, template)
+    if not save_directory.is_dir():
+        save_directory.mkdir(parents=True)
 
+    for fmt in allowed_formats:
+        if fmt != format:
+            numexisting = len([fname for fname in save_directory.glob(f'*.{fmt}')])
+            if numexisting > 0:
+                raise ValueError(f'{numexisting} records of format {fmt} already saved locally')
 
-def save_potential(self, potential, verbose=False, localpath=None):
+    # Download and save
+    if potentials is None:
+        records = self.cdcs.query(template=template)
+        for i in range(len(records)):
+            record = records.iloc[i]
+            fname = Path(save_directory, f'{record.title}.{format}')
+            content = DM(record.xml_content)
+            with open(fname, 'w', encoding='UTF-8') as f:
+                if format == 'xml':
+                    content.xml(fp=f, indent=indent)
+                else:
+                    content.json(fp=f, indent=indent)
+        if verbose:
+            print(f'Downloaded {len(records)} of {template}')
+    
+    # Save loaded content
+    else:
+        for potential in aslist(potentials):
+            potname = potential.id
+
+            fname = Path(save_directory, f'potential.{potname}.{format}')
+            if format == 'xml':
+                with open(fname, 'w', encoding='UTF-8') as f:
+                    potential.asmodel().xml(fp=f, indent=indent)
+            elif format == 'json':
+                with open(fname, 'w', encoding='UTF-8') as f:
+                    potential.asmodel().json(fp=f, indent=indent)
+        
+        if verbose:
+            print(f'Downloaded {len(potentials)} of {template}')
+
+def upload_potential(self, potential, verbose=False):
     """
-    Saves a new potential to the database.
+    Saves a new potential to the remote database.  Requires write
+    permissions to potentials.nist.gov
 
     Parameters
     ----------
-    localpath : str, optional
-        Path to a local directory where the records are to be copied to.
-        If not given, will check localpath value set during object
-        initialization.
-    potentials : list of Potential, optional
-        Specifies a subset of potentials to copy to localpath.  If not given, 
-        potentials will be loaded if needed, and all loaded potentials will be
-        copied.
-    format : str, optional
-        The file format to save the results locally as.  Allowed values are
-        'xml' and 'json'.  Default value is 'xml'.
+    potential : Potential
+        The content to save.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-    
     
     title = 'potential.' + potential.id
     content = potential.asmodel().xml()

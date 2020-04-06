@@ -116,6 +116,9 @@ def load_citations(self, localpath=None, local=None, remote=None, verbose=False)
         self.__citations = None
         self.__citations_df = None
         
+def get_citations(self, doi, localpath=None, verbose=False):
+    raise NotImplementedError('To be done...')
+
 def get_citation(self, doi, localpath=None, verbose=False):
     
     # Try loaded values first
@@ -158,60 +161,107 @@ def get_citation(self, doi, localpath=None, verbose=False):
         print(f'Citation retrieved from CrossRef')
     return Citation(bibtex)
 
-def copy_citations(self, localpath=None, citations=None, format='bib',
-                   verbose=False):
+def download_citations(self, localpath=None, citations=None, format='bib',
+                       indent=None, verbose=False):
+    """
+    Download citation records from the remote and save to localpath.
     
+    Parameters
+    ----------
+    localpath : path-like object, optional
+        Path to a local directory where the files will be saved to.  If not
+        given, will use the localpath value set during object initialization.
+    citations : list of Citation, optional
+        A list of citations to download. If not given, all citations will
+        be downloaded.
+    format : str, optional
+        The file format to save the record files as.  Allowed values are 'bib'
+        (default), 'xml' and 'json'.
+    indent : int, optional
+        The indentation spacing size to use for the locally saved record files.
+        If not given, the JSON/XML content will be compact.  Ignored if format
+        is 'bib'.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    """
+
+    template = 'Citation'
+
     # Handle localpath value
     if localpath is None:
         localpath = self.localpath
     if localpath is None:
         raise ValueError('No local path set to save files to')
-    if not Path(localpath, 'Citation').is_dir():
-        Path(localpath, 'Citation').mkdir(parents=True)
+    
+    # Check format value
+    format = format.lower()
+    allowed_formats = ['bib', 'xml', 'json']
+    if format not in allowed_formats:
+        raise ValueError("Format must be 'bib', 'xml' or 'json'")
 
-    # Handle citations value
+    # Create save directory if needed
+    save_directory = Path(localpath, template)
+    if not save_directory.is_dir():
+        save_directory.mkdir(parents=True)
+
+    for fmt in allowed_formats:
+        if fmt != format:
+            numexisting = len([fname for fname in save_directory.glob(f'*.{fmt}')])
+            if numexisting > 0:
+                raise ValueError(f'{numexisting} records of format {fmt} already saved locally')
+
+    # Download if needed
     if citations is None:
-        citations = self.citations
+        records = self.cdcs.query(template=template)
+        def makecitations(series):
+            return Citation(model=series.xml_content)
+        citations = records.apply(makecitations, axis=1)
     else:
         citations = aslist(citations)
-
-    # Handle format value
-    allowed_formats = ['xml', 'json', 'bib']
-    format = format.lower()
-    if format not in allowed_formats:
-        raise ValueError('Invalid format style: allowed values are "xml", "json" and "bib"')
-    for fmt in allowed_formats:
-        if fmt == format:
-            continue
-        count = len(list(Path(localpath, 'Citation').glob(f'*.{fmt}')))
-        if count > 0:
-            raise ValueError(f'{count} citations already exist in {fmt} format')
 
     for citation in citations:
         doifname = citation.doifname
 
-        fname = Path(localpath, 'Citation', f'{doifname}.{format}')
+        fname = Path(save_directory, f'{doifname}.{format}')
         if format == 'bib':
             with open(fname, 'w', encoding='UTF-8') as f:
                 f.write(citation.bibtex)
         elif format == 'xml':
             with open(fname, 'w', encoding='UTF-8') as f:
-                citation.asmodel().xml(fp=f)
+                citation.asmodel().xml(fp=f, indent=indent)
         elif format == 'json':
             with open(fname, 'w', encoding='UTF-8') as f:
-                citation.asmodel().json(fp=f)
+                citation.asmodel().json(fp=f, indent=indent)
     if verbose:
         print(f'{len(citations)} citation records copied to localpath')
 
-def save_citation(self, citation, verbose=False):
+def upload_citation(self, citation, verbose=False):
+    """
+    Saves a new citation to the remote database.  Requires write
+    permissions to potentials.nist.gov
+
+    Parameters
+    ----------
+    citation : Citation
+        The content to save.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    """
+
     title = citation.doifname
     content = citation.asmodel().xml()
     template = 'Citation'
     try:
-        self.cdcs.upload_record(content=content, template=template, title=title)
-        if verbose:
-            print('Citation added to database')
+        try:
+            self.cdcs.upload_record(content=content, template=template, title=title)
+            if verbose:
+                print('Citation added to database')
+        except:
+            self.cdcs.update_record(content=content, template=template, title=title)
+            if verbose:
+                print('Citation updated in database')
     except:
-        self.cdcs.update_record(content=content, template=template, title=title)
         if verbose:
-            print('Citation updated in database')
+            print('Failed to upload citation to database')

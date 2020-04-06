@@ -13,8 +13,8 @@ from .PotentialLAMMPS import PotentialLAMMPS
 from .Database import Database
 
 from . import build
-from .build_potential_LAMMPS import build_potential_LAMMPS
+from .build_lammps_potential import build_lammps_potential
 
 __all__ = sorted(['tools', 'FAQ', 'Request', 'Citation', 'Artifact', 'Parameter', 'Weblink',
            'Implementation', 'Potential', 'Action', 'PotentialLAMMPS', 'Database', 'build',
-           'build_potential_LAMMPS'])
+           'build_lammps_potential'])

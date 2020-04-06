@@ -122,23 +122,23 @@ def widget_lammps_potential(self):
     associated with using it.
     """
     
-    if self.potential_LAMMPS_df is None:
-        self.load_potential_LAMMPS()
+    if self.lammps_potentials_df is None:
+        self.load_lammps_potentials()
     
     # Build list of all status values
     statuses = ['all', 'active', 'superseded', 'retracted']
     
     # Build list of all unique pair_styles
-    unique_pair_styles = [''] + list(np.unique(self.potential_LAMMPS_df.pair_style))
+    unique_pair_styles = [''] + list(np.unique(self.lammps_potentials_df.pair_style))
 
     # Build list of all unique elements
     unique_elements = set()
-    for elements in self.potential_LAMMPS_df.elements.values:
+    for elements in self.lammps_potentials_df.elements.values:
         unique_elements.update(elements)
     unique_elements = [''] + sorted(list(unique_elements))
     
     # Build list of all potential ids
-    potential_ids = self.potential_LAMMPS_df.id.tolist()
+    potential_ids = self.lammps_potentials_df.id.tolist()
 
     # Create selection widgets
     status_dropdown = widgets.Dropdown(options=statuses, value='active', description='Status:')
@@ -167,7 +167,7 @@ def widget_lammps_potential(self):
             print('To download LAMMPS files, enter a local directory and click the button.')
             print('To customize LAMMPS commands for specific element model symbols, enter a space-delimited list into the Symbols box.')
             print(f'Allowed symbols = {" ".join(potential.symbols)}')
-    base_header2(self.potential_LAMMPS[0])
+    base_header2(self.lammps_potentials[0])
 
     download_output = widgets.Output()
 
@@ -179,7 +179,7 @@ def widget_lammps_potential(self):
                 print(potential.pair_info(symbols))
             except:
                 display(HTML('<b>Invalid symbols list</b>'))
-    show_pair_info(self.potential_LAMMPS[0])
+    show_pair_info(self.lammps_potentials[0])
     
     # Define function for updating list of potentials
     def update_potential_dropdown_options(change):
@@ -209,7 +209,7 @@ def widget_lammps_potential(self):
             pair_style = None
 
         # Call search_potentials with author, year, elements
-        potentials = self.get_potential_LAMMPS(status=status, pair_style=pair_style, element=elements)
+        potentials = self.get_lammps_potentials(status=status, pair_style=pair_style, element=elements)
         
         # Update potential dropdown accordingly
         potential_dropdown.options = [pot.id for pot in potentials]
@@ -227,7 +227,7 @@ def widget_lammps_potential(self):
         symbols_text.value = ''
         # Select potential based on dropdown value
         try:
-            potential = self.potential_LAMMPS[self.potential_LAMMPS_df.id == potential_dropdown.value][0]
+            potential = self.lammps_potentials[self.lammps_potentials_df.id == potential_dropdown.value][0]
         except:
             symbols_text.disabled = True
             download_button.disabled = True
@@ -250,7 +250,7 @@ def widget_lammps_potential(self):
             symbols = symbols_text.value.split()
 
         try:
-            potential = self.potential_LAMMPS[self.potential_LAMMPS_df.id == potential_dropdown.value][0]
+            potential = self.lammps_potentials[self.lammps_potentials_df.id == potential_dropdown.value][0]
         except:
             symbols_text.disabled = True
             download_button.disabled = True
@@ -276,9 +276,9 @@ def widget_lammps_potential(self):
             except:
                 print(f'Download directory "{potdir}"" not found/valid')
             else:
-                potential = self.potential_LAMMPS[self.potential_LAMMPS_df.id == potential_dropdown.value][0]
+                potential = self.lammps_potentials[self.lammps_potentials_df.id == potential_dropdown.value][0]
                 
-                self.download_LAMMPS_files(potential, targetdir=potdir)
+                self.download_lammps_potentials_files(potential, targetdir=potdir)
                 print(f'Files downloaded to {Path(potdir, potential.id)}')
     download_button.on_click(download_action)
 

@@ -1,7 +1,7 @@
 from .build import (EamBuilder, EimBuilder, KimBuilder, LibParamBuilder,
                PairBuilder, ParamFileBuilder)
 
-def build_potential_LAMMPS(pair_style, **kwargs):
+def build_lammps_potential(pair_style, **kwargs):
     
     subclasses = [PairBuilder, ParamFileBuilder, LibParamBuilder, 
                   EamBuilder, EimBuilder, KimBuilder]
