@@ -8,7 +8,7 @@ Introduction
 The potentials package provides a Python-based interface to the content hosted
 on the `NIST Interatomic Potentials Repository`_. The package directly
 interacts with the underlying database hosted at `https://potentials.nist.gov/`_
-allowing for the metadata for the hosted interatomic potentials to be searched
+allowing for the metadata for all hosted interatomic potentials to be searched
 and explored.
 
 Jupyter Notebooks
@@ -25,8 +25,8 @@ Search Tools
   Parameter files can be downloaded, and the associated LAMMPS command lines
   shown.
 
-- `Database Exploration.ipynb`_ |colab3| provides details for how to
-  perform more complicated searches directly in Python.
+- `Database Class.ipynb`_ |colab3| provides details for how to interact with
+  Database objects to perform more complicated searches directly in Python.
 
 Adding Content
 ``````````````
@@ -58,23 +58,16 @@ Implemented
   directory.  If the path to the local directory is given, the Database class
   can interact with the local copy in a manner comparable to the remote
   database.
-- BTools supporting the construction of the records used by PotentialLAMMPS for
+- Tools supporting the construction of the records used by PotentialLAMMPS for
   different LAMMPS pair styles so that users can integrate their personal
   LAMMPS potentials with the code and database records.
 - Classes for interacting with FAQ, Requests, and Action records used by the
   Interatomic Potentials Repository.
 
-Planned
-```````
-
-- Tools supporting the construction of parameter files in different LAMMPS
-  styles.  (EAM-oriented tools exist, but need to be integrated in.)
-
-Record status
-`````````````
-- NIST: 100%
-- OpenKIM: 0% (75% in local files, to be merged)
-- Additional metadata fields to be added to records...
+To do
+`````
+- Entries for OpenKIM potentials need to be removed from the data directory
+  and merged with the remote database entries.
 
 .. _NIST Interatomic Potentials Repository: https://www.ctcms.nist.gov/potentials/
 .. _https://potentials.nist.gov/: https://potentials.nist.gov/
@@ -91,8 +84,8 @@ Record status
  :alt: colab logo
  :target: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Search%20LAMMPS%20Potentials.ipynb
 
-.. _Database Exploration.ipynb: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Database%20Exploration.ipynb
+.. _Database class.ipynb: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Database%20class.ipynb
 .. |colab3| image:: https://colab.research.google.com/assets/colab-badge.svg
  #
  :alt: colab logo
- :target: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Database%20Exploration.ipynb
+ :target: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Database%20class.ipynb

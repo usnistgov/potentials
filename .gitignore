@@ -14,4 +14,7 @@ upload_package.bash
 # Virtual Studio Code metadata
 .vscode/
 
+# Example files
+testdb/
+
 test/
