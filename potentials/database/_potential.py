@@ -109,17 +109,27 @@ def load_potentials(self, localpath=None, local=None, remote=None, verbose=False
 def get_potentials(self, id=None, key=None, author=None, year=None, element=None,
                   localpath=None, verbose=False):
     """
-    Selects potentials matching the given parameters.  If 
+    Get all matching potentials from the database.
     
     Parameters
     ----------
     id : str or list, optional
+        Potential ID(s) to search for.  These are unique identifiers derived
+        from the publication information and the elemental system being modeled.
     key : str or list, optional
+        UUID4 key(s) to search for.  Each entry has a unique random-generated
+        UUID4 key.
     author : str or list, optional
-    year : str or list, optional
+        Author string(s) to search for.
+    year : int or list, optional
+        Publication year(s) to search for.
     element : str or list, optional
+        Element model(s) to search for.
     localpath : str, optional
-        
+        Path to a local directory to check for records first.  If not given,
+        will check localpath value set during object initialization.  If not
+        given or set during initialization, then only the remote database will
+        be loaded.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
@@ -244,11 +254,22 @@ def get_potentials(self, id=None, key=None, author=None, year=None, element=None
 def get_potential(self, id=None, author=None, year=None, element=None,
                   localpath=None, verbose=False):
     """
-    Loads potential from the database, first checking localpath, then
-    trying to download from host.
+    Get a single matching potential from the database.
     
     Parameters
     ----------
+    id : str or list, optional
+        Potential ID(s) to search for.  These are unique identifiers derived
+        from the publication information and the elemental system being modeled.
+    key : str or list, optional
+        UUID4 key(s) to search for.  Each entry has a unique random-generated
+        UUID4 key.
+    author : str or list, optional
+        Author string(s) to search for.
+    year : int or list, optional
+        Publication year(s) to search for.
+    element : str or list, optional
+        Element model(s) to search for.
     localpath : str, optional
         Path to a local directory to check for records first.  If not given,
         will check localpath value set during object initialization.  If not
@@ -258,6 +279,15 @@ def get_potential(self, id=None, author=None, year=None, element=None,
         If True, info messages will be printed during operations.  Default
         value is False.
     
+    Returns
+    -------
+    Potential
+        The matching potential.
+
+    Raises
+    ------
+    ValueError
+        If no or multiple matching potentials found.
     """
     potentials = self.get_potentials(id=id, author=author, year=year, element=element,
                                      localpath=localpath, verbose=verbose)

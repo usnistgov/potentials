@@ -2,6 +2,8 @@
 
 from cdcs import CDCS
 
+from ..tools import aslist
+
 class Database():
     """
     Class for interacting with potential records hosted from potentials.nist.gov
@@ -28,16 +30,14 @@ class Database():
 
     def __init__(self, host=None, username=None, password=None, certification=None,
                  localpath=None, verbose=False, local=True, remote=True, 
-                 load_citations=False, load_potentials=False,
-                 load_lammps_potentials=False):
+                 load=False, status='active'):
         """
         Class initializer
 
         Parameters
         ----------
         host : str, optional
-            Remote host site to access.  Default value is
-            'https://potentials.nist.gov/'
+            CDCS site to access.  Default value is 'https://potentials.nist.gov/'.
         username : str, optional 
             User name to use to access the host site.  Default value of '' will
             access the site as an anonymous visitor.
@@ -59,15 +59,15 @@ class Database():
             Indicates if the load operations will download records from the
             remote database.  Default value is True.  If a local copy exists,
             then setting this to False is considerably faster.
-        load_citations : bool, optional
-            If True, the citations will be loaded during initialization.
-            Default value is False.
-        load_potentials : bool, optional
-            If True, the potentials will be loaded during initialization.
-            Default value is False.
-        load_lammps_potentials : bool, optional
-            If True, the LAMMPS potentials will be loaded during initialization.
-            Default value is False.
+        load : bool, str or list, optional
+            If True, citations, potentials and lammps_potentials will all be
+            loaded during initialization. If False (default), none will be
+            loaded.  Alternatively, a str or list can be given to specify which
+            of the three record types to load.
+        status : str, list or None, optional
+            Only potential_LAMMPS records with the given status(es) will be
+            loaded.  Allowed values are 'active' (default), 'superseded', and
+            'retracted'.  If None is given, then all potentials will be loaded.
         """
         # Set default database parameters
         if host is None:
@@ -87,19 +87,34 @@ class Database():
         self.__remote = remote
 
         # Load records
-        if load_citations:
-            self.load_citations(verbose=verbose)
-        else:
+        if load is True:
+            self.load_all(verbose=verbose)
+        elif load is False:
             self._no_load_citations()
-        if load_potentials:
-            self.load_potentials(verbose=verbose)
-        else:
             self._no_load_potentials()
-        if load_lammps_potentials:
-            self.load_lammps_potentials(verbose=verbose)
-        else:
             self._no_load_lammps_potentials()
-    
+        else:
+            load = aslist(load)
+        
+            if 'citations' in load:
+                self.load_citations(verbose=verbose)
+                load.remove('citations')
+            else:
+                self._no_load_citations()
+            if 'potentials' in load:
+                self.load_potentials(verbose=verbose)
+                load.remove('potentials')
+            else:
+                self._no_load_potentials()
+            if 'lammps_potentials' in load:
+                self.load_lammps_potentials(verbose=verbose, status=status)
+                load.remove('lammps_potentials')
+            else:
+                self._no_load_lammps_potentials()
+
+            if len(load) > 0:
+                raise ValueError('unknown load type: allowed values are citations, potentials, and lammps_potentials')
+
     @property
     def cdcs(self):
         """cdcs.CDCS: REST client for database access"""
@@ -120,7 +135,8 @@ class Database():
         """bool : Indicates if load operations will check remote database"""
         return self.__remote
 
-    def load_all(self, localpath=None, local=None, remote=None, verbose=False):
+    def load_all(self, localpath=None, local=None, remote=None, status='active',
+                 verbose=False):
         """
         Loads records of all styles from the database, first checking localpath,
         then trying to download from host.
@@ -140,16 +156,25 @@ class Database():
             Setting this to be False is useful/faster if a local copy of the
             database exists.  If not given, will use the local value set during
             initialization.
+        status : str, list or None, optional
+            Only potential_LAMMPS records with the given status(es) will be
+            loaded.  Allowed values are 'active' (default), 'superseded', and
+            'retracted'.  If None is given, then all potentials will be loaded.
         verbose : bool, optional
             If True, info messages will be printed during operations.  Default
             value is False.
         """
-        self.load_citations(localpath=localpath, local=local, remote=remote, verbose=verbose)
-        self.load_potentials(localpath=localpath, local=local, remote=remote, verbose=verbose)
-        self.load_lammps_potentials(localpath=localpath, local=local, remote=remote, verbose=verbose)
+        self.load_citations(localpath=localpath, local=local, remote=remote,
+                            verbose=verbose)
+        self.load_potentials(localpath=localpath, local=local, remote=remote,
+                             verbose=verbose)
+        self.load_lammps_potentials(localpath=localpath, local=local,
+                                    remote=remote, status=status,
+                                    verbose=verbose)
 
     def download_all(self, localpath=None, format='xml', citeformat='bib',
-                     indent=None, verbose=False, get_files=True):
+                     indent=None, status='active', verbose=False,
+                     get_files=True):
         """
         Downloads all records from the remote to localhost.
 
@@ -171,6 +196,10 @@ class Database():
         verbose : bool, optional
             If True, info messages will be printed during operations.  Default
             value is False.
+        status : str, list or None, optional
+            Only potential_LAMMPS records with the given status(es) will be
+            downloaded.  Allowed values are 'active' (default), 'superseded', and
+            'retracted'.  If None is given, then all potentials will be downloaded.
         get_files : bool, optional
             If True, the parameter files associated with the potential_LAMMPS
             record will also be downloaded.
@@ -189,4 +218,4 @@ class Database():
 
         self.download_lammps_potentials(localpath=localpath, format=format,
                                         indent=indent, verbose=verbose,
-                                        get_files=get_files)
+                                        status=status, get_files=get_files)

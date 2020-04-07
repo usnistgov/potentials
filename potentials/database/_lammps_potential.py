@@ -32,7 +32,7 @@ def _no_load_lammps_potentials(self):
     self.__lammps_potentials_df = None
 
 def load_lammps_potentials(self, localpath=None, local=None, remote=None,
-                          verbose=False):
+                           status='active', verbose=False):
     """
     Loads LAMMPS potentials from the database, first checking localpath, then
     trying to download from host.
@@ -52,6 +52,10 @@ def load_lammps_potentials(self, localpath=None, local=None, remote=None,
         Setting this to be False is useful/faster if a local copy of the
         database exists.  If not given, will use the local value set during
         initialization.
+    status : str, list or None, optional
+        Only potential_LAMMPS records with the given status(es) will be
+        loaded.  Allowed values are 'active' (default), 'superseded', and
+        'retracted'.  If None is given, then all potentials will be loaded.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
@@ -66,12 +70,18 @@ def load_lammps_potentials(self, localpath=None, local=None, remote=None,
         local = self.local
     if remote is None:
         remote = self.remote
-    
+
     # Check localpath first
     if local is True and localpath is not None:
+
+        if status is not None:
+            status = aslist(status)
+
         for potfile in Path(localpath, 'potential_LAMMPS').glob('*'):
             if potfile.suffix in ['.xml', '.json']:
-                potentials[potfile.stem] = PotentialLAMMPS(potfile)
+                lammps_potential = PotentialLAMMPS(potfile)
+                if status is not None and lammps_potential.status in status:
+                    potentials[potfile.stem] = PotentialLAMMPS(potfile)
 
         if verbose:
             localloaded = len(potentials)
@@ -79,8 +89,18 @@ def load_lammps_potentials(self, localpath=None, local=None, remote=None,
     
     # Load remote
     if remote is True:
+        
+        # Add status query
+        mquery = {}
+        if status is not None:
+            status = aslist(status)
+            if 'active' in status:
+                status.append(None)
+            mquery['potential-LAMMPS.status'] = {'$in':status}
+
         try:
-            records = self.cdcs.query(template='potential_LAMMPS')
+            records = self.cdcs.query(template='potential_LAMMPS',
+                                      mongoquery=mquery)
         except:
             if verbose:
                 print('Failed to load LAMMPS potentials from remote')

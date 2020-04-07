@@ -115,18 +115,24 @@ def widget_search_potentials(self):
     display(element1_dropdown, element2_dropdown, element3_dropdown,
             year_dropdown, author_text, potential_dropdown, potential_output)
 
-def widget_lammps_potential(self):
+def widget_lammps_potential(self, results=None):
     """
     Builds ipywidgets for selecting a LAMMPS implemented potential from the
     database, downloading the files, and displaying the LAMMPS commands
     associated with using it.
+
+    Parameters
+    ----------
+    results : dict, optional
+        If given a dict, the selected potential can be retrieved under the
+        'lammps_potential' key.
     """
     
+    if results is None:
+        results = {}
+
     if self.lammps_potentials_df is None:
         self.load_lammps_potentials()
-    
-    # Build list of all status values
-    statuses = ['all', 'active', 'superseded', 'retracted']
     
     # Build list of all unique pair_styles
     unique_pair_styles = [''] + list(np.unique(self.lammps_potentials_df.pair_style))
@@ -141,7 +147,6 @@ def widget_lammps_potential(self):
     potential_ids = self.lammps_potentials_df.id.tolist()
 
     # Create selection widgets
-    status_dropdown = widgets.Dropdown(options=statuses, value='active', description='Status:')
     element1_dropdown = widgets.Dropdown(options=unique_elements, description='Element1:')
     element2_dropdown = widgets.Dropdown(options=unique_elements, description='Element2:')
     element3_dropdown = widgets.Dropdown(options=unique_elements, description='Element3:')
@@ -149,37 +154,17 @@ def widget_lammps_potential(self):
     potential_dropdown = widgets.Dropdown(options=potential_ids, description='Potential:')
     
     # Create interaction widgets
-    potdir_text = widgets.Text(value='', description='Directory:', continuous_update=False)
-    download_button = widgets.Button(description='Download Files')
-    symbols_text = widgets.Text(value='', description='Symbols:', continuous_update=False)
+    download_button = widgets.Button(description='Copy Files')
 
     # Initialize outputs
     header1_output = widgets.Output()
     with header1_output:
         display(HTML('<h1>Select a LAMMPS potential</h1></br>'))
-        print('Use the dropdown boxes to parse by element(s) and pair_style to select a potential.')
-    
-    header2_output = widgets.Output()
-    def base_header2(potential):
-        with header2_output:
-            clear_output()
-            display(HTML('<h1>Download, display commands</h1>'))
-            print('To download LAMMPS files, enter a local directory and click the button.')
-            print('To customize LAMMPS commands for specific element model symbols, enter a space-delimited list into the Symbols box.')
-            print(f'Allowed symbols = {" ".join(potential.symbols)}')
-    base_header2(self.lammps_potentials[0])
+        print('Use the dropdown boxes to parse and select a potential. If you wish')
+        print('to copy/download the parameter files to the current working directory')
+        print('then click "Copy Files" after selection.')
 
     download_output = widgets.Output()
-
-    potential_output = widgets.Output()
-    def show_pair_info(potential, symbols=None):
-        with potential_output:
-            clear_output()
-            try:
-                print(potential.pair_info(symbols))
-            except:
-                display(HTML('<b>Invalid symbols list</b>'))
-    show_pair_info(self.lammps_potentials[0])
     
     # Define function for updating list of potentials
     def update_potential_dropdown_options(change):
@@ -187,11 +172,7 @@ def widget_lammps_potential(self):
         Updates the list of potentials in potential_dropdown based on values in
         the other widgets.
         """
-        # Set status value
-        status = status_dropdown.value
-        if status == 'all':
-            status = None
-
+        
         # Set elements value
         elements = []
         if element1_dropdown.value != '':
@@ -209,7 +190,7 @@ def widget_lammps_potential(self):
             pair_style = None
 
         # Call search_potentials with author, year, elements
-        potentials = self.get_lammps_potentials(status=status, pair_style=pair_style, element=elements)
+        potentials = self.get_lammps_potentials(pair_style=pair_style, element=elements)
         
         # Update potential dropdown accordingly
         potential_dropdown.options = [pot.id for pot in potentials]
@@ -218,71 +199,36 @@ def widget_lammps_potential(self):
     element1_dropdown.observe(update_potential_dropdown_options, 'value')
     element2_dropdown.observe(update_potential_dropdown_options, 'value')
     element3_dropdown.observe(update_potential_dropdown_options, 'value')
-    status_dropdown.observe(update_potential_dropdown_options, 'value')
     pair_style_dropdown.observe(update_potential_dropdown_options, 'value')
     
     # Define function for updating selected potential
-    def update_selected_potential(change):
+    def update_selected_potential(change=None):
         
-        symbols_text.value = ''
         # Select potential based on dropdown value
         try:
-            potential = self.lammps_potentials[self.lammps_potentials_df.id == potential_dropdown.value][0]
+            potential = self.get_lammps_potential(id=potential_dropdown.value)
         except:
-            symbols_text.disabled = True
             download_button.disabled = True
-            with potential_output:
+            with download_output:
                 clear_output()
                 display(HTML('<b>No matching potentials found: try different selectors</b>'))
+            results.pop('lammps_potential', None)
         else:
-            symbols_text.disabled = False
+            results['lammps_potential'] = potential
             download_button.disabled = False
-            base_header2(potential)
-            show_pair_info(potential)
 
     # Tie potential widget to above function
     potential_dropdown.observe(update_selected_potential, 'value')
+    update_selected_potential()
 
-    def update_symbols(change):
-        if symbols_text.value.strip() == '':
-            symbols = None
-        else:
-            symbols = symbols_text.value.split()
-
-        try:
-            potential = self.lammps_potentials[self.lammps_potentials_df.id == potential_dropdown.value][0]
-        except:
-            symbols_text.disabled = True
-            download_button.disabled = True
-            with potential_output:
-                clear_output()
-                display(HTML('<b>No matching potentials found: try different selectors</b>'))
-        else:
-            symbols_text.disabled = False
-            download_button.disabled = False
-            show_pair_info(potential, symbols)
-        
-    symbols_text.observe(update_symbols, 'value')
-
-    def download_action(change):
+    def download_action(change=None):
         with download_output:
             clear_output()
-            potdir = potdir_text.value
-            if potdir == '':
-                potdir = '.'
-            try:
-                potdir = Path(potdir)
-                assert potdir.is_dir()
-            except:
-                print(f'Download directory "{potdir}"" not found/valid')
-            else:
-                potential = self.lammps_potentials[self.lammps_potentials_df.id == potential_dropdown.value][0]
-                
-                self.download_lammps_potentials_files(potential, targetdir=potdir)
-                print(f'Files downloaded to {Path(potdir, potential.id)}')
+            potential = self.get_lammps_potential(id = potential_dropdown.value, get_files=True)
+            results['lammps_potential'] = potential
+            print(f'Parameter files copied/downloaded to {Path(potential.id)}')
     download_button.on_click(download_action)
 
     # Display widgets and output
-    display(header1_output, status_dropdown, element1_dropdown, element2_dropdown, element3_dropdown,
-            pair_style_dropdown, potential_dropdown, header2_output, potdir_text, symbols_text,
-             download_button, download_output, potential_output)
+    display(header1_output, element1_dropdown, element2_dropdown, element3_dropdown,
+            pair_style_dropdown, potential_dropdown, download_button, download_output)
