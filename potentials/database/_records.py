@@ -4,26 +4,11 @@ from pathlib import Path
 
 from DataModelDict import DataModelDict as DM
 
-def get_record(self, template, title, localpath=None, local=None,
-               remote=None, verbose=False):
-    """
-    Gets a reference file from localpath or by downloading from
-    potentials.nist.gov if a local copy is not found.
+from ..tools import aslist
+
+def get_records(self, template=None, title=None, keyword=None, mongoquery=None,
+                localpath=None, local=None, remote=None, verbose=False):
     
-    Parameters
-    ----------
-    style : str
-        The reference record's style.
-    name : str
-        The name of the record.
-    verbose: bool, optional
-        If True, informative print statements will be used.
-        
-    Returns
-    -------
-    DataModelDict.DataModelDict
-        The record content.
-    """
     # Set localpath, local, and remote as given here or during init
     if localpath is None:
         localpath = self.localpath
@@ -32,27 +17,96 @@ def get_record(self, template, title, localpath=None, local=None,
     if remote is None:
         remote = self.remote
     
+    # Check for competing parameters
+    if keyword is not None and title is not None:
+        raise ValueError("keyword and title cannot both be given")
+    
+    matches = {}
+    numlocal = 0
+    numremote = 0
+    
     # Try local library first
     if local is True and localpath is not None:
-        for fmt in ['xml', 'json']:
-            fname = Path(localpath, template, f'{title}.{fmt}')
-            if fname.is_file():
-                if verbose:
-                    print('Found record in local library')
-                return DM(fname)
+        if template is None:
+            templates = ['*']
+        else:
+            templates = aslist(template)
+        
+        # Search by title
+        if title is not None:
+            titles = aslist(title)
+        
+            for templatedir in templates:
+                for titlename in titles:
+                    for fname in Path(localpath, templatedir).glob(f'{titlename}.*'):
+                        if fname.suffix in ['.xml', '.json']:
+                            matches[titlename] = DM(fname)
+                        
+        # Search by keyword
+        elif keyword is not None:
+            keywords = aslist(keyword)
+            
+            for templatedir in templates:
+                for fname in Path(localpath, templatedir).glob('*'):
+                    if fname.suffix in ['.xml', '.json']:
+                        titlename = fname.stem
+                        with open(fname) as f:
+                            content = f.read()
+                        
+                        ismatch = True
+                        for kw in keywords:
+                            if kw not in content:
+                                ismatch = False
+                                break
+                        if ismatch:
+                            matches[titlename] = DM(fname)
+                    
+        # Add all by template
+        else:
+            for templatedir in templates:
+                for fname in Path(localpath, templatedir).glob('*'):
+                    if fname.suffix in ['.xml', '.json']:
+                        titlename = fname.stem
+                        matches[titlename] = DM(fname)
+    
+        numlocal = len(matches)
+        if verbose:
+            print(f'Found {numlocal} records in local library')
     
     # Try remote next
     if remote is True:
-        matches = self.cdcs.query(template=template, title=title)
-        if len(matches) == 1:
-            if verbose:
-                print('found record in remote database')
-            return DM(matches.iloc[0].xml_content)
-            
-        elif len(matches) > 0:
-            raise ValueError(f'found multiple {title} of {template} records in remote database')
+        rmatches = self.cdcs.query(template=template, title=title,
+                                   keyword=keyword, mongoquery=mongoquery)
+        if verbose:
+            numremote = len(rmatches)
+            print(f'found {numremote} records in remote database')
+        
+        for i in rmatches.index:
+            rmatch = rmatches.loc[i]
+            if rmatch.title not in matches:
+                matches[rmatch.title] = DM(rmatch.xml_content)
+        
+    if verbose and numlocal > 0 and numremote > 0:
+        numtotal = len(matches)
+        print(f'found {numtotal} unique records between local and remote')
+
+    if len(matches) > 0:            
+        return list(matches.values())
+    else:
+        return []
+
+def get_record(self, template=None, title=None, keyword=None, mongoquery=None,
+               localpath=None, local=None, remote=None, verbose=False):
     
-    raise ValueError(f'Record {title} of {template} not found')
+    records = get_records(self, template=template, title=title, keyword=keyword,
+                          mongoquery=mongoquery, localpath=localpath, local=local,
+                          remote=remote, verbose=verbose)
+    if len(records) == 1:
+        return records[0]
+    elif len(records) == 0:
+        raise ValueError('No matching records found')
+    else:
+        raise ValueError('Multiple matching records found')
 
 def download_records(self, template, localpath=None, format='xml', indent=None,
                      verbose=False):

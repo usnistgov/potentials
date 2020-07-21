@@ -25,7 +25,7 @@ class Database():
                                     download_lammps_potentials, upload_lammps_potential,
                                     get_lammps_potentials_files, save_lammps_potential)
 
-    from ._records import get_record, download_records
+    from ._records import get_records, get_record, download_records
     from ._widgets import (widget_search_potentials, widget_lammps_potential)
 
     def __init__(self, host=None, username=None, password=None, certification=None,
