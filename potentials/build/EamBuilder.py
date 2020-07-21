@@ -30,7 +30,7 @@ class EamBuilder(PotentialLAMMPSBuilder):
         """
         # Set default values for format
         kwargs['units'] = kwargs.get('units', 'metal')
-        kwargs['atom_style'] = kwargs.get('units', 'atomic')
+        kwargs['atom_style'] = kwargs.get('atom_style', 'atomic')
         kwargs['pair_style'] = kwargs.get('pair_style', 'eam')
 
         # Call PotentialLAMMPS's init
