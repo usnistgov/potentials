@@ -177,3 +177,43 @@ def download_records(self, template, localpath=None, format='xml', indent=None,
                 
     if verbose:
         print(f'Downloaded {len(records)} of {template}')
+
+def upload_records(self, template, content, title, workspace=None, 
+                   verbose=False):
+    """
+    Saves a new record to the remote database.  Requires write
+    permissions to potentials.nist.gov
+
+    Parameters
+    ----------
+    template : str
+        The template (schema/style) for the record being uploaded.
+    content : str
+        The content to upload.
+    title : str
+        The title (name) to assign to the record.
+    workspace, str, optional
+        The workspace to assign the record to. If not given, no workspace will
+        be assigned (only accessible to user who submitted it).
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    """
+    
+    try:
+        try:
+            self.cdcs.upload_record(content=content, template=template, title=title, verbose=verbose) 
+        except:
+            self.cdcs.update_record(content=content, template=template, title=title, verbose=verbose)
+        success = True
+    except:
+        print(f'Failed to upload/update record {title} of {template} to the database')
+        success = False
+
+    if workspace is not None and success:
+        try:
+            self.cdcs.assign_record_workspace(self, record, workspace, verbose=verbose)
+        except:
+            print(f'Failed to assign record {title} to workspace {workspace}')
+
+    
