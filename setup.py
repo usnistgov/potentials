@@ -38,7 +38,7 @@ setup(name = 'potentials',
         'requests',
         'habanero',
         'bibtexparser',
-        'cdcs',
+        'cdcs>=0.1.3',
       ],
       package_data={'': ['*']},
       zip_safe = False)
