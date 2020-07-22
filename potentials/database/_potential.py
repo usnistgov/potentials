@@ -385,7 +385,7 @@ def download_potentials(self, localpath=None, potentials=None, format='xml',
         if verbose:
             print(f'Downloaded {len(potentials)} of {template}')
 
-def upload_potential(self, potential, verbose=False):
+def upload_potential(self, potential, workspace=None, verbose=False):
     """
     Saves a new potential to the remote database.  Requires write
     permissions to potentials.nist.gov
@@ -394,6 +394,9 @@ def upload_potential(self, potential, verbose=False):
     ----------
     potential : Potential
         The content to save.
+    workspace, str, optional
+        The workspace to assign the record to. If not given, no workspace will
+        be assigned (only accessible to user who submitted it).
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
@@ -402,15 +405,6 @@ def upload_potential(self, potential, verbose=False):
     title = 'potential.' + potential.id
     content = potential.asmodel().xml()
     template = 'Potential'
-    try:
-        try:
-            self.cdcs.upload_record(content=content, template=template, title=title)
-            if verbose:
-                print('Potential added to database')
-        except:
-            self.cdcs.update_record(content=content, template=template, title=title)
-            if verbose:
-                print('Potential updated in database')
-    except:
-        if verbose:
-            print('Failed to upload potential to database')
+
+    self.upload_records(template, content, title, workspace=workspace, 
+                        verbose=verbose)

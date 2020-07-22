@@ -236,7 +236,7 @@ def download_citations(self, localpath=None, citations=None, format='bib',
     if verbose:
         print(f'{len(citations)} citation records copied to localpath')
 
-def upload_citation(self, citation, verbose=False):
+def upload_citation(self, citation, workspace=None, verbose=False):
     """
     Saves a new citation to the remote database.  Requires write
     permissions to potentials.nist.gov
@@ -245,6 +245,9 @@ def upload_citation(self, citation, verbose=False):
     ----------
     citation : Citation
         The content to save.
+    workspace, str, optional
+        The workspace to assign the record to. If not given, no workspace will
+        be assigned (only accessible to user who submitted it).
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
@@ -253,15 +256,6 @@ def upload_citation(self, citation, verbose=False):
     title = citation.doifname
     content = citation.asmodel().xml()
     template = 'Citation'
-    try:
-        try:
-            self.cdcs.upload_record(content=content, template=template, title=title)
-            if verbose:
-                print('Citation added to database')
-        except:
-            self.cdcs.update_record(content=content, template=template, title=title)
-            if verbose:
-                print('Citation updated in database')
-    except:
-        if verbose:
-            print('Failed to upload citation to database')
+    
+    self.upload_records(template, content, title, workspace=workspace, 
+                        verbose=verbose)

@@ -9,6 +9,9 @@ class Database():
     Class for interacting with potential records hosted from potentials.nist.gov
     """
     # Class imports
+    from ._records import (get_records, get_record, download_records,
+                           upload_record)
+
     from ._citation import (citations, citations_df, 
                             load_citations, _no_load_citations,
                             get_citations, get_citation,
@@ -25,7 +28,6 @@ class Database():
                                     download_lammps_potentials, upload_lammps_potential,
                                     get_lammps_potentials_files, save_lammps_potential)
 
-    from ._records import get_records, get_record, download_records
     from ._widgets import (widget_search_potentials, widget_lammps_potential)
 
     def __init__(self, host=None, username=None, password=None, certification=None,

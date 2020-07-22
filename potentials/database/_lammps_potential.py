@@ -521,7 +521,7 @@ def get_lammps_potentials_files(self, lammps_potentials, localpath=None,
         if remote:
             print(f'Files for {num_downloaded} LAMMPS potentials downloaded')
 
-def upload_lammps_potential(self, lammps_potential, verbose=False):
+def upload_lammps_potential(self, lammps_potential, workspace=None, verbose=False):
     """
     Saves a new LAMMPS potential to the remote database.  Requires write
     permissions to potentials.nist.gov
@@ -530,6 +530,9 @@ def upload_lammps_potential(self, lammps_potential, verbose=False):
     ----------
     lammps_potential : PotentialLAMMPS
         The content to save.
+    workspace, str, optional
+        The workspace to assign the record to. If not given, no workspace will
+        be assigned (only accessible to user who submitted it).
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
@@ -538,18 +541,9 @@ def upload_lammps_potential(self, lammps_potential, verbose=False):
     title = lammps_potential.id
     content = lammps_potential.asmodel().xml().replace('True', 'true').replace('False', 'false')
     template = 'potential_LAMMPS'
-    try:
-        try:
-            self.cdcs.upload_record(content=content, template=template, title=title)
-            if verbose:
-                print('potential_LAMMPS added to database')
-        except:
-            self.cdcs.update_record(content=content, template=template, title=title)
-            if verbose:
-                print('potential_LAMMPS updated in database')
-    except:
-        if verbose:
-            print('Failed to upload potential_LAMMPS to database')
+    
+    self.upload_records(template, content, title, workspace=workspace, 
+                        verbose=verbose)
 
 def save_lammps_potential(self, lammps_potential, filenames=None,
                           localpath=None, format='xml', indent=None,
