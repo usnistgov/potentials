@@ -1,5 +1,6 @@
 # coding: utf-8
 from . import tools
+from .Settings import Settings
 from .FAQ import FAQ
 from .Request import Request
 from .Citation import Citation
@@ -15,6 +16,6 @@ from .Database import Database
 from . import build
 from .build_lammps_potential import build_lammps_potential
 
-__all__ = sorted(['tools', 'FAQ', 'Request', 'Citation', 'Artifact', 'Parameter', 'Weblink',
+__all__ = sorted(['tools', 'Settings', 'FAQ', 'Request', 'Citation', 'Artifact', 'Parameter', 'Weblink',
            'Implementation', 'Potential', 'Action', 'PotentialLAMMPS', 'Database', 'build',
            'build_lammps_potential'])

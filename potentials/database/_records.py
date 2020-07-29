@@ -28,7 +28,10 @@ def get_records(self, template=None, title=None, keyword=None, mongoquery=None,
     # Try local library first
     if local is True and localpath is not None:
         if template is None:
-            templates = ['*']
+            templates = []
+            for t in localpath.glob('*'):
+                if t.is_dir():
+                    templates.append(t.name)
         else:
             templates = aslist(template)
         
@@ -108,10 +111,10 @@ def get_record(self, template=None, title=None, keyword=None, mongoquery=None,
     else:
         raise ValueError('Multiple matching records found')
 
-def download_records(self, template, localpath=None, format='xml', indent=None,
-                     verbose=False):
+def download_records(self, template, localpath=None, keyword=None, mongoquery=None,
+                     format='xml', indent=None, verbose=False):
     """
-    Download all records associated with a given template from the remote and
+    Download records associated with a given template from the remote and
     save to localpath.
     
     Parameters
@@ -122,6 +125,11 @@ def download_records(self, template, localpath=None, format='xml', indent=None,
     localpath : path-like object, optional
         Path to a local directory where the files will be saved to.  If not
         given, will use the localpath value set during object initialization.
+    keyword : str, optional
+        A keyword content pattern to search for to limit which records are
+        downloaded.
+    mongoquery : dict, optional
+        A MongoDB-style filter query to limit which records are downloaded.
     format : str, optional
         The file format to save the file as.  Allowed values are 'xml'
         (default) and 'json'.
@@ -164,7 +172,8 @@ def download_records(self, template, localpath=None, format='xml', indent=None,
                 raise ValueError(f'{numexisting} records of format {fmt} already saved locally')
 
     # Download and save
-    records = self.cdcs.query(template=template)
+    records = self.cdcs.query(template=template, 
+                              keyword=keyword, mongoquery=mongoquery)
     for i in range(len(records)):
         record = records.iloc[i]
         fname = Path(save_directory, f'{record.title}.{format}')

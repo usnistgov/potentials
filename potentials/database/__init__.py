@@ -1,7 +1,9 @@
 # coding: utf-8
+from pathlib import Path
 
 from cdcs import CDCS
 
+from .. import Settings
 from ..tools import aslist
 
 class Database():
@@ -49,8 +51,8 @@ class Database():
         certification : str, optional
             File path to certification file if needed for host.
         localpath : str, optional
-            Path to a local directory.  This can be used to hold user-defined
-            records and/or a local copy of the database's records.
+            Path to the local library directory to use.  If not given, will use
+            the set library_directory setting.
         verbose : bool, optional
             If True, info messages will be printed during operations.  Default
             value is False.
@@ -82,7 +84,10 @@ class Database():
                            certification=certification)
         
         # Define class attributes
-        self.__localpath = localpath
+        if localpath is None:
+            self.__localpath = Settings().library_directory
+        else:
+            self.__localpath = Path(localpath)
         assert isinstance(local, bool)
         assert isinstance(remote, bool)
         self.__local = local
