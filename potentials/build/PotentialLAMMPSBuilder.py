@@ -228,7 +228,7 @@ class PotentialLAMMPSBuilder(object):
         model['potential-LAMMPS'] = DM()
         model['potential-LAMMPS']['key'] = self.key
         model['potential-LAMMPS']['id'] = self.id
-        if self.status is not 'active':
+        if self.status != 'active':
             model['potential-LAMMPS']['status'] = self.status
         model['potential-LAMMPS']['potential'] = DM()
         model['potential-LAMMPS']['potential']['key'] = self.potkey
