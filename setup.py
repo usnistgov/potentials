@@ -39,6 +39,7 @@ setup(name = 'potentials',
         'habanero',
         'bibtexparser',
         'cdcs>=0.1.3',
+        'ipywidgets',
       ],
       package_data={'': ['*']},
       zip_safe = False)
