@@ -33,7 +33,7 @@ class Database():
     from ._widgets import (widget_search_potentials, widget_lammps_potential)
 
     def __init__(self, host=None, username=None, password=None, certification=None,
-                 localpath=None, verbose=False, local=True, remote=True, 
+                 localpath=None, verbose=False, local=None, remote=None, 
                  load=False, status='active'):
         """
         Class initializer
@@ -58,11 +58,12 @@ class Database():
             value is False.
         local : bool, optional
             Indicates if the load operations will check localpath for records.
-            Default value is True.
+            Default value is controlled by settings.
         remote : bool, optional
             Indicates if the load operations will download records from the
-            remote database.  Default value is True.  If a local copy exists,
-            then setting this to False is considerably faster.
+            remote database.  Default value is controlled by settings.  If a
+            local copy exists, then setting this to False is considerably
+            faster.
         load : bool, str or list, optional
             If True, citations, potentials and lammps_potentials will all be
             loaded during initialization. If False (default), none will be
@@ -88,6 +89,12 @@ class Database():
             self.__localpath = Settings().library_directory
         else:
             self.__localpath = Path(localpath)
+        
+        # Handle local/remote settings
+        if local is None:
+            local = Settings().local
+        if remote is None:
+            remote = Settings().remote
         assert isinstance(local, bool)
         assert isinstance(remote, bool)
         self.__local = local

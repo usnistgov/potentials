@@ -199,3 +199,69 @@ class Settings():
 
             # Save changes
             self.save()
+
+    def set_remote(self, flag=None):
+        """
+        Sets the default value for the database initialization parameter
+        'remote'.
+        """      
+        # Ask for flag if not given
+        if flag is None:
+            flag = screen_input("Enter default remote option (True/False):")
+        
+        if isinstance(flag, str):
+            if flag.lower() in ['t', 'true']:
+                flag = True
+            elif flag.lower() in ['f', 'false']:
+                flag = False
+            else:
+                raise ValueError('Invalid setting: must be True/False')
+        
+        if not isinstance(flag, bool):
+            raise TypeError('remote flag value must be bool')
+
+        if flag is True and 'remote' in self.__content:
+            del self.__content['remote']
+        elif flag is False:
+            self.__content['remote'] = False
+
+        # Save changes
+        self.save()
+
+    def set_local(self, flag=None):
+        """
+        Sets the default value for the database initialization parameter
+        'local'.
+        """   
+        # Ask for flag if not given
+        if flag is None:
+            flag = screen_input("Enter default remote option (True/False):")
+        if isinstance(flag, str):
+            if flag.lower() in ['t', 'true']:
+                flag = True
+            elif flag.lower() in ['f', 'false']:
+                flag = False
+            else:
+                raise ValueError('Invalid setting: must be True/False')
+        
+        if not isinstance(flag, bool):
+            raise TypeError('local flag value must be bool')
+
+
+        if flag is True and 'local' in self.__content:
+            del self.__content['local']
+        elif flag is False:
+            self.__content['local'] = False
+        
+        # Save changes
+        self.save()
+
+    @property
+    def remote(self):
+        """The default value for the database initialization parameter 'remote'"""
+        return self.__content.get('remote', True)
+
+    @property
+    def local(self):
+        """The default value for the database initialization parameter 'local'"""
+        return self.__content.get('local', True)
