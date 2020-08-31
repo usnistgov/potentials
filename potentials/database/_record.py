@@ -144,7 +144,7 @@ def download_records(self, template, localpath=None, keyword=None, mongoquery=No
     if template == 'potential_LAMMPS':
         raise ValueError('use download_lammps_potentials instead')
     elif template == 'Potential':
-        raise ValueError('use download_lammps_potentials instead')
+        raise ValueError('use download_potentials instead')
     elif template == 'Citation':
         raise ValueError('use download_citations instead')
     
@@ -210,13 +210,58 @@ def upload_record(self, template, content, title, workspace=None,
     """
     
     try:
-        try:
-            self.cdcs.upload_record(content=content, template=template,
-                                    title=title, workspace=workspace,
-                                    verbose=verbose) 
-        except:
-            self.cdcs.update_record(content=content, template=template,
-                                    title=title, workspace=workspace, 
-                                    verbose=verbose)
+        self.cdcs.upload_record(content=content, template=template,
+                                title=title, workspace=workspace,
+                                verbose=verbose) 
     except:
-        print(f'Failed to upload/update record {title} of {template} to the database')
+        self.cdcs.update_record(content=content, template=template,
+                                title=title, workspace=workspace, 
+                                verbose=verbose)
+
+def delete_record(self, template, title, local=True, remote=False,
+                  localpath=None, verbose=False):
+    """
+    Deletes a single data record from the database - local and/or remote.
+
+    Parameters
+    ----------
+    template : str
+        The template (schema/style) for the record being deleted.
+    title : str
+        The title (name) of the record to delete.
+    local : bool, optional
+        If True (default) then the record will be deleted from the localpath.
+    remote : bool, optional
+        If True then the record will be deleted from the remote database.  
+        Requires write permissions to potentials.nist.gov.  Default value is
+        False.
+    localpath : path-like object, optional
+        Path to a local directory where the file to delete is located.  If not
+        given, will use the localpath value set during object initialization.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    """
+    if local is False and remote is False:
+        raise ValueError('local and remote both False: no records deleted')
+
+    if local is True:
+        # Check localpath values
+        if localpath is None:
+            localpath = self.localpath
+        if localpath is None:
+            raise ValueError('localpath must be set to delete local files')
+
+        numfiles = 0
+        for fname in Path(localpath, template).glob(f'{title}.*'):
+            fname.unlink()
+            numfiles += 1
+            if verbose:
+                print(f'deleted {fname}')
+        
+        if numfiles == 0:
+            raise ValueError(f'No local record {title} of {template} found to delete')
+
+    if remote is True:
+        self.cdcs.delete_record(template=template, title=title, verbose=verbose)
+    

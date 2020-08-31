@@ -298,29 +298,34 @@ def get_potential(self, id=None, author=None, year=None, element=None,
     else:
         raise ValueError('Multiple matching potentials found')
 
-def download_potentials(self, localpath=None, potentials=None, format='xml',
-                        indent=None, verbose=False):
+def download_potentials(self, format='xml', localpath=None, indent=None,
+                        overwrite=True, verbose=False):
     """
     Download all potentials from the remote to the localpath directory.
 
     Parameters
     ----------
+    format : str, optional
+        The file format to save the file as.  Allowed values are 'xml'
+        (default) and 'json'.
     localpath : str, optional
         Path to a local directory where the records are to be copied to.
         If not given, will check localpath value set during object
         initialization.
-    potentials : list of Potential, optional
-        A list of potentials to download. If not given, all potentials will
-        be downloaded.
-    format : str, optional
-        The file format to save the file as.  Allowed values are 'xml'
-        (default) and 'json'.
     indent : int, optional
         The indentation spacing size to use for the locally saved file.  If not
         given, the JSON/XML content will be compact.
+    overwrite : bool, optional
+        If True (default) then any matching potentials already in the localpath
+        will be updated if the content has changed.  If False, all existing
+        potentials in the localpath will be unchanged.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
+    reload : bool, optional
+        If True, will call load_potentials() after adding the new
+        potential.  Default value is False: loading is slow and should only be
+        done when you wish to retrieve the saved potentials.
     
     Raises
     ------
@@ -329,6 +334,70 @@ def download_potentials(self, localpath=None, potentials=None, format='xml',
         different format already exist in localpath.    
     """
 
+    # Download all potentials from remote
+    records = self.cdcs.query(template='Potential')
+    def makepotentials(series):
+        return Potential(model=series.xml_content)
+    potentials = records.apply(makepotentials, axis=1)
+    
+    # Save locally
+    self.save_potentials(potentials, format=format, localpath=localpath, 
+                         indent=indent, overwrite=overwrite, verbose=verbose)
+
+def upload_potential(self, potential, workspace=None, verbose=False):
+    """
+    Saves a new potential to the remote database.  Requires write
+    permissions to potentials.nist.gov
+
+    Parameters
+    ----------
+    potential : Potential
+        The content to save.
+    workspace, str, optional
+        The workspace to assign the record to. If not given, no workspace will
+        be assigned (only accessible to user who submitted it).
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    """
+    
+    title = 'potential.' + potential.id
+    content = potential.asmodel().xml()
+    template = 'Potential'
+
+    self.upload_record(template, content, title, workspace=workspace, 
+                        verbose=verbose)
+
+def save_potentials(self, potentials, format='xml', localpath=None,
+                    indent=None, overwrite=True, verbose=False, reload=False):
+    """
+    Save Potential records to the localpath.
+    
+    Parameters
+    ----------
+    potentials : Potential or list of Potential
+        The potential(s) to save. 
+    format : str, optional
+        The file format to save the record files as.  Allowed values are 
+        'xml' (default) and 'json'.
+    localpath : path-like object, optional
+        Path to a local directory where the files will be saved to.  If not
+        given, will use the localpath value set during object initialization.
+    indent : int, optional
+        The indentation spacing size to use for the locally saved record files.
+        If not given, the JSON/XML content will be compact.
+    overwrite : bool, optional
+        If True (default) then any matching potentials already in the localpath
+        will be updated if the content has changed.  If False, all existing
+        potentials in the localpath will be unchanged.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    reload : bool, optional
+        If True, will call load_potentials() after adding the new
+        potential.  Default value is False: loading is slow and should only be
+        done when you wish to retrieve the saved potentials.
+    """
     template = 'Potential'
 
     # Check localpath values
@@ -354,57 +423,91 @@ def download_potentials(self, localpath=None, potentials=None, format='xml',
             if numexisting > 0:
                 raise ValueError(f'{numexisting} records of format {fmt} already saved locally')
 
-    # Download and save
-    if potentials is None:
-        records = self.cdcs.query(template=template)
-        for i in range(len(records)):
-            record = records.iloc[i]
-            fname = Path(save_directory, f'{record.title}.{format}')
-            content = DM(record.xml_content)
-            with open(fname, 'w', encoding='UTF-8') as f:
-                if format == 'xml':
-                    content.xml(fp=f, indent=indent)
-                else:
-                    content.json(fp=f, indent=indent)
-        if verbose:
-            print(f'Downloaded {len(records)} of {template}')
-    
-    # Save loaded content
-    else:
-        for potential in aslist(potentials):
-            potname = potential.id
+    count_duplicate = 0
+    count_updated = 0
+    count_new = 0
 
-            fname = Path(save_directory, f'potential.{potname}.{format}')
-            if format == 'xml':
-                with open(fname, 'w', encoding='UTF-8') as f:
-                    potential.asmodel().xml(fp=f, indent=indent)
-            elif format == 'json':
-                with open(fname, 'w', encoding='UTF-8') as f:
-                    potential.asmodel().json(fp=f, indent=indent)
+    potentials = aslist(potentials)
+
+    for potential in potentials:
         
-        if verbose:
-            print(f'Downloaded {len(potentials)} of {template}')
+        # Build filename
+        potname = potential.id
+        fname = Path(save_directory, f'potential.{potname}.{format}')
+        
+        # Skip existing files if overwrite is False
+        if overwrite is False and fname.is_file():
+            count_duplicate += 1
+            continue
 
-def upload_potential(self, potential, workspace=None, verbose=False):
+        # Build content
+        if format == 'xml':
+            content = potential.asmodel().xml(indent=indent)
+        elif format == 'json':
+            content = potential.asmodel().json(indent=indent)
+
+        # Check if existing content has changed
+        if fname.is_file():
+            with open(fname, encoding='UTF-8') as f:
+                oldcontent = f.read()
+            if content == oldcontent:
+                count_duplicate += 1
+                continue
+            else:
+                count_updated += 1
+        else:
+            count_new += 1
+
+        with open(fname, 'w', encoding='UTF-8') as f:
+            f.write(content)
+
+    if verbose:
+        print(f'{len(potentials)} potentials saved to localpath')
+        if count_new > 0:
+            print(f' - {count_new} new potentials added')
+        if count_updated > 0:
+            print(f' - {count_updated} existing potentials updated')
+        if count_duplicate > 0:
+            print(f' - {count_duplicate} duplicate potentials skipped')
+
+    if reload:
+        self.load_potentials(verbose=verbose)
+
+def delete_potential(self, potential, local=True, remote=False, localpath=None,
+                     verbose=False):
     """
-    Saves a new potential to the remote database.  Requires write
+    Deletes a potential from the remote database.  Requires write
     permissions to potentials.nist.gov
 
     Parameters
     ----------
-    potential : Potential
-        The content to save.
-    workspace, str, optional
-        The workspace to assign the record to. If not given, no workspace will
-        be assigned (only accessible to user who submitted it).
+    potential : Potential or str
+        The potential to delete from the remote database.  Can either give the
+        corresponding Potential object or just the potential's id/title.
+    local : bool, optional
+        If True (default) then the record will be deleted from the localpath.
+    remote : bool, optional
+        If True then the record will be deleted from the remote database.  
+        Requires write permissions to potentials.nist.gov.  Default value is
+        False.
+    localpath : path-like object, optional
+        Path to a local directory where the file to delete is located.  If not
+        given, will use the localpath value set during object initialization.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-    
-    title = 'potential.' + potential.id
-    content = potential.asmodel().xml()
     template = 'Potential'
-
-    self.upload_records(template, content, title, workspace=workspace, 
-                        verbose=verbose)
+    if isinstance(potential, Potential):
+        title = 'potential.' + potential.id
+    elif isinstance(potential, str):
+        if 'potential.' in title:
+            title = potential
+        else:
+            title = 'potential.' + potential
+    else:
+        raise TypeError('Invalid potential value: must be Potential or str')
+    
+    self.delete_record(template, title, local=local, remote=remote,
+                       localpath=localpath, verbose=verbose)
+    

@@ -337,9 +337,9 @@ def get_lammps_potential(self, id=None, key=None, potid=None, potkey=None,
     
     return lammps_potential
 
-def download_lammps_potentials(self, localpath=None, lammps_potentials=None,
-                               format='xml', indent=None, verbose=False,
-                               status='active', get_files=True):
+def download_lammps_potentials(self, format='xml', localpath=None, indent=None,
+                               status='active', getfiles=True,
+                               overwrite=True, verbose=False, reload=False):
     """
     Download potential_LAMMPS records from the remote and save to localpath.
     
@@ -357,112 +357,58 @@ def download_lammps_potentials(self, localpath=None, lammps_potentials=None,
     indent : int, optional
         The indentation spacing size to use for the locally saved record files.
         If not given, the JSON/XML content will be compact.
-    verbose : bool, optional
-        If True, info messages will be printed during operations.  Default
-        value is False.
     status : str, list or None, optional
         Only potential_LAMMPS records with the given status(es) will be
         downloaded.  Allowed values are 'active' (default), 'superseded', and
         'retracted'.  If None is given, then all potentials will be downloaded.
-    get_files : bool, optional
+    getfiles : bool, optional
         If True, the parameter files associated with the potential_LAMMPS
         record will also be downloaded.
+    overwrite : bool, optional
+        If True (default) then any matching LAMMPS potentials already in the
+        localpath will be updated if the content has changed.  If False, all
+        existing LAMMPS potentials in the localpath will be unchanged.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    reload : bool, optional
+        If True, will call load_lammps_potentials() after adding the new
+        potential.  Default value is False: loading is slow and should only be
+        done when you wish to retrieve the saved potentials.
     """
-    # Load potentials to speed up file downloads
-    if get_files is True and self.potentials is None:
-        self.load_potentials()
-
     template = 'potential_LAMMPS'
     
-    # Check localpath values
-    if localpath is None:
-        localpath = self.localpath
-    if localpath is None:
-        raise ValueError('localpath must be set to download files')
-    
-    # Check format value
-    format = format.lower()
-    allowed_formats = ['xml', 'json']
-    if format not in allowed_formats:
-        raise ValueError("Format must be 'xml' or 'json'")
-    
-    
+    # Load potentials to speed up file downloads
+    if getfiles is True and self.potentials is None:
+        self.load_potentials()
 
-    # Create save directory if needed
-    save_directory = Path(localpath, template)
-    if not save_directory.is_dir():
-        save_directory.mkdir(parents=True)
+    mquery = {}
 
-    for fmt in allowed_formats:
-        if fmt != format:
-            numexisting = len([fname for fname in save_directory.glob(f'*.{fmt}')])
-            if numexisting > 0:
-                raise ValueError(f'{numexisting} records of format {fmt} already saved locally')
+    # Add status query
+    if status is not None:
+        status = aslist(status)
+        if 'active' in status:
+            status.append(None)
+        mquery['potential-LAMMPS.status'] = {'$in':status}
 
-    # Download and save
-    if lammps_potentials is None:
+    records = self.cdcs.query(template=template, mongoquery=mquery)
+    def makelammpspotentials(series):
+        return PotentialLAMMPS(model=series.xml_content)
+    lammps_potentials = records.apply(makelammpspotentials, axis=1)
 
-        mquery = {}
-
-        # Add status query
-        if status is not None:
-            status = aslist(status)
-            if 'active' in status:
-                status.append(None)
-            mquery['potential-LAMMPS.status'] = {'$in':status}
-
-        records = self.cdcs.query(template=template, mongoquery=mquery)
-        for i in range(len(records)):
-            record = records.iloc[i]
-            fname = Path(save_directory, f'{record.title}.{format}')
-            content = DM(record.xml_content)
-            with open(fname, 'w', encoding='UTF-8') as f:
-                if format == 'xml':
-                    content.xml(fp=f, indent=indent)
-                else:
-                    content.json(fp=f, indent=indent)
-        if verbose:
-            print(f'Downloaded {len(records)} of {template}')
-    
-    # Save loaded content
+    if getfiles is True:
+        filenames = None
     else:
-        if status is None:
-            status = ['active', 'superseded', 'retracted']
-        else:
-            status = aslist(status)
+        filenames = [[] for i in range(len(lammps_potentials))]
 
-        for lammps_potential in aslist(lammps_potentials):
-            if lammps_potential.status not in status:
-                continue
-            
-            potname = lammps_potential.id
-
-            fname = Path(save_directory, f'{potname}.{format}')
-            if format == 'xml':
-                with open(fname, 'w', encoding='UTF-8') as f:
-                    lammps_potential.asmodel().xml(fp=f, indent=indent)
-            elif format == 'json':
-                with open(fname, 'w', encoding='UTF-8') as f:
-                    lammps_potential.asmodel().json(fp=f, indent=indent)
-        
-        if verbose:
-            print(f'Downloaded {len(lammps_potentials)} of {template}')
-
-    if get_files is True:
-        # Convert downloaded records to lammps_potentials
-        def makepotentials(series):
-            return PotentialLAMMPS(model=series.xml_content)
-        lammps_potentials = records.apply(makepotentials, axis=1)
-        
-        # Download parameter files
-        self.get_lammps_potentials_files(lammps_potentials,
-                                         local=False, remote=True,
-                                         targetdir=save_directory,
-                                         verbose=verbose)
+    self.save_lammps_potentials(lammps_potentials, filenames=filenames,
+                                format=format, localpath=localpath,
+                                indent=indent, overwrite=overwrite,
+                                verbose=verbose, reload=reload)
 
 def get_lammps_potentials_files(self, lammps_potentials, localpath=None,
-                               local=None, remote=None, targetdir='.',
-                               verbose=False):
+                                local=None, remote=None, targetdir='.',
+                                verbose=False):
     
     # Set localpath, local, and remote as given here or during init
     if localpath is None:
@@ -542,32 +488,41 @@ def upload_lammps_potential(self, lammps_potential, workspace=None, verbose=Fals
     content = lammps_potential.asmodel().xml().replace('True', 'true').replace('False', 'false')
     template = 'potential_LAMMPS'
     
-    self.upload_records(template, content, title, workspace=workspace, 
+    self.upload_record(template, content, title, workspace=workspace, 
                         verbose=verbose)
 
-def save_lammps_potential(self, lammps_potential, filenames=None,
-                          localpath=None, format='xml', indent=None,
-                          verbose=False, reload=False):
+def save_lammps_potentials(self, lammps_potentials, filenames=None,
+                           format='xml', localpath=None,  indent=None,
+                           overwrite=True, verbose=False, reload=False):
     """
     Saves a new LAMMPS potential to the local copy of the database
 
     Parameters
     ----------
-    lammps_potential : PotentialLAMMPS or PotentialLAMMPSBuilder
-        The content to save.
-    filenames : str, path or list, optional
-        The path names to any parameter files associated with the potential.
-        These will be copied into the local directory as well
+    lammps_potentials : PotentialLAMMPS or list of PotentialLAMMPS
+        The lammps_potential(s) to save.
+    filenames : list, optional
+        The path names to any parameter files associated with each
+        lammps_potentials.  Length of the list should be the same as the
+        length of lammps_potentials.  Each entry can be None, a path, or a list
+        of paths.  If the value is None for an entry then the corresponding
+        Potential record will be searched for parameter files to download.  
+        Note that files will only be copied/downloaded if the associated record
+        is new/different.
+    format : str, optional
+        The file format to save the record files as.  Allowed values are 'xml'
+        (default) and 'json'.
     localpath : path-like object, optional
         Path to a local directory where the record and files will be saved to.
         If not given, will use the localpath value set during object
         initialization.
-    format : str, optional
-        The file format to save the record files as.  Allowed values are 'xml'
-        (default) and 'json'.
     indent : int, optional
         The indentation spacing size to use for the locally saved record files.
         If not given, the JSON/XML content will be compact.
+    overwrite : bool, optional
+        If True (default) then any matching LAMMPS potentials already in the
+        localpath will be updated if the content has changed.  If False, all
+        existing LAMMPS potentials in the localpath will be unchanged.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
@@ -590,36 +545,164 @@ def save_lammps_potential(self, lammps_potential, filenames=None,
     if format not in allowed_formats:
         raise ValueError("Format must be 'xml' or 'json'")
 
-    # Check potential
-    if isinstance(lammps_potential, PotentialLAMMPSBuilder):
-        lammps_potential = lammps_potential.potential()
-    if lammps_potential.id is None:
-        raise ValueError('The id of lammps_potential must be set')
-    
-    # Save potential
-    title = lammps_potential.id
-    content = lammps_potential.asmodel()
-    if not Path(localpath, template).is_dir():
-        Path(localpath, template).mkdir(parents=True)
-    fname = Path(localpath, template, f'{title}.{format}')
-    with open(fname, 'w') as f:
-        if format == 'xml':
-            content.xml(fp=f, indent=indent)
-        elif format == 'json':
-            content.json(fp=f, indent=indent)
-    if verbose:
-        print(f'LAMMPS potential {title} saved to {localpath}')
+    # Check lammps_potentials and filenames
+    lammps_potentials = aslist(lammps_potentials)
+    if filenames is None:
+        filenames = [None for i in range(len(lammps_potentials))]
+    filenames = aslist(filenames)
+    if len(lammps_potentials) == 1 and len(filenames) > 1:
+        filenames = [filenames]
+    if len(lammps_potentials) != len(filenames):
+         raise ValueError('Incompatible number of lammps_potentials and filenames')
 
-    # Copy files
-    if filenames is not None:
-        potdir = Path(localpath, template, title)
-        if not potdir.is_dir():
-            potdir.mkdir(parents=True)
-        filenames = aslist(filenames)
-        for filename in filenames:
-            shutil.copy(filename, potdir)
-        if verbose:
-            print(f'copied {len(filenames)} parameter files')
+    # Convert builders to PotentialLAMMPS objects and check for ids
+    for i in range(len(lammps_potentials)):
+        if isinstance(lammps_potentials[i], PotentialLAMMPSBuilder):
+            lammps_potentials[i] = lammps_potentials[i].potential()
+        if lammps_potentials[i].id is None:
+            raise ValueError(f'The id of lammps_potentials[{i}] not set')
+
+    # Create save directory if needed
+    save_directory = Path(localpath, template)
+    if not save_directory.is_dir():
+        save_directory.mkdir(parents=True)
+
+    # Check for existing records of a different format
+    for fmt in allowed_formats:
+        if fmt != format:
+            numexisting = len([fname for fname in save_directory.glob(f'*.{fmt}')])
+            if numexisting > 0:
+                raise ValueError(f'{numexisting} records of format {fmt} already saved locally')
+
+    count_duplicate = 0
+    count_updated = 0
+    count_new = 0    
+    count_files_copied = 0
+    count_files_not_found = 0
+    downloaders = []
+
+    for lammps_potential, fnames in zip(lammps_potentials, filenames):
     
+        # Build filename
+        potname = lammps_potential.id
+        fname = Path(save_directory, f'{potname}.{format}')
+
+        # Skip existing files if overwrite is False
+        if overwrite is False and fname.is_file():
+            count_duplicate += 1
+            continue
+
+        # Build content
+        if format == 'xml':
+            content = lammps_potential.asmodel().xml(indent=indent)
+        elif format == 'json':
+            content = lammps_potential.asmodel().json(indent=indent)
+
+        # Check if existing content has changed
+        if fname.is_file():
+            with open(fname, encoding='UTF-8') as f:
+                oldcontent = f.read()
+            if content == oldcontent:
+                count_duplicate += 1
+                continue
+            else:
+                count_updated += 1
+        else:
+            count_new += 1
+
+        with open(fname, 'w', encoding='UTF-8') as f:
+            f.write(content)
+
+        # Copy files
+        if fnames is not None:
+            fnames = aslist(fnames)
+            
+            potdir = Path(save_directory, potname)
+            if len(fnames) > 0:
+                if not potdir.is_dir():
+                    potdir.mkdir(parents=True)
+                
+                for filename in fnames:
+                    shutil.copy(filename, potdir)
+                count_files_copied += 1
+            else:
+                count_files_not_found += 1
+        
+        # Build list of potentials to download records for
+        else:
+            downloaders.append(lammps_potential)
+        
+    if verbose:
+        print(f'{len(lammps_potentials)} LAMMPS potentials saved to localpath')
+        if count_new > 0:
+            print(f' - {count_new} new potentials added')
+        if count_updated > 0:
+            print(f' - {count_updated} existing potentials updated')
+        if count_duplicate > 0:
+            print(f' - {count_duplicate} duplicate potentials skipped')
+        if count_files_copied > 0:
+            print(f' - {count_files_copied} potentials had files copied')
+        if count_files_not_found > 0:
+            print(f' - {count_files_not_found} potentials had no files to copy')
+    
+    # Download files for the lammps potentials without lists of files
+    if len(downloaders) > 0:
+        self.get_lammps_potentials_files(downloaders,
+                                         local=False, remote=True,
+                                         targetdir=save_directory,
+                                         verbose=verbose)
+
     if reload:
-        self.load_lammps_potentials()
+        self.load_lammps_potentials(verbose=verbose)
+
+def delete_lammps_potential(self, lammps_potential, local=True, remote=False,
+                            localpath=None, paramfiles=True, verbose=False):
+    """
+    Deletes a lammps_potential from the remote database.  Requires write
+    permissions to potentials.nist.gov
+
+    Parameters
+    ----------
+    lammps_potential : PotentialLAMMPS or str
+        The LAMMPS potential to delete from the remote database.  Can either
+        give the corresponding PotentialLAMMPS object or just the potential's
+        id/title.
+    local : bool, optional
+        If True (default) then the record will be deleted from the localpath.
+    remote : bool, optional
+        If True then the record will be deleted from the remote database.  
+        Requires write permissions to potentials.nist.gov.  Default value is
+        False.
+    localpath : path-like object, optional
+        Path to a local directory where the file to delete is located.  If not
+        given, will use the localpath value set during object initialization.
+    paramfiles : bool, optional
+        If True (default) and local is True, then any parameter files
+        associated with the record will also be deleted from localpath.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    """
+    template = 'potential_LAMMPS'
+    if isinstance(lammps_potential, PotentialLAMMPS):
+        title = lammps_potential.id
+    elif isinstance(lammps_potential, str):
+        title = lammps_potential
+    else:
+        raise TypeError('Invalid lammps_potential value: must be PotentialLAMMPS or str')
+    
+    self.delete_record(template, title, local=local, remote=remote,
+                       localpath=localpath, verbose=verbose)
+
+    # Delete local parameter files
+    if local is True and paramfiles is True:
+        # Check localpath values
+        if localpath is None:
+            localpath = self.localpath
+        if localpath is None:
+            raise ValueError('localpath must be set to delete local files')
+        
+        paramdir = Path(localpath, template, title)
+        if paramdir.is_dir():
+            shutil.rmtree(paramdir)
+    

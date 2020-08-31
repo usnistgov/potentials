@@ -11,24 +11,27 @@ class Database():
     Class for interacting with potential records hosted from potentials.nist.gov
     """
     # Class imports
-    from ._records import (get_records, get_record, download_records,
-                           upload_record)
+    from ._record import (get_records, get_record, download_records,
+                          upload_record, delete_record)
 
     from ._citation import (citations, citations_df, 
                             load_citations, _no_load_citations,
                             get_citations, get_citation,
-                            download_citations, upload_citation)
+                            download_citations, upload_citation,
+                            save_citations, delete_citation)
 
     from ._potential import (potentials, potentials_df,
                              load_potentials, _no_load_potentials,
                              get_potentials, get_potential,
-                             download_potentials, upload_potential)
+                             download_potentials, upload_potential,
+                             save_potentials, delete_potential)
 
     from ._lammps_potential import (lammps_potentials, lammps_potentials_df,
                                     load_lammps_potentials, _no_load_lammps_potentials,
                                     get_lammps_potentials, get_lammps_potential,
                                     download_lammps_potentials, upload_lammps_potential,
-                                    get_lammps_potentials_files, save_lammps_potential)
+                                    get_lammps_potentials_files, save_lammps_potentials,
+                                    delete_lammps_potential)
 
     from ._widgets import (widget_search_potentials, widget_lammps_potential)
 

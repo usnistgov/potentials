@@ -161,31 +161,92 @@ def get_citation(self, doi, localpath=None, verbose=False):
         print(f'Citation retrieved from CrossRef')
     return Citation(bibtex)
 
-def download_citations(self, localpath=None, citations=None, format='bib',
-                       indent=None, verbose=False):
+def download_citations(self, format='bib', localpath=None, indent=None,
+                       overwrite=True, verbose=False):
     """
-    Download citation records from the remote and save to localpath.
+    Download all citation records from the remote and save to localpath.
     
     Parameters
     ----------
-    localpath : path-like object, optional
-        Path to a local directory where the files will be saved to.  If not
-        given, will use the localpath value set during object initialization.
-    citations : list of Citation, optional
-        A list of citations to download. If not given, all citations will
-        be downloaded.
     format : str, optional
         The file format to save the record files as.  Allowed values are 'bib'
         (default), 'xml' and 'json'.
+    localpath : path-like object, optional
+        Path to a local directory where the files will be saved to.  If not
+        given, will use the localpath value set during object initialization.
     indent : int, optional
         The indentation spacing size to use for the locally saved record files.
         If not given, the JSON/XML content will be compact.  Ignored if format
         is 'bib'.
+    overwrite : bool, optional
+        If True (default) then any matching citations already in the localpath
+        will be updated with the new content.  If False, all existing citations
+        in the localpath will be skipped.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    """
+    # Download all citations from remote
+    records = self.cdcs.query(template='Citation')
+    def makecitations(series):
+        return Citation(model=series.xml_content)
+    citations = records.apply(makecitations, axis=1)
+
+    # Save locally
+    self.save_citations(citations, format=format, localpath=localpath, 
+                        indent=indent, overwrite=overwrite, verbose=verbose)
+
+def upload_citation(self, citation, workspace=None, verbose=False):
+    """
+    Saves a new citation to the remote database.  Requires write
+    permissions to potentials.nist.gov
+
+    Parameters
+    ----------
+    citation : Citation
+        The content to save.
+    workspace, str, optional
+        The workspace to assign the record to. If not given, no workspace will
+        be assigned (only accessible to user who submitted it).
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
     """
 
+    title = citation.doifname
+    content = citation.asmodel().xml()
+    template = 'Citation'
+    
+    self.upload_record(template, content, title, workspace=workspace, 
+                        verbose=verbose)
+
+def save_citations(self, citations, format='bib', localpath=None, 
+                   indent=None, overwrite=True, verbose=False):
+    """
+    Save Citation records to the localpath.
+    
+    Parameters
+    ----------
+    citations : Citation or list of Citation
+        The citation(s) to save. 
+    format : str, optional
+        The file format to save the record files as.  Allowed values are 'bib'
+        (default), 'xml' and 'json'.
+    localpath : path-like object, optional
+        Path to a local directory where the files will be saved to.  If not
+        given, will use the localpath value set during object initialization.
+    indent : int, optional
+        The indentation spacing size to use for the locally saved record files.
+        If not given, the JSON/XML content will be compact.  Ignored if format
+        is 'bib'.
+    overwrite : bool, optional
+        If True (default) then any matching citations already in the localpath
+        will be updated with the new content.  If False, all existing citations
+        in the localpath will be skipped.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    """
     template = 'Citation'
 
     # Handle localpath value
@@ -211,51 +272,86 @@ def download_citations(self, localpath=None, citations=None, format='bib',
             if numexisting > 0:
                 raise ValueError(f'{numexisting} records of format {fmt} already saved locally')
 
-    # Download if needed
-    if citations is None:
-        records = self.cdcs.query(template=template)
-        def makecitations(series):
-            return Citation(model=series.xml_content)
-        citations = records.apply(makecitations, axis=1)
-    else:
-        citations = aslist(citations)
+    count_duplicate = 0
+    count_updated = 0
+    count_new = 0
+
+    citations = aslist(citations)
 
     for citation in citations:
+        
+        # Build filename 
         doifname = citation.doifname
-
         fname = Path(save_directory, f'{doifname}.{format}')
-        if format == 'bib':
-            with open(fname, 'w', encoding='UTF-8') as f:
-                f.write(citation.bibtex)
-        elif format == 'xml':
-            with open(fname, 'w', encoding='UTF-8') as f:
-                citation.asmodel().xml(fp=f, indent=indent)
-        elif format == 'json':
-            with open(fname, 'w', encoding='UTF-8') as f:
-                citation.asmodel().json(fp=f, indent=indent)
-    if verbose:
-        print(f'{len(citations)} citation records copied to localpath')
+        
+        # Skip existing files if overwrite is False
+        if overwrite is False and fname.is_file():
+            count_duplicate += 1
+            continue
 
-def upload_citation(self, citation, workspace=None, verbose=False):
+        # Build content
+        if format == 'bib':
+            content = citation.bibtex
+        elif format == 'xml':
+            content = citation.asmodel().xml(indent=indent)
+        elif format == 'json':
+            content = citation.asmodel().json(indent=indent)
+
+        # Check if existing content has changed
+        if fname.is_file():
+            with open(fname, encoding='UTF-8') as f:
+                oldcontent = f.read()
+            if content == oldcontent:
+                count_duplicate += 1
+                continue
+            else:
+                count_updated += 1
+        else:
+            count_new += 1
+
+        with open(fname, 'w', encoding='UTF-8') as f:
+            f.write(content)
+    
+    if verbose:
+        print(f'{len(citations)} citations saved to localpath')
+        if count_new > 0:
+            print(f' - {count_new} new citations added')
+        if count_updated > 0:
+            print(f' - {count_updated} existing citations updated')
+        if count_duplicate > 0:
+            print(f' - {count_duplicate} duplicate citations skipped')
+
+def delete_citation(self, citation, local=True, remote=False, localpath=None,
+                    verbose=False):
     """
-    Saves a new citation to the remote database.  Requires write
-    permissions to potentials.nist.gov
+    Deletes a citation from the database - local and/or remote.
 
     Parameters
     ----------
-    citation : Citation
-        The content to save.
-    workspace, str, optional
-        The workspace to assign the record to. If not given, no workspace will
-        be assigned (only accessible to user who submitted it).
+    citation : Citation or str
+        The citation to delete from the database.  Can either give the
+        corresponding Citation object or just the citation's doi.
+    local : bool, optional
+        If True (default) then the record will be deleted from the localpath.
+    remote : bool, optional
+        If True then the record will be deleted from the remote database.  
+        Requires write permissions to potentials.nist.gov.  Default value is
+        False.
+    localpath : path-like object, optional
+        Path to a local directory where the file to delete is located.  If not
+        given, will use the localpath value set during object initialization.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-
-    title = citation.doifname
-    content = citation.asmodel().xml()
     template = 'Citation'
+    if isinstance(citation, Citation):
+        title = citation.doifname
+    elif isinstance(citation, str):
+        title = citation.lower().replace('/', '_')
+    else:
+        raise TypeError('Invalid citation value: must be Citation or str')
     
-    self.upload_records(template, content, title, workspace=workspace, 
-                        verbose=verbose)
+    self.delete_record(template, title, local=local, remote=remote,
+                       localpath=localpath, verbose=verbose)
+    
