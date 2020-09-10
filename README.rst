@@ -14,6 +14,12 @@ and explored.
 Jupyter Notebooks
 -----------------
 
+Setup
+`````
+
+- 0. Initial Setup.ipynb instructs new users on how default settings for the
+  local copy of the database can be set and changed.
+
 Search Tools
 ````````````
 
