@@ -438,28 +438,31 @@ def get_lammps_potentials_files(self, lammps_potentials, localpath=None,
         
         # Check remote
         if remote is True and copied is False:
-            potential = self.get_potential(id=lammps_potential.potid)
-            
-            # Find matching implementation
-            impmatch = False
-            for imp in potential.implementations:
-                if imp.key == lammps_potential.key:
-                    impmatch = True
-                    break
-            
-            # Download artifacts
-            if impmatch:
-                pot_dir = Path(targetdir, lammps_potential.id)
-                if not pot_dir.is_dir():
-                    pot_dir.mkdir(parents=True)
+            try:
+                potential = self.get_potential(id=lammps_potential.potid)
+            except:
+                pass
+            else:
+                # Find matching implementation
+                impmatch = False
+                for imp in potential.implementations:
+                    if imp.key == lammps_potential.key:
+                        impmatch = True
+                        break
+                
+                # Download artifacts
+                if impmatch:
+                    pot_dir = Path(targetdir, lammps_potential.id)
+                    if not pot_dir.is_dir():
+                        pot_dir.mkdir(parents=True)
 
-                for artifact in imp.artifacts:
-                    r = requests.get(artifact.url)
-                    r.raise_for_status()
-                    artifactfile = Path(pot_dir, artifact.filename)
-                    with open(artifactfile, 'wb') as f:
-                        f.write(r.content)
-                num_downloaded += 1
+                    for artifact in imp.artifacts:
+                        r = requests.get(artifact.url)
+                        r.raise_for_status()
+                        artifactfile = Path(pot_dir, artifact.filename)
+                        with open(artifactfile, 'wb') as f:
+                            f.write(r.content)
+                    num_downloaded += 1
     
     if verbose:
         if local:

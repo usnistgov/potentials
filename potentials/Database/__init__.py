@@ -191,7 +191,7 @@ class Database():
 
     def download_all(self, localpath=None, format='xml', citeformat='bib',
                      indent=None, status='active', verbose=False,
-                     get_files=True):
+                     getfiles=True):
         """
         Downloads all records from the remote to localhost.
 
@@ -217,7 +217,7 @@ class Database():
             Only potential_LAMMPS records with the given status(es) will be
             downloaded.  Allowed values are 'active' (default), 'superseded', and
             'retracted'.  If None is given, then all potentials will be downloaded.
-        get_files : bool, optional
+        getfiles : bool, optional
             If True, the parameter files associated with the potential_LAMMPS
             record will also be downloaded.
         
@@ -235,4 +235,4 @@ class Database():
 
         self.download_lammps_potentials(localpath=localpath, format=format,
                                         indent=indent, verbose=verbose,
-                                        status=status, get_files=get_files)
+                                        status=status, getfiles=getfiles)
