@@ -106,7 +106,7 @@ def load_potentials(self, localpath=None, local=None, remote=None, verbose=False
         self.__potentials = None
         self.__potentials_df = None
 
-def get_potentials(self, id=None, key=None, author=None, year=None, element=None,
+def get_potentials(self, id=None, key=None, author=None, year=None, elements=None,
                   localpath=None, verbose=False):
     """
     Get all matching potentials from the database.
@@ -123,8 +123,8 @@ def get_potentials(self, id=None, key=None, author=None, year=None, element=None
         Author string(s) to search for.
     year : int or list, optional
         Publication year(s) to search for.
-    element : str or list, optional
-        Element model(s) to search for.
+    elements : str or list, optional
+        Element(s) to search for.
     localpath : str, optional
         Path to a local directory to check for records first.  If not given,
         will check localpath value set during object initialization.  If not
@@ -197,7 +197,7 @@ def get_potentials(self, id=None, key=None, author=None, year=None, element=None
                               &self.potentials_df.apply(keymatch, args=[key], axis=1)
                               &self.potentials_df.apply(authormatch, args=[author], axis=1)
                               &self.potentials_df.apply(yearmatch, args=[year], axis=1)
-                              &self.potentials_df.apply(elementmatch, args=[element], axis=1)]
+                              &self.potentials_df.apply(elementmatch, args=[elements], axis=1)]
         if verbose:
             print(len(potentials), 'matching potentials found from loaded records')
         return potentials
@@ -231,10 +231,10 @@ def get_potentials(self, id=None, key=None, author=None, year=None, element=None
                 year[i] = int(year[i])
             mquery['interatomic-potential.description.citation.publication-date.year'] = {'$in': year}
             
-        # Add year query
-        if element is not None:
-            element = aslist(element)
-            mquery['interatomic-potential.element'] = {'$all': element}
+        # Add elements query
+        if elements is not None:
+            elements = aslist(elements)
+            mquery['interatomic-potential.element'] = {'$all': elements}
 
         matches = self.cdcs.query(template='Potential', mongoquery=mquery)
 
@@ -251,7 +251,7 @@ def get_potentials(self, id=None, key=None, author=None, year=None, element=None
         else:
             return np.array([])
 
-def get_potential(self, id=None, author=None, year=None, element=None,
+def get_potential(self, id=None, author=None, year=None, elements=None,
                   localpath=None, verbose=False):
     """
     Get a single matching potential from the database.
@@ -268,8 +268,8 @@ def get_potential(self, id=None, author=None, year=None, element=None,
         Author string(s) to search for.
     year : int or list, optional
         Publication year(s) to search for.
-    element : str or list, optional
-        Element model(s) to search for.
+    elements : str or list, optional
+        Element(s) to search for.
     localpath : str, optional
         Path to a local directory to check for records first.  If not given,
         will check localpath value set during object initialization.  If not
@@ -289,7 +289,7 @@ def get_potential(self, id=None, author=None, year=None, element=None,
     ValueError
         If no or multiple matching potentials found.
     """
-    potentials = self.get_potentials(id=id, author=author, year=year, element=element,
+    potentials = self.get_potentials(id=id, author=author, year=year, elements=elements,
                                      localpath=localpath, verbose=verbose)
     if len(potentials) == 1:
         return potentials[0]

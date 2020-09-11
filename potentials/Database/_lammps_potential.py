@@ -133,8 +133,8 @@ def load_lammps_potentials(self, localpath=None, local=None, remote=None,
         self.__lammps_potentials_df = None
 
 def get_lammps_potentials(self, id=None, key=None, potid=None, potkey=None,
-                         status='active', pair_style=None, element=None,
-                         symbol=None, verbose=False, get_files=False):
+                         status='active', pair_style=None, elements=None,
+                         symbols=None, verbose=False, getfiles=False):
     """
     Gets LAMMPS potentials from the loaded values or by downloading from
     potentials.nist.gov if local copies are not found.
@@ -153,13 +153,13 @@ def get_lammps_potentials(self, id=None, key=None, potid=None, potkey=None,
         The status value(s) to limit the search by.
     pair_style : str or list, optional
         The pair_style value(s) to limit the search by.
-    element : str or list, optional
-        The included elemental model(s) to limit the search by.
-    symbol : str or list, optional
+    elements : str or list, optional
+        The included element(s) to limit the search by.
+    symbols : str or list, optional
         The included symbol model(s) to limit the search by.
     verbose: bool, optional
         If True, informative print statements will be used.
-    get_files : bool, optional
+    getfiles : bool, optional
         If True, then the parameter files for the matching potentials
         will also be retrieved and copied to the working directory.
         If False (default) and the parameter files are in the library,
@@ -199,8 +199,8 @@ def get_lammps_potentials(self, id=None, key=None, potid=None, potkey=None,
                          &potsdf.apply(valmatch, args=[potkey, 'potkey'], axis=1)
                          &potsdf.apply(valmatch, args=[status, 'status'], axis=1)
                          &potsdf.apply(valmatch, args=[pair_style, 'pair_style'], axis=1)
-                         &potsdf.apply(listmatch, args=[element, 'elements'], axis=1)
-                         &potsdf.apply(listmatch, args=[symbol, 'symbols'], axis=1)]
+                         &potsdf.apply(listmatch, args=[elements, 'elements'], axis=1)
+                         &potsdf.apply(listmatch, args=[symbols, 'symbols'], axis=1)]
         if verbose:
             print(len(lammps_potentials), 'matching LAMMPS potentials found from loaded records')
 
@@ -241,20 +241,20 @@ def get_lammps_potentials(self, id=None, key=None, potid=None, potkey=None,
             pair_style = aslist(pair_style)
             mquery['potential-LAMMPS.pair_style.type'] = {'$in': pair_style}
         
-        # Add element query
-        if element is not None:
-            element = aslist(element)
-            mquery['potential-LAMMPS.atom.element'] = {'$all': element}
+        # Add elements query
+        if elements is not None:
+            elements = aslist(elements)
+            mquery['potential-LAMMPS.atom.element'] = {'$all': elements}
 
-        # Add symbol query
-        if symbol is not None:
-            symbol = aslist(symbol)
+        # Add symbols query
+        if symbols is not None:
+            symbols = aslist(symbols)
             mquery['$or'] = []
             # Check symbols
-            mquery['$or'].append({'potential-LAMMPS.atom.symbol': {'$all': symbol}})
+            mquery['$or'].append({'potential-LAMMPS.atom.symbol': {'$all': symbols}})
             # if symbols not in model, check elements
             mquery['$or'].append({'potential-LAMMPS.atom.symbol': {'$exists': False},
-                                'potential-LAMMPS.atom.element':{'$all': symbol}})
+                                'potential-LAMMPS.atom.element':{'$all': symbols}})
 
         matches = self.cdcs.query(template='potential_LAMMPS', mongoquery=mquery)
         if len(matches) > 0:
@@ -267,7 +267,7 @@ def get_lammps_potentials(self, id=None, key=None, potid=None, potkey=None,
         lammps_potentials = matches.apply(makepotentials, axis=1)
 
     # Get files, set pot_dir
-    if get_files is True:
+    if getfiles is True:
         self.get_lammps_potentials_files(lammps_potentials, verbose)
         for lammps_potential in lammps_potentials:
             lammps_potential.pot_dir = lammps_potential.id
@@ -282,8 +282,8 @@ def get_lammps_potentials(self, id=None, key=None, potid=None, potkey=None,
     return lammps_potentials
 
 def get_lammps_potential(self, id=None, key=None, potid=None, potkey=None,
-                         status='active', pair_style=None, element=None,
-                         symbol=None, verbose=False, get_files=False):
+                         status='active', pair_style=None, elements=None,
+                         symbols=None, verbose=False, getfiles=False):
     """
     Gets a LAMMPS potential from the localpath or by downloading from
     potentials.nist.gov if a local copy is not found.  Will raise an error
@@ -303,13 +303,13 @@ def get_lammps_potential(self, id=None, key=None, potid=None, potkey=None,
         The status value(s) to limit the search by.
     pair_style : str or list, optional
         The pair_style value(s) to limit the search by.
-    element : str or list, optional
+    elements : str or list, optional
         The included elemental model(s) to limit the search by.
-    symbol : str or list, optional
+    symbols : str or list, optional
         The included symbol model(s) to limit the search by.
     verbose: bool, optional
         If True, informative print statements will be used.
-    get_files : bool, optional
+    getfiles : bool, optional
         If True, then the parameter files for the matching potentials
         will also be retrieved and copied to the working directory.
         If False (default) and the parameter files are in the library,
@@ -321,8 +321,8 @@ def get_lammps_potential(self, id=None, key=None, potid=None, potkey=None,
         The potential object to use.
     """
     lammps_potentials = self.get_lammps_potentials(id=id, key=key, potid=potid, potkey=potkey,
-                         status=status, pair_style=pair_style, element=element,
-                         symbol=symbol, verbose=verbose, get_files=False)
+                         status=status, pair_style=pair_style, elements=elements,
+                         symbols=symbols, verbose=verbose, getfiles=False)
                          
     if len(lammps_potentials) == 1:
         lammps_potential = lammps_potentials[0]
@@ -331,7 +331,7 @@ def get_lammps_potential(self, id=None, key=None, potid=None, potkey=None,
     else:
         raise ValueError('Multiple matching LAMMPS potentials found')
 
-    if get_files is True:
+    if getfiles is True:
         self.get_lammps_potentials_files(lammps_potential, verbose=verbose)
         lammps_potential.pot_dir = lammps_potential.id
     
