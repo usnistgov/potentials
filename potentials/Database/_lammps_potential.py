@@ -80,7 +80,7 @@ def load_lammps_potentials(self, localpath=None, local=None, remote=None,
         for potfile in Path(localpath, 'potential_LAMMPS').glob('*'):
             if potfile.suffix in ['.xml', '.json']:
                 lammps_potential = PotentialLAMMPS(potfile)
-                if status is not None and lammps_potential.status in status:
+                if status is None or lammps_potential.status in status:
                     potentials[potfile.stem] = PotentialLAMMPS(potfile)
 
         if verbose:
