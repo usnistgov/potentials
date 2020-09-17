@@ -18,7 +18,64 @@ class PotentialLAMMPSBuilder(object):
                  pair_style_terms=None, status='active', allsymbols=False,
                  elements=None, masses=None, charges=None, symbols=None,
                  command_terms=None):
+        """
+        Builder class initializer.
         
+        id : str, optional
+            A human-readable identifier to name the LAMMPS potential
+            implementation.  Must be set in order to save to the database as
+            the id is used as the potential's file name.
+        key : str, optional
+            A UUID4 code to uniquely identify the LAMMPS potential
+            implementation.  If not specified, a new UUID4 code is
+            automatically generated.
+        potid : str, optional
+            A human-readable identifier to refer to the conceptual potential
+            model that the potential is based on.  This should be shared by
+            alternate implementations of the same potential.
+        potkey : str, optional
+            A UUID4 code to uniquely identify the conceptual potential model.
+            This should be shared by alternate implementations of the same
+            potential. If not specified, a new UUID4 code is automatically
+            generated.
+        units : str, optional
+            The LAMMPS units option to use.
+        atom_style : str, optional
+            The LAMMPS atom_style option to use.
+        pair_style : str, optional
+            The LAMMPS pair_style option to use.
+        pair_style_terms :  list, optional
+            Any other terms that appear on the pair_style line (like cutoff)
+            if needed.
+        status : str, optional
+            Indicates if the implementation is 'active' (valid and current),
+            'superseded' (valid, but better ones exist), or 'retracted'
+            (invalid). Default value is 'active'.
+        allsymbols : bool, optional
+            Flag indicating if the coefficient lines must be defined for every
+            particle model in the potential even if those particles are not
+            used.  Default value is False as most pair_styles do not require
+            this.
+        elements : str or list, optional
+            The elemental symbols associated with each particle model if the
+            particles represent atoms.
+        masses : float or list, optional
+            The masses of each particle.  Optional if elements is given as
+            standard values can be used.
+        charges : float or list, optional
+            The static charges to assign to each particle, if the model calls
+            for it.
+        symbols : str or list, optional
+            The symbols used to identify each unique particle model. Optional
+            if elements is given and the particle symbols are the same as the
+            elemental symbols.
+        command_terms : list, optional
+            Allows any other LAMMPS command lines that must be set for the
+            potential to work properly to be set.  Each command line should be
+            given as a list of terms, and multiple command lines given as a
+            list of lists.
+        
+        """
         self.id = id
         self.key = key
         self.potid = potid
@@ -85,7 +142,7 @@ class PotentialLAMMPSBuilder(object):
 
     @property
     def units(self):
-        """LAMMPS units style."""
+        """str : LAMMPS units option."""
         return self.__units
 
     @units.setter
@@ -96,7 +153,7 @@ class PotentialLAMMPSBuilder(object):
 
     @property
     def atom_style(self):
-        """LAMMPS atom_style."""
+        """str : LAMMPS atom_style option."""
         return self.__atom_style
 
     @atom_style.setter
@@ -107,7 +164,7 @@ class PotentialLAMMPSBuilder(object):
 
     @property
     def pair_style(self):
-        """LAMMPS pair_style."""
+        """str : LAMMPS pair_style option."""
         return self.__pair_style
 
     @pair_style.setter
@@ -118,6 +175,7 @@ class PotentialLAMMPSBuilder(object):
 
     @property
     def allsymbols(self):
+        """bool : Flag indicating if the coefficient lines must be defined for every particle model in the potential even if those particles are not used."""
         return self.__allsymbols
 
     @allsymbols.setter
@@ -133,6 +191,7 @@ class PotentialLAMMPSBuilder(object):
 
     @property
     def status(self):
+        """str : The status of the LAMMPS potential: active, superseded or retracted"""
         return self.__status
 
     @status.setter
@@ -143,6 +202,7 @@ class PotentialLAMMPSBuilder(object):
 
     @property
     def symbols(self):
+        """list : The interaction models defined by the potential"""
         return self.__symbols
 
     @symbols.setter
@@ -153,6 +213,7 @@ class PotentialLAMMPSBuilder(object):
 
     @property
     def elements(self):
+        """list : The elements associated with each interaction model"""
         return self.__elements
 
     @elements.setter
@@ -163,6 +224,7 @@ class PotentialLAMMPSBuilder(object):
 
     @property
     def masses(self):
+        """list : The atomic or particle mass associated with each interaction model"""
         return self.__masses
 
     @masses.setter
@@ -173,6 +235,7 @@ class PotentialLAMMPSBuilder(object):
 
     @property
     def charges(self):
+        """list : The atomic or particle charge associated with each interaction model"""
         return self.__charges
 
     @charges.setter
@@ -183,6 +246,7 @@ class PotentialLAMMPSBuilder(object):
 
     @property
     def pair_style_terms(self):
+        """list : All extra terms to include in the pair_style command line"""
         return self.__pair_style_terms
 
     @pair_style_terms.setter
@@ -194,6 +258,7 @@ class PotentialLAMMPSBuilder(object):
 
     @property
     def command_terms(self):
+        """list : All extra command lines to include"""
         return self.__command_terms
 
     @command_terms.setter
@@ -214,6 +279,11 @@ class PotentialLAMMPSBuilder(object):
         -------
         DataModelDict
             The PotentialLAMMPS data model.
+            
+        Raises
+        ValueError
+            If elements and/or symbols not set, if masses not set when elements
+            are not given, or if pair_style is not set.
         """
         # Check that required values have been set
         if self.symbols is None and self.elements is None:
@@ -262,12 +332,16 @@ class PotentialLAMMPSBuilder(object):
 
     @property
     def symbollist(self):
+        """The list of all of the model symbols defined by the potential"""
         if self.symbols is not None:
             return ' '.join(self.symbols)
         else:
             return ' '.join(self.elements)
 
     def iteratoms(self):
+        """
+        Iterates through the list of atoms with fields element, symbol, mass, charge
+        """
         if self.symbols is not None:
             symbols = self.symbols
         else:
@@ -305,6 +379,7 @@ class PotentialLAMMPSBuilder(object):
             yield atom
 
     def buildpairstyle(self):
+        """Builds the pair_style command line"""
         pairstyle = DM()
         pairstyle['type'] = self.pair_style
         
@@ -316,11 +391,13 @@ class PotentialLAMMPSBuilder(object):
         return pairstyle
 
     def buildpaircoeff(self):
+        """Builds the pair_coeff command lines"""
         paircoeff = None
 
         return paircoeff
 
     def buildcommands(self):
+        """Builds extra command lines from command_terms"""
         commands = []
         for line in self.command_terms:
             if len(line) == 0:

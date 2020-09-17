@@ -41,7 +41,7 @@ class EamBuilder(PotentialLAMMPSBuilder):
     
     @property
     def paramfiles(self):
-        "The names of the parameter files to use"
+        """list : The names of the parameter files to use"""
         return self.__paramfiles
 
     @paramfiles.setter
@@ -51,7 +51,7 @@ class EamBuilder(PotentialLAMMPSBuilder):
         self.__paramfiles = value
 
     def buildpaircoeff(self):
-        
+        """Builds the pair_coeff command lines"""
         if self.symbols is not None:
             symbols = self.symbols
         else:
