@@ -38,7 +38,7 @@ class LibParamBuilder(PotentialLAMMPSBuilder):
     
     @property
     def libfile(self):
-        "The name of the library file to use"
+        """str : The name of the library file to use"""
         return self.__libfile
 
     @libfile.setter
@@ -49,7 +49,7 @@ class LibParamBuilder(PotentialLAMMPSBuilder):
 
     @property
     def paramfile(self):
-        "The name of the parameter file to use"
+        """str : The name of the parameter file to use"""
         return self.__paramfile
 
     @paramfile.setter
@@ -59,7 +59,7 @@ class LibParamBuilder(PotentialLAMMPSBuilder):
         self.__paramfile = value
 
     def buildpaircoeff(self):
-
+        """Builds the pair_coeff command lines"""
         if self.libfile is None:
             raise ValueError('libfile must be set')
         if self.paramfile is None:

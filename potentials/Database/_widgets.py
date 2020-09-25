@@ -80,7 +80,7 @@ def widget_search_potentials(self):
             author = None
 
         # Call search_potentials with author, year, elements
-        potentials = self.get_potentials(author=author, year=year, element=elements)
+        potentials = self.get_potentials(author=author, year=year, elements=elements)
         
         # Update potential dropdown accordingly
         potential_dropdown.options = [pot.id for pot in potentials]
@@ -190,7 +190,7 @@ def widget_lammps_potential(self, results=None):
             pair_style = None
 
         # Call search_potentials with author, year, elements
-        potentials = self.get_lammps_potentials(pair_style=pair_style, element=elements)
+        potentials = self.get_lammps_potentials(pair_style=pair_style, elements=elements)
         
         # Update potential dropdown accordingly
         potential_dropdown.options = [pot.id for pot in potentials]
@@ -224,7 +224,7 @@ def widget_lammps_potential(self, results=None):
     def download_action(change=None):
         with download_output:
             clear_output()
-            potential = self.get_lammps_potential(id = potential_dropdown.value, get_files=True)
+            potential = self.get_lammps_potential(id = potential_dropdown.value, getfiles=True)
             results['lammps_potential'] = potential
             print(f'Parameter files copied/downloaded to {Path(potential.id)}')
     download_button.on_click(download_action)

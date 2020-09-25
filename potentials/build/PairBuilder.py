@@ -52,7 +52,18 @@ class PairBuilder(PotentialLAMMPSBuilder):
         return tuple(self.__interactions)
 
     def set_interaction(self, symbols=None, terms=None):
+        """
+        Function allowing for symbol-symbol interactions to be defined one at
+        a time.
         
+        Parameters
+        ----------
+        symbols : list, optional
+            The pair of symbols that the interaction is defined for.  Not
+            required if the potential only models one interaction.
+        terms : list, optional
+            The pair_coeff command line terms for the interaction.
+        """
         if terms is not None:
             terms = aslist(terms)
         else:
@@ -96,7 +107,7 @@ class PairBuilder(PotentialLAMMPSBuilder):
             self.__interactions.append({'symbols':symbols, 'terms':terms})
 
     def buildpaircoeff(self):
-        
+        """Builds the pair_coeff command lines"""
         # Universal interactions: ignore symbols
         if len(self.interactions) == 1 and 'symbols' not in self.interactions[0]:
             paircoeff = DM()
@@ -138,6 +149,7 @@ class PairBuilder(PotentialLAMMPSBuilder):
 
     @property
     def supported_pair_styles(self):
+        """tuple : The list of known pair styles that use this format."""
         return (
             'atm',
             'awpmd/cut',

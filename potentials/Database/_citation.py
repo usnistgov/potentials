@@ -124,20 +124,23 @@ def get_citation(self, doi, localpath=None, verbose=False):
     
     # Try loaded values first
     if self.citations_df is not None:
+        
         matches = self.citations[(self.citations_df.doi == doi)
                                 |(self.citations_df.note == doi)]
+
         if len(matches) == 1:
             if verbose:
                 print('Citation retrieved from loaded citations')
             return matches[0]
         elif len(matches) > 1:
             raise ValueError('Multiple loaded records found for the given doi')
-        
+    
+    doifname = doi.lower().replace('/', '_')
+
     # Try localpath next
     if localpath is None:
         localpath = self.localpath
     if localpath is not None:
-        doifname = doi.lower().replace('/', '_')
         for fname in Path(localpath, 'Citation').glob(doifname+'.*'):
             if verbose:
                 print(f'Citation retrieved from local file {fname.name}')
@@ -145,7 +148,6 @@ def get_citation(self, doi, localpath=None, verbose=False):
                 return Citation(f.read())
     
     # Try remote next
-    doifname = doi.replace('/', '_')
     try:
         record = self.cdcs.query(template='Citation', title=doifname)
         assert len(record) == 1

@@ -38,7 +38,7 @@ class EimBuilder(PotentialLAMMPSBuilder):
     
     @property
     def paramfile(self):
-        "The name of the parameter file to use"
+        """str : The name of the parameter file to use"""
         return self.__paramfile
 
     @paramfile.setter
@@ -48,7 +48,7 @@ class EimBuilder(PotentialLAMMPSBuilder):
         self.__paramfile = value
 
     def buildpaircoeff(self):
-
+        """Builds the pair_coeff command lines"""
         if self.paramfile is None:
             raise ValueError('paramfile must be set')
 
