@@ -1,6 +1,7 @@
 # coding: utf-8
 # Standard Python libraries
 from pathlib import Path
+import json
 
 from DataModelDict import DataModelDict as DM
 
@@ -174,18 +175,43 @@ def download_records(self, template, localpath=None, keyword=None, mongoquery=No
     # Download and save
     records = self.cdcs.query(template=template, 
                               keyword=keyword, mongoquery=mongoquery)
+    if verbose:
+        print(f'Found {len(records)} of {template}')
+    
+    count_new = 0
+    count_updated = 0
+    count_duplicate = 0
     for i in range(len(records)):
         record = records.iloc[i]
         fname = Path(save_directory, f'{record.title}.{format}')
-        content = DM(record.xml_content)
-        with open(fname, 'w') as f:
-            if format == 'xml':
-                content.xml(fp=f, indent=indent)
+        
+        if format == 'xml':
+            content = DM(record.xml_content).xml(indent=indent)
+        else:
+            content = json.dumps(DM(record.xml_content), indent=indent, ensure_ascii=False)
+            
+        # Check if existing content has changed
+        if fname.is_file():
+            with open(fname, encoding='UTF-8') as f:
+                oldcontent = f.read()
+            if content == oldcontent:
+                count_duplicate += 1
+                continue
             else:
-                content.json(fp=f, indent=indent)
-                
+                count_updated += 1
+        else:
+            count_new += 1
+        
+        with open(fname, 'w', encoding='UTF-8') as f:
+            f.write(content)
+    
     if verbose:
-        print(f'Downloaded {len(records)} of {template}')
+        if count_new > 0:
+            print(f' - {count_new} new records added')
+        if count_updated > 0:
+            print(f' - {count_updated} existing records updated')
+        if count_duplicate > 0:
+            print(f' - {count_duplicate} duplicate records skipped')
 
 def upload_record(self, template, content, title, workspace=None, 
                    verbose=False):

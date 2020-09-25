@@ -1,6 +1,7 @@
 # coding: utf-8
 # Standard Python libraries
 from pathlib import Path
+import json
 
 # https://numpy.org/
 import numpy as np
@@ -295,7 +296,7 @@ def save_citations(self, citations, format='bib', localpath=None,
         elif format == 'xml':
             content = citation.asmodel().xml(indent=indent)
         elif format == 'json':
-            content = citation.asmodel().json(indent=indent)
+            content = json.dumps(citation.asmodel(), indent=indent, ensure_ascii=False)
 
         # Check if existing content has changed
         if fname.is_file():
