@@ -5,7 +5,7 @@ def getreadme():
         return readme_file.read()
    
 setup(name = 'potentials',
-      version = '0.2.5',
+      version = '0.2.6',
       description = 'API database tools for accessing the NIST Interatomic Potentials Repository: explore and download interatomic potentials and computed properties.',
       long_description = getreadme(),
       classifiers=[
