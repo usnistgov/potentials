@@ -339,6 +339,9 @@ class PotentialLAMMPS(object):
         str
             The LAMMPS input command lines that specifies the potential.
         """
+        if self.pair_style == 'kim':
+            return self.__pair_info_kim(symbols=symbols, masses=masses)
+
         # If no symbols supplied use all for potential
         if symbols is None:
             symbols = self.symbols
@@ -474,3 +477,46 @@ class PotentialLAMMPS(object):
                             line += ' NULL'
         
         return line
+
+    def __pair_info_kim(self, symbols=None, masses=None):
+        """
+        Generates the LAMMPS input command lines associated with a KIM
+        Potential and a list of atom-model symbols.
+        
+        Parameters
+        ----------
+        symbols : list of str, optional
+            List of atom-model symbols corresponding to the atom types in a
+            system.  If None (default), then all atom-model symbols will
+            be included in the order that they are listed in the data model.
+        masses : list, optional
+            Can be given to override the default symbol-based masses for each
+            atom type.  Must be a list of the same length as symbols.  Any
+            values of None in the list indicate that the default value be used
+            for that atom type.
+        
+        Returns
+        -------
+        str
+            The LAMMPS input command lines that specifies the potential.
+        """
+        # If no symbols supplied use all for potential
+        if symbols is None:
+            symbols = self.symbols
+        else:
+            symbols = aslist(symbols)
+
+        # Check length of masses
+        if masses is not None:
+            raise ValueError('Not sure how to change masses for kim')
+        
+        # Normalize symbols
+        symbols = self.normalize_symbols(symbols)
+        
+        # Generate kim_init line
+        info = f'kim_init {self.id} {self.units}\n'
+        
+        # Generate kim_interactions  line
+        info += f'kim_interactions {" ".join(symbols)}\n'
+        
+        return info
