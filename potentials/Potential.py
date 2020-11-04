@@ -85,6 +85,7 @@ class Potential(object):
 
     @property
     def key(self):
+        """str : The potential's uuid4 key"""
         return self.__key
     
     @key.setter
@@ -96,9 +97,34 @@ class Potential(object):
 
     @property
     def id(self):
+        """str : The potential's unique id generated from citation info"""
         # Check for a citation
         if len(self.citations) > 0:
             potential_id = self.citations[0].year_authors
+        else:
+            return None
+        
+        potential_id += '-'
+        
+        if self.fictional:
+            potential_id += '-fictional'
+        
+        if self.othername is not None:
+            potential_id += '-' + str(self.othername)
+        else:
+            for element in self.elements:
+                potential_id += '-' + element
+        
+        if self.modelname is not None:
+            potential_id += '-' + str(self.modelname)
+        
+        return potential_id
+
+    @property
+    def impid_prefix(self):
+        """str : The recommended prefix to use for implementation ids"""
+        if len(self.citations) > 0:
+            potential_id = self.citations[0].year_first_author
         else:
             return None
         
@@ -332,6 +358,10 @@ class Potential(object):
         self.citations.append(Citation(**kwargs))
 
     def add_implementation(self, **kwargs):
-        self.implementations.append(Implementation(**kwargs))
+        implementation = Implementation(**kwargs)
+        for imp in self.implementations:
+            if imp.id == implementation.id:
+                raise ValueError(f'Implementation with id {imp.id} already exists')
+        self.implementations.append(implementation)
 
     
