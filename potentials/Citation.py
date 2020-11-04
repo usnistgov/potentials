@@ -2,6 +2,9 @@
 # Standard libraries
 import string
 
+# https://github.com/avian2/unidecode
+from unidecode import unidecode
+
 # https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
@@ -102,7 +105,8 @@ class Citation():
             model['publication-name'] = bibdict['journal']
             model['publication-date'] = DM()
             model['publication-date']['year'] = asint(bibdict['year'])
-            model['volume'] = asint(bibdict['volume'])
+            if 'volume' in bibdict:
+                model['volume'] = asint(bibdict['volume'])
             if 'number' in bibdict:
                 model['issue'] = asint(bibdict['number'])
             elif 'issue' in bibdict:
@@ -128,7 +132,7 @@ class Citation():
         """Returns a flat dict representation of the object"""
 
         funcnames = ['asdict', 'asmodel', 'bibtex', 'doifname', 'html', 'load',
-                     'parse_authors', 'year_authors']
+                     'parse_authors', 'format_id', 'year_authors', 'year_first_author']
         bibdict = {}
         for key in dir(self):
             if '__' not in key and key not in funcnames:
@@ -137,7 +141,9 @@ class Citation():
 
     @property
     def year_authors(self):
-        """str: YEAR--LAST-F-M string providing a partial id based on citation info"""
+        """
+        str: Partial id for potentials that uses YEAR--LAST-F-M with up to 4 authors.
+        """
         bibdict = self.asdict()
         partialid = str(bibdict['year']) + '-'
         authors = self.parse_authors(bibdict['author'])
@@ -150,13 +156,22 @@ class Citation():
                 partialid += '-' + author['surname']
                 partialid += '-' + author['given-name'].replace('-', '').replace('.', '-').strip('-')
             partialid += '-et-al'
+
+        return unidecode(partialid.replace("'", '').replace(" ", '-'))
+
+    @property
+    def year_first_author(self):
+        """
+        str: Partial id for implementations that uses YEAR--LAST-F-M with only the first author.
+        """
+        bibdict = self.asdict()
+        partialid = str(bibdict['year']) + '-'
+        author = self.parse_authors(bibdict['author'])[0]
+        partialid += '-' + author['surname']
+        partialid += '-' + author['given-name'].replace('-', '').replace('.', '-').strip('-')
         
-        replace_keys = {"'":'', 'á':'a', 'ä':'a', 'ö':'o', 'ø':'o', ' ':'-', 'č':'c', 'ğ':'g', 'ü':'u', 'é':'e', 'Ç':'C', 'ı': 'i'}
-        for k,v in replace_keys.items():
-            partialid = partialid.replace(k,v)
-
-        return partialid
-
+        return unidecode(partialid.replace("'", '').replace(" ", '-'))
+    
     def parse_authors(self, authors):
         """
         Parse bibtex authors field.
@@ -235,6 +250,8 @@ class Citation():
             htmlstr += f'"{bibdict["title"]}", '
 
         if 'journal' in bibdict:
+            htmlstr += f'<i>{bibdict["journal"]}</i>, '
+        elif 'booktitle' in bibdict:
             htmlstr += f'<i>{bibdict["journal"]}</i>, '
 
         if 'volume' in bibdict:
