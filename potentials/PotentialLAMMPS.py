@@ -508,10 +508,19 @@ class PotentialLAMMPS(object):
 
         # Check length of masses
         if masses is not None:
-            raise ValueError('Not sure how to change masses for kim')
+            masses = aslist(masses)
+            assert len(masses) == len(symbols), 'supplied masses must be same length as symbols'
         
         # Normalize symbols
         symbols = self.normalize_symbols(symbols)
+        
+        # Set masses
+        defaultmasses = self.masses(symbols)
+        if masses is not None:
+            for i in range(len(masses)):
+                if masses[i] is not None:
+                    defaultmasses[i] = masses[i]
+        masses = defaultmasses
         
         # Generate kim_init line
         info = f'kim_init {self.id} {self.units}\n'
@@ -519,4 +528,9 @@ class PotentialLAMMPS(object):
         # Generate kim_interactions  line
         info += f'kim_interactions {" ".join(symbols)}\n'
         
+        # Generate mass lines
+        for i in range(len(masses)):
+            info += f'mass {i+1} {masses[i]}\n'
+        info +='\n'
+
         return info
