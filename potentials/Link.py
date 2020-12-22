@@ -1,17 +1,19 @@
 # coding: utf-8
-
+# https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
-class WebLink():
+class Link():
     """
     Class for describing website link
     """
     def __init__(self, model=None, url=None, label=None, linktext=None):
         """
-        Initializes an WebLink object providing a hyperlink to content.
+        Initializes a Link object providing a hyperlink to content.
 
         Parameters
         ----------
+        model : str or DataModelDict, optional
+            Model content or file path to model content.
         url : str, optional
             URL for the link.
         label : str, optional
@@ -78,10 +80,10 @@ class WebLink():
         model : str or DataModelDict
             Model content or file path to model content.
         """
-        weblink = model.find('web-link')
-        self.url = weblink.get('URL', None)
-        self.label = weblink.get('label', None)
-        self.linktext = weblink.get('link-text', None)
+        link = DM(model).find('link')
+        self.url = link['web-link'].get('URL', None)
+        self.label = link['web-link'].get('label', None)
+        self.linktext = link['web-link'].get('link-text', None)
         
     def asmodel(self):
         """
@@ -92,13 +94,14 @@ class WebLink():
         DataModelDict: The data model content.
         """
         model = DM()
-        model['web-link'] = DM()
+        model['link'] = DM()
+        model['link']['web-link'] = DM()
         if self.url is not None:
-            model['web-link']['URL'] = self.url
+            model['link']['web-link']['URL'] = self.url
         if self.label is not None:
-            model['web-link']['label'] = self.label
+            model['link']['web-link']['label'] = self.label
         if self.linktext is not None:
-            model['web-link']['link-text'] = self.linktext
+            model['link']['web-link']['link-text'] = self.linktext
         
         return model
 
@@ -107,6 +110,9 @@ class WebLink():
         htmlstr = ''
         if self.label is not None:
             htmlstr += f'{self.label}: '
-        htmlstr += f'<a href="{self.url}">{self.linktext}</a>'
+        if self.url is not None:
+            htmlstr += f'<a href="{self.url}">{self.linktext}</a>'
+        else:
+            htmlstr += f'{self.linktext}'
 
         return htmlstr

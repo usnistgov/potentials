@@ -10,7 +10,7 @@ from DataModelDict import DataModelDict as DM
 from .tools import aslist
 from .Artifact import Artifact
 from .Parameter import Parameter
-from .WebLink import WebLink
+from .Link import Link
 
 class Implementation():
     """
@@ -19,7 +19,7 @@ class Implementation():
     """
     def __init__(self, model=None, type=None, key=None,
                  id=None, status=None, date=None, notes=None,
-                 artifacts=None, parameters=None, weblinks=None):
+                 artifacts=None, parameters=None, links=None):
         """
         Parameters
         ----------
@@ -33,7 +33,7 @@ class Implementation():
         notes
         artifacts
         parameters
-        weblinks
+        links
         """
         if model is not None:
             # Load existing record
@@ -46,7 +46,7 @@ class Implementation():
                 assert notes is None
                 assert artifacts is None
                 assert parameters is None
-                assert weblinks is None
+                assert links is None
             except:
                 raise TypeError('model cannot be given with any other parameter')
             else:
@@ -70,10 +70,10 @@ class Implementation():
                 for parameter in aslist(parameters):
                     self.add_parameter(**parameter)
             
-            self.weblinks = []
-            if weblinks is not None:
-                for weblink in aslist(weblinks):
-                    self.add_weblink(**weblink)
+            self.links = []
+            if links is not None:
+                for link in aslist(links):
+                    self.add_link(**link)
 
     @property
     def type(self):
@@ -167,10 +167,10 @@ class Implementation():
             for parameter in self.parameters:
                 htmlstr += f'{parameter.html()}<br/>\n'
         
-        if len(self.weblinks) > 0:
+        if len(self.links) > 0:
             htmlstr += '<b>Links:</b><br/>\n'
-            for weblink in self.weblinks:
-                htmlstr += f'{weblink.html()}<br/>\n'
+            for link in self.links:
+                htmlstr += f'{link.html()}<br/>\n'
         
         return htmlstr
 
@@ -203,9 +203,9 @@ class Implementation():
         for parameter in imp.iteraslist('parameter'):
             self.add_parameter(model=DM([('parameter', parameter)]))
 
-        self.weblinks = []
-        for weblink in imp.iteraslist('web-link'):
-            self.add_weblink(model=DM([('web-link', weblink)]))
+        self.links = []
+        for link in imp.iteraslist('link'):
+            self.add_link(model=DM([('link', link)]))
 
     def asdict(self):
         """Returns a flat dict representation of the object"""
@@ -220,7 +220,7 @@ class Implementation():
         data['type'] = self.type
         data['artifacts'] = self.artifacts
         data['parameters'] = self.parameters
-        data['weblinks'] = self.weblinks
+        data['links'] = self.links
         
         return data
 
@@ -248,16 +248,16 @@ class Implementation():
             imp.append('artifact', artifact.asmodel()['artifact'])
         for parameter in self.parameters:
             imp.append('parameter', parameter.asmodel()['parameter'])
-        for weblink in self.weblinks:
-            imp.append('web-link', weblink.asmodel()['web-link'])
+        for link in self.links:
+            imp.append('link', link.asmodel()['link'])
         
         return model
 
     def add_artifact(self, model=None, filename=None, label=None, url=None):
         self.artifacts.append(Artifact(model=model, filename=filename, label=label, url=url))
 
-    def add_weblink(self, model=None, url=None, label=None, linktext=None):
-        self.weblinks.append(WebLink(model=model, url=url, label=label, linktext=linktext))
+    def add_link(self, model=None, url=None, label=None, linktext=None):
+        self.links.append(Link(model=model, url=url, label=label, linktext=linktext))
 
     def add_parameter(self, model=None, name=None, value=None, unit=None):
         self.parameters.append(Parameter(model=model, name=name, value=value, unit=unit))
