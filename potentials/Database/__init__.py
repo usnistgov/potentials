@@ -26,18 +26,24 @@ class Database():
                              download_potentials, upload_potential,
                              save_potentials, delete_potential)
 
+    from ._kim_potential import (installed_kim_models, init_installed_kim_models,
+                                 default_kim_settings_file, load_kim_lammps_potentials,
+                                 find_installed_kim_models, set_installed_kim_models,
+                                 save_installed_kim_models, load_installed_kim_models)
+
     from ._lammps_potential import (lammps_potentials, lammps_potentials_df,
                                     load_lammps_potentials, _no_load_lammps_potentials,
                                     get_lammps_potentials, get_lammps_potential,
                                     download_lammps_potentials, upload_lammps_potential,
-                                    get_lammps_potentials_files, save_lammps_potentials,
+                                    get_lammps_potential_files, save_lammps_potentials,
                                     delete_lammps_potential)
 
     from ._widgets import (widget_search_potentials, widget_lammps_potential)
 
     def __init__(self, host=None, username=None, password=None, certification=None,
                  localpath=None, verbose=False, local=None, remote=None, 
-                 load=False, status='active'):
+                 load=False, status='active', installed_kim_models=None,
+                 kim_api_directory=None, kim_settings_file=None):
         """
         Class initializer
 
@@ -76,6 +82,14 @@ class Database():
             Only potential_LAMMPS records with the given status(es) will be
             loaded.  Allowed values are 'active' (default), 'superseded', and
             'retracted'.  If None is given, then all potentials will be loaded.
+        installed_kim_models : str or list, optional
+            Allows for the list of installed_kim_models to be explicitly given.
+            Cannot be given with the other parameters.
+        kim_api_directory : path-like object, optional
+            The directory containing the kim api to use to build the list.
+        kim_settings_file : path-like object, optional
+            The path to a json file with an 'installed-kim-models' field that lists
+            the installed kim models.
         """
         # Set default database parameters
         if host is None:
@@ -102,6 +116,11 @@ class Database():
         assert isinstance(remote, bool)
         self.__local = local
         self.__remote = remote
+
+        # Initialize kim settings
+        self.init_installed_kim_models(installed_kim_models=installed_kim_models,
+                                       kim_api_directory=kim_api_directory,
+                                       kim_settings_file=kim_settings_file)
 
         # Load records
         if load is True:
@@ -191,7 +210,7 @@ class Database():
 
     def download_all(self, localpath=None, format='xml', citeformat='bib',
                      indent=None, status='active', verbose=False,
-                     getfiles=True):
+                     downloadfiles=True):
         """
         Downloads all records from the remote to localhost.
 
@@ -217,7 +236,7 @@ class Database():
             Only potential_LAMMPS records with the given status(es) will be
             downloaded.  Allowed values are 'active' (default), 'superseded', and
             'retracted'.  If None is given, then all potentials will be downloaded.
-        getfiles : bool, optional
+        downloadfiles : bool, optional
             If True, the parameter files associated with the potential_LAMMPS
             record will also be downloaded.
         
@@ -235,4 +254,4 @@ class Database():
 
         self.download_lammps_potentials(localpath=localpath, format=format,
                                         indent=indent, verbose=verbose,
-                                        status=status, getfiles=getfiles)
+                                        status=status, downloadfiles=downloadfiles)

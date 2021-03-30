@@ -2,20 +2,27 @@
 # Standard Python libraries
 from pathlib import Path
 
+import numpy as np
+
 # https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
-# atomman imports
-from .tools import atomic_mass, aslist, uber_open_rmode
+# https://requests.readthedocs.io/en/master/
+import requests
 
-class PotentialLAMMPS(object):
+# atomman imports
+from .tools import atomic_mass, aslist
+from .BasePotentalLAMMPS import BasePotentialLAMMPS
+from . import Artifact
+
+class PotentialLAMMPS(BasePotentialLAMMPS):
     """
     Class for building LAMMPS input lines from a potential-LAMMPS data model.
     """
     
     def __init__(self, model, pot_dir=None):
         """
-        Initializes an instance associated with a potential-LAMMPS data model.
+        Initializes an instance and loads content from a data model.
         
         Parameters
         ----------
@@ -26,8 +33,55 @@ class PotentialLAMMPS(object):
             the potential.  Default value is None, which assumes any required
             files will be in the working directory when LAMMPS is executed.
         """
-        self.load(model, pot_dir)
+        super().__init__(model, pot_dir=pot_dir)
     
+    @property
+    def modelroot(self):
+        """str : The root element for the associated data model"""
+        return 'potential-LAMMPS'
+
+    @property
+    def fileurls(self):
+        """list : The URLs where the associated files can be downloaded"""
+        urls = []
+        for artifact in self.artifacts:
+            urls.append(artifact.url)
+        return urls
+    
+    @property
+    def dois(self):
+        """list : The publication DOIs associated with the potential"""
+        return self.__dois
+
+    @property
+    def comments(self):
+        """str : Descriptive comments detailing the potential information"""
+        return self.__comments
+
+    @property
+    def print_comments(self):
+        """str : LAMMPS print commands of the potential comments"""
+        
+        # Split defined comments
+        lines = self.comments.split('\n')
+
+        out = ''
+        for line in lines:
+            if line != '':
+                out += f'print "{line}"\n'
+        
+        if len(self.dois) > 0:
+            out += 'print "Publication(s) related to the potential:"\n'
+            for doi in self.dois:
+                out += f'print "https://doi.org/{doi}"\n'
+
+        if len(self.fileurls) > 0:
+            out += 'print "Parameter file(s) can be downloaded at:"\n'
+
+            for url in self.fileurls:
+                out += f'print "{url}"\n'
+        return out
+
     def load(self, model, pot_dir=None):
         """
         Loads potential-LAMMPS data model info.
@@ -41,40 +95,33 @@ class PotentialLAMMPS(object):
             the potential.  Default value is None, which assumes any required
             files will be in the working directory when LAMMPS is executed.
         """
+        # Call parent load to read model and some parameters
+        super().load(model)
         
-        # Load model and find potential-LAMMPS
-        self.__dm = DM(model).find('potential-LAMMPS')
-        
-        # Extract properties
-        self.__id = self.__dm['id']
-        self.__key = self.__dm['key']
-        self.__potid = self.__dm['potential']['id']
-        self.__potkey = self.__dm['potential']['key']
-        self.__units = self.__dm['units']
-        self.__atom_style = self.__dm['atom_style']
-        self.__pair_style = self.__dm['pair_style']['type']
-
-        allsymbols = self.__dm.get('allsymbols', 'False')
-        if allsymbols is True or allsymbols.lower() == 'true':
-            self.__allsymbols = True
-        elif allsymbols is False or allsymbols.lower() == 'false':
-            self.__allsymbols = False
-        else:
-            raise ValueError(f'Invalid allsymbols value "{allsymbols}"')
-        
-        self.__status = self.__dm.get('status', 'active')
-
         if pot_dir is not None:
             self.pot_dir = pot_dir
         else:
             self.pot_dir = ''
         
+        # Add artifacts
+        self.__artifacts = []
+        for artifact in self.model.aslist('artifact'):
+            self.__artifacts.append(Artifact(model=DM([('artifact', artifact)])))
+
+        # Read comments, if present
+        self.__comments = self.model.get('comments', '')
+        try:
+            self.__dois = self.model['potential'].aslist('doi')
+        except:
+            print(self.model)
+            raise ValueError('asdf')
+        
         # Build lists of symbols, elements and masses
-        self.__elements = []
-        self.__symbols = []
-        self.__masses = []
-        self.__charges = []
-        for atom in self.__dm.iteraslist('atom'):
+        self._elements = []
+        self._symbols = []
+        self._masses = []
+        self._charges = []
+        for atom in self.model.iteraslist('atom'):
             element = atom.get('element', None)
             symbol = atom.get('symbol', None)
             mass = atom.get('mass', None)
@@ -93,53 +140,11 @@ class PotentialLAMMPS(object):
             if symbol is None:
                 symbol = element
             
-            # Check if mass is listed.
-            if mass is None:
-                mass = atomic_mass(element)
-            else:
-                mass = float(mass)
-            
             # Add values to the lists
-            self.__elements.append(element)
-            self.__symbols.append(symbol)
-            self.__masses.append(mass)
-            self.__charges.append(charge)
-        
-    def normalize_symbols(self, symbols):
-        """
-        Modifies a given list of symbols to be compatible with the potential.
-        Mostly, this converts symbols to a list if it is not already one, and
-        adds additional symbols if the potential's allsymbols setting is True.
-
-        Parameters
-        ----------
-        symbols : str or list-like object
-            The initial list of symbols
-        
-        Returns
-        -------
-        list
-            The updated list.
-        """
-        
-        # Convert symbols to a list if needed
-        symbols = aslist(symbols)
-        
-        # Check that all symbols are set
-        for symbol in symbols:
-            assert symbol is not None, 'symbols list incomplete: found None value'
-        
-        # Add missing symbols if potential's allsymbols is True
-        if self.allsymbols:
-            for symbol in self.symbols:
-                if symbol not in symbols:
-                    symbols.append(symbol)
-        
-        return symbols
-    
-    def __str__(self):
-        """str: The string of the Potential returns its human-readable id"""
-        return self.id
+            self._elements.append(element)
+            self._symbols.append(symbol)
+            self._masses.append(mass)
+            self._charges.append(charge)
     
     @property
     def pot_dir(self):
@@ -151,89 +156,11 @@ class PotentialLAMMPS(object):
         self.__pot_dir = str(value)
     
     @property
-    def id(self):
-        """str : Human-readable identifier for the LAMMPS implementation."""
-        return self.__id
-    
-    @property
-    def key(self):
-        """str : uuid hash-key for the LAMMPS implementation."""
-        return self.__key
-    
-    @property
-    def potid(self):
-        """str : Human-readable identifier for the potential model."""
-        return self.__potid
-    
-    @property
-    def potkey(self):
-        """str : uuid hash-key for the potential model."""
-        return self.__potkey
-    
-    @property
-    def units(self):
-        """str : LAMMPS units option."""
-        return self.__units
-    
-    @property
-    def atom_style(self):
-        """str : LAMMPS atom_style option."""
-        return self.__atom_style
-    
-    @property
-    def symbols(self):
-        """list of str : All atom-model symbols."""
-        return self.__symbols
-    
-    @property
-    def pair_style(self):
-        return self.__pair_style
-    
-    @property
-    def allsymbols(self):
-        """bool : indicates if all model symbols must be listed."""
-        return self.__allsymbols
-
-    @property
-    def status(self):
-        """str : Indicates the status of the implementation (active, superseded, retracted)"""
-        return self.__status
-
-    @property
-    def model(self):
-        return self.__dm
-
-    def elements(self, symbols=None):
-        """
-        Returns a list of element names associated with atom-model symbols.
+    def artifacts(self):
+        """list : The list of file artifacts for the potential including download URLs."""
+        return self.__artifacts
         
-        Parameters
-        ----------
-        symbols : list of str, optional
-            A list of atom-model symbols.  If None (default), will use all of
-            the potential's symbols.
-        
-        Returns
-        -------
-        list of str
-            The str element symbols corresponding to the atom-model symbols.
-        """
-        # Return all elements if symbols is None
-        if symbols is None:
-            return self.__elements
-        
-        # Normalize symbols
-        symbols = self.normalize_symbols(symbols)
-        
-        # Get all matching elements
-        elements = []
-        for symbol in symbols:
-            i = self.symbols.index(symbol)
-            elements.append(self.__elements[i])
-        
-        return elements
-        
-    def masses(self, symbols=None):
+    def masses(self, symbols=None, prompt=True):
         """
         Returns a list of atomic/ionic masses associated with atom-model
         symbols.
@@ -243,24 +170,32 @@ class PotentialLAMMPS(object):
         symbols : list of str, optional
             A list of atom-model symbols.  If None (default), will use all of
             the potential's symbols.
+        prompt : bool, optional
+            If True (default), then a screen prompt will appear asking for the isotope
+            number if no mass is pre-defined for a symbol and the associated element 
+            lacks a single standard atomic/ionic mass.  If False, then an error will
+            be raised for these cases instead.
         
         Returns
         -------
         list of float
             The atomic/ionic masses corresponding to the atom-model symbols.
         """
-        # Return all masses if symbols is None
+        # Use all symbols if symbols is None
         if symbols is None:
-            return self.__masses
-        
-        # Normalize symbols
-        symbols = self.normalize_symbols(symbols)
+            symbols = self.symbols
+        else:
+            # Normalize symbols
+            symbols = self.normalize_symbols(symbols)
         
         # Get all matching masses
         masses = []
         for symbol in symbols:
             i = self.symbols.index(symbol)
-            masses.append(self.__masses[i])
+            if self._masses[i] is None:
+                masses.append(atomic_mass(self._elements[i], prompt=prompt))
+            else:
+                masses.append(self._masses[i])
         
         return masses
 
@@ -280,44 +215,29 @@ class PotentialLAMMPS(object):
         list of float
             The atomic charges corresponding to the atom-model symbols.
         """
-        # Return all charges if symbols is None
+        # Use all symbols if symbols is None
         if symbols is None:
-            return self.__charges
-        
-        # Normalize symbols
-        symbols = self.normalize_symbols(symbols)
+            symbols = self.symbols
+        else:
+            # Normalize symbols
+            symbols = self.normalize_symbols(symbols)
         
         # Get all matching charges
         charges = []
         for symbol in symbols:
             i = self.symbols.index(symbol)
-            charges.append(self.__charges[i])
+            charges.append(self._charges[i])
         
         return charges
 
     def asdict(self):
         """Returns a flat dict of the metadata fields"""
-        d = {}
-        d['id'] = self.id
-        d['key'] = self.key
-        d['potid'] = self.potid
-        d['potkey'] = self.potkey
-        d['units'] = self.units
-        d['atom_style'] = self.atom_style
-        d['allsymbols'] = self.allsymbols
-        d['pair_style'] = self.pair_style
-        d['status'] = self.status
-        d['symbols'] = self.symbols
-        d['elements'] = self.elements()
-        d['masses'] = self.masses()
-        d['charges'] = self.charges()
+        d = super().asdict()
+        d['artifacts'] = self.artifacts
 
         return d
 
-    def asmodel(self):
-        return DM([('potential-LAMMPS', self.__dm)])
-
-    def pair_info(self, symbols=None, masses=None):
+    def pair_info(self, symbols=None, masses=None, prompt=True, include_comments=True):
         """
         Generates the LAMMPS input command lines associated with the Potential
         and a list of atom-model symbols.
@@ -333,52 +253,55 @@ class PotentialLAMMPS(object):
             atom type.  Must be a list of the same length as symbols.  Any
             values of None in the list indicate that the default value be used
             for that atom type.
-        
+        prompt : bool, optional
+            If True (default), then a screen prompt will appear asking for the isotope
+            number if no mass is pre-defined for a symbol and the associated element 
+            lacks a single standard atomic/ionic mass.  If False, then an error will
+            be raised for these cases instead.
+        include_comments : bool, optional
+            Indicates if print command lines detailing information on the potential
+            are to be included.  Default value is True.
+
         Returns
         -------
         str
             The LAMMPS input command lines that specifies the potential.
         """
-        if self.pair_style == 'kim':
-            return self.__pair_info_kim(symbols=symbols, masses=masses)
-
-        # If no symbols supplied use all for potential
+        # Use all symbols if symbols is None
         if symbols is None:
             symbols = self.symbols
         else:
-            symbols = aslist(symbols)
-
-        # Check length of masses
+            # Normalize symbols
+            symbols = self.normalize_symbols(symbols)
+        
         if masses is not None:
+            
+            # Check length of masses
             masses = aslist(masses)
             assert len(masses) == len(symbols), 'supplied masses must be same length as symbols'
         
-        # Normalize symbols
-        symbols = self.normalize_symbols(symbols)
-        
-        # Set masses
-        defaultmasses = self.masses(symbols)
-        if masses is not None:
+            # Change None values to default values
+            defaultmasses = self.masses(symbols, prompt=prompt)
             for i in range(len(masses)):
-                if masses[i] is not None:
-                    defaultmasses[i] = masses[i]
-        masses = defaultmasses
-        
-        info = ''
+                if masses[i] is None:
+                    masses[i] = defaultmasses[i]
+        else:
+            masses = self.masses(symbols, prompt=prompt)
 
-        # Generate mass lines
-        for i in range(len(masses)):
-            info += f'mass {i+1} {masses[i]}\n'
-        info +='\n'
+        info = ''
         
+        # Add comment prints
+        if include_comments:
+            info += self.print_comments
+
         # Generate pair_style line
-        terms = self.__dm['pair_style'].aslist('term')
+        terms = self.model['pair_style'].aslist('term')
         style_terms = self.__pair_terms(terms)
         
         info += f'pair_style {self.pair_style}{style_terms}\n'
         
         # Generate pair_coeff lines
-        for coeff_line in self.__dm.iteraslist('pair_coeff'):
+        for coeff_line in self.model.iteraslist('pair_coeff'):
             if 'interaction' in coeff_line:
                 interaction = coeff_line['interaction'].get('symbol', ['*', '*'])
             else:
@@ -434,9 +357,13 @@ class PotentialLAMMPS(object):
                                                                 symbols, coeff_symbols)
                                 
                                 info += f'pair_coeff {i+1} {j+1}{coeff_terms}\n'
-        
+        # Generate mass lines
+        for i in range(len(masses)):
+            info += f'mass {i+1} {masses[i]}\n'
+        info +='\n'
+
         # Generate additional command lines
-        for command_line in self.__dm.iteraslist('command'):
+        for command_line in self.model.iteraslist('command'):
             info += self.__pair_terms(command_line.iteraslist('term'),
                                          symbols, self.symbols).strip() + '\n'
         
@@ -477,14 +404,20 @@ class PotentialLAMMPS(object):
                             line += ' NULL'
         
         return line
-
-    def __pair_info_kim(self, symbols=None, masses=None):
+    
+    def pair_data_info(self, filename, pbc, symbols=None, masses=None,
+                       atom_style=None, units=None, prompt=True,
+                       include_comments=True):
         """
-        Generates the LAMMPS input command lines associated with a KIM
-        Potential and a list of atom-model symbols.
-        
+        Generates the LAMMPS command lines associated with both a potential
+        and reading an atom data file.
+
         Parameters
         ----------
+        filename : path-like object
+            The file path to the atom data file for LAMMPS to read in.
+        pbc : array-like object
+            The three boolean periodic boundary conditions.
         symbols : list of str, optional
             List of atom-model symbols corresponding to the atom types in a
             system.  If None (default), then all atom-model symbols will
@@ -494,43 +427,138 @@ class PotentialLAMMPS(object):
             atom type.  Must be a list of the same length as symbols.  Any
             values of None in the list indicate that the default value be used
             for that atom type.
-        
+        atom_style : str, optional
+            The LAMMPS atom_style setting to use for the output.  If not given,
+            will use the default value set for the potential.
+        units : str, optional
+            The LAMMPS unit setting to use for the output.  If not given,
+            will use the default value set for the potential.
+        prompt : bool, optional
+            If True (default), then a screen prompt will appear asking for the isotope
+            number if no mass is pre-defined for a symbol and the associated element 
+            lacks a single standard atomic/ionic mass.  If False, then an error will
+            be raised for these cases instead.
+        include_comments : bool, optional
+            Indicates if print command lines detailing information on the potential
+            are to be included.  Default value is True.
+
         Returns
         -------
         str
-            The LAMMPS input command lines that specifies the potential.
+            The LAMMPS input command lines that specifies the potential and a data
+            file to read.
         """
-        # If no symbols supplied use all for potential
-        if symbols is None:
-            symbols = self.symbols
-        else:
-            symbols = aslist(symbols)
+        if units is None:
+            units = self.units
+        if atom_style is None:
+            atom_style = self.atom_style
 
-        # Check length of masses
-        if masses is not None:
-            masses = aslist(masses)
-            assert len(masses) == len(symbols), 'supplied masses must be same length as symbols'
-        
-        # Normalize symbols
-        symbols = self.normalize_symbols(symbols)
-        
-        # Set masses
-        defaultmasses = self.masses(symbols)
-        if masses is not None:
-            for i in range(len(masses)):
-                if masses[i] is not None:
-                    defaultmasses[i] = masses[i]
-        masses = defaultmasses
-        
-        # Generate kim_init line
-        info = f'kim_init {self.id} {self.units}\n'
-        
-        # Generate kim_interactions  line
-        info += f'kim_interactions {" ".join(symbols)}\n'
-        
-        # Generate mass lines
-        for i in range(len(masses)):
-            info += f'mass {i+1} {masses[i]}\n'
-        info +='\n'
+        # Initialize comment
+        info = ''
+
+        # Add units and atom_style values
+        info += f'units {units}\n'
+        info += f'atom_style {atom_style}\n\n'
+
+        # Set boundary flags to p or m based on pbc values
+        bflags = np.array(['m','m','m'])
+        bflags[pbc] = 'p'
+        info += f'boundary {bflags[0]} {bflags[1]} {bflags[2]}\n'
+    
+        # Set read_data command 
+        info += f'read_data {filename}\n'
+
+        # Set pair_info
+        info += '\n'
+        info += self.pair_info(symbols=symbols, masses=masses, prompt=prompt,
+                               include_comments=include_comments)
 
         return info
+
+    def pair_restart_info(self, filename, symbols=None, masses=None,
+                          prompt=True, include_comments=True):
+        """
+        Generates the LAMMPS command lines associated with both a potential
+        and reading an atom data file.
+
+        Parameters
+        ----------
+        filename : path-like object
+            The file path to the restart file for LAMMPS to read in.
+        symbols : list of str, optional
+            List of atom-model symbols corresponding to the atom types in a
+            system.  If None (default), then all atom-model symbols will
+            be included in the order that they are listed in the data model.
+        masses : list, optional
+            Can be given to override the default symbol-based masses for each
+            atom type.  Must be a list of the same length as symbols.  Any
+            values of None in the list indicate that the default value be used
+            for that atom type.
+        prompt : bool, optional
+            If True (default), then a screen prompt will appear asking for the isotope
+            number if no mass is pre-defined for a symbol and the associated element 
+            lacks a single standard atomic/ionic mass.  If False, then an error will
+            be raised for these cases instead.
+        include_comments : bool, optional
+            Indicates if print command lines detailing information on the potential
+            are to be included.  Default value is True.
+
+        Returns
+        -------
+        str
+            The LAMMPS input command lines that specifies the potential and a restart
+            file to read.
+        """
+        # Add comment line
+        info = '# Script prepared using atomman Python package\n\n'
+    
+        # Set read_data command 
+        info += f'read_restart {filename}\n'
+
+        # Set pair_info
+        info += '\n'
+        info += self.pair_info(symbols=symbols, masses=masses, prompt=prompt,
+                               include_comments=include_comments)
+
+        return info
+
+    def download_files(self, pot_dir=None, verbose=False):
+        """
+        Downloads all artifact files associated with the potential.  The files
+        will be saved to the pot_dir directory.
+
+        Parameters
+        ----------
+        pot_dir : str, optional
+            The path to the directory where the files are to be saved.  If not
+            given, will use whatever pot_dir value was previously set.  If
+            given here, will change the pot_dir value so that the pair_info
+            lines properly point to the downloaded files.
+        verbose : bool, optional
+            If True, will print the names of the files downloaded.
+        
+        Returns
+        -------
+        count : int
+            The number of files downloaded.
+        """
+
+        count = 0
+        if pot_dir is not None:
+            self.pot_dir = pot_dir
+
+        if verbose:
+            print(len(self.artifacts), 'files to download')
+        
+        if len(self.artifacts) and not Path(self.pot_dir).is_dir():
+            Path(self.pot_dir).mkdir(parents=True)
+
+        for artifact in self.artifacts:
+            r = requests.get(artifact.url)
+            with open(Path(self.pot_dir, artifact.filename), 'wb') as f:
+                f.write(r.content)
+            if verbose:
+                print('  -', artifact.filename, 'downloaded')
+            count += 1
+        
+        return count

@@ -6,6 +6,8 @@ from DataModelDict import DataModelDict as DM
 from ..tools import aslist
 from .. import PotentialLAMMPS
 
+from .. import Artifact
+
 class PotentialLAMMPSBuilder(object):
     """
     Template class for generating potential_LAMMPS records for different pair styles.
@@ -15,12 +17,14 @@ class PotentialLAMMPSBuilder(object):
 
     def __init__(self, id=None, key=None, potid=None, potkey=None,
                  units=None, atom_style=None, pair_style=None,
-                 pair_style_terms=None, status='active', allsymbols=False,
-                 elements=None, masses=None, charges=None, symbols=None,
-                 command_terms=None):
+                 pair_style_terms=None, status='active', comments=None, dois=None,
+                 allsymbols=False, elements=None, masses=None, charges=None,
+                 symbols=None, command_terms=None, artifacts=None):
         """
         Builder class initializer.
         
+        Parameters
+        ----------
         id : str, optional
             A human-readable identifier to name the LAMMPS potential
             implementation.  Must be set in order to save to the database as
@@ -51,6 +55,10 @@ class PotentialLAMMPSBuilder(object):
             Indicates if the implementation is 'active' (valid and current),
             'superseded' (valid, but better ones exist), or 'retracted'
             (invalid). Default value is 'active'.
+        comments : str, optional
+            Descriptive information about the potential.
+        dois : str or list, optional
+            Any DOIs associated with the potential.
         allsymbols : bool, optional
             Flag indicating if the coefficient lines must be defined for every
             particle model in the potential even if those particles are not
@@ -74,7 +82,9 @@ class PotentialLAMMPSBuilder(object):
             potential to work properly to be set.  Each command line should be
             given as a list of terms, and multiple command lines given as a
             list of lists.
-        
+        artifacts : potential.Artifact or list, optional
+            Artifact objects detailing any associated parameter or data files
+            and the URLs where they can be downloaded from.
         """
         self.id = id
         self.key = key
@@ -87,6 +97,8 @@ class PotentialLAMMPSBuilder(object):
         
         self.allsymbols = allsymbols
         self.status = status
+        self.comments = comments
+        self.dois = dois
 
         self.symbols = symbols
         self.elements = elements
@@ -95,6 +107,8 @@ class PotentialLAMMPSBuilder(object):
         
         self.pair_style_terms = pair_style_terms
         self.command_terms = command_terms
+
+        self.artifacts = artifacts
 
     @property
     def id(self):
@@ -201,6 +215,29 @@ class PotentialLAMMPSBuilder(object):
         self.__status = value
 
     @property
+    def comments(self):
+        """str : Descriptive information about the potential"""
+        return self.__comments
+
+    @comments.setter
+    def comments(self, value):
+        if value is not None:
+            value = str(value)
+        self.__comments = value
+
+    @property
+    def dois(self):
+        """list : Any DOIs associated with the potential"""
+        return self.__dois
+
+    @dois.setter
+    def dois(self, value):
+        if value is not None:
+            self.__dois = aslist(value)
+        else:
+            self.__dois = []
+
+    @property
     def symbols(self):
         """list : The interaction models defined by the potential"""
         return self.__symbols
@@ -271,6 +308,23 @@ class PotentialLAMMPSBuilder(object):
         else:
             self.__command_terms = []
 
+    @property
+    def artifacts(self):
+        return self.__artifacts
+
+    @artifacts.setter
+    def artifacts(self, value):
+        self.__artifacts = []
+        if value is not None:
+            value = aslist(value)
+            for v in value:
+                if isinstance(v, Artifact):
+                    self.__artifacts.append(v)
+                elif isinstance(v, dict):
+                    self.add_artifact(**v)
+                else:
+                    raise TypeError('Invalid artifact object: must be an Artifact or dict')
+
     def build(self):
         """
         Generates a PotentialLAMMPS data model using the given parameters.
@@ -300,9 +354,15 @@ class PotentialLAMMPSBuilder(object):
         model['potential-LAMMPS']['id'] = self.id
         if self.status != 'active':
             model['potential-LAMMPS']['status'] = self.status
+        
         model['potential-LAMMPS']['potential'] = DM()
         model['potential-LAMMPS']['potential']['key'] = self.potkey
         model['potential-LAMMPS']['potential']['id'] = self.potid
+        for doi in self.dois:
+            model['potential-LAMMPS']['potential'].append('doi', doi)
+
+        if self.comments is not None:
+            model['potential-LAMMPS']['comments'] = self.comments
         model['potential-LAMMPS']['units'] = self.units
         model['potential-LAMMPS']['atom_style'] = self.atom_style
         if self.allsymbols is True:
@@ -319,6 +379,10 @@ class PotentialLAMMPSBuilder(object):
         # Add any extra command lines
         for command in self.buildcommands():
             model['potential-LAMMPS'].append('command', command)
+
+        # Add artifacts
+        for artifact in self.artifacts:
+            model['potential-LAMMPS'].append('artifact', artifact.asmodel())
 
         return model
 
@@ -410,3 +474,6 @@ class PotentialLAMMPSBuilder(object):
                     command.append('term', DM([('option', str(term))]))
             commands.append(command)
         return commands
+
+    def add_artifact(self, model=None, filename=None, label=None, url=None):
+        self.artifacts.append(Artifact(model=model, filename=filename, label=label, url=url))

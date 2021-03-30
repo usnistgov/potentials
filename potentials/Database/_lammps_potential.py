@@ -32,7 +32,7 @@ def _no_load_lammps_potentials(self):
     self.__lammps_potentials_df = None
 
 def load_lammps_potentials(self, localpath=None, local=None, remote=None,
-                           status='active', verbose=False):
+                           pot_dir_style='working', status='active', verbose=False):
     """
     Loads LAMMPS potentials from the database, first checking localpath, then
     trying to download from host.
@@ -52,6 +52,14 @@ def load_lammps_potentials(self, localpath=None, local=None, remote=None,
         Setting this to be False is useful/faster if a local copy of the
         database exists.  If not given, will use the local value set during
         initialization.
+    pot_dir_style : str, optional
+        Specifies how the pot_dir values will be set for the loaded lammps
+        potentials.  Allowed values are 'working', 'id', and 'local'.
+        'working' (default) will set all pot_dir = '', meaning parameter files
+        are expected in the working directory when the potential is accessed.
+        'id' sets the pot_dir values to match the potential's id.
+        'local' sets the pot_dir values to the corresponding local database
+        paths where the files are expected to be found.
     status : str, list or None, optional
         Only potential_LAMMPS records with the given status(es) will be
         loaded.  Allowed values are 'active' (default), 'superseded', and
@@ -71,6 +79,12 @@ def load_lammps_potentials(self, localpath=None, local=None, remote=None,
     if remote is None:
         remote = self.remote
 
+    # Check pot_dir_style values
+    if pot_dir_style not in ['working', 'id', 'local']:
+        raise ValueError('Invalid pot_dir_style value')
+    if pot_dir_style == 'local' and localpath is None:
+        raise ValueError('local pot_dir_style requires localpath to be set')
+
     # Check localpath first
     if local is True and localpath is not None:
 
@@ -81,7 +95,7 @@ def load_lammps_potentials(self, localpath=None, local=None, remote=None,
             if potfile.suffix in ['.xml', '.json']:
                 lammps_potential = PotentialLAMMPS(potfile)
                 if status is None or lammps_potential.status in status:
-                    potentials[potfile.stem] = PotentialLAMMPS(potfile)
+                    potentials[potfile.stem] = lammps_potential
 
         if verbose:
             localloaded = len(potentials)
@@ -115,12 +129,24 @@ def load_lammps_potentials(self, localpath=None, local=None, remote=None,
             if verbose and localloaded > 0:
                 print(f' - {len(potentials) - localloaded} new')
     
+    # Build and append kim models
+    kim_potentials = self.load_kim_lammps_potentials(localpath=localpath, local=local,
+                                                remote=remote, verbose=verbose)
+    potentials.update(kim_potentials)
+
     # Build lammps_potentials and lammps_potentials_df
     if len(potentials) > 0:
         pots = np.array(list(potentials.values()))
         potdicts = []
         for pot in pots:
             potdicts.append(pot.asdict())
+            
+            # Set pot_dir values based on pot_dir_style
+            if pot.pair_style != 'kim':
+                if pot_dir_style == 'id':
+                    pot.pot_dir = pot.id
+                elif pot_dir_style == 'local':
+                    pot.pot_dir = Path(localpath, 'potential_LAMMPS', pot.id)
 
         self.__lammps_potentials_df = pd.DataFrame(potdicts).sort_values('id')
         self.__lammps_potentials = pots[self.lammps_potentials_df.index]
@@ -133,8 +159,9 @@ def load_lammps_potentials(self, localpath=None, local=None, remote=None,
         self.__lammps_potentials_df = None
 
 def get_lammps_potentials(self, id=None, key=None, potid=None, potkey=None,
-                         status='active', pair_style=None, elements=None,
-                         symbols=None, verbose=False, getfiles=False):
+                          status='active', pair_style=None, elements=None,
+                          symbols=None, verbose=False, pot_dir_style=None,
+                          forceremote=False):
     """
     Gets LAMMPS potentials from the loaded values or by downloading from
     potentials.nist.gov if local copies are not found.
@@ -159,19 +186,31 @@ def get_lammps_potentials(self, id=None, key=None, potid=None, potkey=None,
         The included symbol model(s) to limit the search by.
     verbose: bool, optional
         If True, informative print statements will be used.
-    getfiles : bool, optional
-        If True, then the parameter files for the matching potentials
-        will also be retrieved and copied to the working directory.
-        If False (default) and the parameter files are in the library,
-        then the returned objects' pot_dir path will be set appropriately.
-        
+    pot_dir_style : str or None, optional
+        If given, will modify the pot_dir values of all returned potentials
+        to correspond with one of the following styles.
+        'working' (default) will set all pot_dir = '', meaning parameter files
+        are expected in the working directory when the potential is accessed.
+        'id' sets the pot_dir values to match the potential's id.
+        'local' sets the pot_dir values to the corresponding local database
+        paths where the files are expected to be found.
+    forceremote : bool, optional
+        If True, then files will be searched from the remote database
+        regardless of if lammps_potentials have been loaded.
+
     Returns
     -------
-    Potential.LAMMPSPotential
-        The potential object to use.
+    list
+        The matching PotentialLAMMPS objects.
     """
+    # Check pot_dir_style values
+    if pot_dir_style is not None and pot_dir_style not in ['working', 'id', 'local']:
+        raise ValueError('Invalid pot_dir_style value')
+    if pot_dir_style == 'local' and self.localpath is None:
+        raise ValueError('local pot_dir_style requires localpath to be set')
+
     # Check loaded values if available
-    if self.lammps_potentials_df is not None:
+    if self.lammps_potentials_df is not None and forceremote is False:
         
         def valmatch(series, val, key):
             if val is None:
@@ -266,24 +305,23 @@ def get_lammps_potentials(self, id=None, key=None, potid=None, potkey=None,
             print(len(matches), 'matching LAMMPS potentials found from remote database')
         lammps_potentials = matches.apply(makepotentials, axis=1)
 
-    # Get files, set pot_dir
-    if getfiles is True:
-        self.get_lammps_potentials_files(lammps_potentials, verbose)
-        for lammps_potential in lammps_potentials:
-            lammps_potential.pot_dir = lammps_potential.id
-    
-    # Try to find pot_dir path in local files
-    elif self.localpath is not None:
-        for lammps_potential in lammps_potentials:
-            pot_path = Path(self.localpath, 'potential_LAMMPS', lammps_potential.id)
-            if pot_path.is_dir():
-                lammps_potential.pot_dir = pot_path
+    if pot_dir_style is not None:
+        if pot_dir_style == 'working':
+            for lammps_potential in lammps_potentials:
+                lammps_potential.pot_dir = ''
+        elif pot_dir_style == 'id':
+            for lammps_potential in lammps_potentials:
+                lammps_potential.pot_dir = lammps_potential.id
+        elif pot_dir_style == 'local':
+            for lammps_potential in lammps_potentials:
+                lammps_potential.pot_dir = Path(self.localpath, 'potential_LAMMPS', lammps_potential.id)
 
     return lammps_potentials
 
 def get_lammps_potential(self, id=None, key=None, potid=None, potkey=None,
                          status='active', pair_style=None, elements=None,
-                         symbols=None, verbose=False, getfiles=False):
+                         symbols=None, pot_dir_style=None, verbose=False,
+                         forceremote=False):
     """
     Gets a LAMMPS potential from the localpath or by downloading from
     potentials.nist.gov if a local copy is not found.  Will raise an error
@@ -307,22 +345,37 @@ def get_lammps_potential(self, id=None, key=None, potid=None, potkey=None,
         The included elemental model(s) to limit the search by.
     symbols : str or list, optional
         The included symbol model(s) to limit the search by.
+    pot_dir_style : str or None, optional
+        If given, will modify the pot_dir values of the returned potentials
+        to correspond with one of the following styles.
+        'working' (default) will set all pot_dir = '', meaning parameter files
+        are expected in the working directory when the potential is accessed.
+        'id' sets the pot_dir values to match the potential's id.
+        'local' sets the pot_dir values to the corresponding local database
+        paths where the files are expected to be found.
     verbose: bool, optional
         If True, informative print statements will be used.
-    getfiles : bool, optional
-        If True, then the parameter files for the matching potentials
-        will also be retrieved and copied to the working directory.
-        If False (default) and the parameter files are in the library,
-        then the returned objects' pot_dir path will be set appropriately.
-        
+    forceremote : bool, optional
+        If True, then files will be searched from the remote database
+        regardless of if lammps_potentials have been loaded.
+
     Returns
     -------
     Potential.LAMMPSPotential
         The potential object to use.
     """
-    lammps_potentials = self.get_lammps_potentials(id=id, key=key, potid=potid, potkey=potkey,
-                         status=status, pair_style=pair_style, elements=elements,
-                         symbols=symbols, verbose=verbose, getfiles=False)
+    # Check pot_dir_style values
+    if pot_dir_style is not None and pot_dir_style not in ['working', 'id', 'local']:
+        raise ValueError('Invalid pot_dir_style value')
+    if pot_dir_style == 'local' and self.localpath is None:
+        raise ValueError('local pot_dir_style requires localpath to be set')
+
+    lammps_potentials = self.get_lammps_potentials(id=id, key=key, potid=potid,
+                                                   potkey=potkey, status=status,
+                                                   pair_style=pair_style, elements=elements,
+                                                   symbols=symbols, verbose=verbose,
+                                                   pot_dir_style=None,
+                                                   forceremote=forceremote)
                          
     if len(lammps_potentials) == 1:
         lammps_potential = lammps_potentials[0]
@@ -330,86 +383,115 @@ def get_lammps_potential(self, id=None, key=None, potid=None, potkey=None,
         raise ValueError('No matching LAMMPS potentials found')
     else:
         raise ValueError('Multiple matching LAMMPS potentials found')
-
-    if getfiles is True:
-        self.get_lammps_potentials_files(lammps_potential, verbose=verbose)
-        lammps_potential.pot_dir = lammps_potential.id
     
+    if pot_dir_style is not None:
+        if pot_dir_style == 'working':
+            lammps_potential.pot_dir = ''
+        elif pot_dir_style == 'id':
+            lammps_potential.pot_dir = lammps_potential.id
+        elif pot_dir_style == 'local':
+            lammps_potential.pot_dir = Path(self.localpath, 'potential_LAMMPS', lammps_potential.id)
+
     return lammps_potential
 
-def download_lammps_potentials(self, format='xml', localpath=None, indent=None,
-                               status='active', getfiles=True,
-                               overwrite=True, verbose=False, reload=False):
+def download_lammps_potentials(self, id=None, key=None, potid=None, potkey=None,
+                               status='active', pair_style=None, elements=None,
+                               symbols=None, verbose=False, localpath=None,
+                               format='xml', indent=None,
+                               downloadfiles=False, overwrite=True, reload=False):
     """
     Download potential_LAMMPS records from the remote and save to localpath.
     
     Parameters
     ----------
+    id : str or list, optional
+        The id value(s) to limit the search by.
+    key : str or list, optional
+        The key value(s) to limit the search by.
+    potid : str or list, optional
+        The potid value(s) to limit the search by.
+    potkey : str or list, optional
+        The potkey value(s) to limit the search by.
+    status : str or list, optional
+        The status value(s) to limit the search by.
+    pair_style : str or list, optional
+        The pair_style value(s) to limit the search by.
+    elements : str or list, optional
+        The included element(s) to limit the search by.
+    symbols : str or list, optional
+        The included symbol model(s) to limit the search by.
+    verbose: bool, optional
+        If True, informative print statements will be used.
     localpath : path-like object, optional
         Path to a local directory where the files will be saved to.  If not
         given, will use the localpath value set during object initialization.
-    lammps_potentials : list, optional
-        A list of LAMMPS potentials to download. If not given, all LAMMPS
-        potentials will be downloaded.
     format : str, optional
         The file format to save the record files as.  Allowed values are 'xml'
         (default) and 'json'.
     indent : int, optional
         The indentation spacing size to use for the locally saved record files.
         If not given, the JSON/XML content will be compact.
-    status : str, list or None, optional
-        Only potential_LAMMPS records with the given status(es) will be
-        downloaded.  Allowed values are 'active' (default), 'superseded', and
-        'retracted'.  If None is given, then all potentials will be downloaded.
-    getfiles : bool, optional
+    downloadfiles : bool, optional
         If True, the parameter files associated with the potential_LAMMPS
         record will also be downloaded.
     overwrite : bool, optional
         If True (default) then any matching LAMMPS potentials already in the
         localpath will be updated if the content has changed.  If False, all
         existing LAMMPS potentials in the localpath will be unchanged.
-    verbose : bool, optional
-        If True, info messages will be printed during operations.  Default
-        value is False.
     reload : bool, optional
         If True, will call load_lammps_potentials() after adding the new
         potential.  Default value is False: loading is slow and should only be
         done when you wish to retrieve the saved potentials.
     """
-    template = 'potential_LAMMPS'
     
-    # Load potentials to speed up file downloads
-    if getfiles is True and self.potentials is None:
-        self.load_potentials()
+    # Fetch matching lammps potentials from the remote
+    lammps_potentials = self.get_lammps_potentials(id=id, key=key, potid=potid,
+                                                   potkey=potkey, status=status,
+                                                   pair_style=pair_style, elements=elements,
+                                                   symbols=symbols, verbose=verbose,
+                                                   forceremote=True)
 
-    mquery = {}
-
-    # Add status query
-    if status is not None:
-        status = aslist(status)
-        if 'active' in status:
-            status.append(None)
-        mquery['potential-LAMMPS.status'] = {'$in':status}
-
-    records = self.cdcs.query(template=template, mongoquery=mquery)
-    def makelammpspotentials(series):
-        return PotentialLAMMPS(model=series.xml_content)
-    lammps_potentials = records.apply(makelammpspotentials, axis=1)
-
-    if getfiles is True:
-        filenames = None
-    else:
-        filenames = [[] for i in range(len(lammps_potentials))]
-
-    self.save_lammps_potentials(lammps_potentials, filenames=filenames,
+    # Save the potentials to the localpath
+    self.save_lammps_potentials(lammps_potentials, downloadfiles=downloadfiles,
                                 format=format, localpath=localpath,
                                 indent=indent, overwrite=overwrite,
                                 verbose=verbose, reload=reload)
 
-def get_lammps_potentials_files(self, lammps_potentials, localpath=None,
-                                local=None, remote=None, targetdir='.',
-                                verbose=False):
+def get_lammps_potential_files(self, lammps_potential, localpath=None,
+                               local=None, remote=None, pot_dir=None,
+                               verbose=False):
+    """
+    Retrieves the potential parameter files for a LAMMPS potential and saves
+    them to the pot_dir of the potential object.  If local is True and the
+    files are already in the localpath, they will be copied from there.  If
+    remote is True and no files are found in local, then the files will be
+    downloaded.
     
+    Parameters
+    ----------
+    lammps_potential : PotentialLAMMPS
+        The LAMMPS potential to retrieve parameter files for.
+    localpath : path-like object, optional
+        Path to a local directory where the files will be searched for.  If not
+        given, will use the localpath value set during object initialization.
+    local : bool, optional
+        Indicates if the parameter files are to be retrieved from the localpath
+        if copies exist there.  If not given, will use the local value set
+        during initialization.
+    remote : bool, optional
+        Indicates if the parameter files are to be downloaded if local is False
+        or copies are not found in the localpath.  If not given, will use the
+        remote value set during initialization.
+    pot_dir : path-like object, optional
+        The path to the directory where the files are to be saved.  If not
+        given, will use whatever pot_dir value was previously set.  If
+        given here, will change the pot_dir value so that the pair_info
+        lines properly point to the copied/downloaded files.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    """
+
     # Set localpath, local, and remote as given here or during init
     if localpath is None:
         localpath = self.localpath
@@ -418,57 +500,49 @@ def get_lammps_potentials_files(self, lammps_potentials, localpath=None,
     if remote is None:
         remote = self.remote
     
-    # Initialize counters
+    # Change or get pot_dir value for the potential
+    if pot_dir is not None:
+        lammps_potential.pot_dir = pot_dir
+    pot_dir = Path(lammps_potential.pot_dir)
+    if not pot_dir.is_dir():
+        pot_dir.mkdir(parents=True)
+
+    # Check localpath first
+    copied = False
     num_copied = 0
-    num_downloaded = 0
+    if local is True and localpath is not None:
+        local_dir = Path(localpath, 'potential_LAMMPS', lammps_potential.id)
+        if local_dir.is_dir():
+            
+            # Do nothing if the source and target directories are the same
+            if pot_dir == local_dir:
+                if verbose:
+                    print('No files copied - pot_dir is the local database path for the files')
+                return None
 
-    # Loop over all given potentials
-    for lammps_potential in aslist(lammps_potentials):
+            # Copy files from source to target
+            for filename in local_dir.glob('*'):
+                shutil.copy(filename, pot_dir)
+                num_copied += 1
+                copied = True
+    
+    if copied:
+        if verbose:
+            print(f'{num_copied} files copied')
+        return None
+    
+    # Check remote
+    if remote is True and copied is False:
+        num_downloaded = lammps_potential.download_files()
         
-        copied = False
-        # Check localpath first
-        if local is True and localpath is not None:
-            pot_dir = Path(localpath, 'potential_LAMMPS', lammps_potential.id)
-            out_dir = Path(targetdir, lammps_potential.id)
-            if pot_dir.is_dir():
-                if not out_dir.is_dir():
-                    shutil.copytree(pot_dir, out_dir)
-                    num_copied += 1
-                    copied = True
-        
-        # Check remote
-        if remote is True and copied is False:
-            try:
-                potential = self.get_potential(id=lammps_potential.potid)
-            except:
-                pass
-            else:
-                # Find matching implementation
-                impmatch = False
-                for imp in potential.implementations:
-                    if imp.key == lammps_potential.key:
-                        impmatch = True
-                        break
-                
-                # Download artifacts
-                if impmatch:
-                    pot_dir = Path(targetdir, lammps_potential.id)
-                    if not pot_dir.is_dir():
-                        pot_dir.mkdir(parents=True)
-
-                    for artifact in imp.artifacts:
-                        r = requests.get(artifact.url)
-                        r.raise_for_status()
-                        artifactfile = Path(pot_dir, artifact.filename)
-                        with open(artifactfile, 'wb') as f:
-                            f.write(r.content)
-                    num_downloaded += 1
+        if num_downloaded > 0:
+            if verbose:
+                print(f'{num_downloaded} files downloaded')
+            return None
     
     if verbose:
-        if local:
-            print(f'Files for {num_copied} LAMMPS potentials copied')
-        if remote:
-            print(f'Files for {num_downloaded} LAMMPS potentials downloaded')
+        print(f'No files copied or downloaded')
+    
 
 def upload_lammps_potential(self, lammps_potential, workspace=None, verbose=False):
     """
@@ -495,8 +569,8 @@ def upload_lammps_potential(self, lammps_potential, workspace=None, verbose=Fals
                         verbose=verbose)
 
 def save_lammps_potentials(self, lammps_potentials, filenames=None,
-                           format='xml', localpath=None,  indent=None,
-                           overwrite=True, verbose=False, reload=False):
+                           downloadfiles=False, format='xml', localpath=None,
+                           indent=None, overwrite=True, verbose=False, reload=False):
     """
     Saves a new LAMMPS potential to the local copy of the database
 
@@ -505,13 +579,16 @@ def save_lammps_potentials(self, lammps_potentials, filenames=None,
     lammps_potentials : PotentialLAMMPS or list of PotentialLAMMPS
         The lammps_potential(s) to save.
     filenames : list, optional
-        The path names to any parameter files associated with each
-        lammps_potentials.  Length of the list should be the same as the
-        length of lammps_potentials.  Each entry can be None, a path, or a list
-        of paths.  If the value is None for an entry then the corresponding
-        Potential record will be searched for parameter files to download.  
-        Note that files will only be copied/downloaded if the associated record
-        is new/different.
+        The paths to any local parameter files associated with the
+        lammps_potentials to copy to the localpath database.  If filenames
+        is given and multiple lammps_potentials are given, then
+        the length of the filenames list should be the same as the length of
+        lammps_potentials.  Each entry can be None, a path, or a list
+        of paths.  If not given, each entry will be set to None.
+    downloadfiles : bool, optional
+        If True, then the parameter files for the lammps_potentials will
+        attempt to be downloaded.  If filenames are given for a particular
+        lammps potential, then no files will be downloaded.
     format : str, optional
         The file format to save the record files as.  Allowed values are 'xml'
         (default) and 'json'.
@@ -582,16 +659,17 @@ def save_lammps_potentials(self, lammps_potentials, filenames=None,
     count_new = 0    
     count_files_copied = 0
     count_files_not_found = 0
-    downloaders = []
+    count_files_downloaded = 0
+    count_files_not_downloaded = 0
 
     for lammps_potential, fnames in zip(lammps_potentials, filenames):
     
-        # Build filename
+        # Build record name
         potname = lammps_potential.id
-        fname = Path(save_directory, f'{potname}.{format}')
+        recordname = Path(save_directory, f'{potname}.{format}')
 
-        # Skip existing files if overwrite is False
-        if overwrite is False and fname.is_file():
+        # Skip existing records if overwrite is False
+        if overwrite is False and recordname.is_file():
             count_duplicate += 1
             continue
 
@@ -602,8 +680,8 @@ def save_lammps_potentials(self, lammps_potentials, filenames=None,
             content = lammps_potential.asmodel().json(indent=indent)
 
         # Check if existing content has changed
-        if fname.is_file():
-            with open(fname, encoding='UTF-8') as f:
+        if recordname.is_file():
+            with open(recordname, encoding='UTF-8') as f:
                 oldcontent = f.read()
             if content == oldcontent:
                 count_duplicate += 1
@@ -613,7 +691,7 @@ def save_lammps_potentials(self, lammps_potentials, filenames=None,
         else:
             count_new += 1
 
-        with open(fname, 'w', encoding='UTF-8') as f:
+        with open(recordname, 'w', encoding='UTF-8') as f:
             f.write(content)
 
         # Copy files
@@ -632,8 +710,13 @@ def save_lammps_potentials(self, lammps_potentials, filenames=None,
                 count_files_not_found += 1
         
         # Build list of potentials to download records for
-        else:
-            downloaders.append(lammps_potential)
+        elif downloadfiles:
+            if len(lammps_potential.artifacts) > 0:
+                pot_dir = Path(save_directory, potname)
+                lammps_potential.download_files(pot_dir=potdir)
+                count_files_downloaded += 1
+            else:
+                count_files_not_downloaded += 1
         
     if verbose:
         print(f'{len(lammps_potentials)} LAMMPS potentials saved to localpath')
@@ -647,13 +730,10 @@ def save_lammps_potentials(self, lammps_potentials, filenames=None,
             print(f' - {count_files_copied} potentials had files copied')
         if count_files_not_found > 0:
             print(f' - {count_files_not_found} potentials had no files to copy')
-    
-    # Download files for the lammps potentials without lists of files
-    if len(downloaders) > 0:
-        self.get_lammps_potentials_files(downloaders,
-                                         local=False, remote=True,
-                                         targetdir=save_directory,
-                                         verbose=verbose)
+        if count_files_downloaded > 0:
+            print(f' - {count_files_downloaded} potentials had files downloaded')
+        if count_files_not_downloaded > 0:
+            print(f' - {count_files_not_downloaded} potentials had no files to download')
 
     if reload:
         self.load_lammps_potentials(verbose=verbose)

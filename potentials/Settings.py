@@ -45,6 +45,16 @@ class Settings():
         else:
             return Path(self.directory, 'library')
 
+    @property
+    def kim_api_directory(self):
+        """pathlib.Path : Path to the directory containing the kim-api."""
+        
+        # Check kim_api_directory value
+        if 'kim_api_directory' in self.__content:
+            return Path(self.__content['kim_api_directory'])
+        else:
+            return None
+
     def load(self):
         """
         Loads the settings.json file.
@@ -196,6 +206,53 @@ class Settings():
             test = screen_input('Delete settings? (must type yes):').lower()
             if test == 'yes':
                 del self.__content['library_directory']
+
+            # Save changes
+            self.save()
+
+    def set_kim_api_directory(self, path=None):
+        """
+        Sets the default kim api directory.
+
+        Parameters
+        ----------
+        path : str or Path
+            The path to the directory containing the kim api version to set as
+            the default.  If not given, will be asked for in a prompt.
+        """
+        # Check if a different directory has already been set
+        if 'kim_api_directory' in self.__content:
+            print(f'kim api directory already set to {self.kim_api_directory}')
+            option = screen_input('Overwrite? (yes or no):')
+            if option.lower() in ['yes', 'y']:
+                pass
+            elif option.lower() in ['no', 'n']: 
+                return None
+            else: 
+                raise ValueError('Invalid choice')
+        
+        # Ask for path if not given
+        if path is None:
+            path = screen_input("Enter the path for the kim api directory:")
+        self.__content['kim_api_directory'] = Path(path).resolve().as_posix()
+
+        # Save changes
+        self.save()
+        
+    def unset_kim_api_directory(self):
+        """
+        Removes the saved kim api directory information.
+        """
+        
+        # Check if kim_api_directory has been set
+        if 'kim_api_directory' not in self.__content:
+            print(f'kim api directory not set')
+        
+        else:
+            print(f'Remove kim api directory {self.kim_api_directory}?')
+            test = screen_input('Delete settings? (must type yes):').lower()
+            if test == 'yes':
+                del self.__content['kim_api_directory']
 
             # Save changes
             self.save()

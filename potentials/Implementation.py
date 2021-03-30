@@ -63,17 +63,26 @@ class Implementation():
             self.artifacts = []
             if artifacts is not None:
                 for artifact in aslist(artifacts):
-                    self.add_artifact(**artifact)
+                    if isinstance(artifact, Artifact):
+                        self.artifacts.append(artifact)
+                    else:
+                        self.add_artifact(**artifact)
             
             self.parameters = []
             if parameters is not None:
                 for parameter in aslist(parameters):
-                    self.add_parameter(**parameter)
+                    if isinstance(parameter, Parameter):
+                        self.parameters.append(parameter)
+                    else:
+                        self.add_parameter(**parameter)
             
             self.links = []
             if links is not None:
                 for link in aslist(links):
-                    self.add_link(**link)
+                    if isinstance(link, Link):
+                        self.links.append(link)
+                    else:
+                        self.add_link(**link)
 
     @property
     def type(self):
