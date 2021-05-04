@@ -4,9 +4,8 @@ import uuid
 from DataModelDict import DataModelDict as DM
 
 from ..tools import aslist
-from .. import PotentialLAMMPS
-
-from .. import Artifact
+from ..record import PotentialLAMMPS
+from ..record.Artifact import Artifact
 
 class PotentialLAMMPSBuilder(object):
     """

@@ -11,16 +11,20 @@ from DataModelDict import DataModelDict as DM
 import requests
 
 # atomman imports
-from .tools import atomic_mass, aslist
+from ..tools import atomic_mass, aslist
 from .BasePotentalLAMMPS import BasePotentialLAMMPS
-from . import Artifact
+from .Artifact import Artifact
+
+from datamodelbase import query
+
+modelroot = 'potential-LAMMPS'
 
 class PotentialLAMMPS(BasePotentialLAMMPS):
     """
     Class for building LAMMPS input lines from a potential-LAMMPS data model.
     """
     
-    def __init__(self, model, pot_dir=None):
+    def __init__(self, model, name=None, pot_dir=None):
         """
         Initializes an instance and loads content from a data model.
         
@@ -33,12 +37,17 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             the potential.  Default value is None, which assumes any required
             files will be in the working directory when LAMMPS is executed.
         """
-        super().__init__(model, pot_dir=pot_dir)
+        super().__init__(model, name=None, pot_dir=pot_dir)
     
+    @property
+    def style(self):
+        """str: The record style"""
+        return 'potential_LAMMPS'
+
     @property
     def modelroot(self):
         """str : The root element for the associated data model"""
-        return 'potential-LAMMPS'
+        return modelroot
 
     @property
     def fileurls(self):
@@ -82,7 +91,7 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
                 out += f'print "{url}"\n'
         return out
 
-    def load(self, model, pot_dir=None):
+    def load_model(self, model, name=None, pot_dir=None):
         """
         Loads potential-LAMMPS data model info.
         
@@ -96,7 +105,8 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             files will be in the working directory when LAMMPS is executed.
         """
         # Call parent load to read model and some parameters
-        super().load(model)
+        super().load_model(model, name=name)
+        pot = self.model[self.modelroot]
         
         if pot_dir is not None:
             self.pot_dir = pot_dir
@@ -105,23 +115,19 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         
         # Add artifacts
         self.__artifacts = []
-        for artifact in self.model.aslist('artifact'):
+        for artifact in pot.aslist('artifact'):
             self.__artifacts.append(Artifact(model=DM([('artifact', artifact)])))
 
         # Read comments, if present
-        self.__comments = self.model.get('comments', '')
-        try:
-            self.__dois = self.model['potential'].aslist('doi')
-        except:
-            print(self.model)
-            raise ValueError('asdf')
+        self.__comments = pot.get('comments', '')
+        self.__dois = pot['potential'].aslist('doi')
         
         # Build lists of symbols, elements and masses
         self._elements = []
         self._symbols = []
         self._masses = []
         self._charges = []
-        for atom in self.model.iteraslist('atom'):
+        for atom in pot.iteraslist('atom'):
             element = atom.get('element', None)
             symbol = atom.get('symbol', None)
             mass = atom.get('mass', None)
@@ -146,6 +152,59 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             self._masses.append(mass)
             self._charges.append(charge)
     
+    @staticmethod
+    def mongoquery(name=None, key=None, id=None,
+                     potid=None, potkey=None, units=None,
+                     atom_style=None, pair_style=None, status=None,
+                     symbols=None, elements=None):
+        
+        mquery = {}
+        query.str_match.mongo(mquery, f'name', name)
+
+        root = f'content.{modelroot}'
+        query.str_match.mongo(mquery, f'{root}.key', key)
+        query.str_match.mongo(mquery, f'{root}.id', id)
+        query.str_match.mongo(mquery, f'{root}.potential.id', potid)
+        query.str_match.mongo(mquery, f'{root}.potential.key', potkey)
+        query.str_match.mongo(mquery, f'{root}.units', units)
+        query.str_match.mongo(mquery, f'{root}.atom_style', atom_style)
+        query.str_match.mongo(mquery, f'{root}.pair_style.type', pair_style)
+
+        if status is not None:
+            status = aslist(status)
+            if 'active' in status:
+                status.append(None)
+
+        query.str_match.mongo(mquery, f'{root}.status', status)
+        
+        return mquery
+
+    @staticmethod
+    def cdcsquery(key=None, id=None, potid=None, potkey=None,
+                  units=None, atom_style=None, pair_style=None, status=None,
+                  symbols=None, elements=None):
+
+        mquery = {}
+        root = modelroot
+
+        query.str_match.mongo(mquery, f'{root}.key', key)
+        query.str_match.mongo(mquery, f'{root}.id', id)
+        query.str_match.mongo(mquery, f'{root}.potential.id', potid)
+        query.str_match.mongo(mquery, f'{root}.potential.key', potkey)
+        query.str_match.mongo(mquery, f'{root}.units', units)
+        query.str_match.mongo(mquery, f'{root}.atom_style', atom_style)
+        query.str_match.mongo(mquery, f'{root}.pair_style.type', pair_style)
+
+        if status is not None:
+            status = aslist(status)
+            if 'active' in status:
+                status.append(None)
+
+        query.str_match.mongo(mquery, f'{root}.status', status)
+
+        return mquery
+
+
     @property
     def pot_dir(self):
         """str : The directory containing files associated with a given potential."""
@@ -230,14 +289,19 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         
         return charges
 
-    def asdict(self):
+    def metadata(self):
         """Returns a flat dict of the metadata fields"""
-        d = super().asdict()
-        d['artifacts'] = self.artifacts
+        
+        d = super().metadata()
+        d['artifacts'] = []
+        for artifact in self.artifacts:
+            d['artifacts'].append(artifact.metadata())
+        d['comments'] = self.comments
+        d['dois'] = self.dois
 
         return d
 
-    def pair_info(self, symbols=None, masses=None, prompt=True, include_comments=True):
+    def pair_info(self, symbols=None, masses=None, prompt=True, comments=True):
         """
         Generates the LAMMPS input command lines associated with the Potential
         and a list of atom-model symbols.
@@ -258,7 +322,7 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             number if no mass is pre-defined for a symbol and the associated element 
             lacks a single standard atomic/ionic mass.  If False, then an error will
             be raised for these cases instead.
-        include_comments : bool, optional
+        comments : bool, optional
             Indicates if print command lines detailing information on the potential
             are to be included.  Default value is True.
 
@@ -291,17 +355,17 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         info = ''
         
         # Add comment prints
-        if include_comments:
+        if comments:
             info += self.print_comments
 
         # Generate pair_style line
-        terms = self.model['pair_style'].aslist('term')
+        terms = self.model[self.modelroot]['pair_style'].aslist('term')
         style_terms = self.__pair_terms(terms)
         
         info += f'pair_style {self.pair_style}{style_terms}\n'
         
         # Generate pair_coeff lines
-        for coeff_line in self.model.iteraslist('pair_coeff'):
+        for coeff_line in self.model[self.modelroot].iteraslist('pair_coeff'):
             if 'interaction' in coeff_line:
                 interaction = coeff_line['interaction'].get('symbol', ['*', '*'])
             else:
@@ -363,7 +427,7 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         info +='\n'
 
         # Generate additional command lines
-        for command_line in self.model.iteraslist('command'):
+        for command_line in self.model[self.modelroot].iteraslist('command'):
             info += self.__pair_terms(command_line.iteraslist('term'),
                                          symbols, self.symbols).strip() + '\n'
         
@@ -407,7 +471,7 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
     
     def pair_data_info(self, filename, pbc, symbols=None, masses=None,
                        atom_style=None, units=None, prompt=True,
-                       include_comments=True):
+                       comments=True):
         """
         Generates the LAMMPS command lines associated with both a potential
         and reading an atom data file.
@@ -438,7 +502,7 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             number if no mass is pre-defined for a symbol and the associated element 
             lacks a single standard atomic/ionic mass.  If False, then an error will
             be raised for these cases instead.
-        include_comments : bool, optional
+        comments : bool, optional
             Indicates if print command lines detailing information on the potential
             are to be included.  Default value is True.
 
@@ -471,12 +535,12 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         # Set pair_info
         info += '\n'
         info += self.pair_info(symbols=symbols, masses=masses, prompt=prompt,
-                               include_comments=include_comments)
+                               comments=comments)
 
         return info
 
     def pair_restart_info(self, filename, symbols=None, masses=None,
-                          prompt=True, include_comments=True):
+                          prompt=True, comments=True):
         """
         Generates the LAMMPS command lines associated with both a potential
         and reading an atom data file.
@@ -499,7 +563,7 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             number if no mass is pre-defined for a symbol and the associated element 
             lacks a single standard atomic/ionic mass.  If False, then an error will
             be raised for these cases instead.
-        include_comments : bool, optional
+        comments : bool, optional
             Indicates if print command lines detailing information on the potential
             are to be included.  Default value is True.
 
@@ -518,11 +582,11 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         # Set pair_info
         info += '\n'
         info += self.pair_info(symbols=symbols, masses=masses, prompt=prompt,
-                               include_comments=include_comments)
+                               comments=comments)
 
         return info
 
-    def download_files(self, pot_dir=None, verbose=False):
+    def download_files(self, pot_dir=None, overwrite=False, verbose=False):
         """
         Downloads all artifact files associated with the potential.  The files
         will be saved to the pot_dir directory.
@@ -554,11 +618,21 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             Path(self.pot_dir).mkdir(parents=True)
 
         for artifact in self.artifacts:
-            r = requests.get(artifact.url)
-            with open(Path(self.pot_dir, artifact.filename), 'wb') as f:
-                f.write(r.content)
-            if verbose:
-                print('  -', artifact.filename, 'downloaded')
-            count += 1
+            fname = Path(self.pot_dir, artifact.filename)
+            
+            if overwrite or not fname.exists():
+                r = requests.get(artifact.url)
+                if r.status_code == 404:
+                    print(f'File URL not found: {artifact.url}')
+                else:
+                    r.raise_for_status()
+                    with open(fname, 'wb') as f:
+                        f.write(r.content)
+                    if verbose:
+                        print('  -', artifact.filename, 'downloaded')
+                    count += 1
+            else:
+                if verbose:
+                    print('  -', artifact.filename, 'skipped')
         
         return count

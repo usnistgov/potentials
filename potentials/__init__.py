@@ -1,24 +1,28 @@
 # coding: utf-8
+# Standard Python libraries
+from importlib import resources
+
+# Read version from VERSION file
+__version__ = resources.read_text('potentials', 'VERSION').strip()
+
 from . import tools
-from .Settings import Settings
-from .FAQ import FAQ
-from .Request import Request
-from .Citation import Citation
-from .Artifact import Artifact
-from .Parameter import Parameter
-from .Link import Link
-from .Implementation import Implementation
-from .Potential import Potential
-from .Action import Action
-from .PotentialLAMMPS import PotentialLAMMPS
-from .PotentialLAMMPSKIM import PotentialLAMMPSKIM
+from .Settings import settings
+
+
+# Import records and load local record styles
+from . import record
+from .record import recordmanager, load_record
+
+# Import database methods
+from datamodelbase import load_database, databasemanager
 from .Database import Database
 
 from . import build
 from .build_lammps_potential import build_lammps_potential
 
 __all__ = sorted([
-    'tools', 'Settings', 'FAQ', 'Request', 'Citation', 'Artifact', 'Parameter',
-    'Link', 'Implementation', 'Potential', 'Action', 'PotentialLAMMPS',
-    'PotentialLAMMPSKIM', 'Database', 'build', 'build_lammps_potential'
+    '__version__', 'tools', 'settings',
+    'record', 'load_record', 'recordmanager',
+    'load_database', 'databasemanager', 'Database',
+    'build', 'build_lammps_potential',
 ])

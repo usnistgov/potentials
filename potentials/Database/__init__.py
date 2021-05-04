@@ -1,10 +1,10 @@
 # coding: utf-8
 from pathlib import Path
 
-from cdcs import CDCS
-
-from .. import Settings
+from .. import settings
 from ..tools import aslist
+
+from datamodelbase import load_database
 
 class Database():
     """
@@ -12,154 +12,120 @@ class Database():
     """
     # Class imports
     from ._record import (get_records, get_record, download_records,
-                          upload_record, delete_record)
+                          remote_query, upload_record, delete_record, save_record)
 
-    from ._citation import (citations, citations_df, 
-                            load_citations, _no_load_citations,
-                            get_citations, get_citation,
-                            download_citations, upload_citation,
-                            save_citations, delete_citation)
+    from ._citation import (get_citations, get_citation, fetch_citation,
+                            download_citations, upload_citation, save_citation, delete_citation)
 
-    from ._potential import (potentials, potentials_df,
-                             load_potentials, _no_load_potentials,
-                             get_potentials, get_potential,
-                             download_potentials, upload_potential,
-                             save_potentials, delete_potential)
+    from ._potential import (get_potentials, get_potential, download_potentials,
+                             upload_potential, save_potential, delete_potential)
 
-    from ._kim_potential import (installed_kim_models, init_installed_kim_models,
-                                 default_kim_settings_file, load_kim_lammps_potentials,
-                                 find_installed_kim_models, set_installed_kim_models,
-                                 save_installed_kim_models, load_installed_kim_models)
+    from ._kim_potential import (get_kim_lammps_potentials, kim_models, init_kim_models,
+                                 find_kim_models, set_kim_models, save_kim_models_file,
+                                 delete_kim_models_file, load_kim_models_file)
 
-    from ._lammps_potential import (lammps_potentials, lammps_potentials_df,
-                                    load_lammps_potentials, _no_load_lammps_potentials,
-                                    get_lammps_potentials, get_lammps_potential,
-                                    download_lammps_potentials, upload_lammps_potential,
-                                    get_lammps_potential_files, save_lammps_potentials,
+    from ._lammps_potential import (get_lammps_potentials, get_lammps_potential,
+                                    download_lammps_potentials, get_lammps_potential_files,
+                                    upload_lammps_potential, save_lammps_potential,
                                     delete_lammps_potential)
 
     from ._widgets import (widget_search_potentials, widget_lammps_potential)
 
-    def __init__(self, host=None, username=None, password=None, certification=None,
-                 localpath=None, verbose=False, local=None, remote=None, 
-                 load=False, status='active', installed_kim_models=None,
-                 kim_api_directory=None, kim_settings_file=None):
+    def __init__(self, host=None, username=None, password=None, cert=None, verify=None,
+                 localpath=None, format='json', indent=4,
+                 verbose=False, local=None, remote=None, 
+                 kim_models=None, kim_api_directory=None, kim_models_file=None):
         """
         Class initializer
 
         Parameters
         ----------
         host : str, optional
-            CDCS site to access.  Default value is 'https://potentials.nist.gov/'.
+            Remote CDCS site to access.  Default value is 'https://potentials.nist.gov/'.
         username : str, optional 
-            User name to use to access the host site.  Default value of '' will
+            User name to use to access the remote site.  Default value of '' will
             access the site as an anonymous visitor.
         password : str, optional
             Password associated with the given username.  Not needed for
             anonymous access.
-        certification : str, optional
-            File path to certification file if needed for host.
+        cert : str or tuple, optional
+            File path(s) to certification file(s) if needed for host.
+        verify: bool or str, optional
+            Verification options.  If not given, will default to True if cert
+            is given and False if cert is not given.
         localpath : str, optional
-            Path to the local library directory to use.  If not given, will use
-            the set library_directory setting.
-        verbose : bool, optional
-            If True, info messages will be printed during operations.  Default
-            value is False.
+            Path to the local directory to use for the local database location.
+            If not given, will use the library_directory setting.
+        format : str, optional
+            The file format to use for saving records to the local location.
+            Allowed values are 'json' or 'xml'.  If not given, will use the
+            library_format setting.
+        indent : str, optional
+            The indentation style to use for saving records to the local
+            database location.  If not given, will use the library_indent setting.
         local : bool, optional
             Indicates if the load operations will check localpath for records.
-            Default value is controlled by settings.
+            Default value is controlled by settings.  If False, then localpath,
+            format and indent values are ignored.
         remote : bool, optional
             Indicates if the load operations will download records from the
-            remote database.  Default value is controlled by settings.  If a
-            local copy exists, then setting this to False is considerably
-            faster.
-        load : bool, str or list, optional
-            If True, citations, potentials and lammps_potentials will all be
-            loaded during initialization. If False (default), none will be
-            loaded.  Alternatively, a str or list can be given to specify which
-            of the three record types to load.
-        status : str, list or None, optional
-            Only potential_LAMMPS records with the given status(es) will be
-            loaded.  Allowed values are 'active' (default), 'superseded', and
-            'retracted'.  If None is given, then all potentials will be loaded.
-        installed_kim_models : str or list, optional
+            remote database.  Default value is controlled by settings.  If False,
+            then host, username, password, cert and verify values are ignored.
+        kim_models : str or list, optional
             Allows for the list of installed_kim_models to be explicitly given.
             Cannot be given with the other parameters.
         kim_api_directory : path-like object, optional
             The directory containing the kim api to use to build the list.
-        kim_settings_file : path-like object, optional
-            The path to a json file with an 'installed-kim-models' field that lists
-            the installed kim models.
+        kim_models_file : path-like object, optional
+            The path to a whitespace-delimited file listing full kim ids.
+        pot_dir_style : str, optional
+            Specifies how the pot_dir values will be set for the loaded lammps
+            potentials.  Allowed values are 'working', 'id', and 'local'.
+            'working' will set all pot_dir = '', meaning parameter files
+            are expected in the working directory when the potential is accessed.
+            'id' sets the pot_dir values to match the potential's id.
+            'local' sets the pot_dir values to the corresponding local database
+            paths where the files are expected to be found.  Default value is
+            controlled by settings.
         """
-        # Set default database parameters
-        if host is None:
-            host = 'https://potentials.nist.gov/'
-        if username is None:
-            username = ''
-        
-        # Create the underlying CDCS client
-        self.__cdcs = CDCS(host=host, username=username, password=password,
-                           certification=certification)
-        
-        # Define class attributes
-        if localpath is None:
-            self.__localpath = Settings().library_directory
-        else:
-            self.__localpath = Path(localpath)
-        
+
+
         # Handle local/remote settings
         if local is None:
-            local = Settings().local
+            local = settings.local
         if remote is None:
-            remote = Settings().remote
+            remote = settings.remote
         assert isinstance(local, bool)
         assert isinstance(remote, bool)
         self.__local = local
         self.__remote = remote
 
-        # Initialize kim settings
-        self.init_installed_kim_models(installed_kim_models=installed_kim_models,
-                                       kim_api_directory=kim_api_directory,
-                                       kim_settings_file=kim_settings_file)
-
-        # Load records
-        if load is True:
-            self.load_all(verbose=verbose)
-        elif load is False:
-            self._no_load_citations()
-            self._no_load_potentials()
-            self._no_load_lammps_potentials()
+        # set database interactions
+        if remote:
+            self.set_remote_database(host=host,
+                                     username=username, password=password,
+                                     cert=cert, verify=verify)
         else:
-            load = aslist(load)
+            self.__remote_database = None
         
-            if 'citations' in load:
-                self.load_citations(verbose=verbose)
-                load.remove('citations')
-            else:
-                self._no_load_citations()
-            if 'potentials' in load:
-                self.load_potentials(verbose=verbose)
-                load.remove('potentials')
-            else:
-                self._no_load_potentials()
-            if 'lammps_potentials' in load:
-                self.load_lammps_potentials(verbose=verbose, status=status)
-                load.remove('lammps_potentials')
-            else:
-                self._no_load_lammps_potentials()
-
-            if len(load) > 0:
-                raise ValueError('unknown load type: allowed values are citations, potentials, and lammps_potentials')
+        if local:
+            self.set_local_database(localpath=localpath, format=format, indent=indent)
+        else:
+            self.__local_database = None
+        
+        # Initialize list of kim models to use
+        self.init_kim_models(kim_models=kim_models, kim_models_file=kim_models_file,
+                             kim_api_directory=kim_api_directory)
 
     @property
-    def cdcs(self):
-        """cdcs.CDCS: REST client for database access"""
-        return self.__cdcs
-    
+    def remote_database(self):
+        """datamodelbase.CDCSDatabase : Interfaces with the remote CDCS database"""
+        return self.__remote_database
+
     @property
-    def localpath(self):
-        """str or None: path to the local copy of the database"""
-        return self.__localpath
+    def local_database(self):
+        """datamodelbase.LocalDatabase : Interfaces with the local database"""
+        return self.__local_database
 
     @property
     def local(self):
@@ -171,87 +137,96 @@ class Database():
         """bool : Indicates if load operations will check remote database"""
         return self.__remote
 
-    def load_all(self, localpath=None, local=None, remote=None, status='active',
-                 verbose=False):
+    def set_remote_database(self, host=None, username=None, password=None,
+                            cert=None, verify=None):
         """
-        Loads records of all styles from the database, first checking localpath,
-        then trying to download from host.
+        Sets or changes the remote database settings.
+
+        Parameters
+        ----------
+        host : str, optional
+            Remote CDCS site to access.  Default value is 'https://potentials.nist.gov/'.
+        username : str, optional 
+            User name to use to access the remote site.  Default value of '' will
+            access the site as an anonymous visitor.
+        password : str, optional
+            Password associated with the given username.  Not needed for
+            anonymous access.
+        cert : str or tuple, optional
+            File path(s) to certification file(s) if needed for host.
+        verify: bool or str, optional
+            Verification options.  If not given, will default to True if cert
+            is given and False if cert is not given.
+        """
+        # Set default database parameters
+        if host is None:
+            host = 'https://potentials.nist.gov/'
+        if username is None:
+            username = ''
+        
+        if verify is None:
+            if cert is None:
+                verify = False
+            else:
+                verify = True
+
+        self.__remote_database = load_database(style='cdcs', host=host,
+                                               username=username, password=password,
+                                               cert=cert, verify=verify)
+
+    def set_local_database(self, localpath=None, format=None, indent=None):
+        """
+        Sets or changes the local database settings.
 
         Parameters
         ----------
         localpath : str, optional
-            Path to a local directory to check for records first.  If not given,
-            will check localpath value set during object initialization.  If not
-            given or set during initialization, then only the remote database will
-            be loaded.
-        local : bool, optional
-            Indicates if records in localpath are to be loaded.  If not given,
-            will use the local value set during initialization.
-        remote : bool, optional
-            Indicates if the records in the remote database are to be loaded.
-            Setting this to be False is useful/faster if a local copy of the
-            database exists.  If not given, will use the local value set during
-            initialization.
-        status : str, list or None, optional
-            Only potential_LAMMPS records with the given status(es) will be
-            loaded.  Allowed values are 'active' (default), 'superseded', and
-            'retracted'.  If None is given, then all potentials will be loaded.
-        verbose : bool, optional
-            If True, info messages will be printed during operations.  Default
-            value is False.
-        """
-        self.load_citations(localpath=localpath, local=local, remote=remote,
-                            verbose=verbose)
-        self.load_potentials(localpath=localpath, local=local, remote=remote,
-                             verbose=verbose)
-        self.load_lammps_potentials(localpath=localpath, local=local,
-                                    remote=remote, status=status,
-                                    verbose=verbose)
-
-    def download_all(self, localpath=None, format='xml', citeformat='bib',
-                     indent=None, status='active', verbose=False,
-                     downloadfiles=True):
-        """
-        Downloads all records from the remote to localhost.
-
-        Parameters
-        ----------
-        localpath : str, optional
-            Path to a local directory where the records are to be copied to.
-            If not given, will check localpath value set during object
-            initialization.
+            Path to the local directory to use for the local database location.
+            If not given, will use the library_directory setting.
         format : str, optional
-            The file format to save the results locally as.  Allowed values are
-            'xml' and 'json'.  Default value is 'xml'.
-        citeformat : str, optional
-            The file format to save Citation records locally as.  Allowed
-            values are 'xml', 'json', and 'bib'.  Default value is 'bib'.
-        indent : int, optional
-            The indentation spacing size to use for the locally saved record files.
-            If not given, the JSON/XML content will be compact.
-        verbose : bool, optional
-            If True, info messages will be printed during operations.  Default
-            value is False.
+            The file format to use for saving records to the local location.
+            Allowed values are 'json' or 'xml'.  If not given, will use the
+            library_format setting.
+        indent : str, optional
+            The indentation style to use for saving records to the local
+            database location.  If not given, will use the library_indent setting.
+        """
+        # Define class attributes
+        if localpath is None:
+            localpath = settings.library_directory
+        else:
+            localpath = Path(localpath)
+
+        self.__local_database = load_database(style='local', host=localpath,
+                                              format=format, indent=indent)
+
+    def download_all(self, status=None, downloadfiles=True, overwrite=False,
+                     verbose=False):
+        """
+        Downloads all potential-related records from the remote location to the
+        local location.
+
+        Parameters
+        ----------
         status : str, list or None, optional
             Only potential_LAMMPS records with the given status(es) will be
-            downloaded.  Allowed values are 'active' (default), 'superseded', and
-            'retracted'.  If None is given, then all potentials will be downloaded.
+            downloaded.  Allowed values are 'active' , 'superseded', and 'retracted'.
+            If None (default) is given, then all potentials will be downloaded.
         downloadfiles : bool, optional
             If True, the parameter files associated with the potential_LAMMPS
             record will also be downloaded.
-        
-        Raises
-        ------
-        ValueError
-            If no localpath, no potentials, invalid format, or records in a
-            different format already exist in localpath.
+        overwrite : bool, optional
+            Flag indicating if any existing local records with names matching
+            remote records are updated (True) or left unchanged (False).  Default
+            value is False.
+        verbose : bool, optional
+            If True, info messages will be printed during operations.  Default
+            value is False.
+
         """
-        self.download_citations(localpath=localpath, format=citeformat,
-                                indent=indent, verbose=verbose)
+        self.download_citations(overwrite=overwrite, verbose=verbose)
 
-        self.download_potentials(localpath=localpath, format=format,
-                                 indent=indent, verbose=verbose)
+        self.download_potentials(overwrite=overwrite, verbose=verbose)
 
-        self.download_lammps_potentials(localpath=localpath, format=format,
-                                        indent=indent, verbose=verbose,
-                                        status=status, downloadfiles=downloadfiles)
+        self.download_lammps_potentials(status=status, downloadfiles=downloadfiles,
+                                        overwrite=overwrite, verbose=verbose)

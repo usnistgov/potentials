@@ -7,12 +7,14 @@ import datetime
 from DataModelDict import DataModelDict as DM
 
 # Local imports
-from .tools import aslist
+from ..tools import aslist
 from .Artifact import Artifact
 from .Parameter import Parameter
 from .Link import Link
 
-class Implementation():
+from datamodelbase.record import Record
+
+class Implementation(Record):
     """
     Class for representing Implementation metadata records.
     records.
@@ -50,39 +52,60 @@ class Implementation():
             except:
                 raise TypeError('model cannot be given with any other parameter')
             else:
-                self.load(model)
+                self.load_model(model)
         else:
             # Build new record
-            self.type = type
-            self.key = key
-            self.id = id
-            self.status = status
-            self.date = date
-            self.notes = notes
+            self.set_values(type=type, key=key, id=id, status=status,
+                            date=date, notes=notes, artifacts=artifacts,
+                            parameters=parameters, links=links)
+
+    @property
+    def modelroot(self):
+        return 'implementation'
+
+    @property
+    def xsl_filename(self):
+        return ('potentials.xsl', 'implementation.xsl')
+
+    @property
+    def xsd_filename(self):
+        return ('potentials.xsd', 'implementation.xsd')
+
+    def set_values(self, type=None, key=None,
+                   id=None, status=None, date=None, notes=None,
+                   artifacts=None, parameters=None, links=None):
             
-            self.artifacts = []
-            if artifacts is not None:
-                for artifact in aslist(artifacts):
-                    if isinstance(artifact, Artifact):
-                        self.artifacts.append(artifact)
-                    else:
-                        self.add_artifact(**artifact)
-            
-            self.parameters = []
-            if parameters is not None:
-                for parameter in aslist(parameters):
-                    if isinstance(parameter, Parameter):
-                        self.parameters.append(parameter)
-                    else:
-                        self.add_parameter(**parameter)
-            
-            self.links = []
-            if links is not None:
-                for link in aslist(links):
-                    if isinstance(link, Link):
-                        self.links.append(link)
-                    else:
-                        self.add_link(**link)
+        # Build new record
+        self.type = type
+        self.key = key
+        self.id = id
+        self.status = status
+        self.date = date
+        self.notes = notes
+        
+        self.artifacts = []
+        if artifacts is not None:
+            for artifact in aslist(artifacts):
+                if isinstance(artifact, Artifact):
+                    self.artifacts.append(artifact)
+                else:
+                    self.add_artifact(**artifact)
+        
+        self.parameters = []
+        if parameters is not None:
+            for parameter in aslist(parameters):
+                if isinstance(parameter, Parameter):
+                    self.parameters.append(parameter)
+                else:
+                    self.add_parameter(**parameter)
+        
+        self.links = []
+        if links is not None:
+            for link in aslist(links):
+                if isinstance(link, Link):
+                    self.links.append(link)
+                else:
+                    self.add_link(**link)
 
     @property
     def type(self):
@@ -154,36 +177,7 @@ class Implementation():
         else:
             self.__notes = str(v)
 
-    def html(self):
-        """Returns an HTML representation of the object."""
-        
-        htmlstr = ''
-        
-        htmlstr += f'<b>{self.type}</b> ({self.id})<br/>\n'
-        if self.status != 'active':
-            htmlstr += f'<b>{self.status}</b><br/>\n'
-        
-        if self.notes is not None:
-            htmlstr += f'<b>Notes:</b> {self.notes}</br>\n'
-        
-        if len(self.artifacts) > 0:
-            htmlstr += '<b>Files:</b><br/>\n'
-            for artifact in self.artifacts:
-                htmlstr += f'{artifact.html()}<br/>\n'
-        
-        if len(self.parameters) > 0:
-            htmlstr += '<b>Parameters:</b><br/>\n'
-            for parameter in self.parameters:
-                htmlstr += f'{parameter.html()}<br/>\n'
-        
-        if len(self.links) > 0:
-            htmlstr += '<b>Links:</b><br/>\n'
-            for link in self.links:
-                htmlstr += f'{link.html()}<br/>\n'
-        
-        return htmlstr
-
-    def load(self, model):
+    def load_model(self, model):
         """
         Loads the object info from data model content
         
@@ -216,24 +210,33 @@ class Implementation():
         for link in imp.iteraslist('link'):
             self.add_link(model=DM([('link', link)]))
 
-    def asdict(self):
+    def metadata(self):
         """Returns a flat dict representation of the object"""
         data = {}
         
         # Copy class attributes to dict
         data['key'] = self.key
         data['id'] = self.id
-        data['date'] = self.date
+        data['date'] = self.date.isoformat()
         data['status'] = self.status
         data['notes'] = self.notes
         data['type'] = self.type
-        data['artifacts'] = self.artifacts
-        data['parameters'] = self.parameters
-        data['links'] = self.links
+
+        data['artifacts'] = []
+        for artifact in self.artifacts:
+            data['artifacts'].append(artifact.metadata())
         
+        data['parameters'] = []
+        for parameter in self.parameters:
+            data['parameters'].append(parameter.metadata())
+        
+        data['links'] = []
+        for link in self.links:
+            data['links'].append(link.metadata())
+            
         return data
 
-    def asmodel(self):
+    def build_model(self):
         """
         Returns the object info as data model content
         
@@ -254,11 +257,11 @@ class Implementation():
         if self.notes is not None:
             imp['notes'] = DM([('text', self.notes)])
         for artifact in self.artifacts:
-            imp.append('artifact', artifact.asmodel()['artifact'])
+            imp.append('artifact', artifact.build_model()['artifact'])
         for parameter in self.parameters:
-            imp.append('parameter', parameter.asmodel()['parameter'])
+            imp.append('parameter', parameter.build_model()['parameter'])
         for link in self.links:
-            imp.append('link', link.asmodel()['link'])
+            imp.append('link', link.build_model()['link'])
         
         return model
 

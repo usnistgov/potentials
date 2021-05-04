@@ -5,289 +5,412 @@ import json
 
 from DataModelDict import DataModelDict as DM
 
+import numpy as np
+import pandas as pd
+
+from datamodelbase import load_record
+
 from ..tools import aslist
 
-def get_records(self, template=None, title=None, keyword=None, mongoquery=None,
-                localpath=None, local=None, remote=None, verbose=False):
+def get_records(self, style=None, name=None,
+                local=None, remote=None, verbose=False,
+                return_df=False, **kwargs):
+    """
+    Retrieves all matching records from the local and/or remote locations.  If
+    records with the same record name are retrieved from both locations, then
+    the local versions of those records are given.
+
+    Parameters
+    ----------
+    style : str, optional
+        The record style to search. If not given, a prompt will ask for it.
+    name : str or list, optional
+        The name(s) of records to limit the search by.
+    local : bool, optional
+        Indicates if the local location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    remote : bool, optional
+        Indicates if the remote location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    return_df : bool, optional
+        If True, then the corresponding pandas.Dataframe of metadata
+        will also be returned.
+    **kwargs : any, optional
+        Any extra keyword arguments supported by the record style.
+
+    Returns
+    -------
+    numpy.NDArray of Record subclasses
+        The retrived records.
+    pandas.DataFrame
+        A table of the records' metadata.  Returned if return_df = True.
     
-    # Set localpath, local, and remote as given here or during init
-    if localpath is None:
-        localpath = self.localpath
+    Raises
+    ------
+    ValueError
+        If local or remote is set to True when the corresponding database
+        interaction has not been set.
+    """
+    # Handle local and remote
     if local is None:
         local = self.local
     if remote is None:
         remote = self.remote
+
+    # Test that the respective databases have been set
+    if local and self.local_database is None:
+        raise ValueError('local database info not set: initialize with local=True or call set_local_database')
+    if remote and self.remote_database is None:
+        raise ValueError('remote database info not set: initialize with remote=True or call set_remote_database')
     
-    # Check for competing parameters
-    if keyword is not None and title is not None:
-        raise ValueError("keyword and title cannot both be given")
-    
-    matches = {}
-    numlocal = 0
-    numremote = 0
-    
-    # Try local library first
-    if local is True and localpath is not None:
-        if template is None:
-            templates = []
-            for t in localpath.glob('*'):
-                if t.is_dir():
-                    templates.append(t.name)
-        else:
-            templates = aslist(template)
-        
-        # Search by title
-        if title is not None:
-            titles = aslist(title)
-        
-            for templatedir in templates:
-                for titlename in titles:
-                    for fname in Path(localpath, templatedir).glob(f'{titlename}.*'):
-                        if fname.suffix in ['.xml', '.json']:
-                            matches[titlename] = DM(fname)
-                        
-        # Search by keyword
-        elif keyword is not None:
-            keywords = aslist(keyword)
-            
-            for templatedir in templates:
-                for fname in Path(localpath, templatedir).glob('*'):
-                    if fname.suffix in ['.xml', '.json']:
-                        titlename = fname.stem
-                        with open(fname) as f:
-                            content = f.read()
-                        
-                        ismatch = True
-                        for kw in keywords:
-                            if kw not in content:
-                                ismatch = False
-                                break
-                        if ismatch:
-                            matches[titlename] = DM(fname)
-                    
-        # Add all by template
-        else:
-            for templatedir in templates:
-                for fname in Path(localpath, templatedir).glob('*'):
-                    if fname.suffix in ['.xml', '.json']:
-                        titlename = fname.stem
-                        matches[titlename] = DM(fname)
-    
-        numlocal = len(matches)
+    # Get local records
+    if local:
+        l_recs, l_df = self.local_database.get_records(style, name=name,
+                                                       return_df=True, **kwargs)
         if verbose:
-            print(f'Found {numlocal} records in local library')
+            print(f'Found {len(l_recs)} matching {style} records in local library')
+    else:
+        l_recs = np.array([])
+        l_df = pd.DataFrame({'name':[]})
     
-    # Try remote next
-    if remote is True:
-        rmatches = self.cdcs.query(template=template, title=title,
-                                   keyword=keyword, mongoquery=mongoquery)
+    # Get remote records
+    if remote:
+        try:
+            r_recs, r_df = self.remote_database.get_records(style, name=name,
+                                                            return_df=True, **kwargs)
+        except Exception as e:
+            r_recs = np.array([])
+            r_df = pd.DataFrame({'name':[]})
+            if verbose:
+                print(f'Remote access failed: {e}')
         if verbose:
-            numremote = len(rmatches)
-            print(f'found {numremote} records in remote database')
-        
-        for i in rmatches.index:
-            rmatch = rmatches.loc[i]
-            if rmatch.title not in matches:
-                matches[rmatch.title] = DM(rmatch.xml_content)
-        
-    if verbose and numlocal > 0 and numremote > 0:
-        numtotal = len(matches)
-        print(f'found {numtotal} unique records between local and remote')
-
-    if len(matches) > 0:            
-        return list(matches.values())
+            print(f'Found {len(r_recs)} matching {style} records in remote library')
     else:
-        return []
+        r_recs = np.array([])
+        r_df = pd.DataFrame({'name':[]})
 
-def get_record(self, template=None, title=None, keyword=None, mongoquery=None,
-               localpath=None, local=None, remote=None, verbose=False):
+    # Combine results
+    if len(r_recs) == 0:
+        records = l_recs
+        df = l_df
+    elif len(l_recs) == 0:
+        records = r_recs
+        df = r_df
+    else:
+        # Identify missing remotes
+        newr_df = r_df[~r_df.name.isin(l_df.name)]
+        newr_recs = r_recs[newr_df.index.tolist()]
+        if verbose:
+            print(f' - {len(newr_recs)} remote records are new')
+        
+        # Combine local and new remote
+        records = np.hstack([l_recs, newr_recs])
+        df = pd.concat([l_df, newr_df], ignore_index=True, sort=False)
+
+    # Sort by name
+    df = df.sort_values('name')
+    records = records[df.index.tolist()]
+
+    # Return records (and df)
+    if return_df:
+        return records, df.reset_index(drop=True)
+    else:
+        return records
     
-    records = get_records(self, template=template, title=title, keyword=keyword,
-                          mongoquery=mongoquery, localpath=localpath, local=local,
-                          remote=remote, verbose=verbose)
-    if len(records) == 1:
-        return records[0]
-    elif len(records) == 0:
-        raise ValueError('No matching records found')
-    else:
-        raise ValueError('Multiple matching records found')
-
-def download_records(self, template, localpath=None, keyword=None, mongoquery=None,
-                     format='xml', indent=None, verbose=False):
+def get_record(self, style=None, name=None,
+                local=None, remote=None, verbose=False,
+                return_df=False, **kwargs):
     """
-    Download records associated with a given template from the remote and
-    save to localpath.
-    
+    Retrieves a single matching record from the local and/or remote locations.
+    If local is True and the record is found there, then the local copy of the
+    record is returned without searching the remote.
+
     Parameters
     ----------
-    template : str
-        The template (schema/style) of records to download.  If given, all
-        records with this template will be downloaded.
-    localpath : path-like object, optional
-        Path to a local directory where the files will be saved to.  If not
-        given, will use the localpath value set during object initialization.
+    style : str, optional
+        The record style to search. If not given, a prompt will ask for it.
+    name : str or list, optional
+        The name(s) of records to limit the search by.
+    local : bool, optional
+        Indicates if the local location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    remote : bool, optional
+        Indicates if the remote location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    **kwargs : any, optional
+        Any extra keyword arguments supported by the record style.
+
+    Returns
+    -------
+    Record subclass
+        The retrived record.
+    
+    Raises
+    ------
+    ValueError
+        If local or remote is set to True when the corresponding database
+        interaction has not been set.
+    ValueError
+        If multiple or no matching records are discovered.
+    """
+    # Handle local and remote
+    if local is None:
+        local = self.local
+    if remote is None:
+        remote = self.remote
+
+    # Test that the respective databases have been set
+    if local and self.local_database is None:
+        raise ValueError('local database info not set: initialize with local=True or call set_local_database')
+    if remote and self.remote_database is None:
+        raise ValueError('remote database info not set: initialize with remote=True or call set_remote_database')
+    
+    # Check local first
+    if local:
+        records = self.local_database.get_records(style, name=name, **kwargs)
+        if len(records) == 1:
+            if verbose:
+                print('Matching record retrieved from local')
+            return records[0]
+        elif len(records) > 1:
+            raise ValueError('Multiple matching records found')
+    
+    # Get remote records
+    if remote:
+        records = self.remote_database.get_records(style, name=name, **kwargs)
+        if len(records) == 1:
+            if verbose:
+                print('Matching record retrieved from remote')
+            return records[0]
+        elif len(records) > 0:
+            raise ValueError('Multiple matching records found')
+    
+    raise ValueError('No matching records found')
+
+def remote_query(self, style=None, keyword=None, query=None, name=None,
+                 return_df=False):
+    """
+    Allows for custom Mongo-style or keyword search queries to be performed on
+    records from the remote database.
+
+    Parameters
+    ----------
+    style : str, optional
+        The record style to search. If not given, a prompt will ask for it.
+    name : str or list, optional
+        The name(s) of records to limit the search by.
+    return_df : bool, optional
+        If True, then the corresponding pandas.Dataframe of metadata
+        will also be returned
+    query : dict, optional
+        A custom-built CDCS Mongo-style query to use for the record search.
+        Cannot be given with keyword.
     keyword : str, optional
-        A keyword content pattern to search for to limit which records are
-        downloaded.
-    mongoquery : dict, optional
-        A MongoDB-style filter query to limit which records are downloaded.
-    format : str, optional
-        The file format to save the file as.  Allowed values are 'xml'
-        (default) and 'json'.
-    indent : int, optional
-        The indentation spacing size to use for the locally saved file.  If not
-        given, the JSON/XML content will be compact.
-    verbose : bool, optional
-        If True, info messages will be printed during operations.  Default
-        value is False.
+        Allows for a search of records whose contents contain a keyword.
+        Cannot be given with query.
+    
+    Returns
+    -------
+    numpy.NDArray of Record subclasses
+        The retrived records.
+    pandas.DataFrame
+        A table of the records' metadata.  Returned if return_df = True.
     """
-    
-    if template == 'potential_LAMMPS':
-        raise ValueError('use download_lammps_potentials instead')
-    elif template == 'Potential':
-        raise ValueError('use download_potentials instead')
-    elif template == 'Citation':
-        raise ValueError('use download_citations instead')
-    
-    # Check localpath values
-    if localpath is None:
-        localpath = self.localpath
-    if localpath is None:
-        raise ValueError('localpath must be set to download files')
-    
-    # Check format value
-    format = format.lower()
-    allowed_formats = ['xml', 'json']
-    if format not in allowed_formats:
-        raise ValueError("Format must be 'xml' or 'json'")
-    
-    # Create save directory if needed
-    save_directory = Path(localpath, template)
-    if not save_directory.is_dir():
-        save_directory.mkdir(parents=True)
+    return self.remote_database.get_records(style=style, return_df=return_df,
+                                            query=query, keyword=keyword, name=name)
 
-    for fmt in allowed_formats:
-        if fmt != format:
-            numexisting = len([fname for fname in save_directory.glob(f'*.{fmt}')])
-            if numexisting > 0:
-                raise ValueError(f'{numexisting} records of format {fmt} already saved locally')
-
-    # Download and save
-    records = self.cdcs.query(template=template, 
-                              keyword=keyword, mongoquery=mongoquery)
-    if verbose:
-        print(f'Found {len(records)} of {template}')
-    
-    count_new = 0
-    count_updated = 0
-    count_duplicate = 0
-    for i in range(len(records)):
-        record = records.iloc[i]
-        fname = Path(save_directory, f'{record.title}.{format}')
-        
-        if format == 'xml':
-            content = DM(record.xml_content).xml(indent=indent)
-        else:
-            content = json.dumps(DM(record.xml_content), indent=indent, ensure_ascii=False)
-            
-        # Check if existing content has changed
-        if fname.is_file():
-            with open(fname, encoding='UTF-8') as f:
-                oldcontent = f.read()
-            if content == oldcontent:
-                count_duplicate += 1
-                continue
-            else:
-                count_updated += 1
-        else:
-            count_new += 1
-        
-        with open(fname, 'w', encoding='UTF-8') as f:
-            f.write(content)
-    
-    if verbose:
-        if count_new > 0:
-            print(f' - {count_new} new records added')
-        if count_updated > 0:
-            print(f' - {count_updated} existing records updated')
-        if count_duplicate > 0:
-            print(f' - {count_duplicate} duplicate records skipped')
-
-def upload_record(self, template, content, title, workspace=None, 
-                   verbose=False):
+def download_records(self, style=None, name=None, overwrite=False,
+                     keyword=None, query=None, verbose=False, **kwargs):
     """
-    Saves a new record to the remote database.  Requires write
-    permissions to potentials.nist.gov
+    Retrieves all matching records from the remote location and saves them to
+    the local location.
 
     Parameters
     ----------
-    template : str
-        The template (schema/style) for the record being uploaded.
-    content : str
-        The content to upload.
-    title : str
-        The title (name) to assign to the record.
-    workspace, str, optional
-        The workspace to assign the record to. If not given, no workspace will
-        be assigned (only accessible to user who submitted it).
+    style : str, optional
+        The record style to search. If not given, a prompt will ask for it.
+    name : str or list, optional
+        The name(s) of records to limit the search by.
+    overwrite : bool, optional
+        Flag indicating if any existing local records with names matching
+        remote records are updated (True) or left unchanged (False).  Default
+        value is False.
+    query : dict, optional
+        A custom-built CDCS-style query to use for the record search.
+        Alternative to passing in the record-specific metadata kwargs.
+        Note that name can be given with query.
+    keyword : str, optional
+        Allows for a search of records whose contents contain a keyword.
+        Alternative to giving query or kwargs.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    **kwargs : any, optional
+        Any extra keyword arguments supported by the record style.
+
+    Returns
+    -------
+    numpy.NDArray of Record subclasses
+        The retrived records.
+    pandas.DataFrame
+        A table of the records' metadata.  Returned if return_df = True.
+    
+    Raises
+    ------
+    ValueError
+        If local or remote is set to True when the corresponding database
+        interaction has not been set.
+    """
+    # Test that the respective databases have been set
+    if self.local_database is None:
+        raise ValueError('local database info not set: initialize with local=True or call set_local_database')
+    if self.remote_database is None:
+        raise ValueError('remote database info not set: initialize with remote=True or call set_remote_database')
+    
+    # Get matching remote records
+    records = self.remote_database.get_records(style, name=name, **kwargs)
+    if verbose:
+        print(f'Found {len(records)} matching {style} records in remote library')
+    
+    num_added = 0
+    num_changed = 0
+    num_skipped = 0
+    for record in records:
+        try:
+            self.local_database.add_record(record=record)
+            num_added += 1
+        except:
+            if overwrite:
+                self.local_database.update_record(record=record)
+                num_changed += 1
+            else:
+                num_skipped += 1
+    
+    if verbose:
+        print(num_added, 'new records added to local')
+        if num_changed > 0:
+            print(num_changed, 'existing records changed in local')
+        if num_skipped > 0:
+            print(num_skipped, 'existing records skipped')
+
+def save_record(self, record=None, style=None, name=None,
+                  model=None, overwrite=False, verbose=False):
+    """
+    Saves a record to the local database.
+    
+    Parameters
+    ----------
+    record : Record, optional
+        The record to save.  If not given, then style and model are
+        required.
+    style : str, optional
+        The record style to save.  Required if record is not given.
+    model : str, DataModelDict, or file-like object, optional
+        The contents of the record to save.  Required if record is not given.
+    name : str, optional
+        The name to assign to the record.  Required if record is not given and
+        model is not a file name.
+    overwrite : bool, optional
+        Indicates what to do when a matching record is found in the remote
+        location.  If False (default), then the record is not updated.  If
+        True, then the record is updated.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
     """
+    if record is None:
+        record = load_record(style, model, name=name)
     
     try:
-        self.cdcs.upload_record(content=content, template=template,
-                                title=title, workspace=workspace,
-                                verbose=verbose) 
+        self.local_database.add_record(record=record, verbose=verbose) 
     except:
-        self.cdcs.update_record(content=content, template=template,
-                                title=title, workspace=workspace, 
-                                verbose=verbose)
+        if overwrite:
+            self.local_database.update_record(record=record, verbose=verbose)
+        else:
+            raise ValueError('Matching record already exists: use overwrite=True to change it')
 
-def delete_record(self, template, title, local=True, remote=False,
-                  localpath=None, verbose=False):
+def upload_record(self, record=None, style=None, name=None,
+                  model=None, workspace=None, overwrite=False, verbose=False):
     """
-    Deletes a single data record from the database - local and/or remote.
+    Uploads a record to the remote database.  Requires an account for the remote
+    location with write permissions.
 
     Parameters
     ----------
-    template : str
-        The template (schema/style) for the record being deleted.
-    title : str
-        The title (name) of the record to delete.
-    local : bool, optional
-        If True (default) then the record will be deleted from the localpath.
-    remote : bool, optional
-        If True then the record will be deleted from the remote database.  
-        Requires write permissions to potentials.nist.gov.  Default value is
-        False.
-    localpath : path-like object, optional
-        Path to a local directory where the file to delete is located.  If not
-        given, will use the localpath value set during object initialization.
+    record : Record, optional
+        The record to upload.  If not given, then style and model are
+        required.
+    style : str, optional
+        The record style to upload.  Required if record is not given.
+    model : str, DataModelDict, or file-like object, optional
+        The contents of the record to upload.  Required if record is not given.
+    name : str, optional
+        The name to assign to the record.  Required if record is not given and
+        model is not a file name.
+    workspace : str, optional
+        The workspace to assign the record to. If not given, no workspace will
+        be assigned (only accessible to user who submitted it).
+    overwrite : bool, optional
+        Indicates what to do when a matching record is found in the remote
+        location.  If False (default), then the record is not updated.  If
+        True, then the record is updated.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-    if local is False and remote is False:
-        raise ValueError('local and remote both False: no records deleted')
-
-    if local is True:
-        # Check localpath values
-        if localpath is None:
-            localpath = self.localpath
-        if localpath is None:
-            raise ValueError('localpath must be set to delete local files')
-
-        numfiles = 0
-        for fname in Path(localpath, template).glob(f'{title}.*'):
-            fname.unlink()
-            numfiles += 1
-            if verbose:
-                print(f'deleted {fname}')
-        
-        if numfiles == 0:
-            raise ValueError(f'No local record {title} of {template} found to delete')
-
-    if remote is True:
-        self.cdcs.delete_record(template=template, title=title, verbose=verbose)
+    if record is None:
+        record = load_record(style, model, name=name)
     
+    try:
+        self.remote_database.add_record(record=record, workspace=workspace,
+                                        verbose=verbose) 
+    except:
+        if overwrite:
+            self.remote_database.update_record(record=record, workspace=workspace, 
+                                               verbose=verbose)
+        else:
+            raise ValueError('Matching record already exists: use overwrite=True to change it')
+
+def delete_record(self, record=None, style=None, name=None,
+                  local=True, remote=False, verbose=False):
+    """
+    Deletes a record from the local and/or remote locations.  
+
+    Parameters
+    ----------
+    record : Record, optional
+        The record to delete.  If not given, then style and name
+        are required.
+    style : str, optional
+        The style of the record to delete.  Required if record is not given.
+    name : str, optional
+        The name of the record to delete.  Required if record is not given.
+    local : bool, optional
+        Indicates if the record will be deleted from the local location.
+        Default value is True.
+    remote : bool, optional
+        Indicates if the record will be deleted from the remote location.
+        Default value is False.  If True, requires an account for the remote
+        location with write permissions.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    """
+    if not local and not remote:
+        print('local and remote both False: no records deleted')
+        return None
+    
+    if local:
+        self.local_database.delete_record(record=record, name=name, style=style)
+        if verbose:
+            print('record successfully deleted from local')
+    if remote:
+        self.remote_database.delete_record(record=record, name=name, style=style)
+        if verbose:
+            print('record successfully deleted from remote')

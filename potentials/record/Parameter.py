@@ -2,7 +2,9 @@
 
 from DataModelDict import DataModelDict as DM
 
-class Parameter():
+from datamodelbase.record import Record
+
+class Parameter(Record):
     """
     Class for describing parameter values
     """
@@ -29,11 +31,22 @@ class Parameter():
             except:
                 raise TypeError('model cannot be given with any other parameter')
             else:
-                self.load(model)
+                self.load_model(model)
         else:
-            self.name = name
-            self.value = value
-            self.unit = unit
+            self.set_values(name=name, value=value, unit=unit)
+
+    @property
+    def modelroot(self):
+        return 'parameter'
+
+    @property
+    def xsl_filename(self):
+        return ('potentials.xsl', 'parameter.xsl')
+
+    @property
+    def xsd_filename(self):
+        return ('potentials.xsd', 'parameter.xsd')
+
 
     @property
     def name(self):
@@ -71,7 +84,24 @@ class Parameter():
         else:
             self.__unit = float(v)
 
-    def load(self, model):
+    def set_values(self, name=None, value=None, unit=None):
+        """
+        Sets a Parameter object's attributes
+
+        Parameters
+        ----------
+        name : str, optional
+            The name of the parameter or string parameter line.
+        value : float, optional
+            The value of the parameter.
+        unit : str, optional
+            Units associated with value.
+        """
+        self.name = name
+        self.value = value
+        self.unit = unit
+
+    def load_model(self, model):
         """
         Loads the object info from data model content
         
@@ -85,7 +115,7 @@ class Parameter():
         self.unit = parameter.get('unit', None)
         self.name = parameter.get('name', None)
         
-    def asmodel(self):
+    def build_model(self):
         """
         Returns the object info as data model content
         
@@ -104,13 +134,11 @@ class Parameter():
         
         return model
 
-    def html(self):
-        """Returns an HTML representation of the object."""
+    def metadata(self):
+        """Returns a flat dict representation of the object"""
+        meta = {}
+        meta['value'] = self.value
+        meta['unit'] = self.unit
+        meta['name'] = self.name
 
-        htmlstr = f'{self.name}'
-        if self.value is not None:
-            htmlstr += f' {self.value}'
-            if self.unit is not None:
-                htmlstr += f' {self.unit}'
-        
-        return htmlstr
+        return meta

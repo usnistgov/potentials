@@ -2,7 +2,9 @@
 # https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
-class Link():
+from datamodelbase.record import Record
+
+class Link(Record):
     """
     Class for describing website link
     """
@@ -29,11 +31,21 @@ class Link():
             except:
                 raise TypeError('model cannot be given with any other parameter')
             else:
-                self.load(model)
+                self.load_model(model)
         else:
-            self.linktext = linktext
-            self.label = label
-            self.url = url
+            self.set_values(linktext=linktext, label=label, url=url)
+
+    @property
+    def modelroot(self):
+        return 'link'
+
+    @property
+    def xsl_filename(self):
+        return ('potentials.xsl', 'link.xsl')
+
+    @property
+    def xsd_filename(self):
+        return ('potentials.xsd', 'link.xsd')
 
     @property
     def url(self):
@@ -71,7 +83,24 @@ class Link():
         else:
             self.__linktext = str(v)
 
-    def load(self, model):
+    def set_values(self, url=None, label=None, linktext=None):
+        """
+        Sets an Artifact object's attributes
+
+        Parameters
+        ----------
+        url : str, optional
+            URL for the link.
+        label : str, optional
+            A short description label.
+        linktext : str, optional
+            The text for the link, i.e. what gets clicked on.
+        """
+        self.linktext = linktext
+        self.label = label
+        self.url = url
+
+    def load_model(self, model):
         """
         Loads the object info from data model content
         
@@ -85,7 +114,7 @@ class Link():
         self.label = link['web-link'].get('label', None)
         self.linktext = link['web-link'].get('link-text', None)
         
-    def asmodel(self):
+    def build_model(self):
         """
         Returns the object info as data model content
         
@@ -104,15 +133,12 @@ class Link():
             model['link']['web-link']['link-text'] = self.linktext
         
         return model
+    
+    def metadata(self):
+        """Returns a flat dict representation of the object"""
+        meta = {}
+        meta['linktext'] = self.linktext
+        meta['label'] = self.label
+        meta['url'] = self.url
 
-    def html(self):
-        """Returns an HTML representation of the object."""
-        htmlstr = ''
-        if self.label is not None:
-            htmlstr += f'{self.label}: '
-        if self.url is not None:
-            htmlstr += f'<a href="{self.url}">{self.linktext}</a>'
-        else:
-            htmlstr += f'{self.linktext}'
-
-        return htmlstr
+        return meta

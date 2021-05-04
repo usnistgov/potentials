@@ -2,7 +2,9 @@
 # https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
-class Artifact():
+from datamodelbase.record import Record
+
+class Artifact(Record):
     """
     Class for describing artifacts (files accessible online)
     """
@@ -29,11 +31,21 @@ class Artifact():
             except:
                 raise TypeError('model cannot be given with any other parameter')
             else:
-                self.load(model)
+                self.load_model(model)
         else:
-            self.filename = filename
-            self.label = label
-            self.url = url
+            self.set_values(filename=filename, label=label, url=url)
+
+    @property
+    def modelroot(self):
+        return 'artifact'
+
+    @property
+    def xsl_filename(self):
+        return ('potentials.xsl', 'artifact.xsl')
+
+    @property
+    def xsd_filename(self):
+        return ('potentials.xsd', 'artifact.xsd')
 
     @property
     def filename(self):
@@ -71,7 +83,24 @@ class Artifact():
         else:
             self.__url = str(v)
 
-    def load(self, model):
+    def set_values(self, filename=None, label=None, url=None):
+        """
+        Sets an Artifact object's attributes
+
+        Parameters
+        ----------
+        filename : str, optional
+            The name of the file without path information.
+        label : str, optional
+            A short description label.
+        url : str, optional
+            URL for file where downloaded, if available.
+        """
+        self.filename = filename
+        self.label = label
+        self.url = url
+
+    def load_model(self, model):
         """"
         Loads the object info from data model content
         
@@ -84,8 +113,8 @@ class Artifact():
         self.url = artifact['web-link'].get('URL', None)
         self.label = artifact['web-link'].get('label', None)
         self.filename = artifact['web-link'].get('link-text', None)
-        
-    def asmodel(self):
+    
+    def build_model(self):
         """
         Returns the object info as data model content
         
@@ -107,14 +136,11 @@ class Artifact():
         
         return model
 
-    def html(self):
-        """Returns an HTML representation of the object."""
-        htmlstr = ''
-        if self.label is not None:
-            htmlstr += f'{self.label}: '
-        if self.url is not None:
-            htmlstr += f'<a href="{self.url}">{self.filename}</a>'
-        else:
-            htmlstr += f'{self.filename}'
-        
-        return htmlstr
+    def metadata(self):
+        """Returns a flat dict representation of the object"""
+        meta = {}
+        meta['filename'] = self.filename
+        meta['label'] = self.label
+        meta['url'] = self.url
+
+        return meta

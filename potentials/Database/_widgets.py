@@ -11,17 +11,27 @@ import ipywidgets as widgets
 # https://numpy.org/
 import numpy as np
 
-def widget_search_potentials(self):
+import pandas as pd
+
+from ..record import Potential, PotentialLAMMPS
+
+def widget_search_potentials(self, potentials=None, potentials_df=None):
     """
     Builds ipywidgets for selecting an interatomic potential from the database
     and displaying its full html representation (citation plus implementations)
     """
-    if self.potentials_df is None:
-        self.load_potentials()
-    
+    # Build potentials and/or potentials_df if needed
+    if potentials is None:
+        potentials, potentials_df = self.get_potentials(return_df=True)
+    elif potentials_df is None:
+        potentials_df = []
+        for potential in potentials:
+            potentials_df.append(potential.metadata())
+        potentials_df = pd.DataFrame((potentials_df))
+
     # Build list of all unique elements
     unique_elements = set()
-    for elements in self.potentials_df.elements.values:
+    for elements in potentials_df.elements.values:
         unique_elements.update(elements)
     unique_elements = [''] + sorted(list(unique_elements))
     
@@ -29,13 +39,13 @@ def widget_search_potentials(self):
     def getyears(series):
         years = set()
         for citation in series.citations:
-            years.add(citation.year)
+            years.add(citation['year'])
         return years
-    unique_years = self.potentials_df.apply(getyears, axis=1)
+    unique_years = potentials_df.apply(getyears, axis=1)
     unique_years = [''] + sorted(list(set().union(*unique_years)))
 
     # Build list of all potential ids
-    potential_ids = [pot.id for pot in self.potentials]
+    potential_ids = potentials_df.id.tolist()
     
     # Create selection widgets
     element1_dropdown = widgets.Dropdown(options=unique_elements, description='Element1:')
@@ -45,10 +55,15 @@ def widget_search_potentials(self):
     author_text = widgets.Text(value='', description='Author:', continuous_update=False)
     potential_dropdown = widgets.Dropdown(options=potential_ids, description='Potential:')
     
+    # Initialize outputs
+    header1_output = widgets.Output()
+    with header1_output:
+        display(HTML('<h1>Search potential listings</h1></br>'))
+
     # Initialize output for selected potential
     potential_output = widgets.Output()  
     with potential_output:
-        display(HTML(self.potentials[0].html()))
+        potentials[0].html(render=True)
     
     # Define function for updating list of potentials
     def update_potential_dropdown_options(change):
@@ -79,11 +94,11 @@ def widget_search_potentials(self):
         else:
             author = None
 
-        # Call search_potentials with author, year, elements
-        potentials = self.get_potentials(author=author, year=year, elements=elements)
+        # Parse potentials using author, year, elements
+        matches = potentials_df[Potential.pandasfilter(potentials_df, author=author, year=year, element=elements)]
         
         # Update potential dropdown accordingly
-        potential_dropdown.options = [pot.id for pot in potentials]
+        potential_dropdown.options = matches.id.tolist()
 
     # Tie elements, year and text widgets to above function
     element1_dropdown.observe(update_potential_dropdown_options, 'value')
@@ -97,7 +112,7 @@ def widget_search_potentials(self):
         
         # Select potential based on dropdown value
         try:
-            potential = self.potentials[self.potentials_df.id == potential_dropdown.value][0]
+            potential = potentials[potentials_df.id == potential_dropdown.value][0]
         except:
             with potential_output:
                 clear_output()
@@ -106,16 +121,16 @@ def widget_search_potentials(self):
             # Update potential output
             with potential_output:
                 clear_output()
-                display(HTML(potential.html()))
+                potential.html(render=True)
 
     # Tie potential widget to above function
     potential_dropdown.observe(display_selected_potential, 'value')
 
     # Display widgets and output
-    display(element1_dropdown, element2_dropdown, element3_dropdown,
+    display(header1_output, element1_dropdown, element2_dropdown, element3_dropdown,
             year_dropdown, author_text, potential_dropdown, potential_output)
 
-def widget_lammps_potential(self, results=None):
+def widget_lammps_potential(self, lammps_potentials=None, lammps_potentials_df=None, results=None):
     """
     Builds ipywidgets for selecting a LAMMPS implemented potential from the
     database, downloading the files, and displaying the LAMMPS commands
@@ -131,20 +146,26 @@ def widget_lammps_potential(self, results=None):
     if results is None:
         results = {}
 
-    if self.lammps_potentials_df is None:
-        self.load_lammps_potentials()
+    # Build lammps_potentials and/or lammps_potentials_df if needed
+    if lammps_potentials is None:
+        lammps_potentials, lammps_potentials_df = self.get_lammps_potentials(return_df=True)
+    elif lammps_potentials_df is None:
+        lammps_potentials_df = []
+        for potential in lammps_potentials:
+            lammps_potentials_df.append(potential.metadata())
+        lammps_potentials_df = pd.DataFrame((lammps_potentials_df))
     
     # Build list of all unique pair_styles
-    unique_pair_styles = [''] + list(np.unique(self.lammps_potentials_df.pair_style))
+    unique_pair_styles = [''] + list(np.unique(lammps_potentials_df.pair_style))
 
     # Build list of all unique elements
     unique_elements = set()
-    for elements in self.lammps_potentials_df.elements.values:
+    for elements in lammps_potentials_df.elements.values:
         unique_elements.update(elements)
     unique_elements = [''] + sorted(list(unique_elements))
     
     # Build list of all potential ids
-    potential_ids = self.lammps_potentials_df.id.tolist()
+    potential_ids = lammps_potentials_df.id.tolist()
 
     # Create selection widgets
     element1_dropdown = widgets.Dropdown(options=unique_elements, description='Element1:')
@@ -189,11 +210,11 @@ def widget_lammps_potential(self, results=None):
         if pair_style == '':
             pair_style = None
 
-        # Call search_potentials with author, year, elements
-        potentials = self.get_lammps_potentials(pair_style=pair_style, elements=elements)
+        # Parse for pair_style and elements
+        matches = lammps_potentials_df[PotentialLAMMPS.pandasfilter(lammps_potentials_df, pair_style=pair_style, elements=elements)]
         
         # Update potential dropdown accordingly
-        potential_dropdown.options = [pot.id for pot in potentials]
+        potential_dropdown.options = matches.id.tolist()
 
     # Tie elements, year and text widgets to above function
     element1_dropdown.observe(update_potential_dropdown_options, 'value')
@@ -206,7 +227,7 @@ def widget_lammps_potential(self, results=None):
         
         # Select potential based on dropdown value
         try:
-            potential = self.get_lammps_potential(id=potential_dropdown.value)
+            potential = lammps_potentials[lammps_potentials_df.id == potential_dropdown.value][0]
         except:
             download_button.disabled = True
             with download_output:
@@ -224,9 +245,7 @@ def widget_lammps_potential(self, results=None):
     def download_action(change=None):
         with download_output:
             clear_output()
-            potential = self.get_lammps_potential(id = potential_dropdown.value, getfiles=True)
-            results['lammps_potential'] = potential
-            print(f'Parameter files copied/downloaded to {Path(potential.id)}')
+            results['lammps_potential'].download_files(verbose=True)
     download_button.on_click(download_action)
 
     # Display widgets and output

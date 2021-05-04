@@ -1,4 +1,4 @@
-from .build import (EamBuilder, EimBuilder, KimBuilder, LibParamBuilder,
+from .build import (EamBuilder, EimBuilder, LibParamBuilder,
                PairBuilder, ParamFileBuilder)
 
 def build_lammps_potential(pair_style, **kwargs):
@@ -15,7 +15,7 @@ def build_lammps_potential(pair_style, **kwargs):
     """
     
     subclasses = [PairBuilder, ParamFileBuilder, LibParamBuilder, 
-                  EamBuilder, EimBuilder, KimBuilder]
+                  EamBuilder, EimBuilder]
     # Strip acceleration tags
     gputags = ['gpu', 'intel', 'kk', 'omp', 'opt']
     terms = pair_style.split('/')

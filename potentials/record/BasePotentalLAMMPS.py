@@ -2,23 +2,21 @@
 # Standard Python libraries
 import sys
 from pathlib import Path
-import warnings
 
 # https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
-# https://requests.readthedocs.io/en/master/
-import requests
+from datamodelbase.record import Record
+from datamodelbase import query
 
 # atomman imports
-from .tools import atomic_mass, aslist, uber_open_rmode
-from . import Artifact
+from ..tools import aslist
 
-class BasePotentialLAMMPS():
+class BasePotentialLAMMPS(Record):
     """
     Base parent class for PotentialLAMMPS objects
     """
-    def __init__(self, model, **kwargs):
+    def __init__(self, model, name=None, **kwargs):
         """
         Initializes an instance and loads content from a data model.
         
@@ -30,20 +28,11 @@ class BasePotentialLAMMPS():
             Any other keyword parameters supported by the child class
         """
         # Check if base class is initialized directly
-        self.__module_name = sys.modules[self.__module__].__name__
-        if self.__module_name == 'potentials.BasePotentialLAMMPS':
-            raise TypeError("Don't use the base class")
+        if self.__module__ == __name__:
+            raise TypeError("Don't use base class")
         
         # Pass parameters to load
-        self.load(model, **kwargs)
-
-    def __str__(self):
-        """str: The string of the Potential returns its human-readable id"""
-        if self.id is not None:
-            return self.id
-        else:
-            classname = self.__module_name.split('.')[-1]
-            return f'Unnamed {classname}'
+        self.load_model(model, name=name, **kwargs)
 
     @property
     def id(self):
@@ -94,18 +83,7 @@ class BasePotentialLAMMPS():
         """str : Indicates the status of the implementation (active, superseded, retracted)"""
         return self._status
 
-    @property
-    def model(self):
-        """DataModelDict.DataModelDict : The loaded data model content"""
-        return self.__model
-
-    @property
-    def modelroot(self):
-        """str : The root element for the associated data model"""
-        raise NotImplementedError("Not defined for the base class")
-
-
-    def load(self, model, **kwargs):
+    def load_model(self, model, name=None, **kwargs):
         """
         Loads data model info associated with a LAMMPS potential.
         
@@ -116,27 +94,35 @@ class BasePotentialLAMMPS():
         **kwargs : any, optional
             Any other keyword parameters supported by the child class
         """
-        # Load model and find model root
-        self.__model = DM(model).find(self.modelroot)
+        # Load model
+        super().load_model(model, name=name)
 
-        self._id = self.model['id']
-        self._key = self.model['key']
+        # Extract values from model
+        pot = self.model[self.modelroot]
+
+        self._id = pot['id']
         try:
-            self._potid = self.model['potential']['id']
+            self.name
+        except:
+            self.name = self.id
+
+        self._key = pot['key']
+        try:
+            self._potid = pot['potential']['id']
         except:
             self._potid = None
         try:
-            self._potkey = self.model['potential']['key']
+            self._potkey = pot['potential']['key']
         except:
             self._potkey = None
-        self._units = self.model.get('units', 'metal')
-        self._atom_style = self.model.get('atom_style', 'atomic')
+        self._units = pot.get('units', 'metal')
+        self._atom_style = pot.get('atom_style', 'atomic')
         try:
-            self._pair_style = self.model['pair_style']['type']
+            self._pair_style = pot['pair_style']['type']
         except:
             self._pair_style = None
 
-        allsymbols = self.model.get('allsymbols', False)
+        allsymbols = pot.get('allsymbols', False)
         if isinstance(allsymbols, bool):
             self._allsymbols = allsymbols
         elif allsymbols.lower() == 'true':
@@ -146,10 +132,11 @@ class BasePotentialLAMMPS():
         else:
             raise ValueError(f'Invalid allsymbols value "{allsymbols}"')
 
-        self._status = self.model.get('status', 'active')
+        self._status = pot.get('status', 'active')
 
         self._symbols = []
         self._elements = []
+
 
     def normalize_symbols(self, symbols):
         """
@@ -213,9 +200,10 @@ class BasePotentialLAMMPS():
         
         return elements
 
-    def asdict(self):
+    def metadata(self):
         """Returns a flat dict of the metadata fields"""
         d = {}
+        d['name'] = self.name
         d['id'] = self.id
         d['key'] = self.key
         d['potid'] = self.potid
@@ -230,8 +218,29 @@ class BasePotentialLAMMPS():
 
         return d
 
-    def asmodel(self):
-        return DM([(self.modelroot, self.model)])
+    @staticmethod
+    def pandasfilter(dataframe, name=None, key=None, id=None,
+                     potid=None, potkey=None, units=None,
+                     atom_style=None, pair_style=None, status=None,
+                     symbols=None, elements=None):
+        
+        matches = (
+            query.str_match.pandas(dataframe, 'name', name)
+            &query.str_match.pandas(dataframe, 'key', key)
+            &query.str_match.pandas(dataframe, 'id', id)
+            &query.str_match.pandas(dataframe, 'potkey', potkey)
+            &query.str_match.pandas(dataframe, 'potid', potid)
+            &query.str_match.pandas(dataframe, 'units', units)
+            &query.str_match.pandas(dataframe, 'atom_style', atom_style)
+            &query.str_match.pandas(dataframe, 'pair_style', pair_style)
+            &query.str_match.pandas(dataframe, 'status', status)
+            &query.in_list.pandas(dataframe, 'symbols', symbols)
+            &query.in_list.pandas(dataframe, 'elements', elements)
+        )
+        return matches
+
+    def build_model(self):
+        return self.model
 
     def pair_info(self, symbols=None, masses=None, prompt=True):
         """
@@ -303,7 +312,5 @@ class BasePotentialLAMMPS():
         """
         raise NotImplementedError('Needs to be defined by the child class')
 
-
-
     def pair_restart_info(self):
-        pass
+        raise NotImplementedError('Needs to be defined by the child class')

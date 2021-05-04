@@ -1,9 +1,12 @@
 # Standard Python libraries
 from pathlib import Path
 import json
+from copy import deepcopy
 
 # potentials imports
 from .tools import screen_input
+
+__all__ = ['settings']
 
 class Settings():
     """
@@ -46,6 +49,21 @@ class Settings():
             return Path(self.directory, 'library')
 
     @property
+    def remote(self):
+        """The default value for the database initialization parameter 'remote'"""
+        return self.__content.get('remote', True)
+
+    @property
+    def local(self):
+        """The default value for the database initialization parameter 'local'"""
+        return self.__content.get('local', True)
+
+    @property
+    def pot_dir_style(self):
+        """The default value for 'pot_dir_style' used when loading LAMMPS potentials."""
+        return self.__content.get('pot_dir_style', 'working')
+
+    @property
     def kim_api_directory(self):
         """pathlib.Path : Path to the directory containing the kim-api."""
         
@@ -54,6 +72,11 @@ class Settings():
             return Path(self.__content['kim_api_directory'])
         else:
             return None
+
+    @property
+    def kim_models_file(self):
+        """pathlib.Path : Path to the default KIM models file."""
+        return Path(self.directory, 'kim_models.txt')
 
     def load(self):
         """
@@ -210,53 +233,6 @@ class Settings():
             # Save changes
             self.save()
 
-    def set_kim_api_directory(self, path=None):
-        """
-        Sets the default kim api directory.
-
-        Parameters
-        ----------
-        path : str or Path
-            The path to the directory containing the kim api version to set as
-            the default.  If not given, will be asked for in a prompt.
-        """
-        # Check if a different directory has already been set
-        if 'kim_api_directory' in self.__content:
-            print(f'kim api directory already set to {self.kim_api_directory}')
-            option = screen_input('Overwrite? (yes or no):')
-            if option.lower() in ['yes', 'y']:
-                pass
-            elif option.lower() in ['no', 'n']: 
-                return None
-            else: 
-                raise ValueError('Invalid choice')
-        
-        # Ask for path if not given
-        if path is None:
-            path = screen_input("Enter the path for the kim api directory:")
-        self.__content['kim_api_directory'] = Path(path).resolve().as_posix()
-
-        # Save changes
-        self.save()
-        
-    def unset_kim_api_directory(self):
-        """
-        Removes the saved kim api directory information.
-        """
-        
-        # Check if kim_api_directory has been set
-        if 'kim_api_directory' not in self.__content:
-            print(f'kim api directory not set')
-        
-        else:
-            print(f'Remove kim api directory {self.kim_api_directory}?')
-            test = screen_input('Delete settings? (must type yes):').lower()
-            if test == 'yes':
-                del self.__content['kim_api_directory']
-
-            # Save changes
-            self.save()
-
     def set_remote(self, flag=None):
         """
         Sets the default value for the database initialization parameter
@@ -313,12 +289,252 @@ class Settings():
         # Save changes
         self.save()
 
-    @property
-    def remote(self):
-        """The default value for the database initialization parameter 'remote'"""
-        return self.__content.get('remote', True)
+    def set_pot_dir_style(self, value=None):
+        """
+        Sets the default pot_dir_style option.
+
+        Parameters
+        ----------
+        value : str
+            Specifies which pot_dir_style is to be the default.  Allowed values
+            are 'working', 'id', and 'local'. 'working' will set all pot_dir = '',
+            meaning parameter files are expected in the working directory when the
+            potential is accessed. 'id' sets the pot_dir values to match the
+            potential's id. 'local' sets the pot_dir values to the corresponding
+            local database paths where the files are expected to be found.
+            If not given, will be asked for in a prompt.
+        """
+        # Ask for value if not given
+        if value is None:
+            print("Select the pot_dir style option to set as default")
+            print("1. working")
+            print("2. id")
+            print("3. local")
+            value = screen_input(":")
+            try:
+                c = int(value)
+            except:
+                pass
+            else:
+                if c < 1 or c > 3:
+                    raise ValueError('Invalid selection')
+                value = ['working', 'id', 'local'][c-1]
+        
+        if value not in ['working', 'id', 'local']:
+            raise ValueError('Invalid pot_dir_style value: allowed values are "working", "id" and "local"')
+
+        self.__content['pot_dir_style'] = value
+
+        # Save changes
+        self.save()
+
+    def set_kim_api_directory(self, path=None):
+        """
+        Sets the default kim api directory.
+
+        Parameters
+        ----------
+        path : str or Path
+            The path to the directory containing the kim api version to set as
+            the default.  If not given, will be asked for in a prompt.
+        """
+        # Check if a different directory has already been set
+        if 'kim_api_directory' in self.__content:
+            print(f'kim api directory already set to {self.kim_api_directory}')
+            option = screen_input('Overwrite? (yes or no):')
+            if option.lower() in ['yes', 'y']:
+                pass
+            elif option.lower() in ['no', 'n']: 
+                return None
+            else: 
+                raise ValueError('Invalid choice')
+        
+        # Ask for path if not given
+        if path is None:
+            path = screen_input("Enter the path for the kim api directory:")
+        self.__content['kim_api_directory'] = Path(path).resolve().as_posix()
+
+        # Save changes
+        self.save()
+        
+    def unset_kim_api_directory(self):
+        """
+        Removes the saved kim api directory information.
+        """
+        
+        # Check if kim_api_directory has been set
+        if 'kim_api_directory' not in self.__content:
+            print(f'kim api directory not set')
+        
+        else:
+            print(f'Remove kim api directory {self.kim_api_directory}?')
+            test = screen_input('Delete settings? (must type yes):').lower()
+            if test == 'yes':
+                del self.__content['kim_api_directory']
+
+            # Save changes
+            self.save()
+
+    def set_kim_models(self, kim_models, kim_models_file=None):
+        """
+        Saves a default list of kim models.
+
+        Parameters
+        ----------
+        kim_models : list
+            The list of full kim ids to save.
+        kim_models_file : path-like object, optional
+            The path to the file to save the list of kim models to.  If not
+            given, will use the default file location in the settings
+            directory.
+        """
+        
+        if kim_models_file is None:
+            kim_models_file = self.kim_models_file
+            
+        if kim_models_file.is_file():
+            print('kim models file already exists.')
+            option = screen_input('Overwrite? (yes or no):')
+            if option.lower() in ['yes', 'y']:
+                pass
+            elif option.lower() in ['no', 'n']: 
+                return None
+            else: 
+                raise ValueError('Invalid choice')
+        
+        with open(kim_models_file, 'w') as f:
+            for fullid in kim_models:
+                f.write(f'{fullid}\n')
+
+    def unset_kim_models(self):
+        """
+        Removes the default list of kim models.
+        """
+        if not self.kim_models_file.is_file():
+            print(f'List of kim models not set')
+        else:
+            print(f'Remove the list of kim models?')
+            test = screen_input('Delete settings? (must type yes):').lower()
+            if test == 'yes':
+                self.kim_models_file.unlink()
 
     @property
-    def local(self):
-        """The default value for the database initialization parameter 'local'"""
-        return self.__content.get('local', True)
+    def databases(self):
+        """dict: The pre-defined database settings organized by name"""
+        if 'iprPy_database' not in self.__content:
+            self.__content['iprPy_database'] = {}
+        return deepcopy(self.__content['iprPy_database'])
+
+    @property
+    def list_databases(self):
+        """list: The names of the pre-defined database names"""
+        return list(self.databases.keys())
+
+    def set_database(self, name=None, style=None, host=None, **kwargs):
+        """
+        Allows for database information to be defined in the settings file. Screen
+        prompts will be given to allow any necessary database parameters to be
+        entered.
+
+        Parameters
+        ----------
+        name : str, optional
+            The name to assign to the database. If not given, the user will be
+            prompted to enter one.
+        style : str, optional
+            The database style associated with the database. If not given, the
+            user will be prompted to enter one.
+        host : str, optional
+            The database host (directory path or url) where the database is
+            located. If not given, the user will be prompted to enter one.
+        **kwargs : any, optional
+            Any other database style-specific parameter settings required to
+            properly access the database.
+        """
+        # Ask for name if not given
+        if name is None:
+            name = screen_input('Enter a name for the database:')
+
+        # Load database if it exists
+        if name in self.list_databases:
+            
+           # Ask if existing database should be overwritten
+            print(f'Database {name} already defined.')
+            option = screen_input('Overwrite? (yes or no):')
+            if option.lower() in ['yes', 'y']:
+                pass
+            elif option.lower() in ['no', 'n']: 
+                return None
+            else: 
+                raise ValueError('Invalid choice')
+                 
+        # Create database entry
+        self.__content['iprPy_database'][name] = entry = {} 
+            
+        # Ask for style if not given
+        if style is None: 
+            style = screen_input("Enter the database's style:")
+        entry['style'] = style
+
+        #Ask for host if not given
+        if host is None:
+            host = screen_input("Enter the database's host:")
+        entry['host'] = str(host)
+
+        # Ask for additional kwargs if not given
+        if len(kwargs) == 0:
+            print('Enter any other database parameters as key, value')
+            print('Exit by leaving key blank')
+            while True:
+                key = screen_input('key:')
+                if key == '': 
+                    break
+                kwargs[key] = screen_input('value:')
+        for key, value in kwargs.items():
+            entry[key] = value
+
+        # Save changes
+        self.save()
+    
+    def unset_database(self, name=None):
+        """
+        Deletes the settings for a pre-defined database from the settings file.
+
+        Parameters
+        ----------
+        name : str
+            The name assigned to a pre-defined database.
+        """
+        database_names = self.list_databases
+                  
+        # Ask for name if not given
+        if name is None:
+            
+            if len(database_names) > 0:
+                print('Select a database:')
+                for i, database in enumerate(database_names):
+                    print(i+1, database)
+                choice = screen_input(':')
+                try:
+                    choice = int(choice)
+                except:
+                    name = choice
+                else:
+                    name = database_names[choice-1]
+            else:
+                print('No databases currently set')
+                return None
+
+        # Verify listed name exists 
+        try:
+            i = database_names.index(name)
+        except:
+            raise ValueError(f'Database {name} not found')
+
+        print(f'Database {name} found')
+        test = screen_input('Delete settings? (must type yes):').lower()
+        if test == 'yes':
+            del(self.__content['iprPy_database'][name])
+            self.save()
+
+settings = Settings()

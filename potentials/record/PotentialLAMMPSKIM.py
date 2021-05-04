@@ -5,15 +5,19 @@ import warnings
 import numpy as np
 
 # atomman imports
-from .tools import atomic_mass, aslist
+from ..tools import atomic_mass, aslist
 from .BasePotentalLAMMPS import BasePotentialLAMMPS
+
+from datamodelbase import query
+
+modelroot = 'potential-LAMMPS-KIM'
 
 class PotentialLAMMPSKIM(BasePotentialLAMMPS):
     """
     Class for building LAMMPS input lines from a potential-LAMMPS-KIM data model.
     """
     
-    def __init__(self, model, id=None):
+    def __init__(self, model, name=None, id=None):
         """
         Initializes an instance and loads content from a data model.
         
@@ -25,14 +29,34 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             The full KIM model id indicating the version to use.  If not given,
             then the newest known version will be used.
         """
-        super().__init__(model, id=id)
+        super().__init__(model, name=None, id=id)
     
+    @property
+    def style(self):
+        """str: The record style"""
+        return 'potential_LAMMPS_KIM'
+
+    @property
+    def id(self):
+        return self._id
+
+    @id.setter
+    def id(self, value):
+        if self.shortcode in value:
+            self._id = value
+        else:
+            raise ValueError('id must contain the correct model shortcode')
+
+    @property
+    def shortcode(self):
+        return self.__shortcode
+
     @property
     def modelroot(self):
         """str : The root element for the associated data model"""
-        return 'potential-LAMMPS-KIM'
+        return modelroot
 
-    def load(self, model, id=None):
+    def load_model(self, model, name=None, id=None):
         """
         Loads data model info associated with a LAMMPS potential.
         
@@ -45,16 +69,18 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             then the newest known version will be used.
         """
         # Call parent load to read model and some parameters
-        super().load(model)
-        self._id = self.model['id']
-        # Change id to full id
-        if id is None:
-            # Get last known id
-            self._id = self.model.aslist('full-kim-id')[-1]
+        super().load_model(model, name=name)
+        kimpot = self.model[self.modelroot]
+        
+        # Handle shortcode, id and name identifiers
+        self.__shortcode = kimpot['id']
+        if id is not None:
+            self.id = id
         else:
-            shortcode = self.id
-            assert shortcode in id, 'model shortcode not in id'
-            self._id = id
+            # Get last known id
+            self.id = kimpot.aslist('full-kim-id')[-1]
+        if self.name is None:
+            self.name = self.shortcode
         
         # Explicitly set pair_style
         self._pair_style = 'kim'
@@ -69,7 +95,7 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         self._fullcharges = []
         
         # Loop over associated potentials
-        for pot in self.model.aslist('potential'):
+        for pot in kimpot.aslist('potential'):
             self._potkeys.append(pot['key'])
             self._potids.append(pot['id'])
             
@@ -116,6 +142,61 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         else:
             self._potkey = None
             self._potid = None
+
+    @staticmethod
+    def mongoquery(name=None, key=None, id=None,
+                     potid=None, potkey=None, units=None,
+                     atom_style=None, pair_style=None, status=None,
+                     symbols=None, elements=None):
+        
+        # Return bad query if pair_style kim not included
+        if pair_style is not None and 'kim' not in aslist(pair_style):
+            return {"not.kim.pair_style":"get nothing"}
+        
+        mquery = {}
+        query.str_match.mongo(mquery, f'name', name)
+
+        root = f'content.{modelroot}'
+        query.str_match.mongo(mquery, f'{root}.key', key)
+        query.str_match.mongo(mquery, f'{root}.id', id)
+        query.str_match.mongo(mquery, f'{root}.potential.id', potid)
+        query.str_match.mongo(mquery, f'{root}.potential.key', potkey)
+
+        if status is not None:
+            status = aslist(status)
+            if 'active' in status:
+                status.append(None)
+
+        query.str_match.mongo(mquery, f'{root}.status', status)
+        
+        return mquery
+
+    @staticmethod
+    def cdcsquery(key=None, id=None, potid=None, potkey=None,
+                  units=None, atom_style=None, pair_style=None, status=None,
+                  symbols=None, elements=None):
+        
+        #  Return bad query if pair_style kim not included
+        if pair_style is not None and 'kim' not in aslist(pair_style):
+            return {"not.kim.pair_style":"get nothing"}
+
+        mquery = {}
+        root = modelroot
+
+        query.str_match.mongo(mquery, f'{root}.key', key)
+        query.str_match.mongo(mquery, f'{root}.id', id)
+        query.str_match.mongo(mquery, f'{root}.potential.id', potid)
+        query.str_match.mongo(mquery, f'{root}.potential.key', potkey)
+
+        if status is not None:
+            status = aslist(status)
+            if 'active' in status:
+                status.append(None)
+
+        query.str_match.mongo(mquery, f'{root}.status', status)
+
+        return mquery
+
 
     @property
     def symbolsets(self):
