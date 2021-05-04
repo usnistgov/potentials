@@ -70,21 +70,18 @@ Implemented
 - Classes for interacting with FAQ, Requests, and Action records used by the
   Interatomic Potentials Repository.
 
-To do
-`````
-- Entries for OpenKIM potentials need to be removed from the data directory
-  and merged with the remote database entries.
+
 
 .. _NIST Interatomic Potentials Repository: https://www.ctcms.nist.gov/potentials/
 .. _https://potentials.nist.gov/: https://potentials.nist.gov/
 
-.. _Search Potential Entries.ipynb: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Search%20Potential%20Entries.ipynb
+.. _Search Potential Entries.ipynb: https://colab.research.google.com/github/usnistgov/potentials/blob/master/doc/Search%20Potential%20Entries.ipynb
 .. |colab1| image:: https://colab.research.google.com/assets/colab-badge.svg
  #
  :alt: colab logo
  :target: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Search%20Potential%20Entries.ipynb
 
-.. _Search LAMMPS Potentials.ipynb: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Search%20LAMMPS%20Potentials.ipynb
+.. _Search LAMMPS Potentials.ipynb: https://colab.research.google.com/github/usnistgov/potentials/blob/master/doc/Search%20LAMMPS%20Potentials.ipynb
 .. |colab2| image:: https://colab.research.google.com/assets/colab-badge.svg
  #
  :alt: colab logo
