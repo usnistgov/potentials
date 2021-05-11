@@ -4,7 +4,7 @@ from pathlib import Path
 from .. import settings
 from ..tools import aslist
 
-from datamodelbase import load_database
+from .load_database import load_database
 
 class Database():
     """
@@ -31,46 +31,54 @@ class Database():
 
     from ._widgets import (widget_search_potentials, widget_lammps_potential)
 
-    def __init__(self, host=None, username=None, password=None, cert=None, verify=None,
-                 localpath=None, format='json', indent=4,
-                 verbose=False, local=None, remote=None, 
+    def __init__(self, local=None, remote=None, localpath=None,
+                 local_name=None, local_style=None, local_host=None, local_terms=None,
+                 remote_name=None, remote_style=None, remote_host=None, remote_terms=None, 
                  kim_models=None, kim_api_directory=None, kim_models_file=None):
         """
         Class initializer
 
         Parameters
         ----------
-        host : str, optional
-            Remote CDCS site to access.  Default value is 'https://potentials.nist.gov/'.
-        username : str, optional 
-            User name to use to access the remote site.  Default value of '' will
-            access the site as an anonymous visitor.
-        password : str, optional
-            Password associated with the given username.  Not needed for
-            anonymous access.
-        cert : str or tuple, optional
-            File path(s) to certification file(s) if needed for host.
-        verify: bool or str, optional
-            Verification options.  If not given, will default to True if cert
-            is given and False if cert is not given.
-        localpath : str, optional
-            Path to the local directory to use for the local database location.
-            If not given, will use the library_directory setting.
-        format : str, optional
-            The file format to use for saving records to the local location.
-            Allowed values are 'json' or 'xml'.  If not given, will use the
-            library_format setting.
-        indent : str, optional
-            The indentation style to use for saving records to the local
-            database location.  If not given, will use the library_indent setting.
         local : bool, optional
-            Indicates if the load operations will check localpath for records.
-            Default value is controlled by settings.  If False, then localpath,
-            format and indent values are ignored.
+            Indicates if the load operations will check for local records.
+            Default value is controlled by settings.  If False, then the local
+            interactions will not be set.
         remote : bool, optional
-            Indicates if the load operations will download records from the
-            remote database.  Default value is controlled by settings.  If False,
-            then host, username, password, cert and verify values are ignored.
+            Indicates if the load operations will check for remote records.
+            Default value is controlled by settings.  If False, then the remote
+            interactions will not be set.
+
+        localpath : str, optional
+            The path to a directory where a local-style directory is to be
+            found. This is an alias for local_host, with a local_style of
+            "local" and is only retained for backwards compatibility.
+        local_name : str, optional
+            The name assigned to a pre-defined database to use for the local
+            interactions.  Cannot be given with local_style, local_host or
+            local_terms.
+        local_style : str, optional
+            The database style to use for the local interactions.
+        local_host : str, optional
+            The URL/file path where the local database is hosted.
+        local_terms : dict, optional
+            Any other keyword parameters defining necessary access/settings
+            information for using the local database.  Allowed keywords are
+            database style-specific.
+        
+        remote_name : str, optional
+            The name assigned to a pre-defined database to use for the remote
+            interactions.  Cannot be given with remote_style, remote_host or
+            remote_terms.
+        remote_style : str, optional
+            The database style to use for the remote interactions.
+        remote_host : str, optional
+            The URL/file path where the remote database is hosted.
+        remote_terms : dict, optional
+            Any other keyword parameters defining necessary access/settings
+            information for using the remote database.  Allowed keywords are
+            database style-specific.
+
         kim_models : str or list, optional
             Allows for the list of installed_kim_models to be explicitly given.
             Cannot be given with the other parameters.
@@ -78,17 +86,7 @@ class Database():
             The directory containing the kim api to use to build the list.
         kim_models_file : path-like object, optional
             The path to a whitespace-delimited file listing full kim ids.
-        pot_dir_style : str, optional
-            Specifies how the pot_dir values will be set for the loaded lammps
-            potentials.  Allowed values are 'working', 'id', and 'local'.
-            'working' will set all pot_dir = '', meaning parameter files
-            are expected in the working directory when the potential is accessed.
-            'id' sets the pot_dir values to match the potential's id.
-            'local' sets the pot_dir values to the corresponding local database
-            paths where the files are expected to be found.  Default value is
-            controlled by settings.
         """
-
 
         # Handle local/remote settings
         if local is None:
@@ -102,14 +100,18 @@ class Database():
 
         # set database interactions
         if remote:
-            self.set_remote_database(host=host,
-                                     username=username, password=password,
-                                     cert=cert, verify=verify)
+            if remote_terms is None:
+                remote_terms = {}
+            self.set_remote_database(name=remote_name, style=remote_style, 
+                                     host=remote_host, **remote_terms)
         else:
             self.__remote_database = None
         
         if local:
-            self.set_local_database(localpath=localpath, format=format, indent=indent)
+            if local_terms is None:
+                local_terms = {}
+            self.set_local_database(name=local_name, style=local_style, 
+                                     host=local_host, **local_terms)
         else:
             self.__local_database = None
         
@@ -137,68 +139,77 @@ class Database():
         """bool : Indicates if load operations will check remote database"""
         return self.__remote
 
-    def set_remote_database(self, host=None, username=None, password=None,
-                            cert=None, verify=None):
+    def set_remote_database(self, name=None, style=None, host=None, **kwargs):
         """
-        Sets or changes the remote database settings.
+        Sets the remote database to interact with.  If no parameters are given,
+        will load settings for "remote" database if they have been saved, or will
+        otherwise access potentials.nist.gov as an anonymous user.
 
         Parameters
         ----------
+        name : str, optional
+            The name assigned to a pre-defined database.  If given, can be the only
+            parameter.
+        style : str, optional
+            The database style to use.
         host : str, optional
-            Remote CDCS site to access.  Default value is 'https://potentials.nist.gov/'.
-        username : str, optional 
-            User name to use to access the remote site.  Default value of '' will
-            access the site as an anonymous visitor.
-        password : str, optional
-            Password associated with the given username.  Not needed for
-            anonymous access.
-        cert : str or tuple, optional
-            File path(s) to certification file(s) if needed for host.
-        verify: bool or str, optional
-            Verification options.  If not given, will default to True if cert
-            is given and False if cert is not given.
+            The URL/file path where the database is hosted.
+        kwargs : dict, optional
+            Any other keyword parameters defining necessary access information.
+            Allowed keywords are database style-specific.
         """
-        # Set default database parameters
-        if host is None:
-            host = 'https://potentials.nist.gov/'
-        if username is None:
-            username = ''
-        
-        if verify is None:
-            if cert is None:
-                verify = False
+        if name is None and style is None and host is None:
+            if 'remote' in settings.list_databases:
+                self.__remote_database = load_database(name='remote')
             else:
-                verify = True
+                kwargs['username'] = kwargs.get('username', '')
+                self.__remote_database = load_database(style='cdcs',
+                                                       host='https://potentials.nist.gov/',
+                                                       **kwargs)
+        else:
+            self.__remote_database = load_database(name=name, style=style, host=host, **kwargs)
 
-        self.__remote_database = load_database(style='cdcs', host=host,
-                                               username=username, password=password,
-                                               cert=cert, verify=verify)
-
-    def set_local_database(self, localpath=None, format=None, indent=None):
+    def set_local_database(self, localpath=None, name=None, style=None,
+                           host=None, **kwargs):
         """
-        Sets or changes the local database settings.
+        Sets the local database to interact with.  If no parameters are given,
+        will load settings for "local" database if they have been saved, or will
+        otherwise use a local directory inside the default settings directory.
 
         Parameters
         ----------
+        name : str, optional
+            The name assigned to a pre-defined database.  If given, can be the only
+            parameter.
+        style : str, optional
+            The database style to use.
+        host : str, optional
+            The URL/file path where the database is hosted.
         localpath : str, optional
-            Path to the local directory to use for the local database location.
-            If not given, will use the library_directory setting.
-        format : str, optional
-            The file format to use for saving records to the local location.
-            Allowed values are 'json' or 'xml'.  If not given, will use the
-            library_format setting.
-        indent : str, optional
-            The indentation style to use for saving records to the local
-            database location.  If not given, will use the library_indent setting.
+            The path to a directory where a local-style directory is to be found.
+            This is an alias for host, with a style of "local" and is only retained
+            for backwards compatibility.
+        kwargs : dict, optional
+            Any other keyword parameters defining necessary access information.
+            Allowed keywords are database style-specific.
         """
-        # Define class attributes
-        if localpath is None:
-            localpath = settings.library_directory
-        else:
-            localpath = Path(localpath)
+        # Handle old localpath
+        if localpath is not None:
+            assert host is None, 'host and localpath cannot both be given'
+            assert style is None or style == 'local', 'localpath is associated with style "local"'
+            host = localpath
+            style = 'local'
 
-        self.__local_database = load_database(style='local', host=localpath,
-                                              format=format, indent=indent)
+        if name is None and style is None and host is None:
+            
+            if 'local' in settings.list_databases:
+                self.__local_database = load_database(name='local')
+            else:
+                self.__local_database = load_database(style='local',
+                                                      host=Path(settings.directory, 'library'), 
+                                                      **kwargs)
+        else:
+            self.__local_database = load_database(name=name, style=style, host=host, **kwargs)
 
     def download_all(self, status=None, downloadfiles=True, overwrite=False,
                      verbose=False):
