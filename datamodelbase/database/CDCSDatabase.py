@@ -120,10 +120,13 @@ class CDCSDatabase(Database):
         records = np.array(records)
 
         # Build df
-        df = []
-        for record in records:
-            df.append(record.metadata())
-        df = pd.DataFrame(df)
+        if len(records) > 0:
+            df = []
+            for record in records:
+                df.append(record.metadata())
+            df = pd.DataFrame(df)
+        else:
+            df = pd.DataFrame({'name':[]})
 
         # Sort by name
         df = df.sort_values('name')
@@ -207,7 +210,7 @@ class CDCSDatabase(Database):
             raise ValueError('Multiple matching records found')
     
     def add_record(self, record=None, style=None, name=None, model=None,
-                   workspace=None):
+                   workspace=None, verbose=False):
         """
         Adds a new record to the database.  Will issue an error if a 
         matching record already exists in the database.
@@ -226,6 +229,10 @@ class CDCSDatabase(Database):
         model : str, optional
             The xml content of the new record.  Required if record is not
             given.
+        workspace : str or pandas.Series, optional
+            The name of a workspace to assign the record to.  If not given
+            then the record is not assigned to a workspace and will only be
+            accessible to the user who uploaded it.
             
         Returns
         ------
@@ -250,12 +257,17 @@ class CDCSDatabase(Database):
             
         # Upload record to database
         self.cdcs.upload_record(template=record.style, content=record.build_model().xml(),
-                                title=record.name, workspace=workspace)
-        
+                                title=record.name)
+        if verbose:
+            print(f'{record} added to {self.host}')
+
+        if workspace is not None:
+            self.assign_records(record, workspace, verbose=verbose)
+
         return record
     
     def update_record(self, record=None, style=None, name=None, model=None,
-                      workspace=None):
+                      workspace=None, verbose=False):
         """
         Replaces an existing record with a new record of matching name and 
         style, but new content.  Will issue an error if exactly one 
@@ -276,6 +288,10 @@ class CDCSDatabase(Database):
         model : str, optional
             The new xml content to use for the record.  Required if record is
             not given.
+        workspace : str or pandas.Series, optional
+            The name of a workspace to assign the record to.  If not given
+            then the record is not assigned to a workspace and will only be
+            accessible to the user who uploaded it.
             
         Returns
         ------
@@ -309,11 +325,17 @@ class CDCSDatabase(Database):
         
         # Upload record to database
         self.cdcs.update_record(template=record.style, content=record.build_model().xml(),
-                                title=record.name, workspace=workspace)
+                                title=record.name)
         
+        if verbose:
+            print(f'{record} updated in {self.host}')
+
+        if workspace is not None:
+            self.assign_records(record, workspace, verbose=verbose)
+
         return record
     
-    def delete_record(self, record=None, name=None, style=None):
+    def delete_record(self, record=None, name=None, style=None, verbose=False):
         """
         Permanently deletes a record from the database.  Will issue an error 
         if exactly one matching record is not found in the database.
@@ -343,7 +365,31 @@ class CDCSDatabase(Database):
          
         # Delete record
         self.cdcs.delete_record(template=style, title=name)
-    
+
+        if verbose:
+            print(f'{record} deleted from {self.host}')
+
+    def assign_records(self, records, workspace, verbose=False):
+        """
+        Assigns one or more records to a CDCS workspace.
+
+        Parameters
+        ----------
+        records : iprPy.Record or list
+            The record(s) to assign to the workspace.
+        workspace : str
+            The workspace to assign the records to.
+        verbose : bool, optional
+            Setting this to True will print extra status messages.  Default
+            value is False.
+        """
+        ids = []
+        for record in aslist(records):
+            self.cdcs.assign_records(workspace, template=record.style,
+                                     title=record.name)
+            if verbose:
+                print(f'{record} assigned to workspace {workspace}')
+
     def add_tar(self, record=None, name=None, style=None, tar=None, root_dir=None):
         """
         Archives and stores a folder associated with a record.  Issues an

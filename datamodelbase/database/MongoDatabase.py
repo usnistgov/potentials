@@ -184,7 +184,7 @@ class MongoDatabase(Database):
         else:
             raise ValueError('Multiple matching records found')
 
-    def add_record(self, record=None, style=None, name=None, content=None):
+    def add_record(self, record=None, style=None, name=None, content=None, verbose=False):
         """
         Adds a new record to the database.
         
@@ -236,9 +236,12 @@ class MongoDatabase(Database):
         # Upload to mongodb
         self.mongodb[record.style].insert_one(entry)
 
+        if verbose:
+            print(f'{record} added to {self.host}')
+
         return record
 
-    def update_record(self, record=None, style=None, name=None, content=None):
+    def update_record(self, record=None, style=None, name=None, content=None, verbose=False):
         """
         Replaces an existing record with a new record of matching name and
         style, but new content.
@@ -297,9 +300,12 @@ class MongoDatabase(Database):
         # Add new record
         self.add_record(record=record)
         
+        if verbose:
+            print(f'{record} updated in {self.host}')
+
         return record
     
-    def delete_record(self, record=None, name=None, style=None):
+    def delete_record(self, record=None, name=None, style=None, verbose=False):
         """
         Permanently deletes a record from the database.  Will issue an error 
         if exactly one matching record is not found in the database.
@@ -338,6 +344,9 @@ class MongoDatabase(Database):
 
         # Delete record 
         self.mongodb[record.style].delete_one(query)
+
+        if verbose:
+            print(f'{record} deleted from {self.host}')
 
     def add_tar(self, record=None, name=None, style=None, tar=None, root_dir=None):
         """

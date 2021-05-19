@@ -216,7 +216,7 @@ class LocalDatabase(Database):
         else:
             raise ValueError('Multiple matching records found')
 
-    def add_record(self, record=None, style=None, name=None, model=None):
+    def add_record(self, record=None, style=None, name=None, model=None, verbose=False):
         """
         Adds a new record to the database.
         
@@ -272,9 +272,12 @@ class LocalDatabase(Database):
             elif self.format == 'xml':
                 record.build_model().xml(fp=f, indent=self.indent)
         
+        if verbose:
+            print(f'{record} added to {self.host}')
+
         return record
 
-    def update_record(self, record=None, style=None, name=None, model=None):
+    def update_record(self, record=None, style=None, name=None, model=None, verbose=False):
         """
         Replaces an existing record with a new record of matching name and
         style, but new content.
@@ -334,9 +337,12 @@ class LocalDatabase(Database):
             elif self.format == 'xml':
                 record.build_model().xml(fp=f, indent=self.indent)
         
+        if verbose:
+            print(f'{record} updated in {self.host}')
+
         return record
     
-    def delete_record(self, record=None, name=None, style=None):
+    def delete_record(self, record=None, name=None, style=None, verbose=False):
         """
         Permanently deletes a record from the database.  Will issue an error 
         if exactly one matching record is not found in the database.
@@ -371,6 +377,9 @@ class LocalDatabase(Database):
             fname.unlink()
         else:
             raise ValueError(f'No existing {record.style} record {record.name} found')
+
+        if verbose:
+            print(f'{record} deleted from {self.host}')
 
     def add_tar(self, record=None, name=None, style=None, tar=None, root_dir=None):
         """
