@@ -20,6 +20,9 @@ class Database():
     from ._potential import (get_potentials, get_potential, download_potentials,
                              upload_potential, save_potential, delete_potential)
 
+    from ._action import (get_actions, get_action, download_actions,
+                          upload_action, save_action, delete_action)
+
     from ._kim_potential import (get_kim_lammps_potentials, kim_models, init_kim_models,
                                  find_kim_models, set_kim_models, save_kim_models_file,
                                  delete_kim_models_file, load_kim_models_file)
@@ -142,8 +145,8 @@ class Database():
     def set_remote_database(self, name=None, style=None, host=None, **kwargs):
         """
         Sets the remote database to interact with.  If no parameters are given,
-        will load settings for "remote" database if they have been saved, or will
-        otherwise access potentials.nist.gov as an anonymous user.
+        will load settings for "potentials_remote" database if they have been
+        saved, or will otherwise access potentials.nist.gov as an anonymous user.
 
         Parameters
         ----------
@@ -159,8 +162,8 @@ class Database():
             Allowed keywords are database style-specific.
         """
         if name is None and style is None and host is None:
-            if 'remote' in settings.list_databases:
-                self.__remote_database = load_database(name='remote')
+            if 'potentials_remote' in settings.list_databases:
+                self.__remote_database = load_database(name='potentials_remote')
             else:
                 kwargs['username'] = kwargs.get('username', '')
                 self.__remote_database = load_database(style='cdcs',
@@ -173,8 +176,9 @@ class Database():
                            host=None, **kwargs):
         """
         Sets the local database to interact with.  If no parameters are given,
-        will load settings for "local" database if they have been saved, or will
-        otherwise use a local directory inside the default settings directory.
+        will load settings for "potentials_local" database if they have been
+        saved, or will otherwise use a local directory inside the default
+        settings directory.
 
         Parameters
         ----------
@@ -202,8 +206,8 @@ class Database():
 
         if name is None and style is None and host is None:
             
-            if 'local' in settings.list_databases:
-                self.__local_database = load_database(name='local')
+            if 'potentials_local' in settings.list_databases:
+                self.__local_database = load_database(name='potentials_local')
             else:
                 self.__local_database = load_database(style='local',
                                                       host=Path(settings.directory, 'library'), 

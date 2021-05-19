@@ -93,12 +93,17 @@ class Potential(Record):
                 if self.id != pot_id:
                     print(f"Different ids: {self.id} != {pot_id} {self.key}")
 
+        # Set name based on id if no name given
+        try:
+            self.name
+        except:
+            self.name = f'potential.{self.id}'
+
+
     def set_values(self, name=None, elements=None, key=None,
                    othername=None, fictional=False, modelname=None,
                    notes=None, recorddate=None, citations=None,
                    implementations=None):
-
-        self.name = name
 
         # Build new record
         self.elements = elements
@@ -124,6 +129,12 @@ class Potential(Record):
                     self.add_implementation(**implementation)
                 elif isinstance(implementation, Implementation):
                     self.implementations.append(implementation)
+
+        # Set name
+        if name is not None:
+            self.name = name
+        else:
+            self.name = f'potential.{self.id}'
 
     @property
     def key(self):

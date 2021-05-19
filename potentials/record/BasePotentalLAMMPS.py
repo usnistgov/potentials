@@ -83,6 +83,66 @@ class BasePotentialLAMMPS(Record):
         """str : Indicates the status of the implementation (active, superseded, retracted)"""
         return self._status
 
+    @property
+    def pot_dir(self):
+        """str : The directory containing files associated with a given potential."""
+        return self.__pot_dir
+    
+    @pot_dir.setter
+    def pot_dir(self, value):
+        self.__pot_dir = str(value)
+
+    @property
+    def artifacts(self):
+        """list : The list of file artifacts for the potential including download URLs."""
+        return self.__artifacts
+
+    def download_files(self, pot_dir=None, overwrite=False, verbose=False):
+        """
+        Downloads all artifact files associated with the potential.  The files
+        will be saved to the pot_dir directory.
+
+        Parameters
+        ----------
+        pot_dir : str, optional
+            The path to the directory where the files are to be saved.  If not
+            given, will use whatever pot_dir value was previously set.  If
+            given here, will change the pot_dir value so that the pair_info
+            lines properly point to the downloaded files.
+        overwrite : bool, optional
+            If False (default), then the files will not be downloaded if
+            similarly named files already exist in the pot_dir.
+        verbose : bool, optional
+            If True, info statements will be printed.  Default
+            value is False.
+        
+        Returns
+        -------
+        num_downloaded : int
+            The number of artifacts downloaded.
+        num_skipped : int
+            The number of artifacts not downloaded.
+        """
+        
+        if pot_dir is not None:
+            self.pot_dir = pot_dir
+        
+        num_downloaded = 0
+        num_skipped = 0
+        if len(self.artifacts) > 0:
+            if not Path(self.pot_dir).is_dir():
+                Path(self.pot_dir).mkdir(parents=True)
+
+            for artifact in self.artifacts:
+                success = artifact.download(self.pot_dir, overwrite=overwrite,
+                                            verbose=verbose)
+                if success:
+                    num_downloaded += 1
+                else:
+                    num_skipped += 1
+
+        return num_downloaded, num_skipped
+
     def load_model(self, model, name=None, **kwargs):
         """
         Loads data model info associated with a LAMMPS potential.
@@ -136,7 +196,6 @@ class BasePotentialLAMMPS(Record):
 
         self._symbols = []
         self._elements = []
-
 
     def normalize_symbols(self, symbols):
         """

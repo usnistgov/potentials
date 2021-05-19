@@ -30,6 +30,8 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             then the newest known version will be used.
         """
         super().__init__(model, name=None, id=id)
+        self.pot_dir = ''
+        self.__artifacts = []
     
     @property
     def style(self):
@@ -55,6 +57,28 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
     def modelroot(self):
         """str : The root element for the associated data model"""
         return modelroot
+
+    @property
+    def artifacts(self):
+        """list : The list of file artifacts for the potential including download URLs."""
+        return []
+
+    def download_files(self, *args, **kwargs):
+        """
+        Downloads artifact files associated with the potential.  Note that
+        no files exist to download for openKIM models
+
+        Parameters
+        ----------
+        *args, **kwargs : any
+            Allows any parameters in - all are ignored.
+        
+        Returns
+        -------
+        count : int
+            The number of files downloaded - always 0
+        """
+        return 0
 
     def load_model(self, model, name=None, id=None):
         """

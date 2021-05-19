@@ -2,7 +2,12 @@ import datetime
 
 from DataModelDict import DataModelDict as DM
 
+from datamodelbase.record import Record
+from datamodelbase import query 
+
 from . import Potential
+
+modelroot = 'action'
 
 __all__ = ['Action']
 
@@ -14,7 +19,10 @@ class PotInfo():
             self.__key = potential.key
             self.__dois = []
             for citation in potential.citations:
-                self.__dois.append(citation.doi)
+                try:
+                    self.__dois.append(citation.doi)
+                except:
+                    pass
             self.__fictional = potential.fictional
             self.__elements = potential.elements
             self.__othername = potential.othername
@@ -70,10 +78,10 @@ class PotInfo():
     def fictional(self):
         return self.__fictional
     
-    def html(self):
-        return f'<a href="https://www.ctcms.nist.gov/potentials/entry/{self.id}">{self.id}</a>'
+    #def html(self):
+    #    return f'<a href="https://www.ctcms.nist.gov/potentials/entry/{self.id}">{self.id}</a>'
 
-    def asmodel(self):
+    def build_model(self):
         model = DM()
         model['potential'] = DM()
         model['potential']['key'] = self.key
@@ -92,7 +100,7 @@ class PotInfo():
 
         return model
 
-    def asdict(self):
+    def metadata(self):
         return {'id': self.id,
                 'key': self.key,
                 'dois': self.dois,
@@ -100,29 +108,26 @@ class PotInfo():
                 'othername': self.othername,
                 'fictional': self.fictional}
 
-class Action():
+class Action(Record):
 
-    def __init__(self, model=None, date=None, type=None, potentials=None, comment=None):
-        
-        if model is not None:
-            try:
-                assert date is None
-                assert type is None
-                assert potentials is None
-                assert comment is None
-            except:
-                raise ValueError('model cannot be given with any other arguments')
-            self.load(model)
-        else:
-            if date is None:
-                date = datetime.date.today()
-            self.date = date
-            self.type = type
-            self.comment = comment
-            self.__potentials = []
-            for potential in potentials:
-                self.potentials.append(PotInfo(potential))
-        
+    @property
+    def style(self):
+        """str: The record style"""
+        return 'Action'
+
+    @property
+    def modelroot(self):
+        """str: The root element of the content"""
+        return modelroot
+    
+    @property
+    def xsl_filename(self):
+        return ('potentials.xsl', 'Action.xsl')
+
+    @property
+    def xsd_filename(self):
+        return ('potentials.xsd', 'Action.xsd')
+
     @property
     def date(self):
         return self.__date
@@ -163,17 +168,41 @@ class Action():
     @property
     def potentials(self):
         return self.__potentials
-    
-    def load(self, model):
-        model = DM(model).find('action')
-        self.date = model['date']
-        self.type = model['type']
-        self.comment = model.get('comment', None)
+
+    def load_model(self, model, name=None):
+
+        super().load_model(model, name=name)
+        act = self.model[modelroot]
+
+        self.date = act['date']
+        self.type = act['type']
+        self.comment = act.get('comment', None)
         self.__potentials = []
-        for potential in model.aslist('potential'):
+        for potential in act.aslist('potential'):
             self.potentials.append(PotInfo(DM([('potential',potential)])))
 
-    def asmodel(self):
+        if name is not None:
+            self.name = name
+        else:
+            self.name = f"{self.date} {self.comment[:90]}"
+
+    def set_values(self, name=None, date=None, type=None, potentials=None,
+                   comment=None):
+        if date is None:
+            date = datetime.date.today()
+        self.date = date
+        self.type = type
+        self.comment = comment
+        self.__potentials = []
+        for potential in potentials:
+            self.potentials.append(PotInfo(potential))
+
+        if name is not None:
+            self.name = name
+        else:
+            self.name = f"{self.date} {self.comment[:90]}"
+
+    def build_model(self):
         
         model = DM()
         model['action'] = DM()
@@ -181,24 +210,27 @@ class Action():
         model['action']['type'] = self.type 
         
         for potential in self.potentials:
-            model['action'].append('potential', potential.asmodel()['potential'])
+            model['action'].append('potential', potential.build_model()['potential'])
 
         if self.comment is not None:
             model['action']['comment'] = self.comment
 
         return model
 
-    def asdict(self):
-        return {'date': self.date,
-                'type': self.type,
-                'potentials': self.potentials,
-                'comment': self.comment}
+    def metadata(self):
+        return {
+            'name': self.name,
+            'date': self.date,
+            'type': self.type,
+            'potentials': self.potentials,
+            'comment': self.comment
+        }
 
-    def html(self):
-        htmlstr = ''
-        htmlstr += f'<b>{self.type} ({self.date})</b>'
-        if self.comment is not None:
-            htmlstr += ' ' + self.comment
-        for potential in self.potentials:
-            htmlstr += '\n<br/>' + potential.html()
-        return htmlstr
+    #def html(self):
+    #    htmlstr = ''
+    #    htmlstr += f'<b>{self.type} ({self.date})</b>'
+    #    if self.comment is not None:
+    #        htmlstr += ' ' + self.comment
+    #    for potential in self.potentials:
+    #        htmlstr += '\n<br/>' + potential.html()
+    #    return htmlstr

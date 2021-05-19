@@ -6,6 +6,12 @@
   <xsl:template match="parameter">
     <div>  
       <xsl:value-of select="name"/>
+      <xsl:if test="value">
+        <xsl:text> </xsl:text><xsl:value-of select="value"/>
+      </xsl:if>
+      <xsl:if test="unit">
+        <xsl:text> </xsl:text><xsl:value-of select="unit"/>
+      </xsl:if>
     </div>
   </xsl:template>
 </xsl:stylesheet>

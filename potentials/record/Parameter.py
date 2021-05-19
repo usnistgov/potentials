@@ -82,7 +82,7 @@ class Parameter(Record):
         if v is None:
             self.__unit = None
         else:
-            self.__unit = float(v)
+            self.__unit = str(v)
 
     def set_values(self, name=None, value=None, unit=None):
         """

@@ -146,53 +146,42 @@ def get_lammps_potential(self, local=None, remote=None,
 def download_lammps_potentials(self, name=None, key=None, id=None,
                                potid=None, potkey=None, units=None,
                                atom_style=None, pair_style=None, status=None,
-                               symbols=None, elements=None, pot_dir_style=None,
-                               include_kim=True, overwrite=False, downloadfiles=False,
-                               verbose=False):
-
-    # Test that the respective databases have been set
-    if self.local_database is None:
-        raise ValueError('local database info not set: initialize with local=True or call set_local_database')
-    if self.remote_database is None:
-        raise ValueError('remote database info not set: initialize with remote=True or call set_remote_database')
+                               symbols=None, elements=None, include_kim=True,
+                               overwrite=False, downloadfiles=False, verbose=False):
     
-    # Get matching remote potential_LAMMPS records
-    style = 'potential_LAMMPS'
-    records = self.remote_database.get_records(style, name=name, key=key, id=id,
-                                               potid=potid, potkey=potkey, units=units,
-                                               atom_style=atom_style, pair_style=pair_style, status=status,
-                                               symbols=symbols, elements=elements)
-    if verbose:
-        print(f'Found {len(records)} matching {style} records in remote library')
-    
-    num_added = 0
-    num_changed = 0
-    num_skipped = 0
-    num_files = 0
-    num_files_skipped = 0
 
-    for lammps_potential in records:
-        self.save_lammps_potential(lammps_potential, downloadfiles=downloadfiles,
-                                   overwrite=overwrite, verbose=verbose)
+    # Download and get matching potential_LAMMPS records
+    records = self.download_records('potential_LAMMPS',  
+                                    name=name, key=key, id=id, potid=potid, potkey=potkey,
+                                    units=units, atom_style=atom_style, pair_style=pair_style,
+                                    status=status, symbols=symbols, elements=elements,
+                                    return_records=True, overwrite=overwrite, verbose=verbose)
     
-    if verbose:
-        print(num_added, 'new records added to local')
-        if num_changed > 0:
-            print(num_changed, 'existing records changed in local')
-        if num_skipped > 0:
-            print(num_skipped, 'existing records skipped')
+    # Download artifacts
+    if downloadfiles is True:
+        num_downloaded = 0
+        num_skipped = 0
+        for lammps_potential in records:
+            pot_dir = Path(self.local_database.host, 'potential_LAMMPS', lammps_potential.id)
+            nd, ns = lammps_potential.download_files(pot_dir=pot_dir, overwrite=overwrite)
+            num_downloaded += nd
+            num_skipped += ns
+        if verbose:
+            if num_downloaded > 0:
+                print(f'{num_downloaded} parameter files downloaded')
+            if num_skipped > 0:
+                print(f'{num_skipped} existing parameter files skipped')
 
+    # Download matching potential_LAMMPS_KIM records 
     if include_kim:
         self.download_records('potential_LAMMPS_KIM',
-                            name=name, key=key, id=id,
-                            potid=potid, potkey=potkey, units=units,
-                            atom_style=atom_style, pair_style=pair_style, status=status,
-                            symbols=symbols, elements=elements, 
-                            overwrite=overwrite, verbose=verbose)
+                              name=name, key=key, id=id, potid=potid, potkey=potkey,
+                              units=units, atom_style=atom_style, pair_style=pair_style,
+                              status=status, symbols=symbols, elements=elements, 
+                              overwrite=overwrite, verbose=verbose)
 
-def get_lammps_potential_files(self, lammps_potential, localpath=None,
-                               local=None, remote=None, pot_dir=None,
-                               verbose=False):
+def get_lammps_potential_files(self, lammps_potential, local=None, remote=None,
+                               pot_dir=None, overwrite=False, verbose=False):
     """
     Retrieves the potential parameter files for a LAMMPS potential and saves
     them to the pot_dir of the potential object.  If local is True and the
@@ -217,15 +206,13 @@ def get_lammps_potential_files(self, lammps_potential, localpath=None,
         given, will use whatever pot_dir value was previously set.  If
         given here, will change the pot_dir value so that the pair_info
         lines properly point to the copied/downloaded files.
+    overwrite : bool, optional
+        If False (default), then the files will not be copied/downloaded if
+        similarly named files already exist in the pot_dir.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-    # Do nothing for KIM potentials
-    if lammps_potential.pair_style == 'kim':
-        if verbose:
-            print('KIM models have no files to copy')
-        return None
 
     # Set local, and remote as given here or during init
     if local is None:
@@ -233,89 +220,158 @@ def get_lammps_potential_files(self, lammps_potential, localpath=None,
     if remote is None:
         remote = self.remote
     
-    # Change or get pot_dir value for the potential
-    if pot_dir is not None:
-        lammps_potential.pot_dir = pot_dir
-    pot_dir = Path(lammps_potential.pot_dir)
-    if not pot_dir.is_dir():
-        pot_dir.mkdir(parents=True)
+    artifacts = lammps_potential.artifacts
+    if len(artifacts) > 0:
+    
+        # Change or get pot_dir value for the potential
+        if pot_dir is not None:
+            lammps_potential.pot_dir = pot_dir
+        pot_dir = Path(lammps_potential.pot_dir)
+        if not pot_dir.is_dir():
+            pot_dir.mkdir(parents=True)
 
-    # Check local first
-    copied = False
-    num_copied = 0
-    if local is True:
-        local_dir = Path(self.local_database.host, 'potential_LAMMPS', lammps_potential.id)
-        if local_dir.is_dir():
+        # Build local_dir path
+        if local is True:
+            localdir = Path(self.local_database.host, 'potential_LAMMPS', lammps_potential.id)
+
+        # Loop over listed artifacts
+        for artifact in artifacts:
+            targetname = Path(pot_dir, artifact.filename)
+
+            # Check if target file already exists
+            if overwrite or not targetname.exists():
+                copied = False
+
+                # Check local first
+                if local is True:
+                    
+                    # Copy from the local if it exists there
+                    localname = Path(localdir, artifact.filename)
+                    if localname.is_file():
+                        shutil.copy(localname, targetname)
+                        copied = True
+                        if verbose:
+                            print(f'{artifact.filename} copied to {pot_dir}')
+                
+                # Check remote second
+                if remote is True and copied is False:
+                    artifact.download(pot_dir, overwrite=overwrite, verbose=verbose)
             
-            # Do nothing if the source and target directories are the same
-            if pot_dir == local_dir:
+            else:
                 if verbose:
-                    print('No files copied - pot_dir is the local database path for the files')
-                return None
+                    print(f'{artifact.filename} already in {pot_dir}')
 
-            # Copy files from source to target
-            for filename in local_dir.glob('*'):
-                shutil.copy(filename, pot_dir)
-                num_copied += 1
-                copied = True
+def upload_lammps_potential(self, lammps_potential=None, workspace=None,
+                            overwrite=False, verbose=False):
+    """
+    Uploads a LAMMPS potential to the remote database.
     
-    if copied:
-        if verbose:
-            print(f'{num_copied} files copied')
-        return None
-    
-    # Check remote
-    if remote is True and copied is False:
-        num_downloaded = lammps_potential.download_files()
-        
-        if num_downloaded > 0:
-            if verbose:
-                print(f'{num_downloaded} files downloaded')
-            return None
-    
-    if verbose:
-        print(f'No files copied or downloaded')
+    Parameters
+    ----------
+    lammps_potential : PotentialLAMMPS
+        The record to upload.
+    workspace : str, optional
+        The workspace to assign the record to. If not given, no workspace will
+        be assigned (only accessible to user who submitted it).
+    overwrite : bool, optional
+        Indicates what to do when a matching record is found in the remote
+        location.  If False (default), then the record is not updated.  If
+        True, then the record is updated.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    """
+    self.upload_record(record=lammps_potential, workspace=workspace,
+                       overwrite=overwrite, verbose=verbose)
 
-def upload_lammps_potential(self):
-    pass
-
-def save_lammps_potential(self, lammps_potential, name=None, model=None,
-                          filenames=None, downloadfiles=False, overwrite=False,
+def save_lammps_potential(self, lammps_potential, filenames=None,
+                          downloadfiles=False, overwrite=False,
                           verbose=False):
-    
+    """
+    Saves a LAMMPS potential to the local.
+
+    Parameters
+    ----------
+    lammps_potential : PotentialLAMMPS
+        The LAMMPS potential to save to the local.
+    filenames : list, optional
+        A list of file paths for the artifact files to be copied to the local
+        location.  Cannot be given with downloadfiles = True.
+    downloadfiles : bool, optional
+        If True, then the artifacts associated with the LAMMPS potential
+        will be downloaded to the local.  Cannot be True if filenames is given.
+    overwrite : bool, optional
+        If False (default), then any existing records/artifacts will be
+        skipped.  If True, then the existing contents will be replaced.
+    verbose : bool, optional
+        If True, informational print statements will be generated.
+
+    Returns
+    -------
+    added : int
+        Number of artifacts copied/downloaded to the local location.
+    skipped : int 
+        Number of artifacts not copied/downloaded to the local location.
+    """
+
+    # Check for conflicting parameters
     if filenames is not None and downloadfiles is True:
         raise ValueError('Cannot give filenames with downloadfiles=True')
     
+    self.save_record(record=lammps_potential, overwrite=overwrite,
+                     verbose=verbose)
     
-    if lammps_potential is None:
-        lammps_potential = load_record('potential_LAMMPS', model, name=name)
-    
-    try:
-        self.local_database.add_record(record=lammps_potential) 
-        if verbose:
-            print(f'record {lammps_potential.id} added')
-    except:
-        if overwrite:
-            self.local_database.update_record(record=lammps_potential)
-            if verbose:
-                print(f'record {lammps_potential.id} updated')
-        else:
-            if verbose:
-                print(f'record {lammps_potential.id} already exists: use overwrite=True to change it')
-
     if filenames is not None:
+        pot_dir = Path(self.local_database.host, 'potential_LAMMPS', lammps_potential.id)
+        if not pot_dir.is_dir():
+            pot_dir.mkdir(parents=True)
+        
         for filename in aslist(filenames):
-            newname = Path(self.local_database.host, 'potential_LAMMPS', lammps_potential.id, filename.name)
+            added = 0
+            skipped = 0
+            newname = Path(pot_dir, filename.name)
             if overwrite or not newname.exists():
                 shutil.copy(filename, newname)
+                added += 1
                 if verbose:
-                    print(filename.name, 'copied to local database')
-            elif verbose:
-                print(filename.name, 'already exists: use overwrite=True to change it')
+                    print(f'{filename.name} copied to {pot_dir}')
+            else:
+                skipped += 1
+                if verbose:
+                    print(f'{filename.name} already in {pot_dir}')
 
-    if downloadfiles:
+    elif downloadfiles:
         pot_dir = Path(self.local_database.host, 'potential_LAMMPS', lammps_potential.id)
-        count = lammps_potential.download_files(pot_dir=pot_dir, overwrite=overwrite, verbose=verbose)
+        added, skipped = lammps_potential.download_files(pot_dir=pot_dir,
+                                                         overwrite=overwrite,
+                                                         verbose=verbose)
 
-def delete_lammps_potential(self):
-    pass
+def delete_lammps_potential(self, lammps_potential, local=True, remote=False,
+                            localfiles=False, verbose=False):
+    """ 
+    Deletes a LAMMPS potential record from the local and/or remote locations.
+
+    Parameters
+    ----------
+    lammps_potential : PotentialLAMMPS
+        The LAMMPS potential to delete.
+    local : bool, optional
+        Indicates if the record will be deleted from the local location.
+        Deleting the record also deletes the associated parameter files.
+        Default value is True.
+    remote : bool, optional
+        Indicates if the record will be deleted from the remote location.
+        Default value is False.  If True, requires an account for the remote
+        location with write permissions.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    """
+    # Delete the record
+    self.delete_record(record=lammps_potential, local=local, remote=remote,
+                       verbose=verbose)
+    
+    # Delete the parameter files
+    if local is True:
+        pot_dir = Path(self.local_database.host, 'potential_LAMMPS', lammps_potential.id)
+        shutil.rmtree(pot_dir)

@@ -7,9 +7,6 @@ import numpy as np
 # https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
-# https://requests.readthedocs.io/en/master/
-import requests
-
 # atomman imports
 from ..tools import atomic_mass, aslist
 from .BasePotentalLAMMPS import BasePotentialLAMMPS
@@ -90,6 +87,11 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             for url in self.fileurls:
                 out += f'print "{url}"\n'
         return out
+ 
+    @property
+    def artifacts(self):
+        """list : The list of file artifacts for the potential including download URLs."""
+        return self.__artifacts
 
     def load_model(self, model, name=None, pot_dir=None):
         """
@@ -203,21 +205,6 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         query.str_match.mongo(mquery, f'{root}.status', status)
 
         return mquery
-
-
-    @property
-    def pot_dir(self):
-        """str : The directory containing files associated with a given potential."""
-        return self.__pot_dir
-    
-    @pot_dir.setter
-    def pot_dir(self, value):
-        self.__pot_dir = str(value)
-    
-    @property
-    def artifacts(self):
-        """list : The list of file artifacts for the potential including download URLs."""
-        return self.__artifacts
         
     def masses(self, symbols=None, prompt=True):
         """
@@ -586,53 +573,4 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
 
         return info
 
-    def download_files(self, pot_dir=None, overwrite=False, verbose=False):
-        """
-        Downloads all artifact files associated with the potential.  The files
-        will be saved to the pot_dir directory.
-
-        Parameters
-        ----------
-        pot_dir : str, optional
-            The path to the directory where the files are to be saved.  If not
-            given, will use whatever pot_dir value was previously set.  If
-            given here, will change the pot_dir value so that the pair_info
-            lines properly point to the downloaded files.
-        verbose : bool, optional
-            If True, will print the names of the files downloaded.
-        
-        Returns
-        -------
-        count : int
-            The number of files downloaded.
-        """
-
-        count = 0
-        if pot_dir is not None:
-            self.pot_dir = pot_dir
-
-        if verbose:
-            print(len(self.artifacts), 'files to download')
-        
-        if len(self.artifacts) and not Path(self.pot_dir).is_dir():
-            Path(self.pot_dir).mkdir(parents=True)
-
-        for artifact in self.artifacts:
-            fname = Path(self.pot_dir, artifact.filename)
-            
-            if overwrite or not fname.exists():
-                r = requests.get(artifact.url)
-                if r.status_code == 404:
-                    print(f'File URL not found: {artifact.url}')
-                else:
-                    r.raise_for_status()
-                    with open(fname, 'wb') as f:
-                        f.write(r.content)
-                    if verbose:
-                        print('  -', artifact.filename, 'downloaded')
-                    count += 1
-            else:
-                if verbose:
-                    print('  -', artifact.filename, 'skipped')
-        
-        return count
+    

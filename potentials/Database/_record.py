@@ -226,7 +226,8 @@ def remote_query(self, style=None, keyword=None, query=None, name=None,
                                             query=query, keyword=keyword, name=name)
 
 def download_records(self, style=None, name=None, overwrite=False,
-                     keyword=None, query=None, verbose=False, **kwargs):
+                     keyword=None, query=None, return_records=False,
+                     verbose=False, **kwargs):
     """
     Retrieves all matching records from the remote location and saves them to
     the local location.
@@ -251,15 +252,16 @@ def download_records(self, style=None, name=None, overwrite=False,
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
+    return_records : bool, optional
+        If True, the retrieved record objects are also returned.  Default
+        value is False.
     **kwargs : any, optional
         Any extra keyword arguments supported by the record style.
 
     Returns
     -------
     numpy.NDArray of Record subclasses
-        The retrived records.
-    pandas.DataFrame
-        A table of the records' metadata.  Returned if return_df = True.
+        The retrived records.  Only returned if return_records=True.
     
     Raises
     ------
@@ -298,6 +300,9 @@ def download_records(self, style=None, name=None, overwrite=False,
             print(num_changed, 'existing records changed in local')
         if num_skipped > 0:
             print(num_skipped, 'existing records skipped')
+    
+    if return_records is True:
+        return records
 
 def save_record(self, record=None, style=None, name=None,
                   model=None, overwrite=False, verbose=False):
@@ -328,10 +333,11 @@ def save_record(self, record=None, style=None, name=None,
         record = load_record(style, model, name=name)
     
     try:
-        self.local_database.add_record(record=record, verbose=verbose) 
-    except:
+        self.local_database.add_record(record=record, verbose=verbose)
+    except ValueError:
         if overwrite:
-            self.local_database.update_record(record=record, verbose=verbose)
+            self.local_database.update_record(record=record,
+                                              verbose=verbose)
         else:
             raise ValueError('Matching record already exists: use overwrite=True to change it')
 
@@ -370,9 +376,9 @@ def upload_record(self, record=None, style=None, name=None,
     try:
         self.remote_database.add_record(record=record, workspace=workspace,
                                         verbose=verbose) 
-    except:
+    except ValueError:
         if overwrite:
-            self.remote_database.update_record(record=record, workspace=workspace, 
+            self.remote_database.update_record(record=record, workspace=workspace,
                                                verbose=verbose)
         else:
             raise ValueError('Matching record already exists: use overwrite=True to change it')
@@ -407,10 +413,8 @@ def delete_record(self, record=None, style=None, name=None,
         return None
     
     if local:
-        self.local_database.delete_record(record=record, name=name, style=style)
-        if verbose:
-            print('record successfully deleted from local')
+        self.local_database.delete_record(record=record, name=name, style=style,
+                                          verbose=verbose)
     if remote:
-        self.remote_database.delete_record(record=record, name=name, style=style)
-        if verbose:
-            print('record successfully deleted from remote')
+        self.remote_database.delete_record(record=record, name=name, style=style,
+                                           verbose=verbose)

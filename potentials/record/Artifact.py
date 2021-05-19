@@ -1,4 +1,9 @@
 # coding: utf-8
+from pathlib import Path
+
+# https://requests.readthedocs.io/en/master/
+import requests
+
 # https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
@@ -144,3 +149,52 @@ class Artifact(Record):
         meta['url'] = self.url
 
         return meta
+
+    def download(self, targetdir, overwrite=False, verbose=False):
+        """
+        Downloads the artifact from its URL to the given target directory.
+
+        Parameters
+        ----------
+        targetdir : path-like object
+            The directory where the artifact is downloaded to.
+        overwrite : bool, optional
+            If False (default), then the file will not be downloaded if
+            a similarly named file already exists in targetdir.
+        verbose : bool, optional
+            If True, info statements will be printed.  Default
+            value is False.
+        
+        Returns
+        -------
+        bool
+            True if the file was downloaded, False otherwise.
+        """
+        targetname = Path(targetdir, self.filename)
+        
+        # Check if targetname exists
+        if overwrite or not targetname.exists():
+            
+            # Get the URL
+            r = requests.get(self.url)
+            
+            # Print message if URL does not exist
+            if r.status_code == 404:
+                print(f'File URL not found: {self.url}')
+                return False
+            
+            else:
+                # Raise any other request errors
+                r.raise_for_status()
+
+                # Save downloaded content
+                with open(targetname, 'wb') as f:
+                    f.write(r.content)
+                if verbose:
+                    print(f'{self.filename} downloaded to {targetdir}')
+                return True
+        else:
+            # Skip files that already exist
+            if verbose:
+                print(f'{self.filename} already in {targetdir}')
+            return False

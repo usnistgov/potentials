@@ -87,7 +87,7 @@ def get_citation(self, local=None, remote=None, name=None, year=None, volume=Non
                             title=title, journal=journal, doi=doi, author=author,
                             abstract=abstract, verbose=verbose)
 
-def fetch_citation(self, doi, verbose=False):
+def fetch_citation(self, doi, local=None, remote=None, verbose=False):
     """
     Retrieves a single citation based on its DOI.  First, the database is checked
     for matches with the DOI, then with the record name.  If no matches are found
@@ -98,27 +98,35 @@ def fetch_citation(self, doi, verbose=False):
     doi : str
         The citation's DOI.  If the citation has no DOI, then the citation's
         record name should be given instead.
+    local : bool, optional
+        Indicates if the local location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    remote : bool, optional
+        Indicates if the remote location is to be searched.  Default value
+        matches the value set when the database was initialized.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-    # Try fetching based on doi
-    try:
-        return self.get_citation(doi=doi, verbose=verbose)
-    except:
-        pass
+    if local is not False or remote is not False:
+        # Try fetching based on doi
+        try:
+            return self.get_citation(doi=doi, local=local, remote=remote, verbose=verbose)
+        except:
+            pass
 
-    # Try fetching based on name
-    try:
-        return self.get_citation(name=doi, verbose=True)
-    except:
-        pass
+        # Try fetching based on name
+        try:
+            return self.get_citation(name=doi, local=local, remote=remote, verbose=True)
+        except:
+            pass
     
-    # Fetch from CrossRef if not found in database
+    # Fetch from CrossRef if database search failed/skipped
     bibtex = cn.content_negotiation(ids=doi, format="bibtex")
     if verbose:
         print(f'Citation retrieved from CrossRef')
-    return load_record('citation', bibtex)
+
+    return load_record('Citation', bibtex)
 
 def download_citations(self, name=None, year=None, volume=None,
                   title=None, journal=None, doi=None, author=None,
@@ -175,10 +183,10 @@ def save_citation(self, citation, overwrite=False, verbose=False):
     """
     self.save_record(record=citation, overwrite=overwrite, verbose=verbose)
 
-def upload_citation(self, citation=None, workspace=None, overwrite=False,
+def upload_citation(self, citation, workspace=None, overwrite=False,
                     verbose=False):
     """
-    Saves a citation to the local database.
+    Uploads a citation to the remote database.
     
     Parameters
     ----------
@@ -195,9 +203,8 @@ def upload_citation(self, citation=None, workspace=None, overwrite=False,
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-    self.upload_record(self, record=citation, workspace=workspace,
+    self.upload_record(record=citation, workspace=workspace,
                        overwrite=overwrite, verbose=verbose)
-
 
 def delete_citation(self, citation, local=True, remote=False, verbose=False):
     """
@@ -219,5 +226,5 @@ def delete_citation(self, citation, local=True, remote=False, verbose=False):
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-    self.delete_record(self, record=citation, local=local, remote=remote,
+    self.delete_record(record=citation, local=local, remote=remote,
                        verbose=verbose)
