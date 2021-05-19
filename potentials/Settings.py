@@ -86,6 +86,30 @@ class Settings(datamodelbase.Settings.Settings):
         # Save changes
         self.save()
 
+    def set_local_database(self, localpath=None, format='json', indent=4):
+        """
+        Set the default local interaction settings for potential.Database
+        objects.
+
+        Parameters
+        ----------
+        localpath : path, optional
+            The directory to use for the local database.  If not given, will
+            use the default path of directory "library" located in the settings
+            directory.
+        format : str, optional
+            The file format that is used: "json" or "xml".  Default value is
+            "json".
+        indent : int or None, optional
+            The number of indentation spacings to use in the files.  If None,
+            then the files will be compact.  Default value is 4.
+        """
+        if localpath is None:
+            localpath = Path(self.directory, 'library')
+
+        self.set_database(name='potentials_local', style='local', host=localpath,
+                          format=format, indent=indent) 
+
     @property
     def pot_dir_style(self):
         """The default value for 'pot_dir_style' used when loading LAMMPS potentials."""
