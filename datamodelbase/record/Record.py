@@ -81,7 +81,7 @@ class Record():
         str
             The string representation of the record.
         """
-        return f'record style {self.style} named {self.name}'
+        return f'{self.style} record named {self.name}'
     
     @property
     def style(self):
