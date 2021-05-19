@@ -381,7 +381,7 @@ class PotentialLAMMPSBuilder(object):
 
         # Add artifacts
         for artifact in self.artifacts:
-            model['potential-LAMMPS'].append('artifact', artifact.asmodel())
+            model['potential-LAMMPS'].append('artifact', artifact.build_model()['artifact'])
 
         return model
 
