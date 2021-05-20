@@ -23,6 +23,9 @@ class Database():
     from ._action import (get_actions, get_action, download_actions,
                           upload_action, save_action, delete_action)
 
+    from ._related_models import (load_related_models, related_models, get_related_models,
+                                 save_related_models, add_related_models, sort_related_models)
+
     from ._kim_potential import (get_kim_lammps_potentials, kim_models, init_kim_models,
                                  find_kim_models, set_kim_models, save_kim_models_file,
                                  delete_kim_models_file, load_kim_models_file)

@@ -2,8 +2,12 @@ import datetime
 
 from DataModelDict import DataModelDict as DM 
 
+from datamodelbase.record import Record
+from datamodelbase import query 
 
-from .tools import aslist
+from ..tools import aslist
+
+modelroot = 'request'
 
 class System():
     def __init__(self, model=None, formula=None, elements=None):
@@ -13,7 +17,7 @@ class System():
                 assert elements is None
             except:
                 raise ValueError('model cannot be given with any other arguments')
-            self.load(model)
+            self.load_model(model)
         else:
             self.formula = formula
             self.elements = elements
@@ -40,12 +44,12 @@ class System():
         else:
             self.__elements = aslist(value)
 
-    def load(self, model):
+    def load_model(self, model):
         model = DM(model).find('system')
         self.formula = model.get('chemical-formula', None)
         self.elements = model.get('element', None)
 
-    def asmodel(self):
+    def build_model(self):
         model = DM()
         model['system'] = DM()
         if self.formula is not None:
@@ -55,45 +59,40 @@ class System():
                 model['system'].append('element', element)
         return model
 
-    def asdict(self):
-        return {'formula':self.formula, 'elements':self.elements}
+    def metadata(self):
+        return {
+            'formula':self.formula,
+            'elements':self.elements}
 
-    def html(self):
-        htmlstr = ''
-        if self.formula is not None:
-            htmlstr += self.formula
-        elif self.elements is not None:
-            htmlstr += '-'.join(self.elements)
+    #def html(self):
+    #    htmlstr = ''
+    #    if self.formula is not None:
+    #        htmlstr += self.formula
+    #    elif self.elements is not None:
+    #        htmlstr += '-'.join(self.elements)
 
-        return htmlstr
+    #    return htmlstr
         
-
-
-class Request():
-
-    def __init__(self, model=None, date=None, comment=None, systems=None):
-
-        if model is not None:
-            try:
-                assert date is None
-                assert comment is None
-                assert systems is None
-            except:
-                raise ValueError('model cannot be given with any other arguments')
-            self.load(model)
-        else:
-            if date is None:
-                date = datetime.date.today()
-            self.date = date
-            self.comment = comment
-            self.__systems = []
-            if systems is not None:
-                for system in aslist(systems):
-                    if isinstance(system, System):
-                        self.systems.append(system)
-                    else:
-                        self.add_system(**system)
+class Request(Record):
     
+    @property
+    def style(self):
+        """str: The record style"""
+        return 'Request'
+
+    @property
+    def modelroot(self):
+        """str: The root element of the content"""
+        return modelroot
+    
+    @property
+    def xsl_filename(self):
+        return ('potentials.xsl', 'Request.xsl')
+
+    @property
+    def xsd_filename(self):
+        return ('potentials.xsd', 'Request.xsd')
+
     @property
     def date(self):
         return self.__date
@@ -120,46 +119,83 @@ class Request():
     def systems(self):
         return self.__systems
 
-    def load(self, model):
-        model = DM(model).find('request')
-        self.date = model['date']
-        self.comment = model.get('comment', None)
+    def set_values(self, name=None, date=None, comment=None, systems=None):
+        if date is None:
+            date = datetime.date.today()
+        self.date = date
+        self.comment = comment
         self.__systems = []
-        for system in model.aslist('system'):
+        if systems is not None:
+            for system in aslist(systems):
+                if isinstance(system, System):
+                    self.systems.append(system)
+                else:
+                    self.add_system(**system)
+
+        if name is not None:
+            self.name = name
+        else:
+            elements = []
+            for system in self.systems:
+                elements.extend(system.elements)
+            self.name = f'{self.date} {" ".join(elements)}'
+
+    def load_model(self, model, name=None):
+        
+        super().load_model(model, name=name)
+        req = DM(model).find('request')
+        self.date = req['date']
+        self.comment = req.get('comment', None)
+        self.__systems = []
+        for system in req.aslist('system'):
             self.add_system(model=DM([('system',system)]))
 
-    def asmodel(self):
+        if name is not None:
+            self.name = name
+        else:
+            elements = []
+            for system in self.systems:
+                elements.extend(system.elements)
+            self.name = f'{self.date} {" ".join(elements)}'
+
+    def build_model(self):
         model = DM()
         model['request'] = DM()
         model['request']['date'] = str(self.date)
         for system in self.systems:
-            model['request'].append('system', system.asmodel()['system'])
+            model['request'].append('system', system.build_model()['system'])
         if self.comment is not None:
             model['request']['comment'] = self.comment
 
         return model
 
-    def asdict(self):
-
-        return {'date': self.date,
-                'systems': self.systems,
-                'comment': self.comment}
-
-    def html(self):
-        htmlstr = ''
-        htmlsystems = []
+    def metadata(self):
+        data = {}
+        data['name'] = self.name
+        data['date'] = self.date
+        data['comment'] = self.comment
         
+        data['systems'] = []
         for system in self.systems:
-            htmlsystems.append(system.html())
-        if len(htmlsystems) > 0:
-            htmlstr += f'<b>{", ".join(htmlsystems)}</b> '
+            data['systems'].append(system.metadata())
         
-        if self.comment is not None:
-            htmlstr += self.comment + ' '
-        
-        htmlstr += f'({self.date})'
+        return data
 
-        return htmlstr.strip()
+    #def html(self):
+    #    htmlstr = ''
+    #    htmlsystems = []
+        
+    #    for system in self.systems:
+    #        htmlsystems.append(system.html())
+    #    if len(htmlsystems) > 0:
+    #        htmlstr += f'<b>{", ".join(htmlsystems)}</b> '
+        
+    #    if self.comment is not None:
+    #        htmlstr += self.comment + ' '
+        
+    #    htmlstr += f'({self.date})'
+
+    #    return htmlstr.strip()
 
 
     def add_system(self, model=None, formula=None, elements=None):

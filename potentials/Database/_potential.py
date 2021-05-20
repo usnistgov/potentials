@@ -210,5 +210,5 @@ def delete_potential(self, potential, local=True, remote=False, verbose=False):
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-    self.delete_record(self, record=potential, local=local, remote=remote,
+    self.delete_record(record=potential, local=local, remote=remote,
                        verbose=verbose)

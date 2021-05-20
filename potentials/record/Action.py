@@ -218,13 +218,17 @@ class Action(Record):
         return model
 
     def metadata(self):
-        return {
-            'name': self.name,
-            'date': self.date,
-            'type': self.type,
-            'potentials': self.potentials,
-            'comment': self.comment
-        }
+        data = {}
+        data['name'] = self.name
+        data['date'] = self.date
+        data['type'] = self.type
+        data['comment'] = self.comment
+        
+        data['potentials'] = []
+        for pot in self.potentials:
+            data['potentials'].append(pot.metadata())
+        
+        return data
 
     #def html(self):
     #    htmlstr = ''

@@ -1,8 +1,8 @@
 
-def get_actions(self, local=None, remote=None, name=None, date=None, type=None,
-                comment=None, return_df=False, verbose=False):
+def get_requests(self, local=None, remote=None, name=None, date=None, 
+                 comment=None, return_df=False, verbose=False):
     """
-    Retrieves all matching actions from the database.
+    Retrieves all matching requests from the database.
 
     Parameters
     ----------
@@ -16,11 +16,8 @@ def get_actions(self, local=None, remote=None, name=None, date=None, type=None,
         The record name(s) to parse by.
     date : str or list
         The date associated with the record.
-    type : str or list
-        The type of action: 'new posting', 'updated posting', 'retraction',
-        or 'site change'.
     comment : str or list
-        Term(s) to search for in the action's comment field.
+        Term(s) to search for in the request's comment field.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
@@ -28,14 +25,14 @@ def get_actions(self, local=None, remote=None, name=None, date=None, type=None,
         If True, then the corresponding pandas.Dataframe of metadata
         will also be returned.
     """
-    return self.get_records('Action', local=local, remote=remote, name=name, 
+    return self.get_records('Request', local=local, remote=remote, name=name, 
                             date=date, type=type, comment=comment,
                             return_df=return_df, verbose=verbose)
 
-def get_action(self, local=None, remote=None, name=None, date=None, type=None,
+def get_request(self, local=None, remote=None, name=None, date=None,
                 comment=None, verbose=False):
     """
-    Retrieves exactly one matching action from the database.
+    Retrieves exactly one matching request from the database.
 
     Parameters
     ----------
@@ -49,23 +46,20 @@ def get_action(self, local=None, remote=None, name=None, date=None, type=None,
         The record name(s) to parse by.
     date : str or list
         The date associated with the record.
-    type : str or list
-        The type of action: 'new posting', 'updated posting', 'retraction',
-        or 'site change'.
     comment : str or list
-        Term(s) to search for in the action's comment field.
+        Term(s) to search for in the request's comment field.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-    return self.get_record('Action', local=local, remote=remote, name=name, 
+    return self.get_record('Request', local=local, remote=remote, name=name, 
                            date=date, type=type, comment=comment,
                            verbose=verbose)
 
-def download_actions(self, name=None, date=None, type=None,
+def download_requests(self, name=None, date=None,
                      comment=None, overwrite=False, verbose=False):
     """
-    Downloads actions from the remote to the local.
+    Downloads requests from the remote to the local.
 
     Parameters
     ----------
@@ -73,11 +67,8 @@ def download_actions(self, name=None, date=None, type=None,
         The record name(s) to parse by.
     date : str or list
         The date associated with the record.
-    type : str or list
-        The type of action: 'new posting', 'updated posting', 'retraction',
-        or 'site change'.
     comment : str or list
-        Term(s) to search for in the action's comment field.
+        Term(s) to search for in the request's comment field.
     overwrite : bool, optional
         Flag indicating if any existing local records with names matching
         remote records are updated (True) or left unchanged (False).  Default
@@ -86,17 +77,17 @@ def download_actions(self, name=None, date=None, type=None,
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-    self.download_records('Action', name=name, date=date, type=type,
+    self.download_records('Request', name=name, date=date, type=type,
                           comment=comment, overwrite=overwrite, verbose=verbose)
 
-def upload_action(self, action=None, workspace=None, overwrite=False,
+def upload_request(self, request=None, workspace=None, overwrite=False,
                     verbose=False):
     """
-    Uploads an action to the remote database.
+    Uploads a request to the remote database.
     
     Parameters
     ----------
-    action : Action
+    request : Request
         The record to upload.
     workspace : str, optional
         The workspace to assign the record to. If not given, no workspace will
@@ -109,16 +100,16 @@ def upload_action(self, action=None, workspace=None, overwrite=False,
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-    self.upload_record(record=action, workspace=workspace,
+    self.upload_record(record=request, workspace=workspace,
                        overwrite=overwrite, verbose=verbose)
 
-def save_action(self, action, overwrite=False, verbose=False):
+def save_request(self, request, overwrite=False, verbose=False):
     """
-    Saves an action to the local database.
+    Saves a request to the local database.
     
     Parameters
     ----------
-    action : Action
+    request : Request
         The record to save.  
     overwrite : bool, optional
         Indicates what to do when a matching record is found in the local
@@ -128,15 +119,15 @@ def save_action(self, action, overwrite=False, verbose=False):
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-    self.save_record(record=action, overwrite=overwrite, verbose=verbose)
+    self.save_record(record=request, overwrite=overwrite, verbose=verbose)
 
-def delete_action(self, action, local=True, remote=False, verbose=False):
+def delete_request(self, request, local=True, remote=False, verbose=False):
     """
-    Deletes an action from the local and/or remote locations.  
+    Deletes a request from the local and/or remote locations.  
 
     Parameters
     ----------
-    action : Action
+    request : Request
         The record to delete.  If not given, then style and name
         are required.
     local : bool, optional
@@ -150,5 +141,5 @@ def delete_action(self, action, local=True, remote=False, verbose=False):
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-    self.delete_record(record=action, local=local, remote=remote,
+    self.delete_record(record=request, local=local, remote=remote,
                        verbose=verbose)
