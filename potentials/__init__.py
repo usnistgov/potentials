@@ -15,7 +15,7 @@ from .record import recordmanager, load_record
 
 # Import database methods
 #from datamodelbase import databasemanager
-from .Database import Database
+from .Database import Database, load_database
 
 from . import build
 from .build_lammps_potential import build_lammps_potential
@@ -23,5 +23,5 @@ from .build_lammps_potential import build_lammps_potential
 __all__ = sorted([
     '__version__', 'tools', 'settings',
     'record', 'load_record', 'recordmanager',
-    'Database', 'build', 'build_lammps_potential',
+    'Database', 'load_database', 'build', 'build_lammps_potential',
 ])
