@@ -46,7 +46,7 @@ def get_citations(self, local=None, remote=None, name=None, year=None, volume=No
 
 def get_citation(self, local=None, remote=None, name=None, year=None, volume=None,
                  title=None, journal=None, doi=None, author=None,
-                 abstract=None, verbose=False):
+                 abstract=None, prompt=True, verbose=False):
     """
     Retrieves exactly one matching citation from the database.
 
@@ -74,6 +74,10 @@ def get_citation(self, local=None, remote=None, name=None, year=None, volume=Non
         Author name(s) to search for.  Works best for last names only.
     abstract : str or list, optional
         Word(s) to search for in the article abstracts.
+    prompt : bool, optional
+        If prompt=True (default) then a screen input will ask for a selection
+        if multiple matching potentials are found.  If prompt=False, then an
+        error will be thrown if multiple matches are found.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
@@ -83,9 +87,23 @@ def get_citation(self, local=None, remote=None, name=None, year=None, volume=Non
     ValueError
         If no or multiple matching records are found.
     """
+    def promptfxn(df):
+        """Generates a prompt list for citations."""
+
+        js = df.sort_values('year_authors').index
+        for i, j in enumerate(js):
+            print(i+1, df.loc[j, 'year_authors'], )
+        i = int(input('Please select one:')) - 1
+
+        if i < 0 or i >= len(js):
+            raise ValueError('Invalid selection')
+
+        return js[i]
+
     return self.get_record('Citation', local=local, remote=remote, name=name, year=year, volume=volume,
                             title=title, journal=journal, doi=doi, author=author,
-                            abstract=abstract, verbose=verbose)
+                            abstract=abstract, prompt=prompt, promptfxn=promptfxn,
+                            verbose=verbose)
 
 def fetch_citation(self, doi, local=None, remote=None, verbose=False):
     """

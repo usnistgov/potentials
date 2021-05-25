@@ -54,7 +54,7 @@ def get_potentials(self, local=None, remote=None, name=None, key=None, id=None,
 def get_potential(self, local=None, remote=None, name=None, key=None, id=None,
                      notes=None, fictional=None, element=None,
                      othername=None, modelname=None, year=None, author=None,
-                     abstract=None, verbose=False):
+                     abstract=None, prompt=True, verbose=False):
     """
     Retrieves exactly one matching potential from the database.
 
@@ -91,6 +91,10 @@ def get_potential(self, local=None, remote=None, name=None, key=None, id=None,
         Author name(s) to parse by.  This works best for last names only.
     abstract : str or list
         Term(s) to search for in the potential's citation's abstract field.
+    prompt : bool
+        If prompt=True (default) then a screen input will ask for a selection
+        if multiple matching potentials are found.  If prompt=False, then an
+        error will be thrown if multiple matches are found.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
@@ -99,7 +103,7 @@ def get_potential(self, local=None, remote=None, name=None, key=None, id=None,
                            key=key, id=id, notes=notes, fictional=fictional,
                            element=element, othername=othername,
                            modelname=modelname, year=year, author=author,
-                           abstract=abstract, verbose=verbose)
+                           abstract=abstract, prompt=prompt, verbose=verbose)
 
 def download_potentials(self, name=None, key=None, id=None,
                         notes=None, fictional=None, element=None,
