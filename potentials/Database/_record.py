@@ -121,8 +121,9 @@ def get_records(self, style=None, name=None,
         return records
     
 def get_record(self, style=None, name=None,
-                local=None, remote=None, verbose=False,
-                return_df=False, **kwargs):
+               local=None, remote=None,
+               prompt=True, promptfxn=None,
+               verbose=False, **kwargs):
     """
     Retrieves a single matching record from the local and/or remote locations.
     If local is True and the record is found there, then the local copy of the
@@ -140,6 +141,13 @@ def get_record(self, style=None, name=None,
     remote : bool, optional
         Indicates if the remote location is to be searched.  Default value
         matches the value set when the database was initialized.
+    prompt : bool, optional
+        If prompt=True (default) then a screen input will ask for a selection
+        if multiple matching potentials are found.  If prompt=False, then an
+        error will be thrown if multiple matches are found.
+    promptfxn : function, optional
+        A function that generates the prompt selection list.  If not given,
+        the prompt will be a list of "id" values. 
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
@@ -165,31 +173,58 @@ def get_record(self, style=None, name=None,
     if remote is None:
         remote = self.remote
 
-    # Test that the respective databases have been set
-    if local and self.local_database is None:
-        raise ValueError('local database info not set: initialize with local=True or call set_local_database')
-    if remote and self.remote_database is None:
-        raise ValueError('remote database info not set: initialize with remote=True or call set_remote_database')
+    # Define default promptfxn if needed
+    if promptfxn is None:
+        def promptfxn(df):
+            """Generates a prompt list based on id or name fields."""
+            if 'id' in df:
+                key = 'id'
+            else:
+                key = 'name'
+
+            js = df.sort_values(key).index
+            for i, j in enumerate(js):
+                print(i+1, df.loc[j, key])
+            i = int(input('Please select one:')) - 1
+
+            if i < 0 or i >= len(js):
+                raise ValueError('Invalid selection')
+
+            return js[i]
     
     # Check local first
     if local:
-        records = self.local_database.get_records(style, name=name, **kwargs)
+        records, df = self.get_records(style, local=True, remote=False,
+                                       name=name, return_df=True, **kwargs)
         if len(records) == 1:
             if verbose:
                 print('Matching record retrieved from local')
             return records[0]
+
         elif len(records) > 1:
-            raise ValueError('Multiple matching records found')
+            if prompt:
+                print('Multiple matching record retrieved from local')
+                index = promptfxn(df)
+                return records[index]
+            else:
+                raise ValueError('Multiple matching records found')
     
     # Get remote records
     if remote:
-        records = self.remote_database.get_records(style, name=name, **kwargs)
+        records, df = self.get_records(style, local=False, remote=True,
+                                       name=name, return_df=True, **kwargs)
         if len(records) == 1:
             if verbose:
                 print('Matching record retrieved from remote')
             return records[0]
-        elif len(records) > 0:
-            raise ValueError('Multiple matching records found')
+
+        elif len(records) > 1:
+            if prompt:
+                print('Multiple matching record retrieved from remote')
+                index = promptfxn(df)
+                return records[index]
+            else:
+                raise ValueError('Multiple matching records found')
     
     raise ValueError('No matching records found')
 
