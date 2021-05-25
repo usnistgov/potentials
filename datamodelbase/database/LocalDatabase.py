@@ -65,7 +65,7 @@ class LocalDatabase(Database):
         """int or None: The record indentation setting to use when saving records."""
         return self.__indent
 
-    def cache(self, style, refresh=False):
+    def cache(self, style, refresh=False, addnew=True):
         
         recordmanager.assert_style(style)
         
@@ -92,22 +92,24 @@ class LocalDatabase(Database):
             cache = pd.DataFrame({'name':[]})
 
         # Search local directory
-        newrecords = []
-        for fname in Path(self.host, style).glob(f'*.{self.format}'):
-            name = fname.stem
+        if addnew is True:
+            newrecords = []
+            currentnames = cache.name.to_list()
+            for fname in Path(self.host, style).glob(f'*.{self.format}'):
+                name = fname.stem
 
-            # Add new entries
-            if name not in cache.name.to_list():
+                # Add new entries
+                if name not in currentnames:
+                    
+                    record = load_record(style, fname)
+                    newrecords.append(record.metadata())
                 
-                record = load_record(style, fname)
-                newrecords.append(record.metadata())
-            
-        # Update cache if needed
-        if len(newrecords) > 0:
-            newrecords = pd.DataFrame(newrecords)
+            # Update cache if needed
+            if len(newrecords) > 0:
+                newrecords = pd.DataFrame(newrecords)
 
-            cache = cache.append(newrecords, sort=False).sort_values('name').reset_index(drop=True)
-            cache.to_csv(cachefile, index=False)
+                cache = cache.append(newrecords, sort=False).sort_values('name').reset_index(drop=True)
+                cache.to_csv(cachefile, index=False)
 
         return cache
 
