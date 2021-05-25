@@ -23,8 +23,6 @@ else:
     recordmanager.loaded_styles['Potential'] = Potential
     __all__.append('Potential')
 
-__all__.sort()
-
 # Import PotentialLAMMPS
 try:
     from .PotentialLAMMPS import PotentialLAMMPS
@@ -33,8 +31,6 @@ except Exception as e:
 else:
     recordmanager.loaded_styles['potential_LAMMPS'] = PotentialLAMMPS
     __all__.append('PotentialLAMMPS')
-
-__all__.sort()
 
 # Import PotentialLAMMPSKIM
 try:
