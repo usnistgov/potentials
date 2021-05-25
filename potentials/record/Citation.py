@@ -168,7 +168,9 @@ class Citation(Record):
 
     def metadata(self):
         """Returns a flat dict representation of the object"""
-        meta = {'name' : self.name}
+        meta = {}
+        meta['name'] = self.name
+        meta['year_authors'] = self.year_authors
         meta.update(self.bib)
         return meta
 

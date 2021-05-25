@@ -160,6 +160,11 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
                      atom_style=None, pair_style=None, status=None,
                      symbols=None, elements=None):
         
+        if status is not None:
+            status = aslist(status)
+            if 'active' in status:
+                status.append(None)
+
         mquery = {}
         query.str_match.mongo(mquery, f'name', name)
 
@@ -171,20 +176,21 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         query.str_match.mongo(mquery, f'{root}.units', units)
         query.str_match.mongo(mquery, f'{root}.atom_style', atom_style)
         query.str_match.mongo(mquery, f'{root}.pair_style.type', pair_style)
-
-        if status is not None:
-            status = aslist(status)
-            if 'active' in status:
-                status.append(None)
-
         query.str_match.mongo(mquery, f'{root}.status', status)
-        
+        query.in_list.mongo(mquery, f'{root}.atom.element', elements)
+        query.in_list.mongo(mquery, f'{root}.atom.symbol', symbols)
+
         return mquery
 
     @staticmethod
     def cdcsquery(key=None, id=None, potid=None, potkey=None,
                   units=None, atom_style=None, pair_style=None, status=None,
                   symbols=None, elements=None):
+
+        if status is not None:
+            status = aslist(status)
+            if 'active' in status:
+                status.append(None)
 
         mquery = {}
         root = modelroot
@@ -196,13 +202,9 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         query.str_match.mongo(mquery, f'{root}.units', units)
         query.str_match.mongo(mquery, f'{root}.atom_style', atom_style)
         query.str_match.mongo(mquery, f'{root}.pair_style.type', pair_style)
-
-        if status is not None:
-            status = aslist(status)
-            if 'active' in status:
-                status.append(None)
-
         query.str_match.mongo(mquery, f'{root}.status', status)
+        query.in_list.mongo(mquery, f'{root}.atom.element', elements)
+        query.in_list.mongo(mquery, f'{root}.atom.symbol', symbols)
 
         return mquery
         

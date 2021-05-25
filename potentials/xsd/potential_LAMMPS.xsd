@@ -109,7 +109,7 @@
   <xsd:complexType name="termtype">
     <xsd:choice>
       <xsd:element name="option" type="xsd:string"/>
-      <xsd:element name="parameter" type="xsd:decimal"/>
+      <xsd:element name="parameter" type="xsd:float"/>
       <xsd:element name="file" type="xsd:string"/>
       <xsd:element name="symbols" type="xsd:boolean"/>
       <xsd:element name="symbolsList" type="xsd:boolean"/>
