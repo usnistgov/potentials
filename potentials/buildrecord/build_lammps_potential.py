@@ -1,5 +1,5 @@
-from .build import (EamBuilder, EimBuilder, LibParamBuilder,
-               PairBuilder, ParamFileBuilder)
+from .potential_LAMMPS import (EamBuilder, EimBuilder, LibParamBuilder,
+                               PairBuilder, ParamFileBuilder)
 
 def build_lammps_potential(pair_style, **kwargs):
     """

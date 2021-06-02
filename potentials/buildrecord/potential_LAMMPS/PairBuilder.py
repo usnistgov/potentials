@@ -3,7 +3,7 @@ from DataModelDict import DataModelDict as DM
 from scipy.special import comb
 
 from . import PotentialLAMMPSBuilder
-from ..tools import aslist
+from ...tools import aslist
 
 class PairBuilder(PotentialLAMMPSBuilder):
     """

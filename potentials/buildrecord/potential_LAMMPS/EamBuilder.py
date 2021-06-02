@@ -1,7 +1,7 @@
 from DataModelDict import DataModelDict as DM
 
 from . import PotentialLAMMPSBuilder
-from ..tools import aslist
+from ...tools import aslist
 
 class EamBuilder(PotentialLAMMPSBuilder):
     """ 
