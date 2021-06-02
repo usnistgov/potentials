@@ -33,7 +33,7 @@ class Record():
         Parameters
         ----------
         model : str, file-like object, DataModelDict
-            The content of the record as an XML formatted str.
+            The contents of the record.
         name : str, optional
             The unique name to assign to the record.  If model is a file
             path, then the default record name is the file name without
