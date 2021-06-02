@@ -17,11 +17,13 @@ from .record import recordmanager, load_record
 #from datamodelbase import databasemanager
 from .Database import Database, load_database
 
-from . import build
-from .build_lammps_potential import build_lammps_potential
+from . import buildrecord
+from .buildrecord import build_lammps_potential
+
+from . import paramfile
 
 __all__ = sorted([
     '__version__', 'tools', 'settings',
     'record', 'load_record', 'recordmanager',
-    'Database', 'load_database', 'build', 'build_lammps_potential',
+    'Database', 'load_database', 'buildrecord', 'build_lammps_potential',
 ])
