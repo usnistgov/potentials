@@ -1,17 +1,21 @@
-from ..tools import aslist
 from copy import deepcopy
+import warnings
+
 from scipy.interpolate import CubicSpline
 
 import numpy as np
 
-import warnings
+import matplotlib.pyplot as plt
 
+from ..tools import aslist, numderivative
 class EAMAlloy():
     """
     Class for building and analyzing LAMMPS setfl eam/alloy parameter files 
     """
     def __init__(self, filename=None, header=None,
-                 symbol=None, number=None, mass=None, alat=None, lattice=None):
+                 symbol=None, number=None, mass=None, alat=None, lattice=None,
+                 numr=None, cutoffr=None, deltar=None,
+                 numrho=None, cutoffrho=None, deltarho=None):
         """
         Class initializer. Element information can be set at this time.
         
@@ -79,7 +83,20 @@ class EAMAlloy():
                     assert lattice is not None                
                 except:
                     raise ValueError('symbols, numbers, masses, alats, and lattices must all be given or none given')
-                self.set_symbol(symbol, number, mass, alat, lattice)
+                self.set_symbol_info(symbol, number, mass, alat, lattice)
+
+            # Set r
+            if numr is not None:
+                self.set_r(num=numr, cutoff=cutoffr, delta=deltar)
+            
+            # Set rho
+            if numrho is not None:
+                self.set_rho(num=numrho, cutoff=cutoffrho, delta=deltarho)
+
+    @property
+    def pair_style(self):
+        """The LAMMPS pair_style associated with the class"""
+        return 'eam/alloy'
 
     @property
     def header(self):
@@ -436,6 +453,7 @@ class EAMAlloy():
                 fxn = CubicSpline(self.r, self.__rho_r_table[symbol])
                 v = fxn(r)
                 v[np.abs(v) <= 1e-100] = 0.0
+                v[r > self.cutoffr] = 0.0
                 return v
         
         elif symbol in self.__rho_r:
@@ -449,6 +467,7 @@ class EAMAlloy():
             kwargs = self.__rho_r_kwargs[symbol]
             v = fxn(r, **kwargs)
             v[np.abs(v) <= 1e-100] = 0.0
+            v[r > self.cutoffr] = 0.0
             return v
         
         else:
@@ -549,6 +568,7 @@ class EAMAlloy():
                 fxn = CubicSpline(self.r, self.__rphi_r_table[symbolstr])
                 v = fxn(r)
                 v[np.abs(v) <= 1e-100] = 0.0
+                v[r > self.cutoffr] = 0.0
                 return v
         
         elif symbolstr in self.__rphi_r:
@@ -562,6 +582,7 @@ class EAMAlloy():
             kwargs = self.__rphi_r_kwargs[symbolstr]
             v = fxn(r, **kwargs)
             v[np.abs(v) <= 1e-100] = 0.0
+            v[r > self.cutoffr] = 0.0
             return v
         
         elif symbolstr in self.__phi_r or symbolstr in self.__phi_r_table:
@@ -686,6 +707,7 @@ class EAMAlloy():
                 fxn = CubicSpline(self.r, self.__phi_r_table[symbolstr])
                 v = fxn(r)
                 v[np.abs(v) <= 1e-100] = 0.0
+                v[r > self.cutoffr] = 0.0
                 return v
         
         elif symbolstr in self.__phi_r:
@@ -699,6 +721,7 @@ class EAMAlloy():
             kwargs = self.__phi_r_kwargs[symbolstr]
             v = fxn(r, **kwargs)
             v[np.abs(v) <= 1e-100] = 0.0
+            v[r > self.cutoffr] = 0.0
             return v
         
         elif symbolstr in self.__rphi_r or symbolstr in self.__rphi_r_table:
@@ -832,7 +855,15 @@ class EAMAlloy():
                     print(symbols[0], symbols[1], 'not set')
 
     def load(self, f):
-        """Reads in an eam/alloy setfl file"""
+        """
+        Reads in an eam/alloy setfl file
+        
+        Parameters
+        ----------
+        f : path-like object or file-like object
+            The parameter file to read in, either as a file path or as an open
+            file-like object.
+        """
         
         if hasattr(f, 'readlines'):
             lines = f.readlines()
@@ -848,6 +879,10 @@ class EAMAlloy():
         nsymbols = len(symbols)
         if nsymbols != int(lines[3].split()[0]):
             raise ValueError('Invalid potential file (line 4): inconsistent number of symbols')
+
+        # Set initial dummy symbols info (replaced later)
+        for symbol in symbols:
+             self.set_symbol_info(symbol, 0, 0.0, 0.0, 'NA')
 
         # Read line 5 for numrho, deltarho, numr, deltar, and cutoffr
         terms = lines[4].split()
@@ -910,3 +945,295 @@ class EAMAlloy():
                 self.set_rphi_r(symbolpair, table=rphi_r_table)
 
                 c += self.numr
+
+    def build(self, f=None, xf='%25.16e', ncolumns=5):
+        """
+        Constructs an eam/alloy setfl parameter file.
+        
+        Parameters
+        ----------
+        f : str or file-like object
+            If given, the contents will be written to the file-like object or file name given by a str.
+            If not given, the parameter file contents will be returned as a str.
+        xf : str, optional
+            The c-style formatter to use for floating point numbers.  Default value is '%25.16e'.
+        ncolumns : int, optional
+            Indicates how many columns the tabulated values are split by.  Default value is 5.
+        
+        Returns
+        -------
+        str
+            The parameter file contents (returned if f is not given).
+        """
+
+        # Initialize setfl str
+        setfl = ''
+
+        # Add header
+        header = self.header.splitlines()
+        while len(header) < 3:
+            header.append('')
+        header = '\n'.join(header)+'\n'
+        setfl = header
+
+        # Add symbol header info
+        nsymbols = len(self.symbols)
+        if nsymbols == 0:
+            raise ValueError('No symbols set: no data to write')
+        setfl += str(nsymbols)
+        for symbol in self.symbols:
+            setfl += ' ' + symbol
+        setfl += '\n'
+
+        # Add r and rho header info
+        terms = (self.numrho, self.deltarho, self.numr, self.deltar, self.cutoffr)
+        setfl += f'%i {xf} %i {xf} {xf}\n' % terms
+
+        line = []
+
+        # Loop over symbols
+        for symbol in self.symbols:
+
+            # Add symbol header
+            info = self.symbol_info(symbol)
+            terms = (info['number'], info['mass'], info['alat'], info['lattice'])
+            setfl += f'%i {xf} {xf} %s\n' % terms
+
+            # Tabulate F(rho) and rho(r) values
+            vals = np.hstack([self.F_rho(symbol), self.rho_r(symbol)])
+            for j in range(len(vals)):
+                line.append(xf % vals[j])
+                
+                if (j + 1) % ncolumns == 0:
+                    setfl += ' '.join(line) + '\n'
+                    line = []
+
+            if len(line) > 0:
+                setfl += ' '.join(line) + '\n'
+                line = []
+
+        # Build array of all r*phi(r) values
+        vals = []
+        for i in range(nsymbols):
+            for j in range(i+1):
+                symbolpair = [self.symbols[i], self.symbols[j]]
+                vals.append(self.phi_r(symbolpair))
+        vals = np.hstack(vals)
+
+        # Tabulate values
+        for j in range(len(vals)):
+            line.append(xf % (vals[j]))
+            
+            if (j + 1) % ncolumns == 0:
+                setfl += ' '.join(line) + '\n'
+                line = []
+                
+        if len(line) > 0:
+            setfl += ' '.join(line) + '\n'
+            line = []
+
+        # Save or return
+        if f is None:
+            return setfl
+        
+        elif isinstance(f, str):
+            with open(f, 'w') as fp:
+                fp.write(setfl)
+        
+        elif hasattr(f, 'write'):
+            f.write(setfl)
+        
+        else:
+            raise TypeError('f must be a path or a file-like object')
+
+    def plot_F_rho(self, symbols=None, n=0, figsize=None, matplotlib_axes=None,
+                   xlim=None, ylim=None):
+
+        # Initial plot setup and parameters
+        if matplotlib_axes is None:
+            if figsize is None:
+                figsize = (10, 6)
+            fig = plt.figure(figsize=figsize, dpi=72)
+            ax1 = fig.add_subplot(111)
+        else:
+            ax1 = matplotlib_axes
+        
+        if symbols is None:
+            symbols = self.symbols
+        else:
+            symbols = aslist(symbols)
+        ρ = self.rho
+
+        for symbol in symbols:
+            F = self.F_rho(symbol)
+            ax1.plot(*numderivative(ρ, F, n=n), label=symbol)
+        
+        if len(symbols) > 1:
+            ax1.legend()
+        
+        ax1.set_xlabel('ρ', size='x-large')
+        
+        if n == 0:
+            ylabel = 'F(ρ)'
+        elif n == 1:
+            ylabel = '∂F(ρ) / ∂ρ'
+        else:
+            ylabel = f'∂$^{n}$F(ρ) / ∂$ρ^{n}$'
+        ax1.set_ylabel(ylabel, size='x-large')
+        
+        if xlim is None:
+            xlim = (0, ρ[-1])
+        ax1.set_xlim(xlim)
+        
+        if ylim is not None:
+            ax1.set_ylim(ylim)
+        
+        if matplotlib_axes is None:
+            return fig
+
+    def plot_rho_r(self, symbols=None, n=0, figsize=None, matplotlib_axes=None,
+                   xlim=None, ylim=None):
+
+        # Initial plot setup and parameters
+        if matplotlib_axes is None:
+            if figsize is None:
+                figsize = (10, 6)
+            fig = plt.figure(figsize=figsize, dpi=72)
+            ax1 = fig.add_subplot(111)
+        else:
+            ax1 = matplotlib_axes
+
+        if symbols is None:
+            symbols = self.symbols
+        else:
+            symbols = aslist(symbols)
+        r = self.r
+
+        for symbol in symbols:
+            ρ = self.rho_r(symbol)
+            ax1.plot(*numderivative(r, ρ, n=n), label=symbol)
+
+        if len(symbols) > 1:
+            ax1.legend()
+
+        ax1.set_xlabel('r', size='x-large')
+        
+        if n == 0:
+            ylabel = 'ρ(r)'
+        elif n == 1:
+            ylabel = '∂ρ(r) / ∂r'
+        else:
+            ylabel = f'∂$^{n}$ρ(r) / ∂$r^{n}$'
+        ax1.set_ylabel(ylabel, size='x-large')
+        
+        if xlim is None:
+            xlim = (0, r[-1])
+        ax1.set_xlim(xlim)
+        
+        if ylim is not None:
+            ax1.set_ylim(ylim)
+        
+        if matplotlib_axes is None:
+            return fig
+        
+    def plot_rphi_r(self, symbols=None, n=0, figsize=None, matplotlib_axes=None,
+                    xlim=None, ylim=None):
+
+        # Initial plot setup and parameters
+        if matplotlib_axes is None:
+            if figsize is None:
+                figsize = (10, 6)
+            fig = plt.figure(figsize=figsize, dpi=72)
+            ax1 = fig.add_subplot(111)
+        else:
+            ax1 = matplotlib_axes
+        
+        if symbols is None:
+            symbols = []
+            for i in range(len(self.symbols)):
+                for j in range(0, i+1):
+                    symbols.append([self.symbols[i], self.symbols[j]])
+        else:
+            symbols = aslist(symbols)
+        r = self.r
+
+        for symbol in symbols:
+            symbol = aslist(symbol)
+            if len(symbol) == 1:
+                symbol += symbol
+            rϕ = self.rphi_r(symbol)
+            ax1.plot(*numderivative(r, rϕ, n=n), label='-'.join(symbol))
+        ax1.set_xlabel('r', size='x-large')
+        
+        if len(symbols) > 1:
+            ax1.legend()
+
+        if n == 0:
+            ylabel = 'r*ϕ(r)'
+        elif n == 1:
+            ylabel = '∂(r*ϕ(r)) / ∂r'
+        else:
+            ylabel = f'∂$^{n}$(r*ϕ(r)) / ∂$r^{n}$'
+        ax1.set_ylabel(ylabel, size='x-large')
+        
+        if xlim is None:
+            xlim = (0, r[-1])
+        ax1.set_xlim(xlim)
+        
+        if ylim is not None:
+            ax1.set_ylim(ylim)
+        
+        if matplotlib_axes is None:
+            return fig
+        
+    def plot_phi_r(self, symbols=None, n=0, figsize=None, matplotlib_axes=None,
+                   xlim=None, ylim=None):
+
+        # Initial plot setup and parameters
+        if matplotlib_axes is None:
+            if figsize is None:
+                figsize = (10, 6)
+            fig = plt.figure(figsize=figsize, dpi=72)
+            ax1 = fig.add_subplot(111)
+        else:
+            ax1 = matplotlib_axes
+        
+        if symbols is None:
+            symbols = []
+            for i in range(len(self.symbols)):
+                for j in range(0, i+1):
+                    symbols.append([self.symbols[i], self.symbols[j]])
+        else:
+            symbols = aslist(symbols)
+        r = self.r
+
+        for symbol in symbols:
+            symbol = aslist(symbol)
+            if len(symbol) == 1:
+                symbol += symbol
+            rϕ = self.phi_r(symbol)
+            ax1.plot(*numderivative(r, rϕ, n=n), label='-'.join(symbol))
+        ax1.set_xlabel('r', size='x-large')
+        
+        if len(symbols) > 1:
+            ax1.legend()
+
+        ax1.set_xlabel('r', size='x-large')
+        
+        if n == 0:
+            ylabel = 'ϕ(r)'
+        elif n == 1:
+            ylabel = '∂ϕ(r) / ∂r'
+        else:
+            ylabel = f'∂$^{n}$ϕ(r) / ∂$r^{n}$'
+        ax1.set_ylabel(ylabel, size='x-large')
+        
+        if xlim is None:
+            xlim = (0, r[-1])
+        ax1.set_xlim(xlim)
+        
+        if ylim is not None:
+            ax1.set_ylim(ylim)
+        
+        if matplotlib_axes is None:
+            return fig

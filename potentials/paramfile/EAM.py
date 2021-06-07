@@ -1,10 +1,13 @@
-from ..tools import aslist
 from copy import deepcopy
+import warnings
+
 from scipy.interpolate import CubicSpline
 
 import numpy as np
 
-import warnings
+import matplotlib.pyplot as plt
+
+from ..tools import aslist, numderivative
 
 class EAM():
     """
@@ -12,7 +15,8 @@ class EAM():
     """
     def __init__(self, filename=None, header=None,
                  number=None, mass=None, alat=None, lattice=None,
-                 constants='lammps'):
+                 constants='lammps', numr=None, cutoffr=None, deltar=None,
+                 numrho=None, cutoffrho=None, deltarho=None):
         """
         Class initializer. Element information can be set at this time.
         
@@ -98,7 +102,20 @@ class EAM():
                     assert lattice is not None                
                 except:
                     raise ValueError('number, mass, alat, and lattice must all be given or none given')
-                self.set_symbol(number, mass, alat, lattice)
+                self.set_symbol_info(number, mass, alat, lattice)
+
+            # Set r
+            if numr is not None:
+                self.set_r(num=numr, cutoff=cutoffr, delta=deltar)
+            
+            # Set rho
+            if numrho is not None:
+                self.set_rho(num=numrho, cutoff=cutoffrho, delta=deltarho)
+
+    @property
+    def pair_style(self):
+        """The LAMMPS pair_style associated with the class"""
+        return 'eam'
 
     @property
     def hartree(self):
@@ -407,6 +424,7 @@ class EAM():
                 fxn = CubicSpline(self.r, self.__rho_r_table)
                 v = fxn(r)
                 v[np.abs(v) <= 1e-100] = 0.0
+                v[r > self.cutoffr] = 0.0
                 return v
         
         elif self.__rho_r is not None:
@@ -420,6 +438,7 @@ class EAM():
             kwargs = self.__rho_r_kwargs
             v = fxn(r, **kwargs)
             v[np.abs(v) <= 1e-100] = 0.0
+            v[r > self.cutoffr] = 0.0
             return v
         
         else:
@@ -496,6 +515,7 @@ class EAM():
                 fxn = CubicSpline(self.r, self.__z_r_table)
                 v = fxn(r)
                 v[np.abs(v) <= 1e-100] = 0.0
+                v[r > self.cutoffr] = 0.0
                 return v
         
         elif self.__z_r is not None:
@@ -509,6 +529,7 @@ class EAM():
             kwargs = self.__z_r_kwargs
             v = fxn(r, **kwargs)
             v[np.abs(v) <= 1e-100] = 0.0
+            v[r > self.cutoffr] = 0.0
             return v
         
         elif self.__rphi_r is not None or self.__rphi_r_table is not None:
@@ -607,6 +628,7 @@ class EAM():
                 fxn = CubicSpline(self.r, self.__rphi_r_table)
                 v = fxn(r)
                 v[np.abs(v) <= 1e-100] = 0.0
+                v[r > self.cutoffr] = 0.0
                 return v
         
         elif self.__rphi_r is not None:
@@ -620,6 +642,7 @@ class EAM():
             kwargs = self.__rphi_r_kwargs
             v = fxn(r, **kwargs)
             v[np.abs(v) <= 1e-100] = 0.0
+            v[r > self.cutoffr] = 0.0
             return v
         
         elif self.__z_r is not None or self.__z_r_table is not None:
@@ -716,6 +739,7 @@ class EAM():
                 fxn = CubicSpline(self.r, self.__phi_r_table)
                 v = fxn(r)
                 v[np.abs(v) <= 1e-100] = 0.0
+                v[r > self.cutoffr] = 0.0
                 return v
         
         elif self.__phi_r is not None:
@@ -729,9 +753,10 @@ class EAM():
             kwargs = self.__phi_r_kwargs
             v = fxn(r, **kwargs)
             v[np.abs(v) <= 1e-100] = 0.0
+            v[r > self.cutoffr] = 0.0
             return v
 
-        elif self.__z_r is not None:
+        elif self.__z_r is not None or self.__z_r_table is not None:
             
             # Evaluate from z_r
             z_r = self.z_r(r)
@@ -742,7 +767,7 @@ class EAM():
                 return (self.hartree * self.bohr * z_r * z_r) / r
         
         # Evaluate if r*phi(r) is set
-        elif self.__rphi_r is not None:
+        elif self.__rphi_r is not None or self.__rphi_r_table is not None:
 
             # Evaluate from rphi_r
             rphi_r = self.rphi_r(r=r)
@@ -863,7 +888,7 @@ class EAM():
                 lines = fp.readlines()
 
         # Read line 1 to header
-        header = lines[0].strip()
+        self.header = lines[0].strip()
 
         # Read line 2 for element number, mass, alat and lattice
         terms = lines[1].split()
@@ -914,3 +939,239 @@ class EAM():
         end = c + self.numr
         rho_r_table = np.array(terms[start:end], dtype=float)
         self.set_rho_r(table=rho_r_table)
+
+    def build(self, f=None, xf='%25.16e', ncolumns=5):
+        """
+        Constructs an eam/alloy setfl parameter file.
+        
+        Parameters
+        ----------
+        f : str or file-like object
+            If given, the contents will be written to the file-like object or file name given by a str.
+            If not given, the parameter file contents will be returned as a str.
+        xf : str, optional
+            The c-style formatter to use for floating point numbers.  Default value is '%25.16e'.
+        ncolumns : int, optional
+            Indicates how many columns the tabulated values are split by.  Default value is 5.
+        
+        Returns
+        -------
+        str
+            The parameter file contents (returned if f is not given).
+        """
+
+        # Initialize funcfl str
+        funcfl = ''
+
+        # Add header
+        funcfl = self.header + '\n'
+
+        # Add symbol header
+        info = self.symbol_info()
+        terms = (info['number'], info['mass'], info['alat'], info['lattice'])
+        funcfl += f'%i {xf} {xf} %s\n' % terms
+
+        # Add r and rho header info
+        terms = (self.numrho, self.deltarho, self.numr, self.deltar, self.cutoffr)
+        funcfl += f'%i {xf} %i {xf} {xf}\n' % terms
+
+        line = []
+
+        # Build array of all values
+        vals = np.hstack([self.F_rho(), self.z_r(), self.rho_r()])
+        
+        # Tabulate values
+        for j in range(len(vals)):
+            line.append(xf % vals[j])
+            
+            if (j + 1) % ncolumns == 0:
+                funcfl += ' '.join(line) + '\n'
+                line = []
+
+        if len(line) > 0:
+            funcfl += ' '.join(line) + '\n'
+            line = []
+
+        # Save or return
+        if f is None:
+            return funcfl
+        
+        elif isinstance(f, str):
+            with open(f, 'w') as fp:
+                fp.write(funcfl)
+        
+        elif hasattr(f, 'write'):
+            f.write(funcfl)
+        
+        else:
+            raise TypeError('f must be a path or a file-like object')
+
+    def plot_F_rho(self, n=0, figsize=None, matplotlib_axes=None, xlim=None, ylim=None):
+
+        # Initial plot setup and parameters
+        if matplotlib_axes is None:
+            if figsize is None:
+                figsize = (10, 6)
+            fig = plt.figure(figsize=figsize, dpi=72)
+            ax1 = fig.add_subplot(111)
+        else:
+            ax1 = matplotlib_axes
+        
+        ρ = self.rho
+        F = self.F_rho()
+        ax1.plot(*numderivative(ρ, F, n=n))
+        ax1.set_xlabel('ρ', size='x-large')
+        
+        if n == 0:
+            ylabel = 'F(ρ)'
+        elif n == 1:
+            ylabel = '∂F(ρ) / ∂ρ'
+        else:
+            ylabel = f'∂$^{n}$F(ρ) / ∂$ρ^{n}$'
+        ax1.set_ylabel(ylabel, size='x-large')
+        
+        if xlim is None:
+            xlim = (0, ρ[-1])
+        ax1.set_xlim(xlim)
+        
+        if ylim is not None:
+            ax1.set_ylim(ylim)
+        
+        if matplotlib_axes is None:
+            return fig
+        
+    def plot_rho_r(self, n=0, figsize=None, matplotlib_axes=None, xlim=None, ylim=None):
+
+        # Initial plot setup and parameters
+        if matplotlib_axes is None:
+            if figsize is None:
+                figsize = (10, 6)
+            fig = plt.figure(figsize=figsize, dpi=72)
+            ax1 = fig.add_subplot(111)
+        else:
+            ax1 = matplotlib_axes
+        
+        r = self.r
+        ρ = self.rho_r()
+        ax1.plot(*numderivative(r, ρ, n=n))
+        ax1.set_xlabel('r', size='x-large')
+        
+        if n == 0:
+            ylabel = 'ρ(r)'
+        elif n == 1:
+            ylabel = '∂ρ(r) / ∂r'
+        else:
+            ylabel = f'∂$^{n}$ρ(r) / ∂$r^{n}$'
+        ax1.set_ylabel(ylabel, size='x-large')
+        
+        if xlim is None:
+            xlim = (0, r[-1])
+        ax1.set_xlim(xlim)
+        
+        if ylim is not None:
+            ax1.set_ylim(ylim)
+        
+        if matplotlib_axes is None:
+            return fig
+        
+    def plot_rphi_r(self, n=0, figsize=None, matplotlib_axes=None, xlim=None, ylim=None):
+
+        # Initial plot setup and parameters
+        if matplotlib_axes is None:
+            if figsize is None:
+                figsize = (10, 6)
+            fig = plt.figure(figsize=figsize, dpi=72)
+            ax1 = fig.add_subplot(111)
+        else:
+            ax1 = matplotlib_axes
+        
+        r = self.r
+        rϕ = self.rphi_r()
+        ax1.plot(*numderivative(r, rϕ, n=n))
+        ax1.set_xlabel('r', size='x-large')
+        
+        if n == 0:
+            ylabel = 'r*ϕ(r)'
+        elif n == 1:
+            ylabel = '∂(r*ϕ(r)) / ∂r'
+        else:
+            ylabel = f'∂$^{n}$(r*ϕ(r)) / ∂$r^{n}$'
+        ax1.set_ylabel(ylabel, size='x-large')
+        
+        if xlim is None:
+            xlim = (0, r[-1])
+        ax1.set_xlim(xlim)
+        
+        if ylim is not None:
+            ax1.set_ylim(ylim)
+        
+        if matplotlib_axes is None:
+            return fig
+        
+    def plot_phi_r(self, n=0, figsize=None, matplotlib_axes=None, xlim=None, ylim=None):
+
+        # Initial plot setup and parameters
+        if matplotlib_axes is None:
+            if figsize is None:
+                figsize = (10, 6)
+            fig = plt.figure(figsize=figsize, dpi=72)
+            ax1 = fig.add_subplot(111)
+        else:
+            ax1 = matplotlib_axes
+        
+        r = self.r
+        ϕ = self.phi_r()
+        ax1.plot(*numderivative(r, ϕ, n=n))
+        ax1.set_xlabel('r', size='x-large')
+        
+        if n == 0:
+            ylabel = 'ϕ(r)'
+        elif n == 1:
+            ylabel = '∂ϕ(r) / ∂r'
+        else:
+            ylabel = f'∂$^{n}$ϕ(r) / ∂$r^{n}$'
+        ax1.set_ylabel(ylabel, size='x-large')
+        
+        if xlim is None:
+            xlim = (0, r[-1])
+        ax1.set_xlim(xlim)
+        
+        if ylim is not None:
+            ax1.set_ylim(ylim)
+        
+        if matplotlib_axes is None:
+            return fig
+        
+    def plot_z_r(self, n=0, figsize=None, matplotlib_axes=None, xlim=None, ylim=None):
+
+        # Initial plot setup and parameters
+        if matplotlib_axes is None:
+            if figsize is None:
+                figsize = (10, 6)
+            fig = plt.figure(figsize=figsize, dpi=72)
+            ax1 = fig.add_subplot(111)
+        else:
+            ax1 = matplotlib_axes
+        
+        r = self.r
+        z = self.z_r()
+        ax1.plot(*numderivative(r, z, n=n))
+        ax1.set_xlabel('r', size='x-large')
+        
+        if n == 0:
+            ylabel = 'z(r)'
+        elif n == 1:
+            ylabel = '∂z(r) / ∂r'
+        else:
+            ylabel = f'∂$^{n}$z(r) / ∂$r^{n}$'
+        ax1.set_ylabel(ylabel, size='x-large')
+        
+        if xlim is None:
+            xlim = (0, r[-1])
+        ax1.set_xlim(xlim)
+        
+        if ylim is not None:
+            ax1.set_ylim(ylim)
+        
+        if matplotlib_axes is None:
+            return fig
