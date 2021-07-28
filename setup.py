@@ -3,16 +3,20 @@ from setuptools import setup, find_packages
 def getreadme():
     with open('README.rst') as readme_file:
         return readme_file.read()
-   
+
+def getversion():
+    """Fetches version information from VERSION file"""
+    with open('atomman/VERSION') as version_file:
+        return version_file.read().strip()
+
 setup(name = 'potentials',
-      version = '0.2.8',
+      version = getversion(),
       description = 'API database tools for accessing the NIST Interatomic Potentials Repository: explore and download interatomic potentials and computed properties.',
       long_description = getreadme(),
       classifiers=[
         'Development Status :: 4 - Beta',
         'Intended Audience :: Science/Research',
         'Natural Language :: English',
-        'Programming Language :: Python :: 3.6',
         'Programming Language :: Python :: 3.7',
         'Programming Language :: Python :: 3.8',
         'Programming Language :: Python :: 3.9',
@@ -40,7 +44,7 @@ setup(name = 'potentials',
         'requests',
         'habanero',
         'bibtexparser',
-        'cdcs==0.1.4',
+        'cdcs==0.1.5',
         'ipywidgets',
       ],
       package_data={'': ['*']},
