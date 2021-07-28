@@ -322,10 +322,6 @@ class EAM():
             The value(s) of rho to evaluate F_rho at.  If not given, will
             use the rho values set.
         """        
-        # Set default rho
-        if rho is None:
-            rho = self.rho
-
         if self.__F_rho_table is not None:
             if rho is None:
                 # Directly return table

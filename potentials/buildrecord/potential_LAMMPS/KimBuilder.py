@@ -49,7 +49,7 @@ class KimBuilder(PotentialLAMMPSBuilder):
 
     def buildpaircoeff(self):
         paircoeff = DM()
-        paircoeff.append('term', DM([('symbols', 'True')]))
+        paircoeff.append('term', DM([('symbols', True)]))
         
         return paircoeff 
     

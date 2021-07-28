@@ -23,6 +23,12 @@ class Database():
     from ._action import (get_actions, get_action, download_actions,
                           upload_action, save_action, delete_action)
 
+    from ._request import (get_requests, get_request, download_requests,
+                          upload_request, save_request, delete_request)
+
+    from ._faq import (get_faqs, get_faq, download_faqs,
+                       upload_faq, save_faq, delete_faq)
+
     from ._related_models import (load_related_models, related_models, get_related_models,
                                  save_related_models, add_related_models, sort_related_models)
 
@@ -38,8 +44,8 @@ class Database():
     from ._widgets import (widget_search_potentials, widget_lammps_potential)
 
     def __init__(self, local=None, remote=None, localpath=None,
-                 local_name=None, local_style=None, local_host=None, local_terms=None,
-                 remote_name=None, remote_style=None, remote_host=None, remote_terms=None, 
+                 local_name=None, local_database=None, local_style=None, local_host=None, local_terms=None,
+                 remote_name=None, remote_database=None, remote_style=None, remote_host=None, remote_terms=None, 
                  kim_models=None, kim_api_directory=None, kim_models_file=None):
         """
         Class initializer
@@ -59,6 +65,8 @@ class Database():
             The path to a directory where a local-style directory is to be
             found. This is an alias for local_host, with a local_style of
             "local" and is only retained for backwards compatibility.
+        local_database : datamodelbase.Database
+            A pre-existing Database object to use for the local.
         local_name : str, optional
             The name assigned to a pre-defined database to use for the local
             interactions.  Cannot be given with local_style, local_host or
@@ -76,6 +84,8 @@ class Database():
             The name assigned to a pre-defined database to use for the remote
             interactions.  Cannot be given with remote_style, remote_host or
             remote_terms.
+        remote_database : datamodelbase.Database
+            A pre-existing Database object to use for the remote.
         remote_style : str, optional
             The database style to use for the remote interactions.
         remote_host : str, optional
@@ -87,11 +97,13 @@ class Database():
 
         kim_models : str or list, optional
             Allows for the list of installed_kim_models to be explicitly given.
-            Cannot be given with the other parameters.
+            Cannot be given with the other kim parameters.
         kim_api_directory : path-like object, optional
             The directory containing the kim api to use to build the list.
+            Cannot be given with the other kim parameters.
         kim_models_file : path-like object, optional
             The path to a whitespace-delimited file listing full kim ids.
+            Cannot be given with the other kim parameters.
         """
 
         # Handle local/remote settings
@@ -108,16 +120,18 @@ class Database():
         if remote:
             if remote_terms is None:
                 remote_terms = {}
-            self.set_remote_database(name=remote_name, style=remote_style, 
-                                     host=remote_host, **remote_terms)
+            self.set_remote_database(name=remote_name, database=remote_database,
+                                     style=remote_style, host=remote_host,
+                                     **remote_terms)
         else:
             self.__remote_database = None
         
         if local:
             if local_terms is None:
                 local_terms = {}
-            self.set_local_database(name=local_name, style=local_style, 
-                                     host=local_host, **local_terms)
+            self.set_local_database(name=local_name, database=local_database,
+                                    style=local_style, host=local_host,
+                                    localpath=localpath, **local_terms)
         else:
             self.__local_database = None
         
@@ -145,7 +159,8 @@ class Database():
         """bool : Indicates if load operations will check remote database"""
         return self.__remote
 
-    def set_remote_database(self, name=None, style=None, host=None, **kwargs):
+    def set_remote_database(self, name=None, database=None, style=None, host=None,
+                            **kwargs):
         """
         Sets the remote database to interact with.  If no parameters are given,
         will load settings for "potentials_remote" database if they have been
@@ -156,6 +171,8 @@ class Database():
         name : str, optional
             The name assigned to a pre-defined database.  If given, can be the only
             parameter.
+        database : datamodelbase.Database, optional
+            A pre-existing Database object to use for the remote.
         style : str, optional
             The database style to use.
         host : str, optional
@@ -164,7 +181,11 @@ class Database():
             Any other keyword parameters defining necessary access information.
             Allowed keywords are database style-specific.
         """
-        if name is None and style is None and host is None:
+        if database is not None:
+            assert name is None and style is None and host is None
+            self.__remote_database = database
+
+        elif name is None and style is None and host is None:
             if 'potentials_remote' in settings.list_databases:
                 self.__remote_database = load_database(name='potentials_remote')
             else:
@@ -175,7 +196,7 @@ class Database():
         else:
             self.__remote_database = load_database(name=name, style=style, host=host, **kwargs)
 
-    def set_local_database(self, localpath=None, name=None, style=None,
+    def set_local_database(self, localpath=None, name=None, database=None, style=None,
                            host=None, **kwargs):
         """
         Sets the local database to interact with.  If no parameters are given,
@@ -188,6 +209,8 @@ class Database():
         name : str, optional
             The name assigned to a pre-defined database.  If given, can be the only
             parameter.
+        database : datamodelbase.Database, optional
+            A pre-existing Database object to use for the local.
         style : str, optional
             The database style to use.
         host : str, optional
@@ -200,6 +223,12 @@ class Database():
             Any other keyword parameters defining necessary access information.
             Allowed keywords are database style-specific.
         """
+
+        if database is not None:
+            assert name is None and style is None and host is None and localpath is None
+            self.__local_database = database
+            return
+
         # Handle old localpath
         if localpath is not None:
             assert host is None, 'host and localpath cannot both be given'

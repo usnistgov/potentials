@@ -185,7 +185,9 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         query.str_match.mongo(mquery, f'{root}.id', id)
         query.str_match.mongo(mquery, f'{root}.potential.id', potid)
         query.str_match.mongo(mquery, f'{root}.potential.key', potkey)
-
+        query.str_match.mongo(mquery, f'{root}.potential.atom.symbol', symbols)
+        query.str_match.mongo(mquery, f'{root}.potential.atom.element', elements)
+        
         if status is not None:
             status = aslist(status)
             if 'active' in status:
@@ -211,6 +213,8 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         query.str_match.mongo(mquery, f'{root}.id', id)
         query.str_match.mongo(mquery, f'{root}.potential.id', potid)
         query.str_match.mongo(mquery, f'{root}.potential.key', potkey)
+        query.str_match.mongo(mquery, f'{root}.potential.atom.symbol', symbols)
+        query.str_match.mongo(mquery, f'{root}.potential.atom.element', elements)
 
         if status is not None:
             status = aslist(status)
@@ -508,3 +512,80 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
 
         return info
 
+
+    def pair_restart_info(self, filename, symbols=None, masses=None,
+                          units=None, prompt=True, comments=True):
+        """
+        Generates the LAMMPS command lines associated with both a potential
+        and reading an atom data file.
+
+        Parameters
+        ----------
+        filename : path-like object
+            The file path to the restart file for LAMMPS to read in.
+        symbols : list of str, optional
+            List of atom-model symbols corresponding to the atom types in a
+            system.  If None (default), then all atom-model symbols will
+            be included in the order that they are listed in the data model.
+        masses : list, optional
+            Can be given to override the default symbol-based masses for each
+            atom type.  Must be a list of the same length as symbols.  Any
+            values of None in the list indicate that the default value be used
+            for that atom type.
+        prompt : bool, optional
+            If True (default), then a screen prompt will appear asking for the isotope
+            number if no mass is pre-defined for a symbol and the associated element 
+            lacks a single standard atomic/ionic mass.  If False, then an error will
+            be raised for these cases instead.
+        comments : bool, optional
+            Indicates if print command lines detailing information on the potential
+            are to be included.  Default value is True.
+
+        Returns
+        -------
+        str
+            The LAMMPS input command lines that specifies the potential and a restart
+            file to read.
+        """
+        # Handle units
+        if units is None:
+            units = self.units
+
+        # If no symbols supplied use all for potential
+        if symbols is None:
+            symbols = self.symbols
+        else:
+            symbols = self.normalize_symbols(symbols)
+
+        if masses is not None:
+            
+            # Check length of masses
+            masses = aslist(masses)
+            assert len(masses) == len(symbols), 'supplied masses must be same length as symbols'
+            
+            # Change None values to default values
+            defaultmasses = self.masses(symbols, prompt=prompt)
+            for i in range(len(masses)):
+                if masses[i] is None:
+                    masses[i] = defaultmasses[i]
+        else:
+            masses = self.masses(symbols, prompt=prompt)
+
+        # Add comment line
+        info = '# Script prepared using atomman Python package\n\n'
+    
+        # Generate kim_init line
+        info += f'kim_init {self.id} {units}\n'
+
+        # Set read_data command 
+        info += f'read_restart {filename}\n'
+
+        # Generate kim_interactions  line
+        info += f'kim_interactions {" ".join(symbols)}\n'
+
+        # Generate mass lines
+        for i in range(len(masses)):
+            info += f'mass {i+1} {masses[i]}\n'
+        info +='\n'
+
+        return info

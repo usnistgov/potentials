@@ -1,0 +1,32 @@
+LAMMPS (29 Oct 2020)
+OMP_NUM_THREADS environment is not set. Defaulting to 1 thread. (src/comm.cpp:94)
+  using 1 OpenMP thread(s) per MPI task
+#LAMMPS input script that evaluates a system's energy without relaxing
+
+units metal
+atom_style atomic
+
+boundary m m m
+read_data isolated.dat
+Reading data file ...
+  orthogonal box = (0.0000000 0.0000000 0.0000000) to (1.0000000 1.0000000 1.0000000)
+  1 by 1 by 1 MPI processor grid
+  reading atoms ...
+  1 atoms
+  read_data CPU = 0.001 seconds
+
+print "Potential 2021--Zhou-X-W--Pd-H-He--LAMMPS--ipr1 listed in the NIST Interatomic Potentials Repository:"
+Potential 2021--Zhou-X-W--Pd-H-He--LAMMPS--ipr1 listed in the NIST Interatomic Potentials Repository:
+print "https://www.ctcms.nist.gov/potentials/entry/2021--Zhou-X-W-Bartelt-N-C-Sills-R-B--Pd-H-He/2021--Zhou-X-W--Pd-H-He--LAMMPS--ipr1"
+https://www.ctcms.nist.gov/potentials/entry/2021--Zhou-X-W-Bartelt-N-C-Sills-R-B--Pd-H-He/2021--Zhou-X-W--Pd-H-He--LAMMPS--ipr1
+print "Publication(s) related to the potential:"
+Publication(s) related to the potential:
+print "https://doi.org/10.1103/physrevb.103.014108"
+https://doi.org/10.1103/physrevb.103.014108
+print "Parameter file(s) can be downloaded at:"
+Parameter file(s) can be downloaded at:
+print "https://www.ctcms.nist.gov/potentials/Download/2021--Zhou-X-W-Bartelt-N-C-Sills-R-B--Pd-H-He/1/PdHHe.eam.fs.he.t"
+https://www.ctcms.nist.gov/potentials/Download/2021--Zhou-X-W-Bartelt-N-C-Sills-R-B--Pd-H-He/1/PdHHe.eam.fs.he.t
+pair_style eam/he
+ERROR: Unrecognized pair style 'eam/he' (src/force.cpp:279)
+Last command: pair_style eam/he

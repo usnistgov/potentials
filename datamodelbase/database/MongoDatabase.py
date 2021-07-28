@@ -101,19 +101,23 @@ class MongoDatabase(Database):
         else:
             query = recordmanager.mongoquery(style, **kwargs)
         
-        # Query the collection to construct records and df
+        # Query the collection to construct records
         records = []
-        df = []
         collection = self.mongodb[style]
         for entry in collection.find(query):
-
-            # Load as Record object
             record = load_record(style, model=entry['content'],
                                  name=entry['name'])
             records.append(record)
-            df.append(record.metadata())
         records = np.array(records)
-        df = pd.DataFrame(df)
+
+        # Build df
+        if len(records) > 0:
+            df = []
+            for record in records:
+                df.append(record.metadata())
+            df = pd.DataFrame(df)
+        else:
+            df = pd.DataFrame({'name':[]})
 
         # Sort by name
         df = df.sort_values('name')
@@ -164,7 +168,7 @@ class MongoDatabase(Database):
             
         Returns
         ------
-        iprPy.Record
+        Record
             The record from the database matching the given parameters.
         
         Raises
@@ -173,39 +177,55 @@ class MongoDatabase(Database):
             If multiple or no matching records found.
         """
         
+        if style is None:
+            styles = recordmanager.loaded_style_names
+        else:
+            styles = aslist(style)
+
         # Get records
-        record = self.get_records(style, query=query, **kwargs)
+        records = []
+        for style in styles:
+            records.append(self.get_records(style, query=query, **kwargs))
+        records = np.hstack(records)
         
         # Verify that there is only one matching record
-        if len(record) == 1:
-            return record[0]
-        elif len(record) == 0:
+        if len(records) == 1:
+            return records[0]
+        elif len(records) == 0:
             raise ValueError('No matching records found')
         else:
             raise ValueError('Multiple matching records found')
 
-    def add_record(self, record=None, style=None, name=None, content=None, verbose=False):
+    def add_record(self, record=None, style=None, name=None, model=None,
+                   build=False, verbose=False):
         """
         Adds a new record to the database.
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The new record to add to the database.  If not given, then name,
             style and content are required.
-        name : str, optional
-            The name to assign to the new record.  Required if record is not
-            given.
         style : str, optional
             The record style for the new record.  Required if record is not
             given.
-        content : str, optional
-            The xml content of the new record.  Required if record is not
+        name : str, optional
+            The name to assign to the new record.  Required if record is not
             given.
-            
+        model : str or DataModelDict, optional
+            The model contents of the new record.  Required if record is not
+            given.
+        build : bool, optional
+            If True, then the uploaded content will be (re)built based on the
+            record's attributes.  If False (default), then record's existing
+            content will be loaded if it exists, or built if it doesn't exist.
+        verbose : bool, optional
+            If True, info messages will be printed during operations.  Default
+            value is False.
+
         Returns
         ------
-        iprPy.Record
+        Record
             Either the given record or a record composed of the name, style,
             and content.
         
@@ -218,20 +238,27 @@ class MongoDatabase(Database):
 
         # Create Record object if not given
         if record is None:
-            record = load_record(style, name, content)
+            record = load_record(style, model, name=name)
 
         # Issue a ValueError for competing kwargs
-        elif style is not None or name is not None or content is not None:
+        elif style is not None or name is not None or model is not None:
             raise ValueError('kwargs style, name, and content cannot be given with kwarg record')
 
         # Verify that there isn't already a record with a matching name
         if len(self.get_records(name=record.name, style=record.style)) > 0:
             raise ValueError(f'Record {record.name} already exists')
 
+        # Retrieve/build model contents
+        try:
+            assert build is False
+            model = record.model
+        except:
+            model = record.build_model()
+
         # Create meta mongo entry
         entry = OrderedDict()
         entry['name'] = record.name
-        entry['content'] = record.content
+        entry['content'] = model
         
         # Upload to mongodb
         self.mongodb[record.style].insert_one(entry)
@@ -241,28 +268,36 @@ class MongoDatabase(Database):
 
         return record
 
-    def update_record(self, record=None, style=None, name=None, content=None, verbose=False):
+    def update_record(self, record=None, style=None, name=None, model=None,
+                      build=False, verbose=False):
         """
         Replaces an existing record with a new record of matching name and
         style, but new content.
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The record with new content to update in the database.  If not
             given, content is required along with name and/or style to
             uniquely define a record to update.
-        name : str, optional
-            The name to uniquely identify the record to update.
         style : str, optional
             The style of the record to update.
-        content : str, optional
-            The new xml content to use for the record.  Required if record is
-            not given.
+        name : str, optional
+            The name to uniquely identify the record to update.
+        model : str or DataModelDict, optional
+            The model contents of the new record.  Required if record is not
+            given.
+        build : bool, optional
+            If True, then the uploaded content will be (re)built based on the
+            record's attributes.  If False (default), then record's existing
+            content will be loaded if it exists, or built if it doesn't exist.
+        verbose : bool, optional
+            If True, info messages will be printed during operations.  Default
+            value is False.
         
         Returns
         ------
-        iprPy.Record
+        Record
             Either the given record or a record composed of the name, style,
             and content.
         
@@ -276,19 +311,19 @@ class MongoDatabase(Database):
         
         # Create Record object if not given
         if record is None:
-            if content is None:
-                raise TypeError('no new content given')
+            if model is None:
+                raise TypeError('no new model given')
             oldrecord = self.get_record(name=name, style=style)
-            record = load_record(oldrecord.style, oldrecord.name, content)
+            record = load_record(oldrecord.style, model, name=oldrecord.name)
         
         # Issue a ValueError for competing kwargs
         elif style is not None or name is not None:
             raise ValueError('kwargs style and name cannot be given with kwarg record')
         
-        # Replace content in record object
-        elif content is not None:
+        # Replace model in record object
+        elif model is not None:
             oldrecord = record
-            record = load_record(oldrecord.style, oldrecord.name, content)
+            record = load_record(oldrecord.style, model, name=oldrecord.name)
             
         # Find oldrecord matching record
         else:
@@ -307,19 +342,21 @@ class MongoDatabase(Database):
     
     def delete_record(self, record=None, name=None, style=None, verbose=False):
         """
-        Permanently deletes a record from the database.  Will issue an error 
-        if exactly one matching record is not found in the database.
+        Permanently deletes a record from the database. 
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The record to delete from the database.  If not given, name and/or
             style are needed to uniquely define the record to delete.
         name : str, optional
             The name of the record to delete.
         style : str, optional
             The style of the record to delete.
-        
+        verbose : bool, optional
+            If True, info messages will be printed during operations.  Default
+            value is False.
+
         Raises
         ------
         ValueError
@@ -350,15 +387,11 @@ class MongoDatabase(Database):
 
     def add_tar(self, record=None, name=None, style=None, tar=None, root_dir=None):
         """
-        Archives and stores a folder associated with a record.  Issues an
-        error if exactly one matching record is not found in the database, or
-        the associated record already has a tar archive.
+        Archives and stores a folder associated with a record.
         
         Parameters
         ----------
-        database_info : mdcs.MDCS
-            The MDCS class used for accessing the curator database.
-        record : iprPy.Record, optional
+        record : Record, optional
             The record to associate the tar archive with.  If not given, then
             name and/or style necessary to uniquely identify the record are
             needed.
@@ -442,12 +475,10 @@ class MongoDatabase(Database):
     def get_tar(self, record=None, name=None, style=None, raw=False):
         """
         Retrives the tar archive associated with a record in the database.
-        Issues an error if exactly one matching record is not found in the 
-        database.
-        
+                
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The record to retrive the associated tar archive for.
         name : str, optional
             .The name to use in uniquely identifying the record.
@@ -505,19 +536,18 @@ class MongoDatabase(Database):
 
     def delete_tar(self, record=None, name=None, style=None):
         """
-        Deletes a tar file from the database.  Issues an error if exactly one
-        matching record is not found in the database.
+        Deletes a tar file from the database.
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The record associated with the tar archive to delete.  If not
             given, then name and/or style necessary to uniquely identify
             the record are needed.
         name : str, optional
-            .The name to use in uniquely identifying the record.
+            The name to use in uniquely identifying the record.
         style : str, optional
-            .The style to use in uniquely identifying the record.
+            The style to use in uniquely identifying the record.
         
         Raises
         ------
@@ -558,20 +588,18 @@ class MongoDatabase(Database):
     
     def update_tar(self, record=None, name=None, style=None, tar=None, root_dir=None):
         """
-        Replaces an existing tar archive for a record with a new one.  Issues
-        an error if exactly one matching record is not found in the database.
-        The record's name must match the name of the directory being archived.
+        Replaces an existing tar archive for a record with a new one. 
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The record to associate the tar archive with.  If not given, then 
             name and/or style necessary to uniquely identify the record are 
             needed.
         name : str, optional
-            .The name to use in uniquely identifying the record.
+            The name to use in uniquely identifying the record.
         style : str, optional
-            .The style to use in uniquely identifying the record.
+            The style to use in uniquely identifying the record.
         tar : bytes, optional
             The bytes content of a tar file to save.  tar cannot be given
             with root_dir.

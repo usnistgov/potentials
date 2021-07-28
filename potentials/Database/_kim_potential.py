@@ -31,8 +31,8 @@ def get_kim_lammps_potentials(self, local=None, remote=None,
                               atom_style=None, pair_style=None, status='active',
                               symbols=None, elements=None,
                               kim_models=None, kim_api_directory=None,
-                              kim_models_file=None, return_df=False,
-                              verbose=False):
+                              kim_models_file=None, refresh_cache=False,
+                              return_df=False, verbose=False):
     """
     Builds LAMMPS potential entries for KIM models.  The returned entries
     depend both on the parsing parameters and the list of installed kim models
@@ -87,7 +87,8 @@ def get_kim_lammps_potentials(self, local=None, remote=None,
                                      potid=potid, potkey=potkey, units=units,
                                      atom_style=atom_style, pair_style=pair_style, status=status,
                                      symbols=symbols, elements=elements,
-                                     return_df=True, verbose=verbose)
+                                     return_df=True, refresh_cache=refresh_cache,
+                                     verbose=verbose)
     
     # Build list of records based on kim_models list
     records2 = []
@@ -200,7 +201,7 @@ def find_kim_models(self, kim_api_directory=None):
         elif 'Portable Models:' in line:
             capture=True
 
-def set_kim_models(self, value):
+def set_kim_models(self, kim_models):
     """
     Allows for the list of KIM models to be directly set.  Useful if
     the kim api is on a different machine or if the list should include models
@@ -208,10 +209,10 @@ def set_kim_models(self, value):
 
     Parameters
     ----------
-    value : str or list
+    kim_models : str or list
         The list of kim models to use.
     """
-    self.__kim_models = aslist(value)
+    self.__kim_models = aslist(kim_models)
 
 def save_kim_models_file(self, kim_models_file=None):
     """
@@ -246,6 +247,7 @@ def load_kim_models_file(self, kim_models_file=None):
     """
     if kim_models_file is None:
         kim_models_file = settings.kim_models_file
+    kim_models_file = Path(kim_models_file)
 
     if kim_models_file.is_file():
         with open(kim_models_file) as f:

@@ -1,0 +1,37 @@
+This LAMMPS simulation made specific use of work described in the
+following references.  See https://lammps.sandia.gov/cite.html
+for details.
+
+pair agni command:
+
+@article{botu2015adaptive,
+ author    = {Botu, Venkatesh and Ramprasad, Rampi},
+ title     = {Adaptive machine learning framework to accelerate ab initio molecular dynamics},
+ journal   = {International Journal of Quantum Chemistry},
+ volume    = {115},
+ number    = {16},
+ pages     = {1074--1083},
+ year      = {2015},
+ publisher = {Wiley Online Library}
+}
+
+@article{botu2015learning,
+ author    = {Botu, Venkatesh and Ramprasad, Rampi},
+ title     = {Learning scheme to predict atomic forces and accelerate materials simulations},
+ journal   = {Physical Review B},
+ volume    = {92},
+ number    = {9},
+ pages     = {094306},
+ year      = {2015},
+ publisher = {APS}
+}
+
+@article{botu2017jpc,
+ author    = {Botu, V. and Batra, R. and Chapman, J. and Ramprasad, Rampi},
+ journal   = {J. Phys. Chem. C},
+ volume    = {121},
+ number    = {1},
+ pages     = {511},
+ year      = {2017},
+}
+

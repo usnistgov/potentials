@@ -64,14 +64,6 @@ class System():
             'formula':self.formula,
             'elements':self.elements}
 
-    #def html(self):
-    #    htmlstr = ''
-    #    if self.formula is not None:
-    #        htmlstr += self.formula
-    #    elif self.elements is not None:
-    #        htmlstr += '-'.join(self.elements)
-
-    #    return htmlstr
         
 class Request(Record):
     
@@ -167,6 +159,7 @@ class Request(Record):
         if self.comment is not None:
             model['request']['comment'] = self.comment
 
+        self._set_model(model)
         return model
 
     def metadata(self):
@@ -181,22 +174,58 @@ class Request(Record):
         
         return data
 
-    #def html(self):
-    #    htmlstr = ''
-    #    htmlsystems = []
-        
-    #    for system in self.systems:
-    #        htmlsystems.append(system.html())
-    #    if len(htmlsystems) > 0:
-    #        htmlstr += f'<b>{", ".join(htmlsystems)}</b> '
-        
-    #    if self.comment is not None:
-    #        htmlstr += self.comment + ' '
-        
-    #    htmlstr += f'({self.date})'
-
-    #    return htmlstr.strip()
-
-
     def add_system(self, model=None, formula=None, elements=None):
         self.systems.append(System(model=model, formula=formula, elements=elements))
+
+    @staticmethod
+    def pandasfilter(dataframe, name=None, date=None, element=None,
+                     comment=None):
+        """
+        Filters a pandas.DataFrame based on kwargs values for the record style.
+        
+        Parameters
+        ----------
+        dataframe : pandas.DataFrame
+            A table of metadata for multiple records of the record style.
+        name : str or list
+            The record name(s) to parse by.
+        date : str or list
+            The date associated with the record.
+        element : str or list
+            Element(s) to search for in the request.
+        comment : str or list
+            Term(s) to search for in the action's comment field.
+        
+        Returns
+        -------
+        pandas.Series, numpy.NDArray
+            Boolean map of matching values
+        """
+        matches = (
+            query.str_match.pandas(dataframe, 'name', name)
+            &query.date_match.pandas(dataframe, 'date', date)
+            &query.in_list.pandas(dataframe, 'element', element, parent='system')
+            &query.str_contains.pandas(dataframe, 'comment', comment)
+        )
+        return matches
+
+    @staticmethod
+    def mongoquery(name=None, date=None,  element=None, comment=None):
+        mquery = {}
+        query.str_match.mongo(mquery, f'name', name)
+
+        root = f'content.{modelroot}'
+        query.date_match.mongo(mquery, f'{root}.date', date)
+        query.in_list.mongo(mquery, f'{root}.system.element', element)
+        query.str_contains.mongo(mquery, f'{root}.comment', comment)
+        
+        return mquery
+
+    @staticmethod
+    def cdcsquery(date=None,  element=None, comment=None):
+        mquery = {}
+        root = modelroot
+        query.date_match.mongo(mquery, f'{root}.date', date)
+        query.in_list.mongo(mquery, f'{root}.system.element', element)
+        query.str_contains.mongo(mquery, f'{root}.comment', comment)
+        return mquery

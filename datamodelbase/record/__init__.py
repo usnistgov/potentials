@@ -11,12 +11,14 @@ def load_record(style, model=None, name=None, **kwargs):
     Parameters
     ----------
     style : str
-        The record style
-    name : str
-        The name to give to the specific record
-    content : 
-        The record's data model content
-    
+        The record style.
+    name : str, optional
+        The name to give to the specific record.
+    model : str, DataModelDict, optional
+        Data model content to load for the given record style.
+    **kwargs : any
+        Any extra keyword parameter supported by the record style.
+
     Returns
     -------
     subclass of Record 

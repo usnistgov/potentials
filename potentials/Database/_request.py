@@ -1,6 +1,6 @@
 
 def get_requests(self, local=None, remote=None, name=None, date=None, 
-                 comment=None, return_df=False, verbose=False):
+                 element=None, comment=None, return_df=False, verbose=False):
     """
     Retrieves all matching requests from the database.
 
@@ -16,6 +16,8 @@ def get_requests(self, local=None, remote=None, name=None, date=None,
         The record name(s) to parse by.
     date : str or list
         The date associated with the record.
+    element : str or list
+        Element(s) to search for in the request.
     comment : str or list
         Term(s) to search for in the request's comment field.
     verbose : bool, optional
@@ -26,11 +28,11 @@ def get_requests(self, local=None, remote=None, name=None, date=None,
         will also be returned.
     """
     return self.get_records('Request', local=local, remote=remote, name=name, 
-                            date=date, type=type, comment=comment,
+                            date=date, element=element, comment=comment,
                             return_df=return_df, verbose=verbose)
 
 def get_request(self, local=None, remote=None, name=None, date=None,
-                comment=None, verbose=False):
+                element=None, comment=None, verbose=False):
     """
     Retrieves exactly one matching request from the database.
 
@@ -46,6 +48,8 @@ def get_request(self, local=None, remote=None, name=None, date=None,
         The record name(s) to parse by.
     date : str or list
         The date associated with the record.
+    element : str or list
+        Element(s) to search for in the request.
     comment : str or list
         Term(s) to search for in the request's comment field.
     verbose : bool, optional
@@ -53,10 +57,10 @@ def get_request(self, local=None, remote=None, name=None, date=None,
         value is False.
     """
     return self.get_record('Request', local=local, remote=remote, name=name, 
-                           date=date, type=type, comment=comment,
+                           date=date, element=element, comment=comment,
                            verbose=verbose)
 
-def download_requests(self, name=None, date=None,
+def download_requests(self, name=None, date=None, element=None,
                      comment=None, overwrite=False, verbose=False):
     """
     Downloads requests from the remote to the local.
@@ -67,6 +71,8 @@ def download_requests(self, name=None, date=None,
         The record name(s) to parse by.
     date : str or list
         The date associated with the record.
+    element : str or list
+        Element(s) to search for in the request.
     comment : str or list
         Term(s) to search for in the request's comment field.
     overwrite : bool, optional
@@ -77,7 +83,7 @@ def download_requests(self, name=None, date=None,
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-    self.download_records('Request', name=name, date=date, type=type,
+    self.download_records('Request', name=name, date=date, element=element,
                           comment=comment, overwrite=overwrite, verbose=verbose)
 
 def upload_request(self, request=None, workspace=None, overwrite=False,

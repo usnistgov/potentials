@@ -2,7 +2,8 @@
 def get_potentials(self, local=None, remote=None, name=None, key=None, id=None,
                      notes=None, fictional=None, element=None,
                      othername=None, modelname=None, year=None, author=None,
-                     abstract=None, return_df=False, verbose=False):
+                     abstract=None, refresh_cache=False, return_df=False,
+                     verbose=False):
     """
     Retrieves all matching potentials from the database.
 
@@ -39,22 +40,31 @@ def get_potentials(self, local=None, remote=None, name=None, key=None, id=None,
         Author name(s) to parse by.  This works best for last names only.
     abstract : str or list
         Term(s) to search for in the potential's citation's abstract field.
-    verbose : bool, optional
-        If True, info messages will be printed during operations.  Default
-        value is False.
+    refresh_cache : bool, optional
+        If the local database is of style "local", indicates if the metadata
+        cache file is to be refreshed.  If False,
+        metadata for new records will be added but the old record metadata
+        fields will not be updated.  If True, then the metadata for all
+        records will be regenerated, which is needed to update the metadata
+        for modified records.
     return_df : bool, optional
         If True, then the corresponding pandas.Dataframe of metadata
         will also be returned.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
     """
     return self.get_records('Potential', local=local, remote=remote, name=name, key=key, id=id,
                      notes=notes, fictional=fictional, element=element,
                      othername=othername, modelname=modelname, year=year, author=author,
-                     abstract=abstract, return_df=return_df, verbose=verbose)
+                     abstract=abstract, refresh_cache=refresh_cache,
+                     return_df=return_df, verbose=verbose)
 
 def get_potential(self, local=None, remote=None, name=None, key=None, id=None,
                      notes=None, fictional=None, element=None,
                      othername=None, modelname=None, year=None, author=None,
-                     abstract=None, prompt=True, verbose=False):
+                     abstract=None, prompt=True, refresh_cache=False,
+                     verbose=False):
     """
     Retrieves exactly one matching potential from the database.
 
@@ -103,7 +113,8 @@ def get_potential(self, local=None, remote=None, name=None, key=None, id=None,
                            key=key, id=id, notes=notes, fictional=fictional,
                            element=element, othername=othername,
                            modelname=modelname, year=year, author=author,
-                           abstract=abstract, prompt=prompt, verbose=verbose)
+                           abstract=abstract, prompt=prompt,
+                           refresh_cache=refresh_cache, verbose=verbose)
 
 def download_potentials(self, name=None, key=None, id=None,
                         notes=None, fictional=None, element=None,

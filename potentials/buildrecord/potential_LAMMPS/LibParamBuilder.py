@@ -71,7 +71,7 @@ class LibParamBuilder(PotentialLAMMPSBuilder):
         paircoeff.append('term', DM([('file', self.libfile)]))
         paircoeff.append('term', DM([('option', self.symbollist)]))
         paircoeff.append('term', DM([('file', paramfile)]))
-        paircoeff.append('term', DM([('symbols', 'True')]))
+        paircoeff.append('term', DM([('symbols', True)]))
         
         return paircoeff
 

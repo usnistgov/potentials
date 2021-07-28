@@ -1,5 +1,6 @@
 
 def get_actions(self, local=None, remote=None, name=None, date=None, type=None,
+                potential_id=None, potential_key=None, element=None,
                 comment=None, return_df=False, verbose=False):
     """
     Retrieves all matching actions from the database.
@@ -19,6 +20,13 @@ def get_actions(self, local=None, remote=None, name=None, date=None, type=None,
     type : str or list
         The type of action: 'new posting', 'updated posting', 'retraction',
         or 'site change'.
+    potential_id : str or list
+        Limits results to entries related to the given potential id.
+    potential_key : str or list
+        Limits results to entries related to the given potential key.
+    element : str or list
+        Limits results to entries related to potentials with the given
+        element(s).
     comment : str or list
         Term(s) to search for in the action's comment field.
     verbose : bool, optional
@@ -29,11 +37,14 @@ def get_actions(self, local=None, remote=None, name=None, date=None, type=None,
         will also be returned.
     """
     return self.get_records('Action', local=local, remote=remote, name=name, 
-                            date=date, type=type, comment=comment,
-                            return_df=return_df, verbose=verbose)
+                            date=date, type=type, potential_id=potential_id,
+                            potential_key=potential_key, element=element,
+                            comment=comment, return_df=return_df,
+                            verbose=verbose)
 
 def get_action(self, local=None, remote=None, name=None, date=None, type=None,
-                comment=None, verbose=False):
+               potential_id=None, potential_key=None, element=None,
+               comment=None, verbose=False):
     """
     Retrieves exactly one matching action from the database.
 
@@ -52,6 +63,13 @@ def get_action(self, local=None, remote=None, name=None, date=None, type=None,
     type : str or list
         The type of action: 'new posting', 'updated posting', 'retraction',
         or 'site change'.
+    potential_id : str or list
+        Limits results to entries related to the given potential id.
+    potential_key : str or list
+        Limits results to entries related to the given potential key.
+    element : str or list
+        Limits results to entries related to potentials with the given
+        element(s).
     comment : str or list
         Term(s) to search for in the action's comment field.
     verbose : bool, optional
@@ -59,11 +77,13 @@ def get_action(self, local=None, remote=None, name=None, date=None, type=None,
         value is False.
     """
     return self.get_record('Action', local=local, remote=remote, name=name, 
-                           date=date, type=type, comment=comment,
-                           verbose=verbose)
+                           date=date, type=type, potential_id=potential_id,
+                           potential_key=potential_key, element=element,
+                           comment=comment, verbose=verbose)
 
-def download_actions(self, name=None, date=None, type=None,
-                     comment=None, overwrite=False, verbose=False):
+def download_actions(self, name=None, date=None, type=None, potential_id=None,
+                     potential_key=None, element=None, comment=None,
+                     overwrite=False, verbose=False):
     """
     Downloads actions from the remote to the local.
 
@@ -76,6 +96,13 @@ def download_actions(self, name=None, date=None, type=None,
     type : str or list
         The type of action: 'new posting', 'updated posting', 'retraction',
         or 'site change'.
+    potential_id : str or list
+        Limits results to entries related to the given potential id.
+    potential_key : str or list
+        Limits results to entries related to the given potential key.
+    element : str or list
+        Limits results to entries related to potentials with the given
+        element(s).
     comment : str or list
         Term(s) to search for in the action's comment field.
     overwrite : bool, optional
@@ -87,7 +114,9 @@ def download_actions(self, name=None, date=None, type=None,
         value is False.
     """
     self.download_records('Action', name=name, date=date, type=type,
-                          comment=comment, overwrite=overwrite, verbose=verbose)
+                          potential_id=potential_id, potential_key=potential_key,
+                          element=element, comment=comment, overwrite=overwrite,
+                          verbose=verbose)
 
 def upload_action(self, action=None, workspace=None, overwrite=False,
                     verbose=False):

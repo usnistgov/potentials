@@ -66,7 +66,22 @@ class LocalDatabase(Database):
         return self.__indent
 
     def cache(self, style, refresh=False, addnew=True):
-        
+        """
+        Loads/generates the metadata cache csv file for a given record style.
+
+        Parameters
+        ----------
+        style : str 
+            The record style to retrieve the metadata content for.
+        refresh : bool, optional
+            If True, then the metadata content will be rebuilt by loading every
+            record of the given style.  If False (default), the stored metadata
+            for records will be used rather than loading from the files.
+        addnew : bool, optional
+            If True (default), then the metadata for new records will be
+            appended to the stored metadata cache.  If False, then the stored
+            metadata is returned as is.
+        """
         recordmanager.assert_style(style)
         
         cachefile = Path(self.host, f'{style}.csv')
@@ -83,7 +98,18 @@ class LocalDatabase(Database):
                 except:
                     return series[key]
             
-            # Interpret dict and list elements
+            def toint(column):
+                """Convert int columns as needed"""
+                try:
+                    newcolumn = column.astype(int)
+                    assert np.allclose(column, newcolumn)
+                except:
+                    return column
+                else:
+                    return newcolumn
+                    
+            # Interpret int, dict and list elements
+            cache = cache.apply(toint, axis=0)
             for key in cache.keys():
                 cache[key] = cache.apply(interpret, axis=1, args=[key])
 
@@ -113,7 +139,7 @@ class LocalDatabase(Database):
 
         return cache
 
-    def get_records(self, style=None, return_df=False, **kwargs):
+    def get_records(self, style=None, refresh_cache=False, return_df=False, **kwargs):
         """
         Produces a list of all matching records in the database.
         
@@ -121,6 +147,12 @@ class LocalDatabase(Database):
         ----------
         style : str, optional
             The record style to search.
+        refresh_cache : bool, optional
+            Indicates if the metadata cache file is to be refreshed.  If False,
+            metadata for new records will be added but the old record metadata
+            fields will not be updated.  If True, then the metadata for all
+            records will be regenerated, which is needed to update the metadata
+            for modified records.
         return_df : bool, optional
             If True, then the corresponding pandas.Dataframe of metadata
             will also be returned
@@ -136,8 +168,9 @@ class LocalDatabase(Database):
             The corresponding metadata values for the records.  Only returned
             if return_df is True.
         """
+        
         # Get df
-        df = self.get_records_df(style, **kwargs)
+        df = self.get_records_df(style, refresh_cache=refresh_cache, **kwargs)
         
         # Load only the matching records
         records = []
@@ -153,7 +186,7 @@ class LocalDatabase(Database):
         else:
             return records
     
-    def get_records_df(self, style=None, **kwargs):
+    def get_records_df(self, style=None, refresh_cache=False, **kwargs):
         """
         Produces a table of metadata for matching records in the database.
         
@@ -161,6 +194,12 @@ class LocalDatabase(Database):
         ----------
         style : str, optional
             The record style to limit the search by.
+        refresh_cache : bool, optional
+            Indicates if the metadata cache file is to be refreshed.  If False,
+            metadata for new records will be added but the old record metadata
+            fields will not be updated.  If True, then the metadata for all
+            records will be regenerated, which is needed to update the metadata
+            for modified records.
         **kwargs : any, optional
             Any of the record-specific metadata keywords that can be searched
             for.
@@ -171,12 +210,28 @@ class LocalDatabase(Database):
             The corresponding metadata values for the records.
         """
         
-       # Set default search parameters
+        # Set default search parameters
         if style is None:
             style = self.select_record_style()
         
-        # Load cache file for the record style
-        cache = self.cache(style)
+        # Load named records or cache
+        if 'name' in kwargs and kwargs['name'] is not None:
+            
+            # Load only named records
+            cache = []
+            for name in aslist(kwargs['name']):
+                fname = Path(self.host, style, f'{name}.{self.format}')
+                if fname.exists():
+                    record = recordmanager.init(style, model=fname)
+                    cache.append(record.metadata())
+            if len(cache) == 0:
+                cache = pd.DataFrame({'name':[]})
+            else:
+                cache = pd.DataFrame(cache)
+
+        else:
+            # Load cache file for the record style
+            cache = self.cache(style, refresh=refresh_cache)
         
         # Construct mask of records to return
         mask = recordmanager.pandasfilter(style, cache, **kwargs)
@@ -184,7 +239,7 @@ class LocalDatabase(Database):
         
         return df
 
-    def get_record(self, style=None, **kwargs):
+    def get_record(self, style=None, refresh_cache=False, **kwargs):
         """
         Returns a single matching record from the database.
         
@@ -192,13 +247,19 @@ class LocalDatabase(Database):
         ----------
         style : str, optional
             The record style to limit the search by.
+        refresh_cache : bool, optional
+            Indicates if the metadata cache file is to be refreshed.  If False,
+            metadata for new records will be added but the old record metadata
+            fields will not be updated.  If True, then the metadata for all
+            records will be regenerated, which is needed to update the metadata
+            for modified records.
         **kwargs : any, optional
             Any of the record-specific metadata keywords that can be searched
             for.
         
         Returns
-        ------
-        iprPy.Record
+        -------
+        Record
             The single record from the database matching the given parameters.
         
         Raises
@@ -207,39 +268,55 @@ class LocalDatabase(Database):
             If multiple or no matching records found.
         """
         
+        if style is None:
+            styles = recordmanager.loaded_style_names
+        else:
+            styles = aslist(style)
+
         # Get records
-        record = self.get_records(style, **kwargs)
+        records = []
+        for style in styles:
+            records.append(self.get_records(style, refresh_cache=refresh_cache, **kwargs))
+        records = np.hstack(records)        
         
         # Verify that there is only one matching record
-        if len(record) == 1:
-            return record[0]
-        elif len(record) == 0:
-            raise ValueError(f'No matching record found')
+        if len(records) == 1:
+            return records[0]
+        elif len(records) == 0:
+            raise ValueError('No matching records found')
         else:
             raise ValueError('Multiple matching records found')
 
-    def add_record(self, record=None, style=None, name=None, model=None, verbose=False):
+    def add_record(self, record=None, style=None, name=None, model=None,
+                   build=False, verbose=False):
         """
         Adds a new record to the database.
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The new record to add to the database.  If not given, then name,
             style and model are required.
-        name : str, optional
-            The name to assign to the new record.  Required if record is not
-            given.
         style : str, optional
             The record style for the new record.  Required if record is not
             given.
-        model : str, optional
-            The xml content of the new record.  Required if record is not
+        name : str, optional
+            The name to assign to the new record.  Required if record is not
             given.
-            
+        model : str or DataModelDict, optional
+            The model contents of the new record.  Required if record is not
+            given.
+        build : bool, optional
+            If True, then the uploaded content will be (re)built based on the
+            record's attributes.  If False (default), then record's existing
+            content will be loaded if it exists, or built if it doesn't exist.
+        verbose : bool, optional
+            If True, info messages will be printed during operations.  Default
+            value is False.
+
         Returns
         ------
-        iprPy.Record
+        Record
             Either the given record or a record composed of the name, style,
             and model.
         
@@ -268,39 +345,55 @@ class LocalDatabase(Database):
         if not style_dir.is_dir():
             style_dir.mkdir()
         
+        # Retrieve/build model contents
+        try:
+            assert build is False
+            model = record.model
+        except:
+            model = record.build_model()
+
+        # Save record
         with open(fname, 'w', encoding='UTF-8') as f:
             if self.format == 'json':
-                record.build_model().json(fp=f, indent=self.indent, ensure_ascii=False)
+                model.json(fp=f, indent=self.indent, ensure_ascii=False)
             elif self.format == 'xml':
-                record.build_model().xml(fp=f, indent=self.indent)
+                model.xml(fp=f, indent=self.indent)
         
         if verbose:
             print(f'{record} added to {self.host}')
 
         return record
 
-    def update_record(self, record=None, style=None, name=None, model=None, verbose=False):
+    def update_record(self, record=None, style=None, name=None, model=None,
+                      build=False, verbose=False):
         """
         Replaces an existing record with a new record of matching name and
         style, but new content.
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The record with new content to update in the database.  If not
             given, content is required along with name and/or style to
             uniquely define a record to update.
-        name : str, optional
-            The name to uniquely identify the record to update.
         style : str, optional
             The style of the record to update.
-        model : str, optional
-            The new xml content to use for the record.  Required if record is
-            not given.
-        
+        name : str, optional
+            The name to uniquely identify the record to update.
+        model : str or DataModelDict, optional
+            The model contents of the new record.  Required if record is not
+            given.
+        build : bool, optional
+            If True, then the uploaded content will be (re)built based on the
+            record's attributes.  If False (default), then record's existing
+            content will be loaded if it exists, or built if it doesn't exist.
+        verbose : bool, optional
+            If True, info messages will be printed during operations.  Default
+            value is False.
+
         Returns
         ------
-        iprPy.Record
+        Record
             Either the given record or a record composed of the name, style,
             and content.
         
@@ -333,11 +426,19 @@ class LocalDatabase(Database):
         if not fname.is_file():
             raise ValueError(f'No existing record {record.name} found')
         
+        # Retrieve/build model contents
+        try:
+            assert build is False
+            model = record.model
+        except:
+            model = record.build_model()
+
+        # Save record
         with open(fname, 'w', encoding='UTF-8') as f:
             if self.format == 'json':
-                record.build_model().json(fp=f, indent=self.indent, ensure_ascii=False)
+                model.json(fp=f, indent=self.indent, ensure_ascii=False)
             elif self.format == 'xml':
-                record.build_model().xml(fp=f, indent=self.indent)
+                model.xml(fp=f, indent=self.indent)
         
         if verbose:
             print(f'{record} updated in {self.host}')
@@ -346,19 +447,21 @@ class LocalDatabase(Database):
     
     def delete_record(self, record=None, name=None, style=None, verbose=False):
         """
-        Permanently deletes a record from the database.  Will issue an error 
-        if exactly one matching record is not found in the database.
+        Permanently deletes a record from the database.
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The record to delete from the database.  If not given, name and/or
             style are needed to uniquely define the record to delete.
         name : str, optional
             The name of the record to delete.
         style : str, optional
             The style of the record to delete.
-        
+        verbose : bool, optional
+            If True, info messages will be printed during operations.  Default
+            value is False.
+            
         Raises
         ------
         ValueError
@@ -383,22 +486,21 @@ class LocalDatabase(Database):
         if verbose:
             print(f'{record} deleted from {self.host}')
 
-    def add_tar(self, record=None, name=None, style=None, tar=None, root_dir=None):
+    def add_tar(self, record=None, name=None, style=None, tar=None,
+                root_dir=None):
         """
-        Archives and stores a folder associated with a record.  Issues an
-        error if exactly one matching record is not found in the database, or
-        the associated record already has a tar archive.
+        Archives and stores a folder associated with a record.
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The record to associate the tar archive with.  If not given, then
             name and/or style necessary to uniquely identify the record are
             needed.
         name : str, optional
-            .The name to use in uniquely identifying the record.
+            The name to use in uniquely identifying the record.
         style : str, optional
-            .The style to use in uniquely identifying the record.
+            The style to use in uniquely identifying the record.
         tar : bytes, optional
             The bytes content of a tar file to save.  tar cannot be given
             with root_dir.
@@ -412,7 +514,7 @@ class LocalDatabase(Database):
         ------
         ValueError
             If style and/or name content given with record or the record already
-            has an archive.
+            has a folder or a tar archive.
         """
         
         # Create Record object if not given
@@ -428,12 +530,14 @@ class LocalDatabase(Database):
             record = self.get_record(name=record.name, style=record.style)
         
         # Build path to record
-        record_path = Path(self.host, record.style, record.name)
+        dir_path = Path(self.host, record.style, record.name)
         tar_path = Path(self.host, record.style, f'{record.name}.tar.gz')
         
-        # Check if an archive already exists
-        if tar_path.is_file():
+        # Check if an archive or folder already exists
+        if tar_path.exists():
             raise ValueError('Record already has an archive')
+        elif dir_path.exists():
+            raise ValueError('Record already has a folder')
         
         # Make archive
         if tar is None:
@@ -454,17 +558,15 @@ class LocalDatabase(Database):
     def get_tar(self, record=None, name=None, style=None, raw=False):
         """
         Retrives the tar archive associated with a record in the database.
-        Issues an error if exactly one matching record is not found in the 
-        database.
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The record to retrive the associated tar archive for.
         name : str, optional
-            .The name to use in uniquely identifying the record.
+            The name to use in uniquely identifying the record.
         style : str, optional
-            .The style to use in uniquely identifying the record.
+            The style to use in uniquely identifying the record.
         raw : bool, optional
             If True, return the archive as raw binary content. If 
             False, return as an open tarfile. (Default is False)
@@ -490,8 +592,8 @@ class LocalDatabase(Database):
             raise ValueError('kwargs style and name cannot be given with kwarg record')
         
         # Verify that record exists
-        else:
-            record = self.get_record(name=record.name, style=record.style)
+        #else:
+        #    record = self.get_record(name=record.name, style=record.style)
         
         # Build path to record
         tar_path = Path(self.host, record.style, record.name+'.tar.gz')
@@ -505,19 +607,207 @@ class LocalDatabase(Database):
 
     def delete_tar(self, record=None, name=None, style=None):
         """
-        Deletes a tar file from the database.  Issues an error if exactly one
-        matching record is not found in the database.
+        Deletes a tar file from the database.
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The record associated with the tar archive to delete.  If not
             given, then name and/or style necessary to uniquely identify
             the record are needed.
         name : str, optional
-            .The name to use in uniquely identifying the record.
+            The name to use in uniquely identifying the record.
         style : str, optional
-            .The style to use in uniquely identifying the record.
+            The style to use in uniquely identifying the record.
+        
+        Raises
+        ------
+        ValueError
+            If style and/or name content given with record.
+        """
+        
+        # Create Record object if not given
+        if record is None:
+            record = self.get_record(name=name, style=style)
+        
+        # Issue a ValueError for competing kwargs
+        elif style is not None or name is not None:
+            raise ValueError('kwargs style and name cannot be given with kwarg record')
+        
+        # Verify that record exists
+        #else:
+        #    record = self.get_record(name=record.name, style=record.style)
+        
+        # Build path to tar file
+        tar_path = Path(self.host, record.style, record.name+'.tar.gz')
+        
+        # Delete record if it exists
+        if tar_path.is_file():
+            tar_path.unlink()
+
+    def update_tar(self, record=None, name=None, style=None, tar=None,
+                   root_dir=None):
+        """
+        Replaces an existing tar archive for a record with a new one.
+        
+        Parameters
+        ----------
+        record : Record, optional
+            The record to associate the tar archive with.  If not given, then 
+            name and/or style necessary to uniquely identify the record are 
+            needed.
+        name : str, optional
+            The name to use in uniquely identifying the record.
+        style : str, optional
+            The style to use in uniquely identifying the record.
+        tar : bytes, optional
+            The bytes content of a tar file to save.  tar cannot be given
+            with root_dir.
+        root_dir : str, optional
+            Specifies the root directory for finding the directory to archive.
+            The directory to archive is at <root_dir>/<name>.  (Default is to
+            set root_dir to the current working directory.)  tar cannot be given
+            with root_dir.
+        """
+        
+        # Delete the existing tar archive stored in the database
+        self.delete_tar(record=record, name=name)
+        
+        # Add the new tar archive
+        self.add_tar(record=record, name=name, style=style, tar=tar,
+                     root_dir=root_dir)
+
+    def add_folder(self, record=None, name=None, style=None, filenames=None,
+                   root_dir=None):
+        """
+        Stores a folder associated with a record.
+        
+        Parameters
+        ----------
+        record : Record, optional
+            The record to associate the folder with.  If not given, then
+            name and/or style necessary to uniquely identify the record are
+            needed.
+        name : str, optional
+            The name to use in uniquely identifying the record.
+        style : str, optional
+            The style to use in uniquely identifying the record.
+        filenames : str or list, optional
+            The paths to files that are to be added to the record's folder.
+            Cannot be given with root_dir.
+        root_dir : str, optional
+            Specifies the root directory for finding the folder to add.
+            The directory to add is at <root_dir>/<name>.  (Default is to
+            set root_dir to the current working directory.)  Cannot be given
+            with filenames.
+        
+        Raises
+        ------
+        ValueError
+            If style and/or name content given with record or the record already
+            has a folder or a tar archive.
+        """
+        
+        # Create Record object if not given
+        if record is None:
+            record = self.get_record(name=name, style=style)
+        
+        # Issue a ValueError for competing kwargs
+        elif style is not None or name is not None:
+            raise ValueError('kwargs style and name cannot be given with kwarg record')
+        
+        # Verify that record exists
+        else:
+            record = self.get_record(name=record.name, style=record.style)
+        
+        # Build database paths
+        dir_path = Path(self.host, record.style, record.name)
+        tar_path = Path(self.host, record.style, f'{record.name}.tar.gz')
+        
+        # Check if an archive or folder already exists
+        if tar_path.exists():
+            raise ValueError('Record already has an archive')
+        elif dir_path.exists():
+            raise ValueError('Record already has a folder')
+        
+        # Copy folder
+        if filenames is None:
+            if root_dir is None:
+                root_dir = '.'
+            source = Path(root_dir, record.name)
+            shutil.copytree(source, dir_path)
+        
+        # Copy files
+        elif root_dir is None:
+            dir_path.mkdir(parents=True)
+            for filename in iaslist(filenames):
+                shutil.copy2(filename, Path(dir_path, Path(filename).name))
+                
+        else:
+            raise ValueError('filenames and root_dir cannot both be given')
+
+    def get_folder(self, record=None, name=None, style=None):
+        """
+        Retrives the location of the folder associated with a record in the
+        database. 
+        
+        Parameters
+        ----------
+        record : Record, optional
+            The record to retrive the associated folder location for.
+        name : str, optional
+            The name to use in uniquely identifying the record.
+        style : str, optional
+            The style to use in uniquely identifying the record.
+        
+        Returns
+        -------
+        pathlib.Path
+            The path to the record's folder
+        
+        Raises
+        ------
+        ValueError
+            If style and/or name content given with record.
+        NotADirectoryError
+            If the record's folder doesn't exist.
+        """
+        
+        # Create Record object if not given
+        if record is None:
+            record = self.get_record(name=name, style=style)
+        
+        # Issue a ValueError for competing kwargs
+        elif style is not None or name is not None:
+            raise ValueError('kwargs style and name cannot be given with kwarg record')
+        
+        # Verify that record exists
+        else:
+            record = self.get_record(name=record.name, style=record.style)
+        
+        # Build path to folder
+        dir_path = Path(self.host, record.style, record.name)
+        
+        # Return path
+        if dir_path.exists():
+            return dir_path
+        else:
+            raise NotADirectoryError('No folder saved for the record')
+
+    def delete_folder(self, record=None, name=None, style=None):
+        """
+        Deletes a folder from the database.
+        
+        Parameters
+        ----------
+        record : Record, optional
+            The record associated with the folder to delete.  If not
+            given, then name and/or style necessary to uniquely identify
+            the record are needed.
+        name : str, optional
+            The name to use in uniquely identifying the record.
+        style : str, optional
+            The style to use in uniquely identifying the record.
         
         Raises
         ------
@@ -538,40 +828,73 @@ class LocalDatabase(Database):
             record = self.get_record(name=record.name, style=record.style)
         
         # Build path to tar file
-        tar_path = Path(self.host, record.style, record.name+'.tar.gz')
+        dir_path = Path(self.host, record.style, record.name)
         
         # Delete record if it exists
-        if tar_path.is_file():
-            tar_path.unlink()
+        if dir_path.exists():
+            shutil.rmtree(dir_path)
 
-    def update_tar(self, record=None, name=None, style=None, tar=None, root_dir=None):
+    def update_folder(self, record=None, name=None, style=None, filenames=None,
+                      root_dir=None, clear=True):
         """
-        Replaces an existing tar archive for a record with a new one.  Issues
-        an error if exactly one matching record is not found in the database.
-        The record's name must match the name of the directory being archived.
+        Updates an existing folder for a record.
         
         Parameters
         ----------
-        record : iprPy.Record, optional
-            The record to associate the tar archive with.  If not given, then 
+        record : Record, optional
+            The record to associate the folder with.  If not given, then 
             name and/or style necessary to uniquely identify the record are 
             needed.
         name : str, optional
-            .The name to use in uniquely identifying the record.
+            The name to use in uniquely identifying the record.
         style : str, optional
-            .The style to use in uniquely identifying the record.
-        tar : bytes, optional
-            The bytes content of a tar file to save.  tar cannot be given
-            with root_dir.
+            The style to use in uniquely identifying the record.
+        filenames : str or list, optional
+            The paths to files that are to be added to the record's folder.
+            Cannot be given with root_dir.
         root_dir : str, optional
-            Specifies the root directory for finding the directory to archive.
-            The directory to archive is at <root_dir>/<name>.  (Default is to
-            set root_dir to the current working directory.)  tar cannot be given
-            with root_dir.
+            Specifies the root directory for finding the folder to add.
+            The directory to add is at <root_dir>/<name>.  (Default is to
+            set root_dir to the current working directory.)  Cannot be given
+            with filenames.
+        clear : bool, optional
+            If True (default), then the current folder contents will be deleted
+            before the new contents are added.  If False, existing files may
+            remain if the new content does not overwrite it.
         """
+        # Check competing parameters
+        if filenames is not None and root_dir is not None:
+            raise ValueError('filenames and root_dir cannot both be given')
+
+        # Create Record object if not given
+        if record is None:
+            record = self.get_record(name=name, style=style)
         
-        # Delete the existing tar archive stored in the database
-        self.delete_tar(record=record, name=name)
+        # Issue a ValueError for competing kwargs
+        elif style is not None or name is not None:
+            raise ValueError('kwargs style and name cannot be given with kwarg record')
+
+        # Verify that record exists
+        else:
+            record = self.get_record(name=record.name, style=record.style)
         
-        # Add the new tar archive
-        self.add_tar(record=record, name=name, style=style, tar=tar, root_dir=root_dir)
+        # Build database paths
+        dir_path = Path(self.host, record.style, record.name)
+        
+        # Delete existing folder
+        if clear is True:
+            if dir_path.exists():
+                shutil.rmtree(dir_path)
+        
+        # Copy folder
+        if filenames is None:
+            if root_dir is None:
+                root_dir = '.'
+            source = Path(root_dir, record.name)
+            shutil.copytree(source, dir_path)
+        
+        # Copy files
+        elif root_dir is None:
+            dir_path.mkdir(parents=True)
+            for filename in iaslist(filenames):
+                shutil.copy2(filename, Path(dir_path, Path(filename).name))

@@ -14,7 +14,7 @@ from ..tools import aslist
 
 def get_records(self, style=None, name=None,
                 local=None, remote=None, verbose=False,
-                return_df=False, **kwargs):
+                refresh_cache=False, return_df=False, **kwargs):
     """
     Retrieves all matching records from the local and/or remote locations.  If
     records with the same record name are retrieved from both locations, then
@@ -35,6 +35,13 @@ def get_records(self, style=None, name=None,
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
+    refresh_cache : bool, optional
+        If the local database is of style "local", indicates if the metadata
+        cache file is to be refreshed.  If False,
+        metadata for new records will be added but the old record metadata
+        fields will not be updated.  If True, then the metadata for all
+        records will be regenerated, which is needed to update the metadata
+        for modified records.
     return_df : bool, optional
         If True, then the corresponding pandas.Dataframe of metadata
         will also be returned.
@@ -68,8 +75,12 @@ def get_records(self, style=None, name=None,
     
     # Get local records
     if local:
-        l_recs, l_df = self.local_database.get_records(style, name=name,
-                                                       return_df=True, **kwargs)
+        if refresh_cache is True:
+            if self.local_database.style != 'local':
+                raise ValueError('local database must be of style local to refresh cache')
+            else:
+                kwargs['refresh_cache'] = refresh_cache
+        l_recs, l_df = self.local_database.get_records(style, name=name, return_df=True, **kwargs)
         if verbose:
             print(f'Found {len(l_recs)} matching {style} records in local library')
     else:
@@ -123,7 +134,7 @@ def get_records(self, style=None, name=None,
 def get_record(self, style=None, name=None,
                local=None, remote=None,
                prompt=True, promptfxn=None,
-               verbose=False, **kwargs):
+               verbose=False, refresh_cache=False, **kwargs):
     """
     Retrieves a single matching record from the local and/or remote locations.
     If local is True and the record is found there, then the local copy of the
@@ -151,6 +162,13 @@ def get_record(self, style=None, name=None,
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
+    refresh_cache : bool, optional
+        If the local database is of style "local", indicates if the metadata
+        cache file is to be refreshed.  If False,
+        metadata for new records will be added but the old record metadata
+        fields will not be updated.  If True, then the metadata for all
+        records will be regenerated, which is needed to update the metadata
+        for modified records.
     **kwargs : any, optional
         Any extra keyword arguments supported by the record style.
 
@@ -194,6 +212,11 @@ def get_record(self, style=None, name=None,
     
     # Check local first
     if local:
+        if refresh_cache is True:
+            if self.local_database.style != 'local':
+                raise ValueError('local database must be of style local to refresh cache')
+            else:
+                kwargs['refresh_cache'] = refresh_cache
         records, df = self.get_records(style, local=True, remote=False,
                                        name=name, return_df=True, **kwargs)
         if len(records) == 1:

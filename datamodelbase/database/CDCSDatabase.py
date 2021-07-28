@@ -172,8 +172,8 @@ class CDCSDatabase(Database):
         
         Parameters
         ----------
-        record_style : str, optional
-            The record style to search. If not given, a prompt will ask for it.
+        style : str, optional
+            Record style(s) to limit the search by.
         name : str or list, optional
             Record name(s) to delimit by. 
         query : dict, optional
@@ -189,7 +189,7 @@ class CDCSDatabase(Database):
             
         Returns
         ------
-        iprPy.Record
+        Record
             The single record from the database matching the given parameters.
         
         Raises
@@ -197,46 +197,59 @@ class CDCSDatabase(Database):
         ValueError
             If multiple or no matching records found.
         """
-        
+        if style is None:
+            styles = recordmanager.loaded_style_names
+        else:
+            styles = aslist(style)
+
         # Get records
-        record = self.get_records(style, name=name, query=query, keyword=keyword, **kwargs)
-        
+        records = []
+        for style in styles:
+            records.append(self.get_records(style, name=name, query=query, keyword=keyword, **kwargs))
+        records = np.hstack(records)
+
         # Verify that there is only one matching record
-        if len(record) == 1:
-            return record[0]
-        elif len(record) == 0:
+        if len(records) == 1:
+            return records[0]
+        elif len(records) == 0:
             raise ValueError('No matching records found')
         else:
             raise ValueError('Multiple matching records found')
     
     def add_record(self, record=None, style=None, name=None, model=None,
-                   workspace=None, verbose=False):
+                   build=False, workspace=None, verbose=False):
         """
-        Adds a new record to the database.  Will issue an error if a 
-        matching record already exists in the database.
+        Adds a new record to the database.
         
         Parameters
         ----------
         record : iprPy.Record, optional
             The new record to add to the database.  If not given, then name,
             style and content are required.
-        name : str, optional
-            The name to assign to the new record.  Required if record is not
-            given.
         style : str, optional
             The record style for the new record.  Required if record is not
             given.
-        model : str, optional
-            The xml content of the new record.  Required if record is not
+        name : str, optional
+            The name to assign to the new record.  Required if record is not
             given.
+        model : str or DataModelDict, optional
+            The model contents of the new record.  Required if record is not
+            given.
+        build : bool, optional
+            If True, then the uploaded content will be (re)built based on the
+            record's attributes.  If False (default), then record's existing
+            content will be loaded if it exists, or built if it doesn't exist.
         workspace : str or pandas.Series, optional
             The name of a workspace to assign the record to.  If not given
             then the record is not assigned to a workspace and will only be
             accessible to the user who uploaded it.
-            
+        verbose : bool, optional
+            If True, info messages will be printed during operations.  Default
+            value is False.
+
         Returns
         ------
-        iprPy.Record
+        Record
             Either the given record or a record composed of the name, style, 
             and model.
         
@@ -255,8 +268,15 @@ class CDCSDatabase(Database):
         elif style is not None or name is not None or model is not None:
             raise ValueError('kwargs style, name, and model cannot be given with kwarg record')
             
-        # Upload record to database
-        self.cdcs.upload_record(template=record.style, content=record.build_model().xml(),
+        # Retrieve/build model contents
+        try:
+            assert build is False
+            content = record.model.xml()
+        except:
+            content = record.build_model().xml()
+
+        # Upload to database
+        self.cdcs.upload_record(template=record.style, content=content,
                                 title=record.name)
         if verbose:
             print(f'{record} added to {self.host}')
@@ -267,35 +287,39 @@ class CDCSDatabase(Database):
         return record
     
     def update_record(self, record=None, style=None, name=None, model=None,
-                      workspace=None, verbose=False):
+                      build=False, workspace=None, verbose=False):
         """
         Replaces an existing record with a new record of matching name and 
-        style, but new content.  Will issue an error if exactly one 
-        matching record is not found in the database.
+        style, but new content.
         
         Parameters
         ----------
-        database_info : mdcs.MDCS
-            The MDCS class used for accessing the curator database.
-        record : iprPy.Record, optional
-            The record with new content to update in the database.  If not 
-            given, content is required along with name and/or style to 
+        record : Record, optional
+            The record with new content to update in the database.  If not
+            given, content is required along with name and/or style to
             uniquely define a record to update.
-        name : str, optional
-            The name to uniquely identify the record to update.
         style : str, optional
             The style of the record to update.
-        model : str, optional
-            The new xml content to use for the record.  Required if record is
-            not given.
+        name : str, optional
+            The name to uniquely identify the record to update.
+        model : str or DataModelDict, optional
+            The model contents of the new record.  Required if record is not
+            given.
+        build : bool, optional
+            If True, then the uploaded content will be (re)built based on the
+            record's attributes.  If False (default), then record's existing
+            content will be loaded if it exists, or built if it doesn't exist.
         workspace : str or pandas.Series, optional
             The name of a workspace to assign the record to.  If not given
             then the record is not assigned to a workspace and will only be
             accessible to the user who uploaded it.
-            
+        verbose : bool, optional
+            If True, info messages will be printed during operations.  Default
+            value is False.
+
         Returns
         ------
-        iprPy.Record
+        Record
             Either the given record or a record composed of the name, style, 
             and model.
             
@@ -323,8 +347,15 @@ class CDCSDatabase(Database):
             if model is not None:
                 record = load_record(record.style, model, name=record.name)
         
-        # Upload record to database
-        self.cdcs.update_record(template=record.style, content=record.build_model().xml(),
+        # Retrieve/build model contents
+        try:
+            assert build is False
+            content = record.model.xml()
+        except:
+            content = record.build_model().xml()
+
+        # Upload to database
+        self.cdcs.update_record(template=record.style, content=content,
                                 title=record.name)
         
         if verbose:
@@ -342,14 +373,17 @@ class CDCSDatabase(Database):
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The record to delete from the database.  If not given, name and/or
             style are needed to uniquely define the record to delete.
         name : str, optional
             The name of the record to delete.
         style : str, optional
             The style of the record to delete.
-        
+        verbose : bool, optional
+            If True, info messages will be printed during operations.  Default
+            value is False.
+            
         Raises
         ------
         ValueError
@@ -375,7 +409,7 @@ class CDCSDatabase(Database):
 
         Parameters
         ----------
-        records : iprPy.Record or list
+        records : Record or list
             The record(s) to assign to the workspace.
         workspace : str
             The workspace to assign the records to.
@@ -392,22 +426,18 @@ class CDCSDatabase(Database):
 
     def add_tar(self, record=None, name=None, style=None, tar=None, root_dir=None):
         """
-        Archives and stores a folder associated with a record.  Issues an
-        error if exactly one matching record is not found in the database, or
-        the associated record already has a tar archive.
+        Archives and stores a folder associated with a record.
         
         Parameters
         ----------
-        database_info : mdcs.MDCS
-            The MDCS class used for accessing the curator database.
-        record : iprPy.Record, optional
+        record : Record, optional
             The record to associate the tar archive with.  If not given, then
             name and/or style necessary to uniquely identify the record are
             needed.
         name : str, optional
-            .The name to use in uniquely identifying the record.
+            The name to use in uniquely identifying the record.
         style : str, optional
-            .The style to use in uniquely identifying the record.
+            The style to use in uniquely identifying the record.
         tar : bytes, optional
             The bytes content of a tar file to save.  tar cannot be given
             with root_dir.
@@ -487,19 +517,15 @@ class CDCSDatabase(Database):
     def get_tar(self, record=None, name=None, style=None, raw=False):
         """
         Retrives the tar archive associated with a record in the database.
-        Issues an error if exactly one matching record is not found in the 
-        database.
         
         Parameters
         ----------
-        database_info : mdcs.MDCS
-            The MDCS class used for accessing the curator database.
-        record : iprPy.Record, optional
+        record : Record, optional
             The record to retrive the associated tar archive for.
         name : str, optional
-            .The name to use in uniquely identifying the record.
+            The name to use in uniquely identifying the record.
         style : str, optional
-            .The style to use in uniquely identifying the record.
+            The style to use in uniquely identifying the record.
         raw : bool, optional
             If True, return the archive as raw binary content. If 
             False, return as an open tarfile. (Default is False)
@@ -540,6 +566,21 @@ class CDCSDatabase(Database):
             return tarfile.open(fileobj = BytesIO(tardata))
     
     def delete_tar(self, record=None, name=None, style=None):
+        """
+        Deletes a tar file from the database.
+        
+        Parameters
+        ----------
+        record : Record, optional
+            The record associated with the tar archive to delete.  If not
+            given, then name and/or style necessary to uniquely identify
+            the record are needed.
+        name : str, optional
+            The name to use in uniquely identifying the record.
+        style : str, optional
+            The style to use in uniquely identifying the record.
+        """
+        
         # Create Record object if not given
         if record is None:
             record = self.get_record(name=name, style=style)
@@ -558,22 +599,18 @@ class CDCSDatabase(Database):
 
     def update_tar(self, record=None, name=None, style=None, tar=None, root_dir=None):
         """
-        Archives and stores a folder associated with a record.  Issues an
-        error if exactly one matching record is not found in the database, or
-        the associated record already has a tar archive.
+        Archives and stores a folder associated with a record.
         
         Parameters
         ----------
-        database_info : mdcs.MDCS
-            The MDCS class used for accessing the curator database.
-        record : iprPy.Record, optional
+        record : Record, optional
             The record to associate the tar archive with.  If not given, then
             name and/or style necessary to uniquely identify the record are
             needed.
         name : str, optional
-            .The name to use in uniquely identifying the record.
+            The name to use in uniquely identifying the record.
         style : str, optional
-            .The style to use in uniquely identifying the record.
+            The style to use in uniquely identifying the record.
         tar : bytes, optional
             The bytes content of a tar file to save.  tar cannot be given
             with root_dir.

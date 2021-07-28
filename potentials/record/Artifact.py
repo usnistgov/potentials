@@ -139,6 +139,7 @@ class Artifact(Record):
         if self.filename is not None:
             model['artifact']['web-link']['link-text'] = self.filename
         
+        self._set_model(model)
         return model
 
     def metadata(self):

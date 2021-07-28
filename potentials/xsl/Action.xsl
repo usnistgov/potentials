@@ -20,7 +20,7 @@
       <xsl:if test="potential">
         <ul>
         <xsl:for-each select="potential">
-          <li><a href='entry/{id}'><xsl:value-of select="id"/></a></li>
+          <li><a href='https://www.ctcms.nist.gov/potentials/entry/{id}'><xsl:value-of select="id"/></a></li>
         </xsl:for-each>
         </ul>
       </xsl:if>

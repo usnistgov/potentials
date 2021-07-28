@@ -55,7 +55,7 @@ class EimBuilder(PotentialLAMMPSBuilder):
         paircoeff = DM()
         paircoeff.append('term', DM([('option', self.symbollist)]))
         paircoeff.append('term', DM([('file', self.paramfile)]))
-        paircoeff.append('term', DM([('symbols', 'True')]))
+        paircoeff.append('term', DM([('symbols', True)]))
         
         return paircoeff
 

@@ -19,10 +19,8 @@ from ..tools import screen_input, aslist
 
 class Database():
     """
-    Class for handling different database styles in the same fashion.  The
-    class defines the common methods and attributes, which are then uniquely
-    implemented for each style.  The available styles are loaded from the
-    iprPy.databases submodule.
+    Class for handling different database styles in the same fashion.  This
+    base class defines the common methods and attributes.
     """
     
     def __init__(self, host):
@@ -60,22 +58,38 @@ class Database():
         """str: The database's host."""
         return self.__host
     
-    def get_records(self, name=None, style=None, query=None, return_df=False,
+    def get_records(self, style=None, name=None, query=None, return_df=False,
                     **kwargs):
         """
         Produces a list of all matching records in the database.
         
         Parameters
         ----------
-        name : str, optional
-            The record name or id to limit the search by.
         style : str, optional
-            The record style to limit the search by.
+            The record style to search. If not given, a prompt will ask for it.
+        name : str or list, optional
+            Record name(s) to delimit by. 
+        return_df : bool, optional
+            If True, then the corresponding pandas.Dataframe of metadata
+            will also be returned
+        query : dict, optional
+            A custom-built CDCS-style query to use for the record search.
+            Alternative to passing in the record-specific metadata kwargs.
+            Note that name can be given with query.
+        keyword : str, optional
+            Allows for a search of records whose contents contain a keyword.
+            Alternative to giving query or kwargs.
+        **kwargs : any, optional
+            Any of the record-specific metadata keywords that can be searched
+            for.
             
         Returns
         ------
-        list of iprPy.Records
+        records : numpy.NDArray
             All records from the database matching the given parameters.
+        records_df : pandas.DataFrame
+            The corresponding metadata values for the records.  Only returned
+            if return_df is True.
         
         Raises
         ------
@@ -98,7 +112,7 @@ class Database():
             
         Returns
         ------
-        iprPy.Record
+        Record
             The single record from the database matching the given parameters.
         
         Raises
@@ -140,29 +154,36 @@ class Database():
         """
         raise AttributeError('get_records_df not defined for Database style')
     
-    def add_record(self, record=None, name=None, style=None, content=None):
+    def add_record(self, record=None, name=None, style=None, model=None,
+                   build=False, verbose=False):
         """
-        Adds a new record to the database.  Will issue an error if a
-        matching record already exists in the database.
+        Adds a new record to the database.
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The new record to add to the database.  If not given, then name,
             style and content are required.
-        name : str, optional
-            The name to assign to the new record.  Required if record is not
-            given.
         style : str, optional
             The record style for the new record.  Required if record is not
             given.
-        content : str, optional
-            The xml content of the new record.  Required if record is not
+        name : str, optional
+            The name to assign to the new record.  Required if record is not
             given.
+        model : str or DataModelDict, optional
+            The model contents of the new record.  Required if record is not
+            given.
+        build : bool, optional
+            If True, then the uploaded content will be (re)built based on the
+            record's attributes.  If False (default), then record's existing
+            content will be loaded if it exists, or built if it doesn't exist.
+        verbose : bool, optional
+            If True, info messages will be printed during operations.  Default
+            value is False.
             
         Returns
         ------
-        iprPy.Record
+        Record
             Either the given record or a record composed of the name, style,
             and content.
         
@@ -173,29 +194,36 @@ class Database():
         """
         raise AttributeError('add_record not defined for Database style')
     
-    def update_record(self, record=None, name=None, style=None, content=None):
+    def update_record(self, record=None, style=None, name=None, model=None,
+                      build=False, verbose=False):
         """
         Replaces an existing record with a new record of matching name and
-        style, but new content.  Will issue an error if exactly one
-        matching record is not found in the databse.
+        style, but new content.
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The record with new content to update in the database.  If not
             given, content is required along with name and/or style to
             uniquely define a record to update.
-        name : str, optional
-            The name to uniquely identify the record to update.
         style : str, optional
             The style of the record to update.
-        content : str, optional
-            The new xml content to use for the record.  Required if record is
-            not given.
-            
+        name : str, optional
+            The name to uniquely identify the record to update.
+        model : str or DataModelDict, optional
+            The model contents of the new record.  Required if record is not
+            given.
+        build : bool, optional
+            If True, then the uploaded content will be (re)built based on the
+            record's attributes.  If False (default), then record's existing
+            content will be loaded if it exists, or built if it doesn't exist.
+        verbose : bool, optional
+            If True, info messages will be printed during operations.  Default
+            value is False.
+
         Returns
         ------
-        iprPy.Record
+        Record
             Either the given record or a record composed of the name, style,
             and content.
         
@@ -208,12 +236,11 @@ class Database():
     
     def delete_record(self, record=None, name=None, style=None):
         """
-        Permanently deletes a record from the database.  Will issue an error
-        if exactly one matching record is not found in the database.
+        Permanently deletes a record from the database.
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The record to delete from the database.  If not given, name and/or
             style are needed to uniquely define the record to delete.
         name : str, optional
@@ -231,17 +258,15 @@ class Database():
     def get_tar(self, record=None, name=None, style=None, raw=False):
         """
         Retrives the tar archive associated with a record in the database.
-        Issues an error if exactly one matching record is not found in the
-        database.
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The record to retrive the associated tar archive for.
         name : str, optional
-            .The name to use in uniquely identifying the record.
+            The name to use in uniquely identifying the record.
         style : str, optional
-            .The style to use in uniquely identifying the record.
+            The style to use in uniquely identifying the record.
         raw : bool, optional
             If True, return the archive as raw binary content. If
             False, return as an open tarfile. (Default is False)
@@ -261,22 +286,18 @@ class Database():
     
     def add_tar(self, record=None, name=None, style=None, tar=None, root_dir=None):
         """
-        Archives and stores a folder associated with a record.  Issues an
-        error if exactly one matching record is not found in the database, or
-        the associated record already has a tar archive.
+        Archives and stores a folder associated with a record.
         
         Parameters
         ----------
-        database_info : mdcs.MDCS
-            The MDCS class used for accessing the curator database.
-        record : iprPy.Record, optional
+        record : Record, optional
             The record to associate the tar archive with.  If not given, then
             name and/or style necessary to uniquely identify the record are
             needed.
         name : str, optional
-            .The name to use in uniquely identifying the record.
+            The name to use in uniquely identifying the record.
         style : str, optional
-            .The style to use in uniquely identifying the record.
+            The style to use in uniquely identifying the record.
         tar : bytes, optional
             The bytes content of a tar file to save.  tar cannot be given
             with root_dir.
@@ -296,20 +317,18 @@ class Database():
     
     def update_tar(self, record=None, name=None, style=None, tar=None, root_dir=None):
         """
-        Replaces an existing tar archive for a record with a new one.  Issues
-        an error if exactly one matching record is not found in the database.
-        The record's name must match the name of the directory being archived.
+        Replaces an existing tar archive for a record with a new one.
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The record to associate the tar archive with.  If not given, then 
             name and/or style necessary to uniquely identify the record are 
             needed.
         name : str, optional
-            .The name to use in uniquely identifying the record.
+            The name to use in uniquely identifying the record.
         style : str, optional
-            .The style to use in uniquely identifying the record.
+            The style to use in uniquely identifying the record.
         tar : bytes, optional
             The bytes content of a tar file to save.  tar cannot be given
             with root_dir.
@@ -328,19 +347,18 @@ class Database():
     
     def delete_tar(self, record=None, name=None, style=None):
         """
-        Deletes a tar file from the database.  Issues an error if exactly one
-        matching record is not found in the database.
+        Deletes a tar file from the database.
         
         Parameters
         ----------
-        record : iprPy.Record, optional
+        record : Record, optional
             The record associated with the tar archive to delete.  If not
             given, then name and/or style necessary to uniquely identify
             the record are needed.
         name : str, optional
-            .The name to use in uniquely identifying the record.
+            The name to use in uniquely identifying the record.
         style : str, optional
-            .The style to use in uniquely identifying the record.
+            The style to use in uniquely identifying the record.
         
         Raises
         ------
@@ -355,14 +373,14 @@ class Database():
         
         Parameters
         ----------
-        dbase2 :  iprPy.Database
+        dbase2 :  Database
             The database to copy to.
         record_style : str, optional
             The record style to copy.  If record_style and records not
             given, then the available record styles will be listed and the
             user prompted to pick one.  Cannot be given with records.
         records : list, optional
-            A list of iprPy.Record obejcts from the current database to copy
+            A list of Record obejcts from the current database to copy
             to dbase2.  Allows the user full control on which records to
             copy/update.  Cannot be given with record_style.
         includetar : bool, optional
@@ -381,7 +399,7 @@ class Database():
                 raise ValueError('record_style and records cannot both be given')
             
             # Retrieve records from self
-            records = self.get_records(style=record_style) #pylint: disable=assignment-from-no-return
+            records = self.get_records(style=record_style) 
         
         elif records is None:
             # Set empty list if record_style is still None and no records given
@@ -406,13 +424,29 @@ class Database():
             # Copy archives
             if includetar:
                 try:
-                    # get tar if it exists
-                    tar = self.get_tar(record=record, raw=True) #pylint: disable=assignment-from-no-return
+                    # Get tar if it exists
+                    tar = self.get_tar(record=record, raw=True) 
                 except:
-                    pass
+                    
+                    # Get folder if it exists
+                    try:
+                        root_dir = self.get_folder(record=record).parent
+                    except:
+                        pass
+                    else:
+                        try:
+                            # Copy tar over
+                            dbase2.add_tar(record=record, root_dir=root_dir)
+                            tar_count += 1
+                        except:
+                            # Update existing tar
+                            if overwrite:
+                                dbase2.update_tar(record=record, root_dir=root_dir)
+                                tar_count += 1
+                    
                 else:
                     try:
-                        # Add new tar
+                        # Copy tar over
                         dbase2.add_tar(record=record, tar=tar)
                         tar_count += 1
                     except:
@@ -420,6 +454,7 @@ class Database():
                         if overwrite:
                             dbase2.update_tar(record=record, tar=tar)
                             tar_count += 1
+        
         print(record_count, 'records added/updated')
         if includetar:
             print(tar_count, 'tars added/updated')
@@ -449,7 +484,7 @@ class Database():
                 raise ValueError('record_style and records cannot both be given')
             
             # Retrieve records with errors from self
-            records = self.get_records(style=record_style) #pylint: disable=assignment-from-no-return
+            records = self.get_records(style=record_style) 
         
         elif records is None:
             # Set empty list if record_style is still None and no records given

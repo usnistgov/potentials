@@ -21,9 +21,7 @@ from DataModelDict import DataModelDict as DM
 class Record():
     """
     Class for handling different record styles in the same fashion.  The
-    class defines the common methods and attributes, which are then uniquely
-    implemented for each style.  The available styles are loaded from the
-    iprPy.records submodule.
+    base class defines the common methods and attributes.
     """
     
     def __init__(self, model=None, name=None, **kwargs):
@@ -39,7 +37,8 @@ class Record():
             path, then the default record name is the file name without
             extension.
         """
-
+        self.__model = None
+        self.__name = None
         # Check that object is a subclass
         if self.__module__ == __name__:
             raise TypeError("Don't use Record itself, only use derived classes")
@@ -64,9 +63,7 @@ class Record():
         else:
             self.name = name
 
-        # Load model as DataModelDict
-        content = DM(model).find(self.modelroot)
-        self.__model = DM([(self.modelroot, content)])
+        self._set_model(model)
 
     def set_values(self, name=None, **kwargs):
         """
@@ -75,12 +72,7 @@ class Record():
         raise NotImplementedError('Not defined for this class')
 
     def __str__(self):
-        """
-        Returns
-        -------
-        str
-            The string representation of the record.
-        """
+        """str: The string representation of the record"""
         return f'{self.style} record named {self.name}'
     
     @property
@@ -134,11 +126,28 @@ class Record():
         if self.__model is not None:
             return self.__model
         else:
-            raise AttributeError('model content not set')
+            raise AttributeError('model content has not been loaded or built')
     
+    def reload_model(self):
+        """
+        Reloads the record based on the model content.  This allows for direct
+        changes to the model to be updated to the object. 
+        """
+        self.load_model(model=self.model, name=self.name)
+
+    def _set_model(self, model):
+        """
+        Sets model content - called by build_model() and load_model() to update
+        content.  Use load_model() if you are passing in an external model.
+        """
+        
+        # Load model as DataModelDict
+        content = DM(model).find(self.modelroot)
+        self.__model = DM([(self.modelroot, content)])
+
     def build_model(self):
         """
-        Generates model contents based on set object attributes
+        Generates and returns model content based on the values set to object.
         """
         raise NotImplementedError('Not defined for this class')
 
@@ -211,7 +220,8 @@ class Record():
         """Returns an HTML representation of the object"""
 
         # Build xml content
-        xml_content = self.build_model().xml()
+        xml_content = self.model.xml()
+        
         xml = ET.fromstring(xml_content.encode('UTF-8'))
 
         # Read xsl content
@@ -245,7 +255,8 @@ class Record():
 
         # Build xml content
         if xml_content is None:
-            xml_content = self.build_model().xml()
+            xml_content = self.model.xml()
+            
         xml = ET.fromstring(xml_content.encode('UTF-8'))
 
         # Read xsd content

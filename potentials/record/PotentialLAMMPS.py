@@ -207,7 +207,12 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         query.in_list.mongo(mquery, f'{root}.atom.symbol', symbols)
 
         return mquery
-        
+    
+    @property
+    def symbolsets(self):
+        """list : The sets of symbols that correspond to all related potentials"""
+        return [self._symbols]
+
     def masses(self, symbols=None, prompt=True):
         """
         Returns a list of atomic/ionic masses associated with atom-model
@@ -320,26 +325,29 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         str
             The LAMMPS input command lines that specifies the potential.
         """
+
         # Use all symbols if symbols is None
         if symbols is None:
             symbols = self.symbols
         else:
-            # Normalize symbols
-            symbols = self.normalize_symbols(symbols)
-        
+            symbols = aslist(symbols)
+
+        # Check length of given masses
         if masses is not None:
-            
-            # Check length of masses
             masses = aslist(masses)
             assert len(masses) == len(symbols), 'supplied masses must be same length as symbols'
-        
-            # Change None values to default values
-            defaultmasses = self.masses(symbols, prompt=prompt)
-            for i in range(len(masses)):
-                if masses[i] is None:
-                    masses[i] = defaultmasses[i]
         else:
-            masses = self.masses(symbols, prompt=prompt)
+            masses = [None,]
+
+        # Normalize symbols and masses
+        symbols = self.normalize_symbols(symbols)
+        for i in range(len(masses), len(symbols)):
+            masses += [None,]
+        
+        # Change None mass values to default values
+        for i in range(len(masses)):
+            if masses[i] is None:
+                masses[i] = self.masses(symbols[i], prompt=prompt)[0]
 
         info = ''
         
@@ -518,8 +526,9 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         bflags[pbc] = 'p'
         info += f'boundary {bflags[0]} {bflags[1]} {bflags[2]}\n'
     
-        # Set read_data command 
-        info += f'read_data {filename}\n'
+        # Set read_data command       
+        if isinstance(filename, str):
+            info += f'read_data {filename}\n'
 
         # Set pair_info
         info += '\n'

@@ -77,9 +77,6 @@ class PotInfo():
     @property
     def fictional(self):
         return self.__fictional
-    
-    #def html(self):
-    #    return f'<a href="https://www.ctcms.nist.gov/potentials/entry/{self.id}">{self.id}</a>'
 
     def build_model(self):
         model = DM()
@@ -98,6 +95,7 @@ class PotInfo():
         if self.othername is not None:
             model['potential']['other-element'] = self.othername
 
+        self._set_model(model)
         return model
 
     def metadata(self):
@@ -215,6 +213,7 @@ class Action(Record):
         if self.comment is not None:
             model['action']['comment'] = self.comment
 
+        self._set_model(model)
         return model
 
     def metadata(self):
@@ -230,11 +229,75 @@ class Action(Record):
         
         return data
 
-    #def html(self):
-    #    htmlstr = ''
-    #    htmlstr += f'<b>{self.type} ({self.date})</b>'
-    #    if self.comment is not None:
-    #        htmlstr += ' ' + self.comment
-    #    for potential in self.potentials:
-    #        htmlstr += '\n<br/>' + potential.html()
-    #    return htmlstr
+    @staticmethod
+    def pandasfilter(dataframe, name=None, date=None, type=None,
+                     potential_id=None, potential_key=None, element=None,
+                     comment=None):
+        """
+        Filters a pandas.DataFrame based on kwargs values for the record style.
+        
+        Parameters
+        ----------
+        dataframe : pandas.DataFrame
+            A table of metadata for multiple records of the record style.
+        name : str or list
+            The record name(s) to parse by.
+        date : str or list
+            The date associated with the record.
+        type : str or list
+            The type of action: 'new posting', 'updated posting', 'retraction',
+            or 'site change'.
+        potential_id : str or list
+            Limits results to entries related to the given potential id.
+        potential_key : str or list
+            Limits results to entries related to the given potential key.
+        element : str or list
+            Limits results to entries related to potentials with the given
+            element(s).
+        comment : str or list
+            Term(s) to search for in the action's comment field.
+        
+        Returns
+        -------
+        pandas.Series, numpy.NDArray
+            Boolean map of matching values
+        """
+        matches = (
+            query.str_match.pandas(dataframe, 'name', name)
+            &query.date_match.pandas(dataframe, 'date', date)
+            &query.str_match.pandas(dataframe, 'type', type)
+            &query.str_match.pandas(dataframe, 'id', potential_id, parent='potentials')
+            &query.str_match.pandas(dataframe, 'key', potential_key, parent='potentials')
+            &query.in_list.pandas(dataframe, 'element', element, parent='potentials')
+            &query.str_contains.pandas(dataframe, 'comment', comment)
+        )
+        return matches
+
+    @staticmethod
+    def mongoquery(name=None, date=None, type=None, potential_id=None,
+                   potential_key=None, element=None, comment=None):
+        mquery = {}
+        query.str_match.mongo(mquery, f'name', name)
+
+        root = f'content.{modelroot}'
+        query.date_match.mongo(mquery, f'{root}.date', date)
+        query.str_match.mongo(mquery, f'{root}.type', type)
+        query.str_match.mongo(mquery, f'{root}.potential.id', potential_id)
+        query.str_match.mongo(mquery, f'{root}.potential.key', potential_key)
+        query.in_list.mongo(mquery, f'{root}.potential.element', element)
+        query.str_contains.mongo(mquery, f'{root}.comment', comment)
+        
+        return mquery
+
+    @staticmethod
+    def cdcsquery(date=None, type=None, potential_id=None, potential_key=None,
+                  element=None, comment=None):
+        mquery = {}
+        root = modelroot
+        query.date_match.mongo(mquery, f'{root}.date', date)
+        query.str_match.mongo(mquery, f'{root}.type', type)
+        query.str_match.mongo(mquery, f'{root}.potential.id', potential_id)
+        query.str_match.mongo(mquery, f'{root}.potential.key', potential_key)
+        query.in_list.mongo(mquery, f'{root}.potential.element', element)
+        query.str_contains.mongo(mquery, f'{root}.comment', comment)
+        return mquery

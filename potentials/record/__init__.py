@@ -50,6 +50,24 @@ else:
     recordmanager.loaded_styles['Action'] = Action
     __all__.append('Action')
 
+# Import Request
+try:
+    from .Request import Request
+except Exception as e:
+    recordmanager.failed_styles['Request'] = '%s: %s' % sys.exc_info()[:2]
+else:
+    recordmanager.loaded_styles['Request'] = Request
+    __all__.append('Request')
+
+# Import FAQ
+try:
+    from .FAQ import FAQ
+except Exception as e:
+    recordmanager.failed_styles['FAQ'] = '%s: %s' % sys.exc_info()[:2]
+else:
+    recordmanager.loaded_styles['FAQ'] = FAQ
+    __all__.append('FAQ')
+
 #### Component record styles - only import for shortcut names ####
 
 # Import Implementation

@@ -113,7 +113,7 @@ class AtomicInfo():
         if len(matches) > 0:
             return matches.iloc[0]['Atomic Symbol']
         else:
-            raise ValueError(f'No matches for atomic number {atomic_number} found')
+            raise IndexError(f'No matches for atomic number {atomic_number} found')
     
     def atomic_mass(self, atomic_info, mass_number=None, prompt=True):
         """

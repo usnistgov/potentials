@@ -1,0 +1,24 @@
+#LAMMPS input script that evaluates a system's energy without relaxing
+
+units metal
+atom_style atomic
+
+boundary m m m
+read_data isolated.dat
+
+print "Potential 2021--Zhou-X-W--Pd-H-He--LAMMPS--ipr1 listed in the NIST Interatomic Potentials Repository:"
+print "https://www.ctcms.nist.gov/potentials/entry/2021--Zhou-X-W-Bartelt-N-C-Sills-R-B--Pd-H-He/2021--Zhou-X-W--Pd-H-He--LAMMPS--ipr1"
+print "Publication(s) related to the potential:"
+print "https://doi.org/10.1103/physrevb.103.014108"
+print "Parameter file(s) can be downloaded at:"
+print "https://www.ctcms.nist.gov/potentials/Download/2021--Zhou-X-W-Bartelt-N-C-Sills-R-B--Pd-H-He/1/PdHHe.eam.fs.he.t"
+pair_style eam/he
+pair_coeff * * C:\Users\lmh1\Documents\library\potential_LAMMPS\2021--Zhou-X-W--Pd-H-He--LAMMPS--ipr1\PdHHe.eam.fs.he.t Pd
+mass 1 106.42
+
+
+
+thermo_style custom step pe
+thermo_modify format float %.13e
+
+run 0

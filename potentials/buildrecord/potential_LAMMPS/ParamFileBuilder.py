@@ -50,7 +50,7 @@ class ParamFileBuilder(PotentialLAMMPSBuilder):
             raise ValueError('paramfile must be set')
         paircoeff = DM()
         paircoeff.append('term', DM([('file', self.paramfile)]))
-        paircoeff.append('term', DM([('symbols', 'True')]))
+        paircoeff.append('term', DM([('symbols', True)]))
         
         return paircoeff
     

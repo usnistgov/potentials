@@ -68,27 +68,13 @@ class Citation(Record):
         name : str, optional
             The name to use when saving the record.
         """
-        # Get name if model is a filename
-        if name is None:
-            try:
-                if Path(model).is_file():
-                    self.name = Path(model).stem
-            except:
-                pass
-        else:
-            self.name = name
-
-        # Check if model is data model
         try:
-            model = DM(model)
+            super().load_model(model, name=name)
         except:
-            if Path(model).is_file():
-                with open(model, encoding='UTF-8') as f:
-                    model = f.read()
             bibtex = model
         else:
-            bibtex = model.find(self.modelroot).find('bibtex')
-            
+            bibtex = self.model.find('bibtex')
+
         # Parse and extract content
         parser = BibTexParser()
         parser.customization = convert_to_unicode
@@ -100,6 +86,11 @@ class Citation(Record):
             self.name
         except:
             self.name = self.doifname
+
+        try:
+            self.model
+        except:
+            self.build_model()
     
     def set_values(self, name=None, **kwargs):
 
@@ -122,7 +113,7 @@ class Citation(Record):
         ----------
         DataModelDict: The data model content.
         """
-        model = DM()
+        citmodel = DM()
         
         def asint(val):
             try:
@@ -131,34 +122,37 @@ class Citation(Record):
                 return val
 
         if self.bib['ENTRYTYPE'] == 'article':
-            model['document-type'] = 'journal' 
-            model['title'] = self.bib['title']
-            model['author'] = self.parse_authors(self.bib['author'])
-            model['publication-name'] = self.bib['journal']
-            model['publication-date'] = DM()
-            model['publication-date']['year'] = asint(self.bib['year'])
+            citmodel['document-type'] = 'journal' 
+            citmodel['title'] = self.bib['title']
+            citmodel['author'] = self.parse_authors(self.bib['author'])
+            citmodel['publication-name'] = self.bib['journal']
+            citmodel['publication-date'] = DM()
+            citmodel['publication-date']['year'] = asint(self.bib['year'])
             if 'volume' in self.bib:
-                model['volume'] = asint(self.bib['volume'])
+                citmodel['volume'] = asint(self.bib['volume'])
             if 'number' in self.bib:
-                model['issue'] = asint(self.bib['number'])
+                citmodel['issue'] = asint(self.bib['number'])
             elif 'issue' in self.bib:
-                model['issue'] = asint(self.bib['issue'])
+                citmodel['issue'] = asint(self.bib['issue'])
             if 'abstract' in self.bib:
-                model['abstract'] = self.bib['abstract']
+                citmodel['abstract'] = self.bib['abstract']
             if 'pages' in self.bib:
-                model['pages'] = self.bib['pages'].replace('--', '-')
-            model['DOI'] = self.bib['doi']
+                citmodel['pages'] = self.bib['pages'].replace('--', '-')
+            citmodel['DOI'] = self.bib['doi']
         
         elif self.bib['ENTRYTYPE'] == 'unpublished':
-            model['document-type'] = 'unspecified'
-            model['title'] = self.bib['title']
-            model['author'] = self.parse_authors(self.bib['author'])
-            model['publication-date'] = DM()
-            model['publication-date']['year'] = self.bib['year']
+            citmodel['document-type'] = 'unspecified'
+            citmodel['title'] = self.bib['title']
+            citmodel['author'] = self.parse_authors(self.bib['author'])
+            citmodel['publication-date'] = DM()
+            citmodel['publication-date']['year'] = self.bib['year']
         
-        model['bibtex'] = self.build_bibtex()
+        citmodel['bibtex'] = self.build_bibtex()
         
-        return DM([('citation', model)])
+        model = DM([('citation', citmodel)])
+
+        self._set_model(model)
+        return model
     
     def build_bibtex(self):
         """str : bibtex of citation"""
@@ -181,7 +175,7 @@ class Citation(Record):
 
         matches = (
             query.str_match.pandas(dataframe, 'name', name)
-            &query.str_match.pandas(dataframe, 'year', year)
+            &query.int_match.pandas(dataframe, 'year', year)
             &query.str_match.pandas(dataframe, 'volume', volume)
             &query.str_contains.pandas(dataframe, 'title', title)
             &query.str_match.pandas(dataframe, 'journal', journal)
@@ -199,7 +193,7 @@ class Citation(Record):
         query.str_match.mongo(mquery, f'name', name)
 
         root = f'content.{modelroot}'
-        query.str_match.mongo(mquery, f'{root}.publication-date.year', year)
+        query.int_match.mongo(mquery, f'{root}.publication-date.year', year)
         query.str_match.mongo(mquery, f'{root}.volume', volume)
         query.str_contains.mongo(mquery, f'{root}.title', title)
         query.str_match.mongo(mquery, f'{root}.publication-name', journal)
@@ -215,7 +209,7 @@ class Citation(Record):
                   abstract=None):
         mquery = {}
         root = modelroot
-        query.str_match.mongo(mquery, f'{root}.publication-date.year', year)
+        query.int_match.mongo(mquery, f'{root}.publication-date.year', year)
         query.str_match.mongo(mquery, f'{root}.volume', volume)
         query.str_contains.mongo(mquery, f'{root}.title', title)
         query.str_match.mongo(mquery, f'{root}.publication-name', journal)

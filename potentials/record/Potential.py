@@ -336,6 +336,7 @@ class Potential(Record):
         if self.othername is not None:
             potential['other-element'] = self.othername
 
+        self._set_model(model)
         return model
         
     def add_citation(self, **kwargs):
@@ -362,7 +363,7 @@ class Potential(Record):
             &query.in_list.pandas(dataframe, 'elements', element)
             &query.str_match.pandas(dataframe, 'othername', othername)
             &query.str_match.pandas(dataframe, 'modelname', modelname)
-            &query.str_match.pandas(dataframe, 'year', year, parent='citations')
+            &query.int_match.pandas(dataframe, 'year', year, parent='citations')
             &query.str_contains.pandas(dataframe, 'author', author, parent='citations')
             &query.str_contains.pandas(dataframe, 'abstract', abstract, parent='citations')
         )
@@ -381,7 +382,7 @@ class Potential(Record):
         query.str_match.mongo(mquery, f'{root}.id', id)
         query.str_contains.mongo(mquery, f'{root}.notes', notes)
         
-        query.str_match.mongo(mquery, f'{root}.description.citation.publication-date.year', year)
+        query.int_match.mongo(mquery, f'{root}.description.citation.publication-date.year', year)
         query.str_contains.mongo(mquery, f'{root}.description.citation.author.surname', author)
         query.str_contains.mongo(mquery, f'{root}.description.citation.abstract', abstract)
         return mquery
@@ -396,7 +397,7 @@ class Potential(Record):
         query.str_match.mongo(mquery, f'{root}.id', id)
         query.str_contains.mongo(mquery, f'{root}.notes', notes)
         
-        query.str_match.mongo(mquery, f'{root}.description.citation.publication-date.year', year)
+        query.int_match.mongo(mquery, f'{root}.description.citation.publication-date.year', year)
         query.str_contains.mongo(mquery, f'{root}.description.citation.author.surname', author)
         query.str_contains.mongo(mquery, f'{root}.description.citation.abstract', abstract)
         return mquery

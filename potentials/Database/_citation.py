@@ -5,7 +5,8 @@ from .. import load_record
 
 def get_citations(self, local=None, remote=None, name=None, year=None, volume=None,
                   title=None, journal=None, doi=None, author=None,
-                  abstract=None, return_df=False, verbose=False):
+                  abstract=None, refresh_cache=False, return_df=False,
+                  verbose=False):
     """
     Retrieves all matching citations from the database.
 
@@ -33,20 +34,28 @@ def get_citations(self, local=None, remote=None, name=None, year=None, volume=No
         Author name(s) to search for.  Works best for last names only.
     abstract : str or list, optional
         Word(s) to search for in the article abstracts.
-    verbose : bool, optional
-        If True, info messages will be printed during operations.  Default
-        value is False.
+    refresh_cache : bool, optional
+        If the local database is of style "local", indicates if the metadata
+        cache file is to be refreshed.  If False,
+        metadata for new records will be added but the old record metadata
+        fields will not be updated.  If True, then the metadata for all
+        records will be regenerated, which is needed to update the metadata
+        for modified records.
     return_df : bool, optional
         If True, then the corresponding pandas.Dataframe of metadata
         will also be returned.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
     """
     return self.get_records('Citation', local=local, remote=remote, name=name, year=year, volume=volume,
                             title=title, journal=journal, doi=doi, author=author,
-                            abstract=abstract, return_df=return_df, verbose=verbose)
+                            abstract=abstract, refresh_cache=refresh_cache,
+                            return_df=return_df, verbose=verbose)
 
 def get_citation(self, local=None, remote=None, name=None, year=None, volume=None,
                  title=None, journal=None, doi=None, author=None,
-                 abstract=None, prompt=True, verbose=False):
+                 abstract=None, prompt=True, refresh_cache=False, verbose=False):
     """
     Retrieves exactly one matching citation from the database.
 
@@ -78,6 +87,13 @@ def get_citation(self, local=None, remote=None, name=None, year=None, volume=Non
         If prompt=True (default) then a screen input will ask for a selection
         if multiple matching potentials are found.  If prompt=False, then an
         error will be thrown if multiple matches are found.
+    refresh_cache : bool, optional
+        If the local database is of style "local", indicates if the metadata
+        cache file is to be refreshed.  If False,
+        metadata for new records will be added but the old record metadata
+        fields will not be updated.  If True, then the metadata for all
+        records will be regenerated, which is needed to update the metadata
+        for modified records.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
@@ -103,7 +119,7 @@ def get_citation(self, local=None, remote=None, name=None, year=None, volume=Non
     return self.get_record('Citation', local=local, remote=remote, name=name, year=year, volume=volume,
                             title=title, journal=journal, doi=doi, author=author,
                             abstract=abstract, prompt=prompt, promptfxn=promptfxn,
-                            verbose=verbose)
+                            refresh_cache=refresh_cache, verbose=verbose)
 
 def fetch_citation(self, doi, local=None, remote=None, verbose=False):
     """
