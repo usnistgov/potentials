@@ -422,7 +422,8 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         return info
 
     def pair_data_info(self, filename, pbc, symbols=None, masses=None,
-                       atom_style=None, units=None, prompt=True):
+                       atom_style=None, units=None, prompt=True,
+                       comments=True):
         """
         Generates the LAMMPS command lines associated with both a potential
         and reading an atom data file.
@@ -453,6 +454,9 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             number if no mass is pre-defined for a symbol and the associated element 
             lacks a single standard atomic/ionic mass.  If False, then an error will
             be raised for these cases instead.
+        comments : bool, optional
+            Indicates if print command lines detailing information on the potential
+            are to be included.  Default value is True.
         
         Returns
         -------
