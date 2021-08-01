@@ -29,6 +29,9 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         ----------
         model : str or file-like object
             A JSON/XML data model containing a potential-LAMMPS branch.
+        name : str, optional
+            The record name to use.  If not given, this will be set to the
+            potential's id.
         pot_dir : str, optional
             The path to a directory containing any artifacts associated with
             the potential.  Default value is None, which assumes any required

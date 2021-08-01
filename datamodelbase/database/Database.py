@@ -367,14 +367,14 @@ class Database():
         """
         raise AttributeError('delete_tar not defined for Database style')
     
-    def copy_records(self, dbase2, record_style=None, records=None, includetar=True, overwrite=False):
+    def copy_records(self, dest, record_style=None, records=None, includetar=True, overwrite=False):
         """
-        Copies records from one database to another.
+        Copies records from the current database to another database.
         
         Parameters
         ----------
-        dbase2 :  Database
-            The database to copy to.
+        dest :  Database
+            The destination database to copy records to.
         record_style : str, optional
             The record style to copy.  If record_style and records not
             given, then the available record styles will be listed and the
@@ -413,12 +413,12 @@ class Database():
         for record in records:
             try:
                 # Add new records
-                dbase2.add_record(record=record)
+                dest.add_record(record=record)
                 record_count += 1
             except:
                 # Update existing records
                 if overwrite:
-                    dbase2.update_record(record=record)
+                    dest.update_record(record=record)
                     record_count += 1
             
             # Copy archives
@@ -436,23 +436,23 @@ class Database():
                     else:
                         try:
                             # Copy tar over
-                            dbase2.add_tar(record=record, root_dir=root_dir)
+                            dest.add_tar(record=record, root_dir=root_dir)
                             tar_count += 1
                         except:
                             # Update existing tar
                             if overwrite:
-                                dbase2.update_tar(record=record, root_dir=root_dir)
+                                dest.update_tar(record=record, root_dir=root_dir)
                                 tar_count += 1
                     
                 else:
                     try:
                         # Copy tar over
-                        dbase2.add_tar(record=record, tar=tar)
+                        dest.add_tar(record=record, tar=tar)
                         tar_count += 1
                     except:
                         # Update existing tar
                         if overwrite:
-                            dbase2.update_tar(record=record, tar=tar)
+                            dest.update_tar(record=record, tar=tar)
                             tar_count += 1
         
         print(record_count, 'records added/updated')

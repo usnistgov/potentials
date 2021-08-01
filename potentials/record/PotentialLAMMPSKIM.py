@@ -25,6 +25,9 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         ----------
         model : str or file-like object
             A JSON/XML data model containing a potential-LAMMPS-KIM branch.
+        name : str, optional
+            The record name to use.  If not given, this will be set to the
+            potential's id.
         id : str, optional
             The full KIM model id indicating the version to use.  If not given,
             then the newest known version will be used.

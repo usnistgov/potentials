@@ -1,12 +1,13 @@
 # coding: utf-8
 
 from ..tools import screen_input
-from . import databasemanager
+from . import databasemanager as default_databasemanager
 from .. import settings as default_settings
 
 __all__ = ['load_database']
 
-def load_database(name=None, style=None, host=None, settings=None, **kwargs):
+def load_database(name=None, style=None, host=None, settings=None, 
+                  databasemanager=None, **kwargs):
     """
     Loads a database object.  Can be either loaded from stored settings or
     by defining all needed access information.
@@ -23,6 +24,9 @@ def load_database(name=None, style=None, host=None, settings=None, **kwargs):
     settings : datamodelbase.Settings, optional
         A Settings object.  Allows for different settings files to be used
         by downstream packages.
+    databasemanager : datamodelbase.tools.ModuleManager, optional
+        Allows for an alternate databasemanager to be specified by downstream
+        packages. 
     kwargs : dict, optional
         Any other keyword parameters defining necessary access information.
         Allowed keywords are database style-specific.
@@ -32,19 +36,22 @@ def load_database(name=None, style=None, host=None, settings=None, **kwargs):
     Subclass of datamodelbase.Database
         The database object.
     """
-    
+
+    # Check that style and name are both not given
+    if style is not None and name is not None:
+        raise ValueError('name and style cannot both be given')
+
+    # Set default package values 
     if settings is None:
         settings = default_settings
+    if databasemanager is None:
+        databasemanager = default_databasemanager
 
-    # Create new Database based on parameters
-    if style is not None:
-        assert name is None, 'name and style cannot both be given'
+    # Load Database info from saved settings
+    if style is None:
 
-        return databasemanager.init(style, host=host, **kwargs)
-
-    # Load Database from saved info
-    else:
-        assert host is None and len(kwargs) == 0, 'style must be given with host, kwargs'
+        if host is not None or len(kwargs) > 0:
+            raise ValueError('style is required if host and/or kwargs are given')
 
         # Get information from settings file
         database_names = settings.list_databases
@@ -71,5 +78,8 @@ def load_database(name=None, style=None, host=None, settings=None, **kwargs):
             raise ValueError(f'database {name} not found')
 
         style = kwargs.pop('style')
-        return load_database(style=style, **kwargs)
+        host = kwargs.pop('host')
+
+    return databasemanager.init(style, host=host, **kwargs)
+        
     
