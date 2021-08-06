@@ -6,7 +6,7 @@ def getreadme():
 
 def getversion():
     """Fetches version information from VERSION file"""
-    with open('atomman/VERSION') as version_file:
+    with open('potentials/VERSION') as version_file:
         return version_file.read().strip()
 
 setup(name = 'potentials',
