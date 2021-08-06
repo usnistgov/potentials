@@ -11,84 +11,55 @@ interacts with the underlying database hosted at `https://potentials.nist.gov/`_
 allowing for the metadata for all hosted interatomic potentials to be searched
 and explored.
 
-Jupyter Notebooks
------------------
+This package is integrated into `atomman`_ and `iprPy`_, which both extend the
+database interactions provided here.  For example, atomman adds the ability to
+interact with atomic structure records in the NIST database, and iprPy further
+adds the ability to interact with property calculation results.  See the
+documentation for those packages if you are interested in exploring more than
+just interatomic potential information.
 
-Setup
-`````
+Installation
+------------
 
-- 0. Initial Setup.ipynb instructs new users on how default settings for the
-  local copy of the database can be set and changed.
+The potentials package can easily be installed using pip or conda-forge
 
-Search Tools
-````````````
+    pip install potentials
 
-- `Search Potential Entries.ipynb`_ |colab1| provides a user-friendly interface
+or 
+    conda install -c conda-forge potentials
+
+Documentation
+-------------
+
+The documentation for the potentials package consists of Jupyter Notebooks
+contained in the doc directory.  These describe the different components
+of the package and provide working examples.
+
+Basic Search Tools
+``````````````````
+
+- `0. Search Potential Entries.ipynb`_ |colab1| provides a user-friendly interface
   for searching and exploring the known interatomic potentials.
 
-- `Search LAMMPS Potentials.ipynb`_ |colab2| provides a user-friendly interface
+- `0. Search LAMMPS Potentials.ipynb`_ |colab2| provides a user-friendly interface
   for searching and exploring the known LAMMPS interatomic potentials.
   Parameter files can be downloaded, and the associated LAMMPS command lines
   shown.
 
-- `Database Class.ipynb`_ |colab3| provides details for how to interact with
-  Database objects to perform more complicated searches directly in Python.
-
-Adding Content
-``````````````
-
-- Add LAMMPS Potentials.ipynb shows how users can integrate their own LAMMPS
-  potential implementations with the Python code.
-
-- Content Manager.ipynb provides a working document for those with access to
-  add and modify repository content.
-
-Package Features
-----------------
-
-Implemented
-```````````
-
-- Anyone can use the Database class to explore hosted records.
-- Publication citations are handled with the Citation class that can
-  read/write citation data as bibtex, JSON, or XML.  New citations can be
-  constructed, existing ones updated, and can be rendered as HTML.
-- Metadata descriptions of interatomic potentials (citation info, notes, and
-  a list of known implementations) are handled with the Potential class. New
-  potentials can be constructed, existing ones updated, saved/loaded from XML
-  or JSON, and can be rendered as HTML.
-- The PotentialLAMMPS class can be used to generate proper LAMMPS input
-  commands for the hosted LAMMPS-compatible interatomic potentials.  Any
-  LAMMPS parameter files can also be downloaded.
-- Any record can be copied, and all records can be downloaded to a local
-  directory.  If the path to the local directory is given, the Database class
-  can interact with the local copy in a manner comparable to the remote
-  database.
-- Tools supporting the construction of the records used by PotentialLAMMPS for
-  different LAMMPS pair styles so that users can integrate their personal
-  LAMMPS potentials with the code and database records.
-- Classes for interacting with FAQ, Requests, and Action records used by the
-  Interatomic Potentials Repository.
-
-
-
 .. _NIST Interatomic Potentials Repository: https://www.ctcms.nist.gov/potentials/
 .. _https://potentials.nist.gov/: https://potentials.nist.gov/
 
-.. _Search Potential Entries.ipynb: https://colab.research.google.com/github/usnistgov/potentials/blob/master/doc/Search%20Potential%20Entries.ipynb
+.. _atomman: https://www.ctcms.nist.gov/potentials/atomman/
+.. _iprPy: https://www.ctcms.nist.gov/potentials/iprPy/
+
+.. _0. Search Potential Entries.ipynb: https://colab.research.google.com/github/usnistgov/potentials/blob/master/doc/0.%20Search%20Potential%20Entries.ipynb
 .. |colab1| image:: https://colab.research.google.com/assets/colab-badge.svg
  #
  :alt: colab logo
- :target: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Search%20Potential%20Entries.ipynb
+ :target: https://colab.research.google.com/github/usnistgov/potentials/blob/master/0.%20Search%20Potential%20Entries.ipynb
 
-.. _Search LAMMPS Potentials.ipynb: https://colab.research.google.com/github/usnistgov/potentials/blob/master/doc/Search%20LAMMPS%20Potentials.ipynb
+.. _0. Search LAMMPS Potentials.ipynb: https://colab.research.google.com/github/usnistgov/potentials/blob/master/doc/0.%20Search%20LAMMPS%20Potentials.ipynb
 .. |colab2| image:: https://colab.research.google.com/assets/colab-badge.svg
  #
  :alt: colab logo
- :target: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Search%20LAMMPS%20Potentials.ipynb
-
-.. _Database class.ipynb: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Database%20class.ipynb
-.. |colab3| image:: https://colab.research.google.com/assets/colab-badge.svg
- #
- :alt: colab logo
- :target: https://colab.research.google.com/github/usnistgov/potentials/blob/master/Database%20class.ipynb
+ :target: https://colab.research.google.com/github/usnistgov/potentials/blob/master/0.%20Search%20LAMMPS%20Potentials.ipynb
