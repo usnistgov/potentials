@@ -99,7 +99,7 @@ class MongoDatabase(Database):
         if query is not None:
             assert len(kwargs) == 0, 'query cannot be given with kwargs'
         else:
-            query = recordmanager.mongoquery(style, **kwargs)
+            query = load_record(style).mongoquery(**kwargs)
         
         # Query the collection to construct records
         records = []

@@ -14,14 +14,12 @@ from .Artifact import Artifact
 
 from datamodelbase import query
 
-modelroot = 'potential-LAMMPS'
-
 class PotentialLAMMPS(BasePotentialLAMMPS):
     """
     Class for building LAMMPS input lines from a potential-LAMMPS data model.
     """
     
-    def __init__(self, model, name=None, pot_dir=None):
+    def __init__(self, model=None, name=None, pot_dir=None):
         """
         Initializes an instance and loads content from a data model.
         
@@ -37,8 +35,10 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             the potential.  Default value is None, which assumes any required
             files will be in the working directory when LAMMPS is executed.
         """
-        super().__init__(model, name=None, pot_dir=pot_dir)
-    
+        super().__init__(model=model, name=name, pot_dir=pot_dir)
+        if model is None and pot_dir is not None:
+            self.pot_dir = pot_dir
+
     @property
     def style(self):
         """str: The record style"""
@@ -47,7 +47,7 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
     @property
     def modelroot(self):
         """str : The root element for the associated data model"""
-        return modelroot
+        return 'potential-LAMMPS'
 
     @property
     def fileurls(self):
@@ -60,17 +60,21 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
     @property
     def dois(self):
         """list : The publication DOIs associated with the potential"""
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self.__dois
 
     @property
     def comments(self):
         """str : Descriptive comments detailing the potential information"""
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self.__comments
 
     @property
     def print_comments(self):
         """str : LAMMPS print commands of the potential comments"""
-        
+
         # Split defined comments
         lines = self.comments.split('\n')
 
@@ -157,11 +161,10 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             self._masses.append(mass)
             self._charges.append(charge)
     
-    @staticmethod
-    def mongoquery(name=None, key=None, id=None,
-                     potid=None, potkey=None, units=None,
-                     atom_style=None, pair_style=None, status=None,
-                     symbols=None, elements=None):
+    def mongoquery(self, name=None, key=None, id=None,
+                   potid=None, potkey=None, units=None,
+                   atom_style=None, pair_style=None, status=None,
+                   symbols=None, elements=None):
         
         if status is not None:
             status = aslist(status)
@@ -171,7 +174,7 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         mquery = {}
         query.str_match.mongo(mquery, f'name', name)
 
-        root = f'content.{modelroot}'
+        root = f'content.{self.modelroot}'
         query.str_match.mongo(mquery, f'{root}.key', key)
         query.str_match.mongo(mquery, f'{root}.id', id)
         query.str_match.mongo(mquery, f'{root}.potential.id', potid)
@@ -185,8 +188,7 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
 
         return mquery
 
-    @staticmethod
-    def cdcsquery(key=None, id=None, potid=None, potkey=None,
+    def cdcsquery(self, key=None, id=None, potid=None, potkey=None,
                   units=None, atom_style=None, pair_style=None, status=None,
                   symbols=None, elements=None):
 
@@ -196,7 +198,7 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
                 status.append(None)
 
         mquery = {}
-        root = modelroot
+        root = self.modelroot
 
         query.str_match.mongo(mquery, f'{root}.key', key)
         query.str_match.mongo(mquery, f'{root}.id', id)
@@ -237,6 +239,7 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         list of float
             The atomic/ionic masses corresponding to the atom-model symbols.
         """
+
         # Use all symbols if symbols is None
         if symbols is None:
             symbols = self.symbols

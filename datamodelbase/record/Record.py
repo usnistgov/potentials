@@ -51,7 +51,15 @@ class Record():
 
     def load_model(self, model, name=None):
         """
-        Loads model contents  
+        Loads record contents from a given model.
+
+        Parameters
+        ----------
+        model : str or DataModelDict
+            The model contents of the record to load.
+        name : str, optional
+            The name to assign to the record.  Often inferred from other
+            attributes if not given.
         """
         # Get name if model is a filename
         if name is None:
@@ -67,7 +75,15 @@ class Record():
 
     def set_values(self, name=None, **kwargs):
         """
-        Sets multiple object values
+        Set multiple object attributes at the same time.
+
+        Parameters
+        ----------
+        name : str, optional
+            The name to assign to the record.  Often inferred from other
+            attributes if not given.
+        kwargs : any
+            Any record-specific attributes to assign.
         """
         raise NotImplementedError('Not defined for this class')
 
@@ -153,12 +169,13 @@ class Record():
 
     def metadata(self):
         """
-        Returns a dict of simple values for easy comparison.
+        Generates a dict of simple metadata values associated with the record.
+        Useful for quickly comparing records and for building pandas.DataFrames
+        for multiple records of the same style.
         """
         raise NotImplementedError('Specific to subclasses')
     
-    @staticmethod
-    def pandasfilter(dataframe, **kwargs):
+    def pandasfilter(self, dataframe, **kwargs):
         """
         Filters a pandas.DataFrame based on kwargs values for the record style.
         
@@ -174,18 +191,14 @@ class Record():
         pandas.Series, numpy.NDArray?
             Boolean map of matching values
         """
-        return [True for i in range(len(dataframe))]
+        return dataframe.apply(lambda series:True, axis=1)
 
-    @staticmethod
-    def mongoquery(**kwargs):
+    def mongoquery(self, **kwargs):
         """
         Builds a Mongo-style query based on kwargs values for the record style.
         
         Parameters
         ----------
-        root : str, optional
-            Any extra model root(s) to prefix the model paths with.  Used by the
-            different database styles.
         **kwargs : any
             Any of the record style-specific search parameters.
         
@@ -196,28 +209,37 @@ class Record():
         """
         return {}
 
-    @staticmethod
-    def cdcsquery(**kwargs):
+    def cdcsquery(self, **kwargs):
         """
-        Builds a Mongo-style query based on kwargs values for the record style.
+        Builds a CDCS-style query based on kwargs values for the record style.
         
         Parameters
         ----------
-        root : str, optional
-            Any extra model root(s) to prefix the model paths with.  Used by the
-            different database styles.
         **kwargs : any
             Any of the record style-specific search parameters.
         
         Returns
         -------
         dict
-            The Mongo-style query
+            The CDCS-style query
         """
         return {}
 
     def html(self, render=False):
-        """Returns an HTML representation of the object"""
+        """
+        Returns an HTML representation of the object.
+        
+        Parameters
+        ----------
+        render : bool, optional
+            If True, then IPython is used to render the HTML.  If False
+            (default), then the HTML code is returned as a str.
+
+        Returns
+        -------
+        str
+            The HTML code contents.  Returned if render=False.
+        """
 
         # Build xml content
         xml_content = self.model.xml()

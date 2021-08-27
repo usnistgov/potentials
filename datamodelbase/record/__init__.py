@@ -1,6 +1,7 @@
 from .Record import Record
-from .RecordManager import RecordManager
-recordmanager = RecordManager('Record')
+from ..tools import ModuleManager
+recordmanager = ModuleManager('Record')
+
 __all__ = ['Record', 'recordmanager', 'load_record']
 
 # Define load_record 

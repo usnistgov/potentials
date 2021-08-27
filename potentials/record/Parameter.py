@@ -6,7 +6,8 @@ from datamodelbase.record import Record
 
 class Parameter(Record):
     """
-    Class for describing parameter values
+    Class for describing parameter values. Note that this is
+    meant as a component class for other record objects.
     """
     def __init__(self, model=None, name=None, value=None, unit=None):
         """
@@ -37,14 +38,17 @@ class Parameter(Record):
 
     @property
     def modelroot(self):
+        """str: The root element of the content"""
         return 'parameter'
 
     @property
     def xsl_filename(self):
+        """tuple: The module path and file name of the record's xsl html transformer"""
         return ('potentials.xsl', 'parameter.xsl')
 
     @property
     def xsd_filename(self):
+        """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'parameter.xsd')
 
 
@@ -135,7 +139,11 @@ class Parameter(Record):
         return model
 
     def metadata(self):
-        """Returns a flat dict representation of the object"""
+        """
+        Generates a dict of simple metadata values associated with the record.
+        Useful for quickly comparing records and for building pandas.DataFrames
+        for multiple records of the same style.
+        """
         meta = {}
         meta['value'] = self.value
         meta['unit'] = self.unit

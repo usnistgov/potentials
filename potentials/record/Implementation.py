@@ -16,8 +16,8 @@ from datamodelbase.record import Record
 
 class Implementation(Record):
     """
-    Class for representing Implementation metadata records.
-    records.
+    Class for representing Implementation metadata records. . Note that this is
+    meant as a component class for other record objects.
     """
     def __init__(self, model=None, type=None, key=None,
                  id=None, status=None, date=None, notes=None,
@@ -27,15 +27,24 @@ class Implementation(Record):
         ----------
         model : str or DataModelDict, optional
             Model content or file path to model content.
-        type
-        key
-        id
-        status
-        date
-        notes
-        artifacts
-        parameters
-        links
+        type : str, optional
+            Describes the format for the implementation.
+        key : str, optional
+            The UUID4 key to assign to the implementation.
+        id : str, optional
+            The unique id to assign to the implementation.
+        status : str, optional
+            Specifies the current status of the implementation.
+        date : datetime.date, optional
+            A date associated with the implementation listing.
+        notes : str, optional
+            Any notes associated with the implementation.
+        artifacts : list, optional
+            Any Artifact objects or data to associate with the implementation.
+        parameters : list, optional
+            Any Parameter objects or data to associate with the implementation.
+        links : list, optional
+            Any Link objects or data to associate with the implementation.
         """
         if model is not None:
             # Load existing record
@@ -61,20 +70,46 @@ class Implementation(Record):
 
     @property
     def modelroot(self):
+        """str: The root element of the content"""
         return 'implementation'
 
     @property
     def xsl_filename(self):
+        """tuple: The module path and file name of the record's xsl html transformer"""
         return ('potentials.xsl', 'implementation.xsl')
 
     @property
     def xsd_filename(self):
+        """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'implementation.xsd')
 
     def set_values(self, type=None, key=None,
                    id=None, status=None, date=None, notes=None,
                    artifacts=None, parameters=None, links=None):
-            
+        """
+        Sets an Implementation object's attributes
+
+        Parameters
+        ----------
+        type : str, optional
+            Describes the format for the implementation.
+        key : str, optional
+            The UUID4 key to assign to the implementation.
+        id : str, optional
+            The unique id to assign to the implementation.
+        status : str, optional
+            Specifies the current status of the implementation.
+        date : datetime.date, optional
+            A date associated with the implementation listing.
+        notes : str, optional
+            Any notes associated with the implementation.
+        artifacts : list, optional
+            Any Artifact objects or data to associate with the implementation.
+        parameters : list, optional
+            Any Parameter objects or data to associate with the implementation.
+        links : list, optional
+            Any Link objects or data to associate with the implementation.
+        """    
         # Build new record
         self.type = type
         self.key = key
@@ -109,6 +144,7 @@ class Implementation(Record):
 
     @property
     def type(self):
+        """str : The format of the implementation."""
         return self.__type
     
     @type.setter
@@ -120,6 +156,7 @@ class Implementation(Record):
 
     @property
     def key(self):
+        """str : The UUID4 key assigned to the implementation."""
         return self.__key
     
     @key.setter
@@ -131,6 +168,7 @@ class Implementation(Record):
             
     @property
     def id(self):
+        """str : The unique id assigned to the implementation."""
         return self.__id
     
     @id.setter
@@ -142,6 +180,7 @@ class Implementation(Record):
 
     @property
     def status(self):
+        """str : The current status of the implementation."""
         return self.__status
     
     @status.setter
@@ -153,6 +192,7 @@ class Implementation(Record):
 
     @property
     def date(self):
+        """datetime.date : The date associated with the implementation listing"""
         return self.__date
     
     @date.setter
@@ -168,6 +208,7 @@ class Implementation(Record):
     
     @property
     def notes(self):
+        """str : Any additional notes that describe details about the implementation."""
         return self.__notes
 
     @notes.setter
@@ -211,7 +252,11 @@ class Implementation(Record):
             self.add_link(model=DM([('link', link)]))
 
     def metadata(self):
-        """Returns a flat dict representation of the object"""
+        """
+        Generates a dict of simple metadata values associated with the record.
+        Useful for quickly comparing records and for building pandas.DataFrames
+        for multiple records of the same style.
+        """
         data = {}
         
         # Copy class attributes to dict
@@ -266,10 +311,52 @@ class Implementation(Record):
         return model
 
     def add_artifact(self, model=None, filename=None, label=None, url=None):
+        """
+        Initializes an Artifact object and adds it to the artifacts list.
+
+        Parameters
+        ----------
+        model : str or DataModelDict, optional
+            Model content or file path to model content.
+        filename : str, optional
+            The name of the file without path information.
+        label : str, optional
+            A short description label.
+        url : str, optional
+            URL for file where downloaded, if available.
+        """
         self.artifacts.append(Artifact(model=model, filename=filename, label=label, url=url))
 
     def add_link(self, model=None, url=None, label=None, linktext=None):
+        """
+        Initializes a Link object and adds it to the links list.
+        
+        Parameters
+        ----------
+        model : str or DataModelDict, optional
+            Model content or file path to model content.
+        url : str, optional
+            URL for the link.
+        label : str, optional
+            A short description label.
+        linktext : str, optional
+            The text for the link, i.e. what gets clicked on.
+        """
         self.links.append(Link(model=model, url=url, label=label, linktext=linktext))
 
     def add_parameter(self, model=None, name=None, value=None, unit=None):
+        """
+        Initializes a Parameter object and adds it to the parameters list.
+        
+        Parameters
+        ----------
+        model : str or DataModelDict.DataModelDict, optional
+            Data model content to load.
+        name : str, optional
+            The name of the parameter or string parameter line.
+        value : float, optional
+            The value of the parameter.
+        unit : str, optional
+            Units associated with value.
+        """
         self.parameters.append(Parameter(model=model, name=name, value=value, unit=unit))

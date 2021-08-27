@@ -14,12 +14,38 @@ from ..tools import aslist
 from datamodelbase.record import Record
 from datamodelbase import query
 
-modelroot = 'interatomic-potential'
-
 class Potential(Record):
     """
     Class for representing Potential metadata records.
     """
+
+    def __init__(self, model=None, name=None, **kwargs):
+        """
+        Initializes a Record object for a given style.
+        
+        Parameters
+        ----------
+        model : str, file-like object, DataModelDict
+            The contents of the record.
+        name : str, optional
+            The unique name to assign to the record.  If model is a file
+            path, then the default record name is the file name without
+            extension.
+        
+        """
+        # Set default values
+        self.elements = None
+        self.key = None
+        self.othername = None
+        self.fictional = False
+        self.modelname = None
+        self.notes = None
+        self.recorddate = datetime.date.today()
+        self.__citations = []
+        self.__implementations = []
+
+        super().__init__(model=model, name=name, **kwargs)
+
 
     @property
     def style(self):
@@ -28,21 +54,33 @@ class Potential(Record):
 
     @property
     def xsl_filename(self):
+        """tuple: The module path and file name of the record's xsl html transformer"""
         return ('potentials.xsl', 'Potential.xsl')
 
     @property
     def xsd_filename(self):
+        """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'Potential.xsd')
 
     @property
     def modelroot(self):
         """str: The root element of the content"""
-        return modelroot
+        return 'interatomic-potential'
 
     def load_model(self, model, name=None):
+        """
+        Loads record contents from a given model.
 
+        Parameters
+        ----------
+        model : str or DataModelDict
+            The model contents of the record to load.
+        name : str, optional
+            The name to assign to the record.  Often inferred from other
+            attributes if not given.
+        """
         super().load_model(model, name=name)
-        potential = self.model[modelroot]
+        potential = self.model[self.modelroot]
         
         # Extract information
         self.key = potential['key']
@@ -101,40 +139,69 @@ class Potential(Record):
 
 
     def set_values(self, name=None, elements=None, key=None,
-                   othername=None, fictional=False, modelname=None,
+                   othername=None, fictional=None, modelname=None,
                    notes=None, recorddate=None, citations=None,
                    implementations=None):
+        """
+        Set multiple object attributes at the same time.
 
-        # Build new record
-        self.elements = elements
-        self.key = key
-        self.othername = othername
-        self.fictional = fictional
-        self.modelname = modelname
-        self.notes = notes
-        self.recorddate = recorddate
+        Parameters
+        ----------
+        name : str, optional
+            The name to assign to the record.  Often inferred from other
+            attributes if not given.
+        date : str or datetime.date, optional
+            The date to assign to the record.
+        type : str, optional
+            The Action type to assign to the record.
+        potentials : list, optional
+            Potential or model contents for Potential records to associate
+            with the action.
+        comment : str, optional
+            Any additional comments to assign to the record.
+        """
         
-        self.__citations = []
+        if elements is not None:
+            self.elements = elements
+        if key is not None:
+            self.key = key
+        if othername is not None:
+            self.othername = othername
+        if fictional is not None:
+            self.fictional = fictional
+        if modelname is not None:
+            self.modelname = modelname
+        if notes is not None:
+            self.notes = notes
+        if recorddate is not None:
+            self.recorddate = recorddate
+        
         if citations is not None:
-            for citation in aslist(citations):
-                if isinstance(citation, dict):
-                    self.add_citation(**citation)
-                elif isinstance(citation, Citation):
-                    self.citations.append(citation)
+            self.__citations = []
+            if citations is not None:
+                for citation in aslist(citations):
+                    if isinstance(citation, dict):
+                        self.add_citation(**citation)
+                    elif isinstance(citation, Citation):
+                        self.citations.append(citation)
         
-        self.__implementations = []
         if implementations is not None:
-            for implementation in aslist(implementations):
-                if isinstance(implementation, dict):
-                    self.add_implementation(**implementation)
-                elif isinstance(implementation, Implementation):
-                    self.implementations.append(implementation)
+            self.__implementations = []
+            if implementations is not None:
+                for implementation in aslist(implementations):
+                    if isinstance(implementation, dict):
+                        self.add_implementation(**implementation)
+                    elif isinstance(implementation, Implementation):
+                        self.implementations.append(implementation)
 
         # Set name
         if name is not None:
             self.name = name
         else:
-            self.name = f'potential.{self.id}'
+            try:
+                self.name = f'potential.{self.id}'
+            except:
+                self.name = 'potential.unknown'
 
     @property
     def key(self):
@@ -199,6 +266,7 @@ class Potential(Record):
 
     @property
     def recorddate(self):
+        """datetime.date : The date associated with the record"""
         return self.__recorddate
     
     @recorddate.setter
@@ -214,14 +282,17 @@ class Potential(Record):
 
     @property
     def citations(self):
+        """list: Any associated Citation objects"""
         return self.__citations
 
     @property
     def implementations(self):
+        """list: Any associated Implementation objects"""
         return self.__implementations
 
     @property
     def elements(self):
+        """list: elements associated with the potential"""
         return self.__elements
 
     @elements.setter
@@ -233,6 +304,7 @@ class Potential(Record):
     
     @property
     def othername(self):
+        """str or None: Alternate name for what the potential models"""
         return self.__othername
     
     @othername.setter
@@ -244,6 +316,7 @@ class Potential(Record):
     
     @property
     def fictional(self):
+        """bool: Indicates if the potential is classified as fictional"""
         return self.__fictional
     
     @fictional.setter
@@ -253,6 +326,7 @@ class Potential(Record):
     
     @property
     def modelname(self):
+        """str: Extra tag for differentiating potentials when needed"""
         return self.__modelname
     
     @modelname.setter
@@ -264,6 +338,7 @@ class Potential(Record):
 
     @property
     def notes(self):
+        """str or None: Any extra notes associated with the potential"""
         return self.__notes
 
     @notes.setter
@@ -274,7 +349,11 @@ class Potential(Record):
             self.__notes = str(v)
 
     def metadata(self):
-        """Returns a flat dict representation of the object"""
+        """
+        Generates a dict of simple metadata values associated with the record.
+        Useful for quickly comparing records and for building pandas.DataFrames
+        for multiple records of the same style.
+        """
         data = {}
         
         # Copy class attributes to dict
@@ -300,11 +379,7 @@ class Potential(Record):
 
     def build_model(self):
         """
-        Returns the object info as data model content
-        
-        Returns
-        ----------
-        DataModelDict: The data model content.
+        Generates and returns model content based on the values set to object.
         """
         # Initialize model
         model = DM()
@@ -340,20 +415,60 @@ class Potential(Record):
         return model
         
     def add_citation(self, **kwargs):
+        """
+        Initializes a new Citation object and appends it to the citations list.
+        """
         self.citations.append(Citation(**kwargs))
 
     def add_implementation(self, **kwargs):
+        """
+        Initializes a new Implementation object and appends it to the implementations list.
+        """
         implementation = Implementation(**kwargs)
         for imp in self.implementations:
             if imp.id == implementation.id:
                 raise ValueError(f'Implementation with id {imp.id} already exists')
         self.implementations.append(implementation)
 
-    @staticmethod
-    def pandasfilter(dataframe, name=None, key=None, id=None,
+    def pandasfilter(self, dataframe, name=None, key=None, id=None,
                      notes=None, fictional=None, element=None,
                      othername=None, modelname=None, year=None, author=None,
                      abstract=None):
+        """
+        Filters a pandas.DataFrame based on kwargs values for the record style.
+        
+        Parameters
+        ----------
+        dataframe : pandas.DataFrame
+            A table of metadata for multiple records of the record style.
+        name : str or list
+            The record name(s) to parse by.
+        key : str or list
+            The unique potential id(s) to parse by.
+        id : str or list
+            The UUID4 potential key(s) to parse by.
+        notes : str or list
+            Terms in the notes to parse for.
+        fictional : bool or list
+            Value of fictional to parse for.
+        element : str or list
+            Element(s) to parse by.
+        othername : str or list
+            Other name(s) to parse by.
+        modelname : str or list
+            Model name(s) to parse by.
+        year : int or list
+            Publication/creation year(s) to parse by.
+        author : str or list
+            Author(s) to parse by.  Only last names guaranteed to work.
+        abstract : str or list
+            Terms in the publication abstracts to parse for.
+        
+        Returns
+        -------
+        pandas.Series, numpy.NDArray
+            Boolean map of matching values
+        """
         matches = (
             query.str_match.pandas(dataframe, 'name', name)
             &query.str_match.pandas(dataframe, 'key', key)
@@ -369,15 +484,48 @@ class Potential(Record):
         )
         return matches
 
-    @staticmethod
-    def mongoquery(name=None, key=None, id=None,
+    def mongoquery(self, name=None, key=None, id=None,
                    notes=None, fictional=None, element=None,
                    othername=None, modelname=None, year=None, author=None,
                    abstract=None):
+        """
+        Builds a Mongo-style query based on kwargs values for the record style.
+        
+        Parameters
+        ----------
+        name : str or list
+            The record name(s) to parse by.
+        key : str or list
+            The unique potential id(s) to parse by.
+        id : str or list
+            The UUID4 potential key(s) to parse by.
+        notes : str or list
+            Terms in the notes to parse for.
+        fictional : bool or list
+            Value of fictional to parse for.
+        element : str or list
+            Element(s) to parse by.
+        othername : str or list
+            Other name(s) to parse by.
+        modelname : str or list
+            Model name(s) to parse by.
+        year : int or list
+            Publication/creation year(s) to parse by.
+        author : str or list
+            Author(s) to parse by.  Only last names guaranteed to work.
+        abstract : str or list
+            Terms in the publication abstracts to parse for.
+        
+        Returns
+        -------
+        dict
+            The Mongo-style query
+        """        
+        
         mquery = {}
         query.str_match.mongo(mquery, f'name', name)
 
-        root = f'content.{modelroot}'
+        root = f'content.{self.modelroot}'
         query.str_match.mongo(mquery, f'{root}.key', key)
         query.str_match.mongo(mquery, f'{root}.id', id)
         query.str_contains.mongo(mquery, f'{root}.notes', notes)
@@ -387,12 +535,43 @@ class Potential(Record):
         query.str_contains.mongo(mquery, f'{root}.description.citation.abstract', abstract)
         return mquery
 
-    @staticmethod
-    def cdcsquery(key=None, id=None, notes=None,
+    def cdcsquery(self, key=None, id=None, notes=None,
                   fictional=None, element=None, othername=None, modelname=None,
                   year=None, author=None, abstract=None):
+        """
+        Builds a CDCS-style query based on kwargs values for the record style.
+        
+        Parameters
+        ----------
+        key : str or list
+            The unique potential id(s) to parse by.
+        id : str or list
+            The UUID4 potential key(s) to parse by.
+        notes : str or list
+            Terms in the notes to parse for.
+        fictional : bool or list
+            Value of fictional to parse for.
+        element : str or list
+            Element(s) to parse by.
+        othername : str or list
+            Other name(s) to parse by.
+        modelname : str or list
+            Model name(s) to parse by.
+        year : int or list
+            Publication/creation year(s) to parse by.
+        author : str or list
+            Author(s) to parse by.  Only last names guaranteed to work.
+        abstract : str or list
+            Terms in the publication abstracts to parse for.
+        
+        Returns
+        -------
+        dict
+            The CDCS-style query
+        """
+        
         mquery = {}
-        root = modelroot
+        root = self.modelroot
         query.str_match.mongo(mquery, f'{root}.key', key)
         query.str_match.mongo(mquery, f'{root}.id', id)
         query.str_contains.mongo(mquery, f'{root}.notes', notes)

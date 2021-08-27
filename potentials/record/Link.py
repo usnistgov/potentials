@@ -10,7 +10,8 @@ class Link(Record):
     """
     def __init__(self, model=None, url=None, label=None, linktext=None):
         """
-        Initializes a Link object providing a hyperlink to content.
+        Initializes a Link object providing a hyperlink to content. Note that
+        this is meant as a component class for other record objects.
 
         Parameters
         ----------
@@ -37,14 +38,17 @@ class Link(Record):
 
     @property
     def modelroot(self):
+        """str: The root element of the content"""
         return 'link'
 
     @property
     def xsl_filename(self):
+        """tuple: The module path and file name of the record's xsl html transformer"""
         return ('potentials.xsl', 'link.xsl')
 
     @property
     def xsd_filename(self):
+        """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'link.xsd')
 
     @property
@@ -135,7 +139,11 @@ class Link(Record):
         return model
     
     def metadata(self):
-        """Returns a flat dict representation of the object"""
+        """
+        Generates a dict of simple metadata values associated with the record.
+        Useful for quickly comparing records and for building pandas.DataFrames
+        for multiple records of the same style.
+        """
         meta = {}
         meta['linktext'] = self.linktext
         meta['label'] = self.label

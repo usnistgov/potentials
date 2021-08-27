@@ -127,7 +127,7 @@ class LocalDatabase(Database):
                 # Add new entries
                 if name not in currentnames:
                     
-                    record = load_record(style, fname)
+                    record = load_record(style, model=fname, name=name)
                     newrecords.append(record.metadata())
                 
             # Update cache if needed
@@ -234,7 +234,7 @@ class LocalDatabase(Database):
             cache = self.cache(style, refresh=refresh_cache)
         
         # Construct mask of records to return
-        mask = recordmanager.pandasfilter(style, cache, **kwargs)
+        mask = load_record(style).pandasfilter(cache, **kwargs)
         df = cache[mask].reset_index(drop=True)
         
         return df

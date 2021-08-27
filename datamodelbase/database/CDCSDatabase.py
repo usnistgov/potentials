@@ -106,7 +106,7 @@ class CDCSDatabase(Database):
         elif query is not None:
             assert len(kwargs) == 0, 'query cannot be given with kwargs'
         else:
-            query = recordmanager.cdcsquery(style, **kwargs)
+            query = load_record(style).cdcsquery(**kwargs)
 
         def build_records(series):
             return load_record(series.template_title, model=series.xml_content,

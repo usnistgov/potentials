@@ -11,7 +11,8 @@ from datamodelbase.record import Record
 
 class Artifact(Record):
     """
-    Class for describing artifacts (files accessible online)
+    Class for describing artifacts (files accessible online). Note that this is
+    meant as a component class for other record objects.
     """
     def __init__(self, model=None, filename=None, label=None, url=None):
         """
@@ -42,14 +43,17 @@ class Artifact(Record):
 
     @property
     def modelroot(self):
+        """str: The root element of the content"""
         return 'artifact'
 
     @property
     def xsl_filename(self):
+        """tuple: The module path and file name of the record's xsl html transformer"""
         return ('potentials.xsl', 'artifact.xsl')
 
     @property
     def xsd_filename(self):
+        """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'artifact.xsd')
 
     @property
@@ -143,7 +147,11 @@ class Artifact(Record):
         return model
 
     def metadata(self):
-        """Returns a flat dict representation of the object"""
+        """
+        Generates a dict of simple metadata values associated with the record.
+        Useful for quickly comparing records and for building pandas.DataFrames
+        for multiple records of the same style.
+        """
         meta = {}
         meta['filename'] = self.filename
         meta['label'] = self.label

@@ -8,22 +8,20 @@ import numpy as np
 from ..tools import atomic_mass, aslist
 from .BasePotentalLAMMPS import BasePotentialLAMMPS
 
-from datamodelbase import query
-
-modelroot = 'potential-LAMMPS-KIM'
+from datamodelbase import query 
 
 class PotentialLAMMPSKIM(BasePotentialLAMMPS):
     """
     Class for building LAMMPS input lines from a potential-LAMMPS-KIM data model.
     """
     
-    def __init__(self, model, name=None, id=None):
+    def __init__(self, model=None, name=None, id=None):
         """
         Initializes an instance and loads content from a data model.
         
         Parameters
         ----------
-        model : str or file-like object
+        model : str or file-like object, optional
             A JSON/XML data model containing a potential-LAMMPS-KIM branch.
         name : str, optional
             The record name to use.  If not given, this will be set to the
@@ -32,9 +30,9 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             The full KIM model id indicating the version to use.  If not given,
             then the newest known version will be used.
         """
-        super().__init__(model, name=None, id=id)
-        self.pot_dir = ''
-        self.__artifacts = []
+        super().__init__(model=model, name=name, id=id)
+        if model is None and id is not None:
+            self.id = id
     
     @property
     def style(self):
@@ -43,6 +41,8 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
 
     @property
     def id(self):
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self._id
 
     @id.setter
@@ -54,17 +54,14 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
 
     @property
     def shortcode(self):
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self.__shortcode
 
     @property
     def modelroot(self):
         """str : The root element for the associated data model"""
-        return modelroot
-
-    @property
-    def artifacts(self):
-        """list : The list of file artifacts for the potential including download URLs."""
-        return []
+        return 'potential-LAMMPS-KIM'
 
     def download_files(self, *args, **kwargs):
         """
@@ -170,8 +167,7 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             self._potkey = None
             self._potid = None
 
-    @staticmethod
-    def mongoquery(name=None, key=None, id=None,
+    def mongoquery(self, name=None, key=None, id=None,
                      potid=None, potkey=None, units=None,
                      atom_style=None, pair_style=None, status=None,
                      symbols=None, elements=None):
@@ -183,7 +179,7 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         mquery = {}
         query.str_match.mongo(mquery, f'name', name)
 
-        root = f'content.{modelroot}'
+        root = f'content.{self.modelroot}'
         query.str_match.mongo(mquery, f'{root}.key', key)
         query.str_match.mongo(mquery, f'{root}.id', id)
         query.str_match.mongo(mquery, f'{root}.potential.id', potid)
@@ -200,8 +196,7 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         
         return mquery
 
-    @staticmethod
-    def cdcsquery(key=None, id=None, potid=None, potkey=None,
+    def cdcsquery(self, key=None, id=None, potid=None, potkey=None,
                   units=None, atom_style=None, pair_style=None, status=None,
                   symbols=None, elements=None):
         
@@ -210,7 +205,7 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             return {"not.kim.pair_style":"get nothing"}
 
         mquery = {}
-        root = modelroot
+        root = self.modelroot
 
         query.str_match.mongo(mquery, f'{root}.key', key)
         query.str_match.mongo(mquery, f'{root}.id', id)
@@ -232,16 +227,22 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
     @property
     def symbolsets(self):
         """list : The sets of symbols that correspond to all related potentials"""
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self._symbolsets
 
     @property
     def potids(self):
         """list : The ids of all related potentials"""
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self._potids
     
     @property
     def potkeys(self):
         """list : The keys of all related potentials"""
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self._potkeys
 
     def normalize_symbols(self, symbols):
@@ -260,7 +261,6 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         list
             The updated list.
         """
-        
         # Call parent method
         symbols = super().normalize_symbols(symbols)
         
@@ -518,7 +518,6 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         info +='\n'
 
         return info
-
 
     def pair_restart_info(self, filename, symbols=None, masses=None,
                           units=None, prompt=True, comments=True):

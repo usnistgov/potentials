@@ -1,4 +1,5 @@
 from ..tools import aslist
+import pandas as pd
 
 def description():
     return "Query records where val string(s) are in a string element"
@@ -17,6 +18,9 @@ def pandas(df, name, val, parent=None):
             return True
         
         if parent is None:
+            if pd.isna(series[name]):
+                return False
+
             for v in aslist(val):
                 if v not in series[name]:
                     return False

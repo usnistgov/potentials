@@ -18,12 +18,30 @@ from bibtexparser.bibdatabase import BibDatabase
 from datamodelbase.record import Record
 from datamodelbase import query 
 
-modelroot = 'citation'
-
 class Citation(Record):
     """
     Class for representing Citation metadata records.
     """
+
+    def __init__(self, model=None, name=None, **kwargs):
+        """
+        Initializes a Record object for a given style.
+        
+        Parameters
+        ----------
+        model : str, file-like object, DataModelDict
+            The contents of the record.
+        name : str, optional
+            The unique name to assign to the record.  If model is a file
+            path, then the default record name is the file name without
+            extension.
+        
+        """
+        # Set default values
+        self.__bib = {}
+        self.bib['note'] = ''
+
+        super().__init__(model=model, name=name, **kwargs)
 
     @property
     def style(self):
@@ -33,14 +51,16 @@ class Citation(Record):
     @property
     def modelroot(self):
         """str: The root element of the content"""
-        return modelroot
+        return 'citation'
     
     @property
     def xsl_filename(self):
+        """tuple: The module path and file name of the record's xsl html transformer"""
         return ('potentials.xsl', 'Citation.xsl')
 
     @property
     def xsd_filename(self):
+        """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'Citation.xsd')
 
     @property
@@ -93,9 +113,18 @@ class Citation(Record):
             self.build_model()
     
     def set_values(self, name=None, **kwargs):
+        """
+        Set multiple object attributes at the same time.
 
+        Parameters
+        ----------
+        name : str, optional
+            The name to assign to the record.  Often inferred from other
+            attributes if not given.
+        **kwargs : any, ptional
+            Any other kwargs are set to the bibdict
+        """
         # Set bib values
-        self.__bib = {}
         for key, value in kwargs.items():
             self.bib[key] = str(value)
 
@@ -168,11 +197,38 @@ class Citation(Record):
         meta.update(self.bib)
         return meta
 
-    @staticmethod
-    def pandasfilter(dataframe, name=None, year=None, volume=None,
+    def pandasfilter(self, dataframe, name=None, year=None, volume=None,
                      title=None, journal=None, doi=None, author=None,
                      abstract=None):
+        """
+        Filters a pandas.DataFrame based on kwargs values for the record style.
+        
+        Parameters
+        ----------
+        dataframe : pandas.DataFrame
+            A table of metadata for multiple records of the record style.
+        name : str or list
+            The record name(s) to parse by.
+        year : int or list
+            The publication/creation year for the citation.
+        volume : int or list
+            The journal volume for the citation.
+        title : str or list
+            The article title for the citation.
+        journal : str or list
+            The journal name.
+        doi : str or list
+            The citation's DOI.
+        author : str or list
+            Author names to search for - only guaranteed to work with last names.
+        abstract : str or list
+            Key words to search for in the citation abstract.
 
+        Returns
+        -------
+        pandas.Series, numpy.NDArray
+            Boolean map of matching values
+        """
         matches = (
             query.str_match.pandas(dataframe, 'name', name)
             &query.int_match.pandas(dataframe, 'year', year)
@@ -185,14 +241,41 @@ class Citation(Record):
         )
         return matches
 
-    @staticmethod
-    def mongoquery(name=None, year=None, volume=None,
+    def mongoquery(self, name=None, year=None, volume=None,
                    title=None, journal=None, doi=None, author=None,
                    abstract=None):
+        """
+        Builds a Mongo-style query based on kwargs values for the record style.
+        
+        Parameters
+        ----------
+        name : str or list
+            The record name(s) to parse by.
+        year : int or list
+            The publication/creation year for the citation.
+        volume : int or list
+            The journal volume for the citation.
+        title : str or list
+            The article title for the citation.
+        journal : str or list
+            The journal name.
+        doi : str or list
+            The citation's DOI.
+        author : str or list
+            Author names to search for - only guaranteed to work with last names.
+        abstract : str or list
+            Key words to search for in the citation abstract.
+        
+        Returns
+        -------
+        dict
+            The Mongo-style query
+        """        
+        
         mquery = {}
         query.str_match.mongo(mquery, f'name', name)
 
-        root = f'content.{modelroot}'
+        root = f'content.{self.modelroot}'
         query.int_match.mongo(mquery, f'{root}.publication-date.year', year)
         query.str_match.mongo(mquery, f'{root}.volume', volume)
         query.str_contains.mongo(mquery, f'{root}.title', title)
@@ -203,12 +286,36 @@ class Citation(Record):
         
         return mquery
 
-    @staticmethod
-    def cdcsquery(year=None, volume=None,
+    def cdcsquery(self, year=None, volume=None,
                   title=None, journal=None, doi=None, author=None,
                   abstract=None):
+        """
+        Builds a CDCS-style query based on kwargs values for the record style.
+        
+        Parameters
+        ----------
+        year : int or list
+            The publication/creation year for the citation.
+        volume : int or list
+            The journal volume for the citation.
+        title : str or list
+            The article title for the citation.
+        journal : str or list
+            The journal name.
+        doi : str or list
+            The citation's DOI.
+        author : str or list
+            Author names to search for - only guaranteed to work with last names.
+        abstract : str or list
+            Key words to search for in the citation abstract.
+        
+        Returns
+        -------
+        dict
+            The CDCS-style query
+        """
         mquery = {}
-        root = modelroot
+        root = self.modelroot
         query.int_match.mongo(mquery, f'{root}.publication-date.year', year)
         query.str_match.mongo(mquery, f'{root}.volume', volume)
         query.str_contains.mongo(mquery, f'{root}.title', title)

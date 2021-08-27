@@ -16,14 +16,17 @@ class BasePotentialLAMMPS(Record):
     """
     Base parent class for PotentialLAMMPS objects
     """
-    def __init__(self, model, name=None, **kwargs):
+    def __init__(self, model=None, name=None, **kwargs):
         """
         Initializes an instance and loads content from a data model.
         
         Parameters
         ----------
-        model : str or file-like object
+        model : str or file-like object, optional
             A JSON/XML data model for the content.
+        name : str, optional
+            The record name to use.  If not given, this will be set to the
+            potential's id.
         **kwargs : any, optional
             Any other keyword parameters supported by the child class
         """
@@ -31,56 +34,84 @@ class BasePotentialLAMMPS(Record):
         if self.__module__ == __name__:
             raise TypeError("Don't use base class")
         
-        # Pass parameters to load
-        self.load_model(model, name=name, **kwargs)
+        # Set default values
+        self.pot_dir = ''
+        self.__artifacts = []
 
+        # Pass parameters to load
+        if model is not None:
+            self.load_model(model, name=name, **kwargs)
+        elif name is not None:
+            self.name = name
+        
     @property
     def id(self):
         """str : Human-readable identifier for the LAMMPS implementation."""
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self._id
     
     @property
     def key(self):
         """str : uuid hash-key for the LAMMPS implementation."""
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self._key
     
     @property
     def potid(self):
         """str : Human-readable identifier for the potential model."""
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self._potid
     
     @property
     def potkey(self):
         """str : uuid hash-key for the potential model."""
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self._potkey
     
     @property
     def units(self):
         """str : LAMMPS units option."""
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self._units
     
     @property
     def atom_style(self):
         """str : LAMMPS atom_style option."""
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self._atom_style
     
     @property
     def symbols(self):
         """list of str : All atom-model symbols."""
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self._symbols
     
     @property
     def pair_style(self):
+        """str : LAMMPS pair_style option."""
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self._pair_style
     
     @property
     def allsymbols(self):
         """bool : indicates if all model symbols must be listed."""
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self._allsymbols
 
     @property
     def status(self):
         """str : Indicates the status of the implementation (active, superseded, retracted)"""
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self._status
 
     @property
@@ -213,7 +244,6 @@ class BasePotentialLAMMPS(Record):
         list
             The updated list.
         """
-        
         # Convert symbols to a list if needed
         symbols = aslist(symbols)
         
@@ -260,7 +290,14 @@ class BasePotentialLAMMPS(Record):
         return elements
 
     def metadata(self):
-        """Returns a flat dict of the metadata fields"""
+        """
+        Generates a dict of simple metadata values associated with the record.
+        Useful for quickly comparing records and for building pandas.DataFrames
+        for multiple records of the same style.
+        """
+        if self.model is None:
+            raise AttributeError('No model information loaded')
+
         d = {}
         d['name'] = self.name
         d['id'] = self.id
@@ -277,8 +314,7 @@ class BasePotentialLAMMPS(Record):
 
         return d
 
-    @staticmethod
-    def pandasfilter(dataframe, name=None, key=None, id=None,
+    def pandasfilter(self, dataframe, name=None, key=None, id=None,
                      potid=None, potkey=None, units=None,
                      atom_style=None, pair_style=None, status=None,
                      symbols=None, elements=None):
@@ -299,6 +335,8 @@ class BasePotentialLAMMPS(Record):
         return matches
 
     def build_model(self):
+        if self.model is None:
+            raise AttributeError('No model information loaded')
         return self.model
 
     def pair_info(self, symbols=None, masses=None, prompt=True):
