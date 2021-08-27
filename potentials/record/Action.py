@@ -122,7 +122,7 @@ class PotInfo():
         if self.othername is not None:
             model['potential']['other-element'] = self.othername
 
-        self._set_model(model)
+        #self._set_model(model)
         return model
 
     def metadata(self):
