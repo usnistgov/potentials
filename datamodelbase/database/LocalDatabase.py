@@ -83,11 +83,11 @@ class LocalDatabase(Database):
             metadata is returned as is.
         """
         recordmanager.assert_style(style)
-        
         cachefile = Path(self.host, f'{style}.csv')
 
         if cachefile.is_file() and refresh is False:
-            # Load cachefile
+            
+            # Load cache file
             cache = pd.read_csv(cachefile)
 
             def interpret(series, key):
@@ -117,25 +117,27 @@ class LocalDatabase(Database):
             # Initialize new cache
             cache = pd.DataFrame({'name':[]})
 
-        # Search local directory
+        newrecords = []
         if addnew is True:
-            newrecords = []
+
+            # Search local directory for new entries
             currentnames = cache.name.to_list()
             for fname in Path(self.host, style).glob(f'*.{self.format}'):
                 name = fname.stem
 
-                # Add new entries
+                # Load new entries
                 if name not in currentnames:
-                    
                     record = load_record(style, model=fname, name=name)
                     newrecords.append(record.metadata())
-                
-            # Update cache if needed
+            
+            # Add new entries to the cache
             if len(newrecords) > 0:
                 newrecords = pd.DataFrame(newrecords)
-
                 cache = cache.append(newrecords, sort=False).sort_values('name').reset_index(drop=True)
-                cache.to_csv(cachefile, index=False)
+
+        # Update cache file
+        if refresh or len(newrecords) > 0:
+            cache.to_csv(cachefile, index=False)
 
         return cache
 
@@ -214,26 +216,26 @@ class LocalDatabase(Database):
         if style is None:
             style = self.select_record_style()
         
-        # Load named records or cache
         if 'name' in kwargs and kwargs['name'] is not None:
-            
-            # Load only named records
+            # Load named records
             cache = []
             for name in aslist(kwargs['name']):
                 fname = Path(self.host, style, f'{name}.{self.format}')
                 if fname.exists():
                     record = recordmanager.init(style, model=fname)
                     cache.append(record.metadata())
+            
+            # Build cache DataFrame
             if len(cache) == 0:
                 cache = pd.DataFrame({'name':[]})
             else:
                 cache = pd.DataFrame(cache)
 
         else:
-            # Load cache file for the record style
+            # Load cache file
             cache = self.cache(style, refresh=refresh_cache)
         
-        # Construct mask of records to return
+        # Filter based on the record's pandasfilter method
         mask = load_record(style).pandasfilter(cache, **kwargs)
         df = cache[mask].reset_index(drop=True)
         

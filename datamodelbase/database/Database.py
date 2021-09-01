@@ -496,6 +496,7 @@ class Database():
             test = screen_input('Delete records? (must type yes):')
             if test == 'yes':
                 count = 0
+                record_styles = set()
                 for record in records:
                     try:
                         self.delete_tar(record=record)
@@ -504,10 +505,14 @@ class Database():
                     try:
                         self.delete_record(record=record)
                         count += 1
+                        record_styles.add(record.style)
                     except:
                         pass
-                
+                if self.style == 'local':
+                    for record_style in record_styles:
+                        cache = self.cache(record_style, refresh=True)
                 print(count, 'records successfully deleted')
+
     
     def select_record_style(self):
         """
