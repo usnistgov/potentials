@@ -69,7 +69,47 @@ class AtomicInfo():
         data['Mass Number'] = data.apply(make_int, args=['Mass Number'], axis=1)
         
         self.__data = data
-        
+
+    @property
+    def most_stable_isotope(self):
+        """dict: Specifies the mass number for the most stable isotope of the radioactive elements"""
+        return {
+            'Tc': 97,
+            'Pm': 145,
+            'Po': 209,
+            'At': 210,
+            'Rn': 222,
+            'Fr': 223,
+            'Ra': 226,
+            'Ac': 227,
+            'Np': 237,
+            'Pu': 244,
+            'Am': 243,
+            'Cm': 247,
+            'Bk': 247,
+            'Cf': 251,
+            'Es': 252,
+            'Fm': 257,
+            'Md': 258,
+            'No': 259,
+            'Lr': 262,
+            'Rf': 267,
+            'Db': 268,
+            'Sg': 269,
+            'Bh': 270,
+            'Hs': 269,
+            'Mt': 278,
+            'Ds': 281,
+            'Rg': 282,
+            'Cn': 285,
+            'Nh': 286,
+            'Fl': 289,
+            'Mc': 289,
+            'Lv': 293,
+            'Ts': 294,
+            'Og': 294,
+        }
+
     def atomic_number(self, atomic_symbol):
         """
         Return the corresponding atomic number for a given atomic symbol.
@@ -115,7 +155,7 @@ class AtomicInfo():
         else:
             raise IndexError(f'No matches for atomic number {atomic_number} found')
     
-    def atomic_mass(self, atomic_info, mass_number=None, prompt=True):
+    def atomic_mass(self, atomic_info, mass_number=None, prompt=False):
         """
         Returns either the median standard atomic weight for an element or the relative
         atomic mass for an isotope.
@@ -127,10 +167,9 @@ class AtomicInfo():
         mass_number : int, optional
             An isotope mass number.
         prompt : bool, optional
-            If True (default), then a screen prompt will appear for the 
-            mass_number if atomic_info alone is not enough to select a mass.
-            If False, then an error will be thrown instead, which is useful
-            for automatic non-interactive scripts.
+            If True, then a screen prompt will appear for radioactive elements
+            with no standard mass to ask for the isotope to use. If False
+            (default), then the most stable isotope will be automatically used.
 
         Returns
         -------
@@ -187,7 +226,7 @@ class AtomicInfo():
                 print(f'Please select an isotope from {isotopes}:')
                 mass_number = input()
             else:
-                raise ValueError(f'No standard weight for {atomic_symbol}. Specify an isotope instead.')
+                mass_number = self.most_stable_isotope[atomic_symbol]
         
         # Convert mass_number to an int
         mass_number = int(mass_number)
