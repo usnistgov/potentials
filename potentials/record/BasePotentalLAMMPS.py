@@ -339,7 +339,7 @@ class BasePotentialLAMMPS(Record):
             raise AttributeError('No model information loaded')
         return self.model
 
-    def pair_info(self, symbols=None, masses=None, prompt=True):
+    def pair_info(self, symbols=None, masses=None, prompt=False):
         """
         Generates the LAMMPS input command lines associated with a KIM
         Potential and a list of atom-model symbols.
@@ -356,10 +356,9 @@ class BasePotentialLAMMPS(Record):
             values of None in the list indicate that the default value be used
             for that atom type.
         prompt : bool, optional
-            If True (default), then a screen prompt will appear asking for the isotope
-            number if no mass is pre-defined for a symbol and the associated element 
-            lacks a single standard atomic/ionic mass.  If False, then an error will
-            be raised for these cases instead.
+            If True, then a screen prompt will appear for radioactive elements
+            with no standard mass to ask for the isotope to use. If False
+            (default), then the most stable isotope will be automatically used.
 
         Returns
         -------
@@ -369,7 +368,7 @@ class BasePotentialLAMMPS(Record):
         raise NotImplementedError('Needs to be defined by the child class')
 
     def pair_data_info(self, filename, pbc, symbols=None, masses=None,
-                       atom_style=None, units=None, prompt=True):
+                       atom_style=None, units=None, prompt=False):
         """
         Generates the LAMMPS command lines associated with both a potential
         and reading an atom data file.
@@ -396,10 +395,9 @@ class BasePotentialLAMMPS(Record):
             The LAMMPS unit setting to use for the output.  If not given,
             will use the default value set for the potential.
         prompt : bool, optional
-            If True (default), then a screen prompt will appear asking for the isotope
-            number if no mass is pre-defined for a symbol and the associated element 
-            lacks a single standard atomic/ionic mass.  If False, then an error will
-            be raised for these cases instead.
+            If True, then a screen prompt will appear for radioactive elements
+            with no standard mass to ask for the isotope to use. If False
+            (default), then the most stable isotope will be automatically used.
         
         Returns
         -------

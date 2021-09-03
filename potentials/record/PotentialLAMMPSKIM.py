@@ -287,7 +287,7 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
 
         return symbols
         
-    def masses(self, symbols=None, prompt=True):
+    def masses(self, symbols=None, prompt=False):
         """
         Returns a list of atomic/ionic masses associated with atom-model
         symbols.
@@ -298,10 +298,9 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             A list of atom-model symbols.  If None (default), will use all of
             the potential's symbols.
         prompt : bool, optional
-            If True (default), then a screen prompt will appear asking for the isotope
-            number if no mass is pre-defined for a symbol and the associated element 
-            lacks a single standard atomic/ionic mass.  If False, then an error will
-            be raised for these cases instead.
+            If True, then a screen prompt will appear for radioactive elements
+            with no standard mass to ask for the isotope to use. If False
+            (default), then the most stable isotope will be automatically used.
         
         Returns
         -------
@@ -357,7 +356,7 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         
         return charges
 
-    def pair_info(self, symbols=None, masses=None, units=None, prompt=True):
+    def pair_info(self, symbols=None, masses=None, units=None, prompt=False):
         """
         Generates the LAMMPS input command lines associated with a KIM
         Potential and a list of atom-model symbols.
@@ -377,10 +376,9 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             The LAMMPS unit setting to use for the output.  If not given,
             will use the default value set for the potential.
         prompt : bool, optional
-            If True (default), then a screen prompt will appear asking for the isotope
-            number if no mass is pre-defined for a symbol and the associated element 
-            lacks a single standard atomic/ionic mass.  If False, then an error will
-            be raised for these cases instead.
+            If True, then a screen prompt will appear for radioactive elements
+            with no standard mass to ask for the isotope to use. If False
+            (default), then the most stable isotope will be automatically used.
 
         Returns
         -------
@@ -425,7 +423,7 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         return info
 
     def pair_data_info(self, filename, pbc, symbols=None, masses=None,
-                       atom_style=None, units=None, prompt=True,
+                       atom_style=None, units=None, prompt=False,
                        comments=True):
         """
         Generates the LAMMPS command lines associated with both a potential
@@ -453,10 +451,9 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             The LAMMPS unit setting to use for the output.  If not given,
             will use the default value set for the potential.
         prompt : bool, optional
-            If True (default), then a screen prompt will appear asking for the isotope
-            number if no mass is pre-defined for a symbol and the associated element 
-            lacks a single standard atomic/ionic mass.  If False, then an error will
-            be raised for these cases instead.
+            If True, then a screen prompt will appear for radioactive elements
+            with no standard mass to ask for the isotope to use. If False
+            (default), then the most stable isotope will be automatically used.
         comments : bool, optional
             Indicates if print command lines detailing information on the potential
             are to be included.  Default value is True.
@@ -520,7 +517,7 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         return info
 
     def pair_restart_info(self, filename, symbols=None, masses=None,
-                          units=None, prompt=True, comments=True):
+                          units=None, prompt=False, comments=True):
         """
         Generates the LAMMPS command lines associated with both a potential
         and reading an atom data file.
@@ -539,10 +536,9 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             values of None in the list indicate that the default value be used
             for that atom type.
         prompt : bool, optional
-            If True (default), then a screen prompt will appear asking for the isotope
-            number if no mass is pre-defined for a symbol and the associated element 
-            lacks a single standard atomic/ionic mass.  If False, then an error will
-            be raised for these cases instead.
+            If True, then a screen prompt will appear for radioactive elements
+            with no standard mass to ask for the isotope to use. If False
+            (default), then the most stable isotope will be automatically used.
         comments : bool, optional
             Indicates if print command lines detailing information on the potential
             are to be included.  Default value is True.
