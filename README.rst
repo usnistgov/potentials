@@ -46,6 +46,24 @@ Basic Search Tools
   Parameter files can be downloaded, and the associated LAMMPS command lines
   shown.
 
+In-depth Documentation
+``````````````````````
+
+More in-depth documentation can be found in the doc subfolder.  The Notebooks
+located there provide information as to the design of the potentials package,
+how to change default settings, and options that are specific to the supported
+record styles.
+
+Scripts
+```````
+
+The scripts subfolder contains additional Notebooks that relate to managing
+the NIST database using the potentials package.  These are provided as examples
+of using the potentials package for various tasks to help more advanced users
+get started.  WARNING: The Notebooks in scripts are working documents and are not
+guaranteed to have 100% current code or data, and may have poor descriptions.   
+
+
 .. _NIST Interatomic Potentials Repository: https://www.ctcms.nist.gov/potentials/
 .. _https://potentials.nist.gov/: https://potentials.nist.gov/
 
