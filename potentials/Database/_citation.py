@@ -1,23 +1,21 @@
+# coding: utf-8
+# Standard libraries
+from pathlib import Path
+
 # https://github.com/sckott/habanero
 from habanero import cn
 
 from .. import load_record
 
-def get_citations(self, local=None, remote=None, name=None, year=None, volume=None,
-                  title=None, journal=None, doi=None, author=None,
-                  abstract=None, refresh_cache=False, return_df=False,
-                  verbose=False):
+def get_citations(self, name=None, year=None, volume=None, title=None,
+                  journal=None, doi=None, author=None, abstract=None,
+                  local=None, remote=None, refresh_cache=False,
+                  return_df=False, verbose=False):
     """
-    Retrieves all matching citations from the database.
+    Gets all matching citations from the database.
 
     Parameters 
     ----------
-    local : bool, optional
-        Indicates if the local location is to be searched.  Default value
-        matches the value set when the database was initialized.
-    remote : bool, optional
-        Indicates if the remote location is to be searched.  Default value
-        matches the value set when the database was initialized.
     name : str or list, optional
         The name(s) of records to limit the search by.
     year : int or list, optional
@@ -34,6 +32,12 @@ def get_citations(self, local=None, remote=None, name=None, year=None, volume=No
         Author name(s) to search for.  Works best for last names only.
     abstract : str or list, optional
         Word(s) to search for in the article abstracts.
+    local : bool, optional
+        Indicates if the local location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    remote : bool, optional
+        Indicates if the remote location is to be searched.  Default value
+        matches the value set when the database was initialized.
     refresh_cache : bool, optional
         If the local database is of style "local", indicates if the metadata
         cache file is to be refreshed.  If False,
@@ -48,25 +52,21 @@ def get_citations(self, local=None, remote=None, name=None, year=None, volume=No
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-    return self.get_records('Citation', local=local, remote=remote, name=name, year=year, volume=volume,
-                            title=title, journal=journal, doi=doi, author=author,
-                            abstract=abstract, refresh_cache=refresh_cache,
-                            return_df=return_df, verbose=verbose)
+    return self.get_records(
+        style='Citation', name=name, local=local, remote=remote, 
+        refresh_cache=refresh_cache, return_df=return_df, verbose=verbose,
+        year=year, volume=volume, title=title, journal=journal, doi=doi,
+        author=author, abstract=abstract)
 
-def get_citation(self, local=None, remote=None, name=None, year=None, volume=None,
-                 title=None, journal=None, doi=None, author=None,
-                 abstract=None, prompt=True, refresh_cache=False, verbose=False):
+def get_citation(self, name=None, year=None, volume=None, title=None,
+                 journal=None, doi=None, author=None, abstract=None,
+                 local=None, remote=None, prompt=True, refresh_cache=False,
+                 verbose=False):
     """
-    Retrieves exactly one matching citation from the database.
+    Gets exactly one matching citation from the database.
 
     Parameters 
     ----------
-    local : bool, optional
-        Indicates if the local location is to be searched.  Default value
-        matches the value set when the database was initialized.
-    remote : bool, optional
-        Indicates if the remote location is to be searched.  Default value
-        matches the value set when the database was initialized.
     name : str or list, optional
         The name(s) of records to limit the search by.
     year : int or list, optional
@@ -83,6 +83,12 @@ def get_citation(self, local=None, remote=None, name=None, year=None, volume=Non
         Author name(s) to search for.  Works best for last names only.
     abstract : str or list, optional
         Word(s) to search for in the article abstracts.
+    local : bool, optional
+        Indicates if the local location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    remote : bool, optional
+        Indicates if the remote location is to be searched.  Default value
+        matches the value set when the database was initialized.
     prompt : bool, optional
         If prompt=True (default) then a screen input will ask for a selection
         if multiple matching potentials are found.  If prompt=False, then an
@@ -116,10 +122,111 @@ def get_citation(self, local=None, remote=None, name=None, year=None, volume=Non
 
         return js[i]
 
-    return self.get_record('Citation', local=local, remote=remote, name=name, year=year, volume=volume,
-                            title=title, journal=journal, doi=doi, author=author,
-                            abstract=abstract, prompt=prompt, promptfxn=promptfxn,
-                            refresh_cache=refresh_cache, verbose=verbose)
+    return self.get_record(
+        style='Citation', name=name, local=local, remote=remote, prompt=prompt,
+        promptfxn=promptfxn, refresh_cache=refresh_cache, verbose=verbose,
+        year=year, volume=volume, title=title, journal=journal, doi=doi,
+        author=author, abstract=abstract)
+
+def retrieve_citation(self, name=None, dest=None, year=None, volume=None,
+                      title=None, journal=None, doi=None, author=None,
+                      abstract=None, local=None, remote=None, prompt=True,
+                      format='json', indent=4, refresh_cache=False,
+                      verbose=False):
+    """
+    Gets a single matching citation from the database and saves it to a
+    file based on the record's name.
+
+    Parameters 
+    ----------
+    name : str or list, optional
+        The name(s) of records to limit the search by.
+    dest : path, optional
+        The parent directory where the record will be saved to.  If not given,
+        will use the current working directory.
+    year : int or list, optional
+        Publication year(s) to limit the search by.
+    volume : int or list, optional
+        Journal volume(s) to limit the search by.
+    title : str or list, optional
+        Word(s) to search for in the article titles.
+    journal : str or list, optional
+        Journal name(s) to limit the search by.
+    doi : str or list, optional
+        Article DOI(s) to limit the search by. 
+    author : str or list, optional
+        Author name(s) to search for.  Works best for last names only.
+    abstract : str or list, optional
+        Word(s) to search for in the article abstracts.
+    local : bool, optional
+        Indicates if the local location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    remote : bool, optional
+        Indicates if the remote location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    prompt : bool, optional
+        If prompt=True (default) then a screen input will ask for a selection
+        if multiple matching potentials are found.  If prompt=False, then an
+        error will be thrown if multiple matches are found.
+    format : str, optional
+        The file format to save the record in: 'json', 'xml' or 'bib'.  Default
+        is 'json'.
+    indent : int, optional
+        The number of space indentation spacings to use in the saved
+        record for the different tiered levels.  Default is 4.  Giving None
+        will create a compact record.
+    refresh_cache : bool, optional
+        If the local database is of style "local", indicates if the metadata
+        cache file is to be refreshed.  If False,
+        metadata for new records will be added but the old record metadata
+        fields will not be updated.  If True, then the metadata for all
+        records will be regenerated, which is needed to update the metadata
+        for modified records.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+
+    Raises
+    ------
+    ValueError
+        If no or multiple matching records are found.
+    """
+    # Set default dest
+    if dest is None:
+        dest = Path.cwd()
+
+    # Get the record
+    record = self.get_citation(
+        name=name, year=year, volume=volume, title=title, journal=journal,
+        doi=doi, author=author, abstract=abstract, local=local, remote=remote,
+        prompt=prompt, refresh_cache=refresh_cache, verbose=verbose)
+
+    # Save as json
+    if format == 'json':
+        fname = Path(dest, f'{record.name}.json')
+        with open(fname, 'w', encoding='UTF-8') as f:
+            record.model.json(fp=f, indent=indent, ensure_ascii=False)
+        if verbose:
+            print(f'{fname} saved')
+    
+    # Save as xml
+    elif format == 'xml':
+        fname = Path(dest, f'{record.name}.xml')
+        with open(fname, 'w', encoding='UTF-8') as f:
+            record.model.xml(fp=f, indent=indent)
+        if verbose:
+            print(f'{fname} saved')
+
+    # Save as bib
+    elif format == 'bib':
+        fname = Path(dest, f'{record.name}.bib')
+        with open(fname, 'w', encoding='UTF-8') as f:
+            f.write(record.build_bibtex())
+        if verbose:
+            print(f'{fname} saved')
+
+    else:
+        raise ValueError('Invalid format: must be json, xml or bib.')
 
 def fetch_citation(self, doi, local=None, remote=None, verbose=False):
     """
@@ -162,9 +269,9 @@ def fetch_citation(self, doi, local=None, remote=None, verbose=False):
 
     return load_record('Citation', bibtex)
 
-def download_citations(self, name=None, year=None, volume=None,
-                  title=None, journal=None, doi=None, author=None,
-                  abstract=None, overwrite=False, verbose=False):
+def download_citations(self, name=None, year=None, volume=None, title=None,
+                       journal=None, doi=None, author=None, abstract=None,
+                       overwrite=False, return_records=False, verbose=False):
     """
     Downloads citations from the remote to the local.
 
@@ -190,14 +297,19 @@ def download_citations(self, name=None, year=None, volume=None,
         Flag indicating if any existing local records with names matching
         remote records are updated (True) or left unchanged (False).  Default
         value is False.
+    return_records : bool, optional
+        If True, the retrieved record objects are also returned.  Default
+        value is False.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
     """
 
-    self.download_records('Citation', name=name, year=year, volume=volume,
-                          title=title, journal=journal, doi=doi, author=author,
-                          abstract=abstract, overwrite=overwrite, verbose=verbose)
+    return self.download_records(
+        style='Citation', name=name, overwrite=overwrite,
+        return_records=return_records, verbose=verbose,
+        year=year, volume=volume, title=title, journal=journal, doi=doi,
+        author=author, abstract=abstract)
 
 def save_citation(self, citation, overwrite=False, verbose=False):
     """

@@ -11,22 +11,22 @@ class Database():
     Class for interacting with potential records hosted from potentials.nist.gov
     """
     # Class imports
-    from ._record import (get_records, get_record, download_records,
+    from ._record import (get_records, get_record, retrieve_record, download_records,
                           remote_query, upload_record, delete_record, save_record)
 
-    from ._citation import (get_citations, get_citation, fetch_citation,
+    from ._citation import (get_citations, get_citation, retrieve_citation, fetch_citation,
                             download_citations, upload_citation, save_citation, delete_citation)
 
-    from ._potential import (get_potentials, get_potential, download_potentials,
+    from ._potential import (get_potentials, get_potential, retrieve_potential, download_potentials,
                              upload_potential, save_potential, delete_potential)
 
-    from ._action import (get_actions, get_action, download_actions,
+    from ._action import (get_actions, get_action, retrieve_action, download_actions,
                           upload_action, save_action, delete_action)
 
-    from ._request import (get_requests, get_request, download_requests,
+    from ._request import (get_requests, get_request, retrieve_request, download_requests,
                           upload_request, save_request, delete_request)
 
-    from ._faq import (get_faqs, get_faq, download_faqs,
+    from ._faq import (get_faqs, get_faq, retrieve_faq, download_faqs,
                        upload_faq, save_faq, delete_faq)
 
     from ._related_models import (load_related_models, related_models, get_related_models,
@@ -38,8 +38,8 @@ class Database():
 
     from ._lammps_potential import (get_lammps_potentials, get_lammps_potential,
                                     download_lammps_potentials, get_lammps_potential_files,
-                                    upload_lammps_potential, save_lammps_potential,
-                                    delete_lammps_potential)
+                                    retrieve_lammps_potential, upload_lammps_potential,
+                                    save_lammps_potential, delete_lammps_potential)
 
     from ._widgets import (widget_search_potentials, widget_lammps_potential)
 

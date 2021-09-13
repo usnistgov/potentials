@@ -1,62 +1,144 @@
+# coding: utf-8
 
-def get_faqs(self, local=None, remote=None, name=None, return_df=False,
-             question=None, answer=None, verbose=False):
+def get_faqs(self, name=None, question=None, answer=None, local=None,
+             remote=None, refresh_cache=False, return_df=False, verbose=False):
     """
-    Retrieves all matching FAQs from the database.
+    Gets all matching FAQs from the database.
 
     Parameters
     ----------
-    local : bool, optional
-        Indicates if the local location is to be searched.  Default value
-        matches the value set when the database was initialized.
-    remote : bool, optional
-        Indicates if the remote location is to be searched.  Default value
-        matches the value set when the database was initialized.
     name : str or list
         The record name(s) to parse by.
     question : str or list
         Term(s) to search for in the question field.
     answer : str or list
         Term(s) to search for in the answer field.
-    verbose : bool, optional
-        If True, info messages will be printed during operations.  Default
-        value is False.
+    local : bool, optional
+        Indicates if the local location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    remote : bool, optional
+        Indicates if the remote location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    refresh_cache : bool, optional
+        If the local database is of style "local", indicates if the metadata
+        cache file is to be refreshed.  If False,
+        metadata for new records will be added but the old record metadata
+        fields will not be updated.  If True, then the metadata for all
+        records will be regenerated, which is needed to update the metadata
+        for modified records.
     return_df : bool, optional
         If True, then the corresponding pandas.Dataframe of metadata
         will also be returned.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
     """
-    return self.get_records('FAQ', local=local, remote=remote, name=name, 
-                            question=question, answer=answer, return_df=return_df,
-                            verbose=verbose)
+    return self.get_records(
+        style='FAQ', name=name, local=local, remote=remote,
+        refresh_cache=refresh_cache, return_df=return_df, verbose=verbose,
+        question=question, answer=answer)
 
-def get_faq(self, local=None, remote=None, name=None, question=None, answer=None,
-            verbose=False):
+def get_faq(self, name=None, question=None, answer=None, local=None,
+            remote=None, prompt=True, refresh_cache=False, verbose=False):
     """
-    Retrieves exactly one matching FAQ from the database.
+    Gets exactly one matching FAQ from the database.
 
     Parameters
     ----------
-    local : bool, optional
-        Indicates if the local location is to be searched.  Default value
-        matches the value set when the database was initialized.
-    remote : bool, optional
-        Indicates if the remote location is to be searched.  Default value
-        matches the value set when the database was initialized.
     name : str or list
         The record name(s) to parse by.
     question : str or list
         Term(s) to search for in the question field.
     answer : str or list
         Term(s) to search for in the answer field.
+    local : bool, optional
+        Indicates if the local location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    remote : bool, optional
+        Indicates if the remote location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    prompt : bool, optional
+        If prompt=True (default) then a screen input will ask for a selection
+        if multiple matching potentials are found.  If prompt=False, then an
+        error will be thrown if multiple matches are found.
+    refresh_cache : bool, optional
+        If the local database is of style "local", indicates if the metadata
+        cache file is to be refreshed.  If False,
+        metadata for new records will be added but the old record metadata
+        fields will not be updated.  If True, then the metadata for all
+        records will be regenerated, which is needed to update the metadata
+        for modified records.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-    return self.get_record('FAQ', local=local, remote=remote, name=name, 
-                           question=question, answer=answer, verbose=verbose)
+    return self.get_record(
+        style='FAQ', name=name, local=local, remote=remote,
+        prompt=prompt, refresh_cache=refresh_cache, verbose=verbose,
+        question=question, answer=answer)
+
+def retrieve_faq(self, name=None, dest=None, question=None,
+                 answer=None, local=None, remote=None, prompt=True,
+                 format='json', indent=4, refresh_cache=False, verbose=False):
+    """
+    Gets a single matching FAQ from the database and saves it to a
+    file based on the record's name.
+
+    Parameters
+    ----------
+    name : str or list, optional
+        The name(s) of records to limit the search by.
+    dest : path, optional
+        The parent directory where the record will be saved to.  If not given,
+        will use the current working directory.
+    question : str or list
+        Term(s) to search for in the question field.
+    answer : str or list
+        Term(s) to search for in the answer field.
+    local : bool, optional
+        Indicates if the local location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    remote : bool, optional
+        Indicates if the remote location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    prompt : bool, optional
+        If prompt=True (default) then a screen input will ask for a selection
+        if multiple matching potentials are found.  If prompt=False, then an
+        error will be thrown if multiple matches are found.
+    format : str, optional
+        The file format to save the record in: 'json' or 'xml'.  Default
+        is 'json'.
+    indent : int, optional
+        The number of space indentation spacings to use in the saved
+        record for the different tiered levels.  Default is 4.  Giving None
+        will create a compact record.
+    refresh_cache : bool, optional
+        If the local database is of style "local", indicates if the metadata
+        cache file is to be refreshed.  If False,
+        metadata for new records will be added but the old record metadata
+        fields will not be updated.  If True, then the metadata for all
+        records will be regenerated, which is needed to update the metadata
+        for modified records.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    
+    Raises
+    ------
+    ValueError
+        If local or remote is set to True when the corresponding database
+        interaction has not been set.
+    ValueError
+        If multiple or no matching records are discovered.
+    """
+    self.retrieve_record(
+        style='FAQ', name=name, dest=dest, local=local, remote=remote,
+        prompt=prompt, format=format, indent=indent,
+        refresh_cache=refresh_cache, verbose=verbose,
+        question=question, answer=answer)
 
 def download_faqs(self, name=None, question=None, answer=None, 
-                  overwrite=False, verbose=False):
+                  overwrite=False, return_records=False, verbose=False):
     """
     Downloads FAQs from the remote to the local.
 
@@ -72,12 +154,35 @@ def download_faqs(self, name=None, question=None, answer=None,
         Flag indicating if any existing local records with names matching
         remote records are updated (True) or left unchanged (False).  Default
         value is False.
+    return_records : bool, optional
+        If True, the retrieved record objects are also returned.  Default
+        value is False.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
     """
-    self.download_records('FAQ', name=name, question=question, answer=answer,
-                          overwrite=overwrite, verbose=verbose)
+    return self.download_records(
+        style='FAQ', name=name, overwrite=overwrite,
+        return_records=return_records, verbose=verbose,
+        question=question, answer=answer)
+
+def save_faq(self, faq, overwrite=False, verbose=False):
+    """
+    Saves a FAQ to the local database.
+    
+    Parameters
+    ----------
+    faq : FAQ
+        The record to save.  
+    overwrite : bool, optional
+        Indicates what to do when a matching record is found in the local
+        location.  If False (default), then the record is not updated.  If
+        True, then the record is updated.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    """
+    self.save_record(record=faq, overwrite=overwrite, verbose=verbose)
 
 def upload_faq(self, faq=None, workspace=None, overwrite=False,
                     verbose=False):
@@ -101,24 +206,6 @@ def upload_faq(self, faq=None, workspace=None, overwrite=False,
     """
     self.upload_record(record=faq, workspace=workspace,
                        overwrite=overwrite, verbose=verbose)
-
-def save_faq(self, faq, overwrite=False, verbose=False):
-    """
-    Saves a FAQ to the local database.
-    
-    Parameters
-    ----------
-    faq : FAQ
-        The record to save.  
-    overwrite : bool, optional
-        Indicates what to do when a matching record is found in the local
-        location.  If False (default), then the record is not updated.  If
-        True, then the record is updated.
-    verbose : bool, optional
-        If True, info messages will be printed during operations.  Default
-        value is False.
-    """
-    self.save_record(record=faq, overwrite=overwrite, verbose=verbose)
 
 def delete_faq(self, faq, local=True, remote=False, verbose=False):
     """

@@ -1,5 +1,5 @@
-from .. import settings
-from ..tools import aslist
+# coding: utf-8
+# Standard libraries
 from pathlib import Path
 import shutil
 import tempfile
@@ -7,54 +7,47 @@ import tempfile
 import numpy as np
 import pandas as pd
 
-from .. import load_record
+from .. import settings, load_record
+from ..tools import aslist
 
-def get_lammps_potentials(self, local=None, remote=None, 
-                          name=None, key=None, id=None,
-                          potid=None, potkey=None, units=None,
-                          atom_style=None, pair_style=None, status='active',
-                          symbols=None, elements=None, pot_dir_style=None,
-                          kim_models=None, kim_api_directory=None, kim_models_file=None, 
-                          refresh_cache=False, return_df=False, verbose=False):
+def get_lammps_potentials(self, name=None, key=None, id=None, potid=None,
+                          potkey=None, units=None, atom_style=None,
+                          pair_style=None, status=None, symbols=None,
+                          elements=None, pot_dir_style=None, kim_models=None,
+                          kim_api_directory=None, kim_models_file=None,
+                          local=None, remote=None, refresh_cache=False,
+                          return_df=False, verbose=False):
     """
-    Retrieves all matching LAMMPS potentials from the database.
+    Gets all matching LAMMPS potentials from the database.
 
     Parameters
     ----------
-    local : bool, optional
-        Indicates if the local location is to be searched.  Default value
-        matches the value set when the database was initialized.
-    remote : bool, optional
-        Indicates if the remote location is to be searched.  Default value
-        matches the value set when the database was initialized.
-    name : str or list
+    name : str or list, optional
         The record name(s) to parse by.  For potential records, the names
         should correspond to the id with a prefix of "potentials." added to it.
-    key : str or list
+    key : str or list, optional
         The unique UUID4 record key(s) to parse by. 
     id : str or list
         The unique record id(s) labeling the records to parse by.
-    potid : str or list
+    potid : str or list, optional
         The unique UUID4 record key(s) for the associated potential records to
         parse by.
-    potkey : str or list
+    potkey : str or list, optional
         The unique record id(s) labeling the associated potential records to
         parse by.
-    units : str or list
+    units : str or list, optional
         LAMMPS units option(s) to parse by.
-    atom_style : str or list
+    atom_style : str or list, optional
         LAMMPS pair_style(s) to parse by.
-    pair_style : str or list
+    pair_style : str or list, optional
         LAMMPS pair_style(s) to parse by.
-    status : None, str or list
+    status : None, str or list, optional
         Limits the search by the status of the LAMMPS implementations:
-        "active", "superseded" and/or "retracted".  By default, only active
-        implementations are returned.  Giving a value of None will return
-        implementations of all statuses.
-    symbols : str or list
+        "active", "superseded" and/or "retracted".
+    symbols : str or list, optional
         Model symbol(s) to parse by.  Typically correspond to elements for
         atomic potential models.
-    elements : str or list
+    elements : str or list, optional
         Element(s) in the model to parse by.
     pot_dir_style : str, optional
         Specifies how the pot_dir values will be set for the retrieved LAMMPS
@@ -65,14 +58,20 @@ def get_lammps_potentials(self, local=None, remote=None,
         'local' sets the pot_dir values to the corresponding local database
         paths where the files are expected to be found.  Default value is
         controlled by settings.
-    kim_models : list
+    kim_models : list, optional
         A list of full KIM model ids to build LAMMPS potentials for.
-    kim_api_directory : str
+    kim_api_directory : str, optional
         The path to the directory containing a kim-api-collections-management
         executable to use to identify which KIM models are installed.
-    kim_models_file : str
+    kim_models_file : str, optional
         The path to a file containing a list of full KIM model ids to build
         LAMMPS potentials for.
+    local : bool, optional
+        Indicates if the local location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    remote : bool, optional
+        Indicates if the remote location is to be searched.  Default value
+        matches the value set when the database was initialized.
     refresh_cache : bool, optional
         If the local database is of style "local", indicates if the metadata
         cache file is to be refreshed.  If False,
@@ -97,12 +96,12 @@ def get_lammps_potentials(self, local=None, remote=None,
             raise ValueError("pot_dir_style 'local' requires local_database to be set and of style local")
 
     # Get native LAMMPS potentials
-    records, df = self.get_records('potential_LAMMPS', local=local, remote=remote,
-                                   name=name, key=key, id=id,
-                                   potid=potid, potkey=potkey, units=units,
-                                   atom_style=atom_style, pair_style=pair_style, status=status,
-                                   symbols=symbols, elements=elements, refresh_cache=refresh_cache,
-                                   return_df=True, verbose=verbose)
+    records, df = self.get_records(
+        style='potential_LAMMPS', name=name, local=local, remote=remote,
+        refresh_cache=refresh_cache,return_df=True, verbose=verbose,
+        key=key, id=id, potid=potid, potkey=potkey, units=units,
+        atom_style=atom_style, pair_style=pair_style, status=status,
+        symbols=symbols, elements=elements)
 
     # Set pot_dir values based on pot_dir_style
     if pot_dir_style == 'id':
@@ -113,13 +112,13 @@ def get_lammps_potentials(self, local=None, remote=None,
             record.pot_dir = Path(self.local_database.host, 'potential_LAMMPS', record.id)
 
     # Get KIM LAMMPS records
-    krecords, kdf = self.get_kim_lammps_potentials(local=local, remote=remote, 
-                                                   name=name, key=key, id=id,
-                                                   potid=potid, potkey=potkey, units=units,
-                                                   atom_style=atom_style, pair_style=pair_style, status=status,
-                                                   symbols=symbols, elements=elements, kim_models=kim_models,
-                                                   kim_api_directory=kim_api_directory, kim_models_file=kim_models_file, 
-                                                   return_df=True, refresh_cache=refresh_cache, verbose=verbose)
+    krecords, kdf = self.get_kim_lammps_potentials(
+        name=name, key=key, id=id, potid=potid, potkey=potkey, units=units,
+        atom_style=atom_style, pair_style=pair_style, status=status,
+        symbols=symbols, elements=elements, kim_models=kim_models,
+        kim_api_directory=kim_api_directory, kim_models_file=kim_models_file, 
+        local=local, remote=remote, return_df=True,
+        refresh_cache=refresh_cache, verbose=verbose)
 
     records = np.hstack([records, krecords])
     df = pd.concat([df, kdf], ignore_index=True, sort=False)
@@ -134,49 +133,41 @@ def get_lammps_potentials(self, local=None, remote=None,
     else:
         return records
 
-def get_lammps_potential(self, local=None, remote=None, 
-                         name=None, key=None, id=None,
-                         potid=None, potkey=None, units=None,
-                         atom_style=None, pair_style=None, status='active',
-                         symbols=None, elements=None, pot_dir_style=None,
-                         kim_models=None, kim_api_directory=None, kim_models_file=None, 
-                         prompt=True, refresh_cache=False, verbose=False):
+def get_lammps_potential(self, name=None, key=None, id=None, potid=None,
+                         potkey=None, units=None, atom_style=None,
+                         pair_style=None, status=None, symbols=None,
+                         elements=None, pot_dir_style=None, kim_models=None,
+                         kim_api_directory=None, kim_models_file=None, 
+                         local=None, remote=None, prompt=True,
+                         refresh_cache=False, verbose=False):
     """
-    Retrieves a single matching LAMMPS potential from the database.
+    Gets a single matching LAMMPS potential from the database.
 
     Parameters
     ----------
-    local : bool, optional
-        Indicates if the local location is to be searched.  Default value
-        matches the value set when the database was initialized.
-    remote : bool, optional
-        Indicates if the remote location is to be searched.  Default value
-        matches the value set when the database was initialized.
-    name : str or list
+    name : str or list, optional
         The record name(s) to parse by.  For potential records, the names
         should correspond to the id with a prefix of "potentials." added to it.
-    key : str or list
+    key : str or list, optional
         The unique UUID4 record key(s) to parse by. 
-    id : str or list
+    id : str or list, optional
         The unique record id(s) labeling the records to parse by.
-    potid : str or list
+    potid : str or list, optional
         The unique UUID4 record key(s) for the associated potential records to
         parse by.
-    potkey : str or list
+    potkey : str or list, optional
         The unique record id(s) labeling the associated potential records to
         parse by.
-    units : str or list
+    units : str or list, optional
         LAMMPS units option(s) to parse by.
-    atom_style : str or list
+    atom_style : str or list, optional
         LAMMPS pair_style(s) to parse by.
-    pair_style : str or list
+    pair_style : str or list, optional
         LAMMPS pair_style(s) to parse by.
-    status : None, str or list
+    status : None, str or list, optional
         Limits the search by the status of the LAMMPS implementations:
-        "active", "superseded" and/or "retracted".  By default, only active
-        implementations are returned.  Giving a value of None will return
-        implementations of all statuses.
-    symbols : str or list
+        "active", "superseded" and/or "retracted".
+    symbols : str or list, optional
         Model symbol(s) to parse by.  Typically correspond to elements for
         atomic potential models.
     elements : str or list
@@ -190,15 +181,21 @@ def get_lammps_potential(self, local=None, remote=None,
         'local' sets the pot_dir values to the corresponding local database
         paths where the files are expected to be found.  Default value is
         controlled by settings.
-    kim_models : list
+    kim_models : list, optional
         A list of full KIM model ids to build LAMMPS potentials for.
-    kim_api_directory : str
+    kim_api_directory : str, optional
         The path to the directory containing a kim-api-collections-management
         executable to use to identify which KIM models are installed.
-    kim_models_file : str
+    kim_models_file : str, optional
         The path to a file containing a list of full KIM model ids to build
         LAMMPS potentials for.
-    prompt : bool
+    local : bool, optional
+        Indicates if the local location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    remote : bool, optional
+        Indicates if the remote location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    prompt : bool, optional
         If prompt=True (default) then a screen input will ask for a selection
         if multiple matching potentials are found.  If prompt=False, then an
         error will be thrown if multiple matches are found.
@@ -236,13 +233,14 @@ def get_lammps_potential(self, local=None, remote=None,
 
     # Check local first
     if local:
-        records, df = self.get_lammps_potentials(local=True, remote=False, 
-                                             name=name, key=key, id=id,
-                                             potid=potid, potkey=potkey, units=units,
-                                             atom_style=atom_style, pair_style=pair_style, status=status,
-                                             symbols=symbols, elements=elements, pot_dir_style=pot_dir_style,
-                                             kim_models=kim_models, kim_api_directory=kim_api_directory, kim_models_file=kim_models_file, 
-                                             return_df=True, refresh_cache=refresh_cache, verbose=verbose)
+        records, df = self.get_lammps_potentials(
+            name=name, key=key, id=id, potid=potid, potkey=potkey, units=units,
+            atom_style=atom_style, pair_style=pair_style, status=status,
+            symbols=symbols, elements=elements, pot_dir_style=pot_dir_style,
+            kim_models=kim_models, kim_api_directory=kim_api_directory,
+            kim_models_file=kim_models_file, local=True, remote=False,
+            return_df=True, refresh_cache=refresh_cache, verbose=verbose)
+
         if len(records) == 1:
             if verbose:
                 print('Matching record retrieved from local')
@@ -258,13 +256,13 @@ def get_lammps_potential(self, local=None, remote=None,
             
     # Check remote next
     if remote:
-        records, df = self.get_lammps_potentials(local=False, remote=True, 
-                                             name=name, key=key, id=id,
-                                             potid=potid, potkey=potkey, units=units,
-                                             atom_style=atom_style, pair_style=pair_style, status=status,
-                                             symbols=symbols, elements=elements, pot_dir_style=pot_dir_style,
-                                             kim_models=kim_models, kim_api_directory=kim_api_directory, kim_models_file=kim_models_file, 
-                                             return_df=True, verbose=verbose)
+        records, df = self.get_lammps_potentials(
+            name=name, key=key, id=id, potid=potid, potkey=potkey, units=units,
+            atom_style=atom_style, pair_style=pair_style, status=status,
+            symbols=symbols, elements=elements, pot_dir_style=pot_dir_style,
+            kim_models=kim_models, kim_api_directory=kim_api_directory,
+            kim_models_file=kim_models_file, local=False, remote=True, 
+            return_df=True, verbose=verbose)
 
         if len(records) == 1:
             if verbose:
@@ -281,19 +279,203 @@ def get_lammps_potential(self, local=None, remote=None,
 
         raise ValueError('No matching LAMMPS potentials found')
 
+def retrieve_lammps_potential(self, name=None, dest=None, key=None, id=None,
+                              potid=None, potkey=None, units=None,
+                              atom_style=None, pair_style=None, status='active',
+                              symbols=None, elements=None, pot_dir_style=None,
+                              kim_models=None, kim_api_directory=None,
+                              kim_models_file=None, getfiles=False, local=None,
+                              remote=None, prompt=True, format='json',
+                              indent=4, refresh_cache=False, verbose=False):
+    """
+    Gets a single matching PotentialLAMMPS or PotentialLAMMPSKIM record from
+    the database and saves it to a file based on the record's name.  Any
+    associated parameter files can also be downloaded.
+
+    Parameters
+    ----------
+    name : str or list
+        The record name(s) to parse by.  For potential records, the names
+        should correspond to the id with a prefix of "potentials." added to it.
+    dest : path, optional
+        The destination directory where the record is to be saved.  If not
+        given will use the current working directory.
+    key : str or list
+        The unique UUID4 record key(s) to parse by. 
+    id : str or list
+        The unique record id(s) labeling the records to parse by.
+    potid : str or list
+        The unique UUID4 record key(s) for the associated potential records to
+        parse by.
+    potkey : str or list
+        The unique record id(s) labeling the associated potential records to
+        parse by.
+    units : str or list
+        LAMMPS units option(s) to parse by.
+    atom_style : str or list
+        LAMMPS pair_style(s) to parse by.
+    pair_style : str or list
+        LAMMPS pair_style(s) to parse by.
+    status : None, str or list
+        Limits the search by the status of the LAMMPS implementations:
+        "active", "superseded" and/or "retracted".  By default, only active
+        implementations are returned.  Giving a value of None will return
+        implementations of all statuses.
+    symbols : str or list
+        Model symbol(s) to parse by.  Typically correspond to elements for
+        atomic potential models.
+    elements : str or list
+        Element(s) in the model to parse by.
+    pot_dir_style : str, optional
+        Specifies how the pot_dir values will be set for the retrieved LAMMPS
+        potentials.  Allowed values are 'working', 'id', and 'local'.
+        'working' will set all pot_dir = '', meaning parameter files
+        are expected in the working directory when the potential is accessed.
+        'id' sets the pot_dir values to match the potential's id.
+        'local' sets the pot_dir values to the corresponding local database
+        paths where the files are expected to be found.  Default value is
+        controlled by settings.
+    kim_models : list
+        A list of full KIM model ids to build LAMMPS potentials for.
+    kim_api_directory : str
+        The path to the directory containing a kim-api-collections-management
+        executable to use to identify which KIM models are installed.
+    kim_models_file : str
+        The path to a file containing a list of full KIM model ids to build
+        LAMMPS potentials for.
+    getfiles : bool, optional
+        If True, then the parameter files for the matching potentials
+        will also be copied/downloaded to the potential directory.
+    local : bool, optional
+        Indicates if the local location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    remote : bool, optional
+        Indicates if the remote location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    format : str, optional
+        The file format to save the record in: 'json' or 'xml'.  Default
+        is 'json'.
+    indent : int, optional
+        The number of space indentation spacings to use in the saved
+        record for the different tiered levels.  Default is 4.  Giving None
+        will create a compact record.
+    prompt : bool
+        If prompt=True (default) then a screen input will ask for a selection
+        if multiple matching potentials are found.  If prompt=False, then an
+        error will be thrown if multiple matches are found.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    """
+    # Set default dest
+    if dest is None:
+        dest = Path.cwd()
+
+    # Get the record
+    lmppot = self.get_lammps_potential(
+        name=name, key=key, id=id, potid=potid, potkey=potkey, units=units,
+        atom_style=atom_style, pair_style=pair_style, status=status,
+        symbols=symbols, elements=elements, pot_dir_style=pot_dir_style,
+        kim_models=kim_models, kim_api_directory=kim_api_directory,
+        kim_models_file=kim_models_file, local=local, remote=remote,
+        prompt=prompt, refresh_cache=refresh_cache, verbose=verbose)
+
+    # Save as json
+    if format == 'json':
+        fname = Path(dest, f'{lmppot.name}.json')
+        with open(fname, 'w', encoding='UTF-8') as f:
+            lmppot.model.json(fp=f, indent=indent, ensure_ascii=False)
+        if verbose:
+            print(f'{fname} saved')
+
+    # Save as xml
+    elif format == 'xml':
+        fname = Path(dest, f'{lmppot.name}.xml')
+        with open(fname, 'w', encoding='UTF-8') as f:
+            lmppot.model.xml(fp=f, indent=indent)
+        if verbose:
+            print(f'{fname} saved')
+
+    else:
+        raise ValueError('Invalid format: must be json or xml.')
+
+    if getfiles is True:
+
+        # Adjust pot_dir if not absolute
+        pot_dir = Path(lmppot.pot_dir)
+        if not pot_dir.is_absolute():
+            pot_dir = Path(dest, pot_dir)
+
+        # Download parameter files
+        self.get_lammps_potential_files(lmppot, local=local, remote=remote,
+                                        pot_dir=pot_dir, verbose=verbose)
+    
+
 def download_lammps_potentials(self, name=None, key=None, id=None,
                                potid=None, potkey=None, units=None,
                                atom_style=None, pair_style=None, status=None,
                                symbols=None, elements=None, include_kim=True,
-                               overwrite=False, downloadfiles=False, verbose=False):
-    
+                               overwrite=False, return_records=False,
+                               downloadfiles=False, verbose=False):
+    """
+    Downloads PotentialLAMMPS and PotentialLAMMPSKIM records and any associated
+    parameter files from the database.
+
+    Parameters
+    ----------
+    name : str or list, optional
+        The record name(s) to parse by.  For potential records, the names
+        should correspond to the id with a prefix of "potentials." added to it.
+    key : str or list, optional
+        The unique UUID4 record key(s) to parse by. 
+    id : str or list, optional
+        The unique record id(s) labeling the records to parse by.
+    potid : str or list, optional
+        The unique UUID4 record key(s) for the associated potential records to
+        parse by.
+    potkey : str or list, optional
+        The unique record id(s) labeling the associated potential records to
+        parse by.
+    units : str or list, optional
+        LAMMPS units option(s) to parse by.
+    atom_style : str or list, optional
+        LAMMPS pair_style(s) to parse by.
+    pair_style : str or list, optional
+        LAMMPS pair_style(s) to parse by.
+    status : None, str or list, optional
+        Limits the search by the status of the LAMMPS implementations:
+        "active", "superseded" and/or "retracted".
+    symbols : str or list, optional
+        Model symbol(s) to parse by.  Typically correspond to elements for
+        atomic potential models.
+    elements : str or list, optional
+        Element(s) in the model to parse by.
+    include_kim : bool, optional
+        If True (default) both PotentialLAMMPS and PotentialLAMMPSKIM records
+        will be downloaded.  If False, only PotentialLAMMPS records will be
+        downloaded.
+    overwrite : bool, optional
+        Flag indicating if any existing local records and parameter files with
+        names matching remote records and files are updated (True) or left
+        unchanged (False).  Default value is False.
+    return_records : bool, optional
+        If True, the retrieved record objects are also returned.  Default
+        value is False.
+    downloadfiles : bool, optional
+        If True, then any parameter files associated with the potentials will
+        also be downloaded.  Default value is False.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    """
 
     # Download and get matching potential_LAMMPS records
-    records = self.download_records('potential_LAMMPS',  
-                                    name=name, key=key, id=id, potid=potid, potkey=potkey,
-                                    units=units, atom_style=atom_style, pair_style=pair_style,
-                                    status=status, symbols=symbols, elements=elements,
-                                    return_records=True, overwrite=overwrite, verbose=verbose)
+    records = self.download_records(
+        style='potential_LAMMPS', name=name, overwrite=overwrite,
+        return_records=True, verbose=verbose, 
+        key=key, id=id, potid=potid, potkey=potkey, units=units,
+        atom_style=atom_style, pair_style=pair_style, status=status,
+        symbols=symbols, elements=elements)
     
     # Download artifacts
     if downloadfiles is True:
@@ -338,11 +520,18 @@ def download_lammps_potentials(self, name=None, key=None, id=None,
 
     # Download matching potential_LAMMPS_KIM records 
     if include_kim:
-        self.download_records('potential_LAMMPS_KIM',
-                              name=name, key=key, id=id, potid=potid, potkey=potkey,
-                              units=units, atom_style=atom_style, pair_style=pair_style,
-                              status=status, symbols=symbols, elements=elements, 
-                              overwrite=overwrite, verbose=verbose)
+        kimrecords = self.download_records(
+            style='potential_LAMMPS_KIM', name=name, overwrite=overwrite,
+            return_records=return_records, verbose=verbose,
+            key=key, id=id, potid=potid, potkey=potkey, units=units,
+            atom_style=atom_style, pair_style=pair_style,
+            status=status, symbols=symbols, elements=elements)
+
+        if return_records:
+            return np.hstack([records, kimrecords])
+    
+    elif return_records:
+        return records
 
 def get_lammps_potential_files(self, lammps_potential, local=None, remote=None,
                                download=True, pot_dir=None, overwrite=False,
@@ -466,29 +655,6 @@ def get_lammps_potential_files(self, lammps_potential, local=None, remote=None,
                 if verbose:
                     print(f'{artifact.filename} already in {pot_dir}')
 
-def upload_lammps_potential(self, lammps_potential=None, workspace=None,
-                            overwrite=False, verbose=False):
-    """
-    Uploads a LAMMPS potential to the remote database.
-    
-    Parameters
-    ----------
-    lammps_potential : PotentialLAMMPS
-        The record to upload.
-    workspace : str, optional
-        The workspace to assign the record to. If not given, no workspace will
-        be assigned (only accessible to user who submitted it).
-    overwrite : bool, optional
-        Indicates what to do when a matching record is found in the remote
-        location.  If False (default), then the record is not updated.  If
-        True, then the record is updated.
-    verbose : bool, optional
-        If True, info messages will be printed during operations.  Default
-        value is False.
-    """
-    self.upload_record(record=lammps_potential, workspace=workspace,
-                       overwrite=overwrite, verbose=verbose)
-
 def save_lammps_potential(self, lammps_potential, filenames=None,
                           downloadfiles=False, overwrite=False,
                           verbose=False):
@@ -607,7 +773,30 @@ def save_lammps_potential(self, lammps_potential, filenames=None,
                     else:
                         if verbose:
                             print(f'files skipped as local archive exists')
-                
+
+def upload_lammps_potential(self, lammps_potential=None, workspace=None,
+                            overwrite=False, verbose=False):
+    """
+    Uploads a LAMMPS potential to the remote database.
+    
+    Parameters
+    ----------
+    lammps_potential : PotentialLAMMPS
+        The record to upload.
+    workspace : str, optional
+        The workspace to assign the record to. If not given, no workspace will
+        be assigned (only accessible to user who submitted it).
+    overwrite : bool, optional
+        Indicates what to do when a matching record is found in the remote
+        location.  If False (default), then the record is not updated.  If
+        True, then the record is updated.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    """
+    self.upload_record(record=lammps_potential, workspace=workspace,
+                       overwrite=overwrite, verbose=verbose)
+
 def delete_lammps_potential(self, lammps_potential, local=True, remote=False,
                             verbose=False):
     """ 

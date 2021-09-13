@@ -19,6 +19,16 @@ def widget_search_potentials(self, potentials=None, potentials_df=None):
     """
     Builds ipywidgets for selecting an interatomic potential from the database
     and displaying its full html representation (citation plus implementations)
+
+    Parameters
+    ----------
+    potentials : array-like object, optional
+        A list of Potential records to search over.  If not given, will
+        call get_potentials.
+    potentials_df : pandas.Dataframe, optional
+        The metadata Dataframe corresponding to the potentials records.
+        If not given, will be generated from potentials if given or by
+        calling get_potentials with status='active'.
     """
     # Build potentials and/or potentials_df if needed
     if potentials is None:
@@ -130,7 +140,8 @@ def widget_search_potentials(self, potentials=None, potentials_df=None):
     display(header1_output, element1_dropdown, element2_dropdown, element3_dropdown,
             year_dropdown, author_text, potential_dropdown, potential_output)
 
-def widget_lammps_potential(self, lammps_potentials=None, lammps_potentials_df=None, results=None):
+def widget_lammps_potential(self, lammps_potentials=None, lammps_potentials_df=None,
+                            results=None):
     """
     Builds ipywidgets for selecting a LAMMPS implemented potential from the
     database, downloading the files, and displaying the LAMMPS commands
@@ -138,6 +149,13 @@ def widget_lammps_potential(self, lammps_potentials=None, lammps_potentials_df=N
 
     Parameters
     ----------
+    lammps_potentials : array-like object, optional
+        A list of PotentialLAMMPS records to search over.  If not given, will
+        call get_lammps_potentials with status='active'.
+    lammps_potentials_df : pandas.Dataframe, optional
+        The metadata Dataframe corresponding to the lammps_potentials records.
+        If not given, will be generated from lammps_potentials if given or by
+        calling get_lammps_potentials with status='active'.
     results : dict, optional
         If given a dict, the selected potential can be retrieved under the
         'lammps_potential' key.
@@ -148,7 +166,7 @@ def widget_lammps_potential(self, lammps_potentials=None, lammps_potentials_df=N
 
     # Build lammps_potentials and/or lammps_potentials_df if needed
     if lammps_potentials is None:
-        lammps_potentials, lammps_potentials_df = self.get_lammps_potentials(return_df=True)
+        lammps_potentials, lammps_potentials_df = self.get_lammps_potentials(status='active', return_df=True)
     elif lammps_potentials_df is None:
         lammps_potentials_df = []
         for potential in lammps_potentials:

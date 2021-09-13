@@ -58,8 +58,7 @@ class Database():
         """str: The database's host."""
         return self.__host
     
-    def get_records(self, style=None, name=None, query=None, return_df=False,
-                    **kwargs):
+    def get_records(self, style=None, return_df=False, **kwargs):
         """
         Produces a list of all matching records in the database.
         
@@ -67,21 +66,12 @@ class Database():
         ----------
         style : str, optional
             The record style to search. If not given, a prompt will ask for it.
-        name : str or list, optional
-            Record name(s) to delimit by. 
         return_df : bool, optional
             If True, then the corresponding pandas.Dataframe of metadata
             will also be returned
-        query : dict, optional
-            A custom-built CDCS-style query to use for the record search.
-            Alternative to passing in the record-specific metadata kwargs.
-            Note that name can be given with query.
-        keyword : str, optional
-            Allows for a search of records whose contents contain a keyword.
-            Alternative to giving query or kwargs.
         **kwargs : any, optional
-            Any of the record-specific metadata keywords that can be searched
-            for.
+            Any extra options specific to the database style or metadata search
+            parameters specific to the record style.
             
         Returns
         ------
@@ -98,18 +88,19 @@ class Database():
         """
         raise AttributeError('get_records not defined for Database style')
     
-    def get_record(self, name=None, style=None, query=None, **kwargs):
+    def get_record(self, style=None, **kwargs):
         """
         Returns a single matching record from the database.  Issues an error
         if multiple or no matching records are found.
         
         Parameters
         ----------
-        name : str, optional
-            The record name or id to limit the search by.
         style : str, optional
             The record style to limit the search by.
-            
+        **kwargs : any, optional
+            Any extra options specific to the database style or metadata search
+            parameters specific to the record style.
+
         Returns
         ------
         Record
@@ -122,8 +113,7 @@ class Database():
         """
         raise AttributeError('get_record not defined for Database style')
     
-    def get_records_df(self, name=None, style=None, query=None, full=True,
-                       flat=False, **kwargs):
+    def get_records_df(self, style=None, **kwargs):
         """
         Produces a pandas.DataFrame of all matching records in the database.
         
@@ -131,17 +121,10 @@ class Database():
         ----------
         style : str
             The record style to collect records of.
-        full : bool, optional
-            Flag used by the calculation records.  A True value will include
-            terms for both the calculation's input and results, while a value
-            of False will only include input terms (Default is True).
-        flat : bool, optional
-            Flag affecting the format of the dictionary terms.  If True, the
-            dictionary terms are limited to having only str, int, and float
-            values, which is useful for comparisons.  If False, the term
-            values can be of any data type, which is convenient for analysis.
-            (Default is False).
-        
+        **kwargs : any, optional
+            Any extra options specific to the database style or metadata search
+            parameters specific to the record style.
+
         Returns
         ------
         pandas.DataFrame
@@ -154,7 +137,60 @@ class Database():
         """
         raise AttributeError('get_records_df not defined for Database style')
     
-    def add_record(self, record=None, name=None, style=None, model=None,
+    def retrieve_record(self, style=None, dest=None, format='json', indent=4,
+                        verbose=False, **kwargs):
+        """
+        Gets a single matching record from the database and saves it to a
+        file based on the record's name.
+
+        Parameters
+        ----------
+        style : str, optional
+            The record style to search. If not given, a prompt will ask for it.
+        dest : path, optional
+            The parent directory where the record will be saved to.  If not given,
+            will use the current working directory.
+        format : str, optional
+            The file format to save the record in: 'json' or 'xml'.  Default
+            is 'json'.
+        indent : int, optional
+            The number of space indentation spacings to use in the saved
+            record for the different tiered levels.  Default is 4.  Giving None
+            will create a compact record.
+        verbose : bool, optional
+            If True, info messages will be printed during operations.  Default
+            value is False.
+        **kwargs : any, optional
+            Any extra options specific to the database style or metadata search
+            parameters specific to the record style.
+        """
+        # Set default dest
+        if dest is None:
+            dest = Path.cwd()
+
+        # Get the record
+        record = self.get_record(style=style, **kwargs)
+
+        # Save as json
+        if format == 'json':
+            fname = Path(dest, f'{record.name}.json')
+            with open(fname, 'w', encoding='UTF-8') as f:
+                record.model.json(fp=f, indent=indent, ensure_ascii=False)
+            if verbose:
+                print(f'{fname} saved')
+        
+        # Save as xml
+        elif format == 'xml':
+            fname = Path(dest, f'{record.name}.xml')
+            with open(fname, 'w', encoding='UTF-8') as f:
+                record.model.xml(fp=f, indent=indent)
+            if verbose:
+                print(f'{fname} saved')
+
+        else:
+            raise ValueError('Invalid format: must be json or xml.')
+
+    def add_record(self, record=None, style=None, name=None, model=None,
                    build=False, verbose=False):
         """
         Adds a new record to the database.
@@ -234,7 +270,7 @@ class Database():
         """
         raise AttributeError('update_record not defined for Database style')
     
-    def delete_record(self, record=None, name=None, style=None):
+    def delete_record(self, record=None, style=None, name=None):
         """
         Permanently deletes a record from the database.
         
@@ -243,10 +279,11 @@ class Database():
         record : Record, optional
             The record to delete from the database.  If not given, name and/or
             style are needed to uniquely define the record to delete.
-        name : str, optional
-            The name of the record to delete.
         style : str, optional
             The style of the record to delete.
+        name : str, optional
+            The name of the record to delete.
+        
         
         Raises
         ------
@@ -255,7 +292,9 @@ class Database():
         """
         raise AttributeError('delete_record not defined for Database style')
     
-    def get_tar(self, record=None, name=None, style=None, raw=False):
+    
+
+    def get_tar(self, record=None, style=None, name=None, raw=False):
         """
         Retrives the tar archive associated with a record in the database.
         
@@ -263,10 +302,10 @@ class Database():
         ----------
         record : Record, optional
             The record to retrive the associated tar archive for.
-        name : str, optional
-            The name to use in uniquely identifying the record.
         style : str, optional
             The style to use in uniquely identifying the record.
+        name : str, optional
+            The name to use in uniquely identifying the record.
         raw : bool, optional
             If True, return the archive as raw binary content. If
             False, return as an open tarfile. (Default is False)
@@ -284,7 +323,7 @@ class Database():
         """
         raise AttributeError('get_tar not defined for Database style')
     
-    def add_tar(self, record=None, name=None, style=None, tar=None, root_dir=None):
+    def add_tar(self, record=None, style=None, name=None, tar=None, root_dir=None):
         """
         Archives and stores a folder associated with a record.
         
@@ -294,10 +333,10 @@ class Database():
             The record to associate the tar archive with.  If not given, then
             name and/or style necessary to uniquely identify the record are
             needed.
-        name : str, optional
-            The name to use in uniquely identifying the record.
         style : str, optional
             The style to use in uniquely identifying the record.
+        name : str, optional
+            The name to use in uniquely identifying the record.
         tar : bytes, optional
             The bytes content of a tar file to save.  tar cannot be given
             with root_dir.
@@ -315,7 +354,7 @@ class Database():
         """
         raise AttributeError('add_tar not defined for Database style')
     
-    def update_tar(self, record=None, name=None, style=None, tar=None, root_dir=None):
+    def update_tar(self, record=None, style=None, name=None, tar=None, root_dir=None):
         """
         Replaces an existing tar archive for a record with a new one.
         
@@ -325,10 +364,10 @@ class Database():
             The record to associate the tar archive with.  If not given, then 
             name and/or style necessary to uniquely identify the record are 
             needed.
-        name : str, optional
-            The name to use in uniquely identifying the record.
         style : str, optional
             The style to use in uniquely identifying the record.
+        name : str, optional
+            The name to use in uniquely identifying the record.
         tar : bytes, optional
             The bytes content of a tar file to save.  tar cannot be given
             with root_dir.
@@ -345,7 +384,7 @@ class Database():
         """
         raise AttributeError('update_tar not defined for Database style')
     
-    def delete_tar(self, record=None, name=None, style=None):
+    def delete_tar(self, record=None, style=None, name=None):
         """
         Deletes a tar file from the database.
         
@@ -355,10 +394,10 @@ class Database():
             The record associated with the tar archive to delete.  If not
             given, then name and/or style necessary to uniquely identify
             the record are needed.
-        name : str, optional
-            The name to use in uniquely identifying the record.
         style : str, optional
             The style to use in uniquely identifying the record.
+        name : str, optional
+            The name to use in uniquely identifying the record.
         
         Raises
         ------

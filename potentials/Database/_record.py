@@ -12,11 +12,10 @@ from datamodelbase import load_record
 
 from ..tools import aslist
 
-def get_records(self, style=None, name=None,
-                local=None, remote=None, verbose=False,
-                refresh_cache=False, return_df=False, **kwargs):
+def get_records(self, style=None, name=None, local=None, remote=None,
+                refresh_cache=False, return_df=False, verbose=False, **kwargs):
     """
-    Retrieves all matching records from the local and/or remote locations.  If
+    Gets all matching records from the local and/or remote locations.  If
     records with the same record name are retrieved from both locations, then
     the local versions of those records are given.
 
@@ -32,9 +31,6 @@ def get_records(self, style=None, name=None,
     remote : bool, optional
         Indicates if the remote location is to be searched.  Default value
         matches the value set when the database was initialized.
-    verbose : bool, optional
-        If True, info messages will be printed during operations.  Default
-        value is False.
     refresh_cache : bool, optional
         If the local database is of style "local", indicates if the metadata
         cache file is to be refreshed.  If False,
@@ -45,6 +41,9 @@ def get_records(self, style=None, name=None,
     return_df : bool, optional
         If True, then the corresponding pandas.Dataframe of metadata
         will also be returned.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
     **kwargs : any, optional
         Any extra keyword arguments supported by the record style.
 
@@ -131,12 +130,11 @@ def get_records(self, style=None, name=None,
     else:
         return records
     
-def get_record(self, style=None, name=None,
-               local=None, remote=None,
-               prompt=True, promptfxn=None,
-               verbose=False, refresh_cache=False, **kwargs):
+def get_record(self, style=None, name=None, local=None, remote=None,
+               prompt=True, promptfxn=None, refresh_cache=False, verbose=False,
+               **kwargs):
     """
-    Retrieves a single matching record from the local and/or remote locations.
+    Gets a single matching record from the local and/or remote locations.
     If local is True and the record is found there, then the local copy of the
     record is returned without searching the remote.
 
@@ -159,9 +157,6 @@ def get_record(self, style=None, name=None,
     promptfxn : function, optional
         A function that generates the prompt selection list.  If not given,
         the prompt will be a list of "id" values. 
-    verbose : bool, optional
-        If True, info messages will be printed during operations.  Default
-        value is False.
     refresh_cache : bool, optional
         If the local database is of style "local", indicates if the metadata
         cache file is to be refreshed.  If False,
@@ -169,6 +164,9 @@ def get_record(self, style=None, name=None,
         fields will not be updated.  If True, then the metadata for all
         records will be regenerated, which is needed to update the metadata
         for modified records.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
     **kwargs : any, optional
         Any extra keyword arguments supported by the record style.
 
@@ -251,6 +249,93 @@ def get_record(self, style=None, name=None,
     
     raise ValueError('No matching records found')
 
+def retrieve_record(self, style=None, name=None, dest=None, local=None,
+                    remote=None, prompt=True, promptfxn=None, format='json',
+                    indent=4, refresh_cache=False, verbose=False, **kwargs):
+    """
+    Gets a single matching record from the database and saves it to a
+    file based on the record's name.
+
+    Parameters
+    ----------
+    style : str, optional
+        The record style to search. If not given, a prompt will ask for it.
+    name : str or list, optional
+        The name(s) of records to limit the search by.
+    dest : path, optional
+        The parent directory where the record will be saved to.  If not given,
+        will use the current working directory.
+    local : bool, optional
+        Indicates if the local location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    remote : bool, optional
+        Indicates if the remote location is to be searched.  Default value
+        matches the value set when the database was initialized.
+    prompt : bool, optional
+        If prompt=True (default) then a screen input will ask for a selection
+        if multiple matching potentials are found.  If prompt=False, then an
+        error will be thrown if multiple matches are found.
+    promptfxn : function, optional
+        A function that generates the prompt selection list.  If not given,
+        the prompt will be a list of "id" values.
+    format : str, optional
+        The file format to save the record in: 'json' or 'xml'.  Default
+        is 'json'.
+    indent : int, optional
+        The number of space indentation spacings to use in the saved
+        record for the different tiered levels.  Default is 4.  Giving None
+        will create a compact record.
+    refresh_cache : bool, optional
+        If the local database is of style "local", indicates if the metadata
+        cache file is to be refreshed.  If False,
+        metadata for new records will be added but the old record metadata
+        fields will not be updated.  If True, then the metadata for all
+        records will be regenerated, which is needed to update the metadata
+        for modified records.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
+    **kwargs : any, optional
+        Any extra keyword arguments supported by the record style.
+
+    
+    Raises
+    ------
+    ValueError
+        If local or remote is set to True when the corresponding database
+        interaction has not been set.
+    ValueError
+        If multiple or no matching records are discovered.
+    """
+    # Set default dest
+    if dest is None:
+        dest = Path.cwd()
+
+    # Get the record
+    record = self.get_record(
+        style=style, name=name, local=local, remote=remote, prompt=prompt,
+        promptfxn=promptfxn, verbose=verbose, refresh_cache=refresh_cache,
+        **kwargs)
+
+    # Save as json
+    if format == 'json':
+        fname = Path(dest, f'{record.name}.json')
+        with open(fname, 'w', encoding='UTF-8') as f:
+            record.model.json(fp=f, indent=indent, ensure_ascii=False)
+        if verbose:
+            print(f'{fname} saved')
+    
+    # Save as xml
+    elif format == 'xml':
+        fname = Path(dest, f'{record.name}.xml')
+        with open(fname, 'w', encoding='UTF-8') as f:
+            record.model.xml(fp=f, indent=indent)
+        if verbose:
+            print(f'{fname} saved')
+
+    else:
+        raise ValueError('Invalid format: must be json or xml.')
+
 def remote_query(self, style=None, keyword=None, query=None, name=None,
                  return_df=False):
     """
@@ -284,8 +369,7 @@ def remote_query(self, style=None, keyword=None, query=None, name=None,
                                             query=query, keyword=keyword, name=name)
 
 def download_records(self, style=None, name=None, overwrite=False,
-                     keyword=None, query=None, return_records=False,
-                     verbose=False, **kwargs):
+                     return_records=False, verbose=False, **kwargs):
     """
     Retrieves all matching records from the remote location and saves them to
     the local location.
@@ -300,18 +384,11 @@ def download_records(self, style=None, name=None, overwrite=False,
         Flag indicating if any existing local records with names matching
         remote records are updated (True) or left unchanged (False).  Default
         value is False.
-    query : dict, optional
-        A custom-built CDCS-style query to use for the record search.
-        Alternative to passing in the record-specific metadata kwargs.
-        Note that name can be given with query.
-    keyword : str, optional
-        Allows for a search of records whose contents contain a keyword.
-        Alternative to giving query or kwargs.
-    verbose : bool, optional
-        If True, info messages will be printed during operations.  Default
-        value is False.
     return_records : bool, optional
         If True, the retrieved record objects are also returned.  Default
+        value is False.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
         value is False.
     **kwargs : any, optional
         Any extra keyword arguments supported by the record style.

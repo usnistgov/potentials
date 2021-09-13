@@ -25,14 +25,14 @@ def kim_models(self):
     """list: The full KIM ids of the installed KIM models"""
     return self.__kim_models
 
-def get_kim_lammps_potentials(self, local=None, remote=None, 
-                              name=None, key=None, id=None,
+def get_kim_lammps_potentials(self, name=None, key=None, id=None,
                               potid=None, potkey=None, units=None,
-                              atom_style=None, pair_style=None, status='active',
+                              atom_style=None, pair_style=None, status=None,
                               symbols=None, elements=None,
                               kim_models=None, kim_api_directory=None,
-                              kim_models_file=None, refresh_cache=False,
-                              return_df=False, verbose=False):
+                              kim_models_file=None, local=None, remote=None,
+                              refresh_cache=False, return_df=False,
+                              verbose=False):
     """
     Builds LAMMPS potential entries for KIM models.  The returned entries
     depend both on the parsing parameters and the list of installed kim models
@@ -41,6 +41,42 @@ def get_kim_lammps_potentials(self, local=None, remote=None,
 
     Parameters
     ----------
+    name : str or list, optional
+        The record name(s) to parse by.  For potential records, the names
+        should correspond to the id with a prefix of "potentials." added to it.
+    key : str or list, optional
+        The unique UUID4 record key(s) to parse by. 
+    id : str or list
+        The unique record id(s) labeling the records to parse by.
+    potid : str or list, optional
+        The unique UUID4 record key(s) for the associated potential records to
+        parse by.
+    potkey : str or list, optional
+        The unique record id(s) labeling the associated potential records to
+        parse by.
+    units : str or list, optional
+        LAMMPS units option(s) to parse by.
+    atom_style : str or list, optional
+        LAMMPS pair_style(s) to parse by.
+    pair_style : str or list, optional
+        LAMMPS pair_style(s) to parse by.
+    status : None, str or list, optional
+        Limits the search by the status of the LAMMPS implementations:
+        "active", "superseded" and/or "retracted".
+    symbols : str or list, optional
+        Model symbol(s) to parse by.  Typically correspond to elements for
+        atomic potential models.
+    elements : str or list, optional
+        Element(s) in the model to parse by.
+    kim_models : str or list, optional
+        Allows for the list of KIM models to be explicitly given.
+    kim_api_directory : path-like object, optional
+        The directory containing the kim api to use to build the list.
+    kim_models_file : path-like object, optional
+        The path to a whitespace-delimited file that lists KIM models.
+    verbose : bool, optional
+        If True, info messages will be printed during operations.  Default
+        value is False.
     local : bool, optional
         Indicates if records in localpath are to be loaded.  If not given,
         will use the local value set during initialization.
@@ -49,16 +85,16 @@ def get_kim_lammps_potentials(self, local=None, remote=None,
         Setting this to be False is useful/faster if a local copy of the
         database exists.  If not given, will use the local value set during
         initialization.
-
-
-
-
-    kim_models : str or list, optional
-        Allows for the list of KIM models to be explicitly given.
-    kim_api_directory : path-like object, optional
-        The directory containing the kim api to use to build the list.
-    kim_models_file : path-like object, optional
-        The path to a whitespace-delimited file that lists KIM models.
+    refresh_cache : bool, optional
+        If the local database is of style "local", indicates if the metadata
+        cache file is to be refreshed.  If False,
+        metadata for new records will be added but the old record metadata
+        fields will not be updated.  If True, then the metadata for all
+        records will be regenerated, which is needed to update the metadata
+        for modified records.
+    return_df : bool, optional
+        If True, then the corresponding pandas.Dataframe of metadata
+        will also be returned.
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
@@ -81,14 +117,12 @@ def get_kim_lammps_potentials(self, local=None, remote=None,
             return np.array([])
 
     # Get potential_LAMMPS_KIM records
-    records1, df1 = self.get_records('potential_LAMMPS_KIM',
-                                     local=local, remote=remote,
-                                     name=name, key=key, id=id,
-                                     potid=potid, potkey=potkey, units=units,
-                                     atom_style=atom_style, pair_style=pair_style, status=status,
-                                     symbols=symbols, elements=elements,
-                                     return_df=True, refresh_cache=refresh_cache,
-                                     verbose=verbose)
+    records1, df1 = self.get_records(
+        style='potential_LAMMPS_KIM', name=name, local=local, remote=remote,
+        refresh_cache=refresh_cache, return_df=True, verbose=verbose,
+        key=key, id=id, potid=potid, potkey=potkey, units=units,
+        atom_style=atom_style, pair_style=pair_style, status=status,
+        symbols=symbols, elements=elements)
     
     # Build list of records based on kim_models list
     records2 = []
