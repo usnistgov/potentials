@@ -39,7 +39,8 @@ class Database():
     from ._lammps_potential import (get_lammps_potentials, get_lammps_potential,
                                     download_lammps_potentials, get_lammps_potential_files,
                                     retrieve_lammps_potential, upload_lammps_potential,
-                                    save_lammps_potential, delete_lammps_potential)
+                                    save_lammps_potential, delete_lammps_potential,
+                                    bad_lammps_potentials)
 
     from ._widgets import (widget_search_potentials, widget_lammps_potential)
 

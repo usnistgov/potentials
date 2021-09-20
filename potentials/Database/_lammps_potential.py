@@ -826,3 +826,22 @@ def delete_lammps_potential(self, lammps_potential, local=True, remote=False,
     if local is True:
         pot_dir = Path(self.local_database.host, 'potential_LAMMPS', lammps_potential.id)
         shutil.rmtree(pot_dir)
+
+@property
+def bad_lammps_potentials(self):
+    """list: ids of potential_LAMMPS records that are invalid and should fail with LAMMPS"""
+    return [
+        # Listings with invalid parameter files that do not work in LAMMPS
+        '1990--Ackland-G-J--Cu--LAMMPS--ipr1',
+        '2009--Zhakhovskii-V-V--Al--LAMMPS--ipr1',
+        '2009--Zhakhovskii-V-V--Au--LAMMPS--ipr1',
+        '2015--Broqvist-P--Ce-O--LAMMPS--ipr1',
+
+        # Listings with incorrect record info that generates invalid LAMMPS commands
+        '2009--Kim-H-K--Fe-Ti-C--LAMMPS--ipr1',
+        '2012--Jelinek-B--Al-Si-Mg-Cu-Fe--LAMMPS--ipr1',
+        '2013--Gao-H--AgTaO3--LAMMPS--ipr1',
+        '2014--Liyanage-L-S-I--Fe-C--LAMMPS--ipr1',
+        '2015--Ko-W-S--Ni-Ti--LAMMPS--ipr1',
+        '2015--Pascuet-M-I--Al-U--LAMMPS--ipr1',
+    ]
