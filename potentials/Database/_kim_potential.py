@@ -13,7 +13,11 @@ import pandas as pd
 # https://requests.readthedocs.io/en/master/
 import requests
 
+from datamodelbase import query
+
 from DataModelDict import DataModelDict as DM
+
+from potentials.record import PotentialLAMMPSKIM
 
 # Local imports
 from .. import load_record
@@ -133,12 +137,21 @@ def get_kim_lammps_potentials(self, name=None, key=None, id=None,
 
             matches = df1[df1.name == shortcode]
             if len(matches) == 1:
-                record = deepcopy(records1[matches.index.tolist()[0]])
-                record.id = fullid
+                dbrecord = records1[matches.index.tolist()[0]]
+                record = PotentialLAMMPSKIM(model=dbrecord.model, id=fullid)
                 records2.append(record)
                 df2.append(record.metadata())
     records2 = np.array(records2)
     df2 = pd.DataFrame(df2)
+
+    # Filter by key and id if needed
+    matches = (
+        query.str_match.pandas(df2, 'key', key)
+        &query.str_match.pandas(df2, 'id', id)
+    )
+    df2 = df2[matches]
+    records2 = records2[matches]
+    df2.reset_index(drop=True)
 
     if verbose:
         print(f'Built {len(records2)} lammps potentials for KIM models')

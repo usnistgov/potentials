@@ -40,19 +40,6 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         return 'potential_LAMMPS_KIM'
 
     @property
-    def id(self):
-        if self.model is None:
-            raise AttributeError('No model information loaded')
-        return self._id
-
-    @id.setter
-    def id(self, value):
-        if self.shortcode in value:
-            self._id = value
-        else:
-            raise ValueError('id must contain the correct model shortcode')
-
-    @property
     def shortcode(self):
         if self.model is None:
             raise AttributeError('No model information loaded')
@@ -99,10 +86,15 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         # Handle shortcode, id and name identifiers
         self.__shortcode = kimpot['id']
         if id is not None:
-            self.id = id
+            self._id = id
         else:
             # Get last known id
-            self.id = kimpot.aslist('full-kim-id')[-1]
+            self._id = kimpot.aslist('full-kim-id')[-1]
+        
+        # Set key as shortcode plus version
+        self._key = self.id.split('__')[-1]
+        
+        # Set name as shortcode
         if self.name is None:
             self.name = self.shortcode
         
@@ -176,12 +168,28 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         if pair_style is not None and 'kim' not in aslist(pair_style):
             return {"not.kim.pair_style":"get nothing"}
         
+        # Transform key, id values into shortcodes for query
+        shortcodes = set()
+        if key is not None:
+            for k in aslist(key):
+                shortcode = '_'.join(k.split('_')[:-1])
+                shortcodes.add(shortcode)
+        if id is not None:
+            for i in aslist(id):
+                k = i.split('__')[-1]
+                shortcode = '_'.join(k.split('_')[:-1])
+                shortcodes.add(shortcode)
+        if len(shortcodes) == 0:
+            shortcodes = None
+        else:
+            shortcodes = list(shortcodes)
+
         mquery = {}
         query.str_match.mongo(mquery, f'name', name)
 
         root = f'content.{self.modelroot}'
-        query.str_match.mongo(mquery, f'{root}.key', key)
-        query.str_match.mongo(mquery, f'{root}.id', id)
+        #query.str_match.mongo(mquery, f'{root}.key', key)
+        query.str_match.mongo(mquery, f'{root}.id', shortcodes)
         query.str_match.mongo(mquery, f'{root}.potential.id', potid)
         query.str_match.mongo(mquery, f'{root}.potential.key', potkey)
         query.str_match.mongo(mquery, f'{root}.potential.atom.symbol', symbols)
@@ -204,11 +212,27 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         if pair_style is not None and 'kim' not in aslist(pair_style):
             return {"not.kim.pair_style":"get nothing"}
 
+        # Transform key, id values into shortcodes for query
+        shortcodes = set()
+        if key is not None:
+            for k in aslist(key):
+                shortcode = '_'.join(k.split('_')[:-1])
+                shortcodes.add(shortcode)
+        if id is not None:
+            for i in aslist(id):
+                k = i.split('__')[-1]
+                shortcode = '_'.join(k.split('_')[:-1])
+                shortcodes.add(shortcode)
+        if len(shortcodes) == 0:
+            shortcodes = None
+        else:
+            shortcodes = list(shortcodes)
+
         mquery = {}
         root = self.modelroot
 
-        query.str_match.mongo(mquery, f'{root}.key', key)
-        query.str_match.mongo(mquery, f'{root}.id', id)
+        #query.str_match.mongo(mquery, f'{root}.key', key)
+        query.str_match.mongo(mquery, f'{root}.id', shortcodes)
         query.str_match.mongo(mquery, f'{root}.potential.id', potid)
         query.str_match.mongo(mquery, f'{root}.potential.key', potkey)
         query.str_match.mongo(mquery, f'{root}.potential.atom.symbol', symbols)
