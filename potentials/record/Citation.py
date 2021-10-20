@@ -154,7 +154,8 @@ class Citation(Record):
             citmodel['document-type'] = 'journal' 
             citmodel['title'] = self.bib['title']
             citmodel['author'] = self.parse_authors(self.bib['author'])
-            citmodel['publication-name'] = self.bib['journal']
+            if 'journal' in self.bib:
+                citmodel['publication-name'] = self.bib['journal']
             citmodel['publication-date'] = DM()
             citmodel['publication-date']['year'] = asint(self.bib['year'])
             if 'volume' in self.bib:
