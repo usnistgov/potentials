@@ -333,7 +333,7 @@ class MongoDatabase(Database):
         self.delete_record(record=oldrecord)
         
         # Add new record
-        self.add_record(record=record)
+        self.add_record(record=record, build=build)
         
         if verbose:
             print(f'{record} updated in {self.host}')
