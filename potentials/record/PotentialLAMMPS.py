@@ -218,75 +218,7 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         """list : The sets of symbols that correspond to all related potentials"""
         return [self._symbols]
 
-    def masses(self, symbols=None, prompt=False):
-        """
-        Returns a list of atomic/ionic masses associated with atom-model
-        symbols.
-        
-        Parameters
-        ----------
-        symbols : list of str, optional
-            A list of atom-model symbols.  If None (default), will use all of
-            the potential's symbols.
-        prompt : bool, optional
-            If True, then a screen prompt will appear for radioactive elements
-            with no standard mass to ask for the isotope to use. If False
-            (default), then the most stable isotope will be automatically used.
-        
-        Returns
-        -------
-        list of float
-            The atomic/ionic masses corresponding to the atom-model symbols.
-        """
-
-        # Use all symbols if symbols is None
-        if symbols is None:
-            symbols = self.symbols
-        else:
-            # Normalize symbols
-            symbols = self.normalize_symbols(symbols)
-        
-        # Get all matching masses
-        masses = []
-        for symbol in symbols:
-            i = self.symbols.index(symbol)
-            if self._masses[i] is None:
-                masses.append(atomic_mass(self._elements[i], prompt=prompt))
-            else:
-                masses.append(self._masses[i])
-        
-        return masses
-
-    def charges(self, symbols=None):
-        """
-        Returns a list of atomic charges associated with atom-model symbols.
-        Will have a None value if not assigned.
-        
-        Parameters
-        ----------
-        symbols : list of str, optional
-            A list of atom-model symbols.  If None (default), will use all of
-            the potential's symbols.
-        
-        Returns
-        -------
-        list of float
-            The atomic charges corresponding to the atom-model symbols.
-        """
-        # Use all symbols if symbols is None
-        if symbols is None:
-            symbols = self.symbols
-        else:
-            # Normalize symbols
-            symbols = self.normalize_symbols(symbols)
-        
-        # Get all matching charges
-        charges = []
-        for symbol in symbols:
-            i = self.symbols.index(symbol)
-            charges.append(self._charges[i])
-        
-        return charges
+    
 
     def metadata(self):
         """Returns a flat dict of the metadata fields"""

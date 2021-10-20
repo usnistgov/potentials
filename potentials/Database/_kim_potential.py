@@ -128,30 +128,68 @@ def get_kim_lammps_potentials(self, name=None, key=None, id=None,
         atom_style=atom_style, pair_style=pair_style, status=status,
         symbols=symbols, elements=elements)
     
-    # Build list of records based on kim_models list
+    # Build list of records based on kim_models and expand potentials
     records2 = []
     df2 = []
-    for fullid in kim_models:
-        if '__MO_' in fullid:
-            shortcode = '_'.join(fullid.split('_')[-3:-1])
+    if len(records1) > 0:
+        for fullid in kim_models:
+            if '__MO_' in fullid:
+                shortcode = '_'.join(fullid.split('_')[-3:-1])
 
-            matches = df1[df1.name == shortcode]
-            if len(matches) == 1:
-                dbrecord = records1[matches.index.tolist()[0]]
-                record = PotentialLAMMPSKIM(model=dbrecord.model, id=fullid)
-                records2.append(record)
-                df2.append(record.metadata())
+                matches = df1[df1.name == shortcode]
+                if len(matches) == 1:
+                    dbrecord = records1[matches.index.tolist()[0]]
+                    record = PotentialLAMMPSKIM(model=dbrecord.model, id=fullid)
+
+                    # Capture records as is if associated with one potential
+                    if len(record.potkeys) == 1:
+                        records2.append(record)
+                        df2.append(record.metadata())
+
+                    else:
+                        # Loop over potential keys
+                        for pkey in record.potkeys:
+                            record.select_potential(potkey=pkey)
+
+                            # Limit based on search parameters
+                            if potkey is not None and record.potkey not in aslist(potkey):
+                                continue
+                            if potid is not None and record.potid not in aslist(potid):
+                                continue
+                            if symbols is not None:
+                                nomatch = False
+                                for symbol in aslist(symbols):
+                                    if symbol not in record.symbols:
+                                        nomatch = True
+                                        break
+                                if nomatch:
+                                    continue
+                            if elements is not None:
+                                nomatch = False
+                                record_elements = record.elements()
+                                for element in aslist(elements):
+                                    if element not in record_elements:
+                                        nomatch = True
+                                        break
+                                if nomatch:
+                                    continue
+
+                            # Capture copy of the record
+                            records2.append(deepcopy(record))
+                            df2.append(record.metadata())
+
     records2 = np.array(records2)
     df2 = pd.DataFrame(df2)
 
     # Filter by key and id if needed
-    matches = (
-        query.str_match.pandas(df2, 'key', key)
-        &query.str_match.pandas(df2, 'id', id)
-    )
-    df2 = df2[matches]
-    records2 = records2[matches]
-    df2.reset_index(drop=True)
+    if len(records2) > 0:
+        matches = (
+            query.str_match.pandas(df2, 'key', key)
+            &query.str_match.pandas(df2, 'id', id)
+        )
+        df2 = df2[matches]
+        records2 = records2[matches]
+        df2.reset_index(drop=True)
 
     if verbose:
         print(f'Built {len(records2)} lammps potentials for KIM models')

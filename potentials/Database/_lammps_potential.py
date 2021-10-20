@@ -98,7 +98,7 @@ def get_lammps_potentials(self, name=None, key=None, id=None, potid=None,
     # Get native LAMMPS potentials
     records, df = self.get_records(
         style='potential_LAMMPS', name=name, local=local, remote=remote,
-        refresh_cache=refresh_cache,return_df=True, verbose=verbose,
+        refresh_cache=refresh_cache, return_df=True, verbose=verbose,
         key=key, id=id, potid=potid, potkey=potkey, units=units,
         atom_style=atom_style, pair_style=pair_style, status=status,
         symbols=symbols, elements=elements)
@@ -120,18 +120,35 @@ def get_lammps_potentials(self, name=None, key=None, id=None, potid=None,
         local=local, remote=remote, return_df=True,
         refresh_cache=refresh_cache, verbose=verbose)
 
-    records = np.hstack([records, krecords])
-    df = pd.concat([df, kdf], ignore_index=True, sort=False)
+    # Add KIM LAMMPS records to the lists
+    if len(krecords) > 0:
+        records = np.hstack([records, krecords])
+        df = pd.concat([df, kdf], ignore_index=True, sort=False)
 
     # Sort by name
-    df = df.sort_values('name')
-    records = records[df.index.tolist()]
+    if len(records) > 0:
+        df = df.sort_values('name')
+        records = records[df.index.tolist()]
+        df = df.reset_index(drop=True)
 
     # Return records (and df)
     if return_df:
-        return records, df.reset_index(drop=True)
+        return records, df
     else:
         return records
+
+def promptfxn(df):
+    """Generates a prompt list based on id field."""
+    
+    js = df.sort_values('id').index
+    for i, j in enumerate(js):
+        print(f"{i+1} {df.loc[j, 'id']} {'-'.join(df.loc[j, 'elements'])}")
+    i = int(input('Please select one:')) - 1
+
+    if i < 0 or i >= len(js):
+        raise ValueError('Invalid selection')
+
+    return js[i]
 
 def get_lammps_potential(self, name=None, key=None, id=None, potid=None,
                          potkey=None, units=None, atom_style=None,
@@ -216,20 +233,6 @@ def get_lammps_potential(self, name=None, key=None, id=None, potid=None,
         local = self.local
     if remote is None:
         remote = self.remote
-    
-    def promptfxn(df):
-        """Generates a prompt list based on id field."""
-        key = 'id'
-        
-        js = df.sort_values(key).index
-        for i, j in enumerate(js):
-            print(i+1, df.loc[j, key])
-        i = int(input('Please select one:')) - 1
-
-        if i < 0 or i >= len(js):
-            raise ValueError('Invalid selection')
-
-        return js[i]
 
     # Check local first
     if local:
@@ -248,7 +251,7 @@ def get_lammps_potential(self, name=None, key=None, id=None, potid=None,
         
         elif len(records) > 1:
             if prompt:
-                print('Multiple matching record retrieved from local')
+                print('Multiple matching records retrieved from local')
                 index = promptfxn(df)
                 return records[index]
             else:
@@ -271,13 +274,13 @@ def get_lammps_potential(self, name=None, key=None, id=None, potid=None,
         
         elif len(records) > 1:
             if prompt:
-                print('Multiple matching record retrieved from remote')
+                print('Multiple matching records retrieved from remote')
                 index = promptfxn(df)
                 return records[index]
             else:
                 raise ValueError('Multiple matching records found')
 
-        raise ValueError('No matching LAMMPS potentials found')
+    raise ValueError('No matching LAMMPS potentials found')
 
 def retrieve_lammps_potential(self, name=None, dest=None, key=None, id=None,
                               potid=None, potkey=None, units=None,
