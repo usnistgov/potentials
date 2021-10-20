@@ -6,7 +6,10 @@ def description():
 
 def mongo(qdict, path, val):
     if val is not None:
-        qdict[path] = {'$in': aslist(val)}
+        if '$and' not in qdict:
+            qdict['$and'] = []
+        for v in aslist(val):
+            qdict['$and'].append({path:v})
 
 def pandas(df, name, val, parent=None):
     
