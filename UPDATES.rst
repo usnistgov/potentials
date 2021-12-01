@@ -1,6 +1,20 @@
 Updates
 =======
 
+0.3.2
+-----
+
+- bad_lammps_potentials list added which lists the LAMMPS potentials entries
+  that should always issue errors if used.  This is useful for anyone wishing
+  to test both old and new versions of potentials by helping to process
+  calculation errors.
+- More updates for KIM potentials - now any KIM models associated with multiple
+  potential entries will generate separate PotentialLAMMPS records for each.
+  This simplifies the handling of these edge cases and helps avoid compositions
+  associated with untrained cross-interactions.
+- Citation records now treat "journal" as optional when loading.  CrossRef
+  bibtex seems to now be missing this value?
+
 0.3.1
 -----
 
