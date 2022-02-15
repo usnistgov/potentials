@@ -105,7 +105,7 @@ def widget_search_potentials(self, potentials=None, potentials_df=None):
             author = None
 
         # Parse potentials using author, year, elements
-        matches = potentials_df[Potential.pandasfilter(potentials_df, author=author, year=year, element=elements)]
+        matches = potentials_df[Potential().pandasfilter(potentials_df, author=author, year=year, element=elements)]
         
         # Update potential dropdown accordingly
         potential_dropdown.options = matches.id.tolist()
@@ -229,7 +229,7 @@ def widget_lammps_potential(self, lammps_potentials=None, lammps_potentials_df=N
             pair_style = None
 
         # Parse for pair_style and elements
-        matches = lammps_potentials_df[PotentialLAMMPS.pandasfilter(lammps_potentials_df, pair_style=pair_style, elements=elements)]
+        matches = lammps_potentials_df[PotentialLAMMPS().pandasfilter(lammps_potentials_df, pair_style=pair_style, elements=elements)]
         
         # Update potential dropdown accordingly
         potential_dropdown.options = matches.id.tolist()
