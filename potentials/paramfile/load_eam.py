@@ -1,3 +1,4 @@
+# coding: utf-8
 from . import EAM, EAMAlloy, EAMFS
 
 def load_eam(f, style=None):
@@ -14,7 +15,7 @@ def load_eam(f, style=None):
         eam pair_style.  'eam/alloy' or 'alloy' will load setfl files for the
         LAMMPS eam/alloy pair_style.  'eam/fs' or 'fs' will load setfl files for
         the eam/fs pair_style.  If not given, will attempt to load the file
-        using the different styles.  
+        using the different styles.
         
     Returns
     -------

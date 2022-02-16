@@ -7,8 +7,7 @@ import tempfile
 import numpy as np
 import pandas as pd
 
-from .. import settings, load_record
-from ..tools import aslist
+from .. import settings
 
 def get_lammps_potentials(self, name=None, key=None, id=None, potid=None,
                           potkey=None, units=None, atom_style=None,
@@ -504,7 +503,7 @@ def download_lammps_potentials(self, name=None, key=None, id=None,
                 for lammps_potential in records:
                     pot_id = lammps_potential.id
                     pot_dir = Path(tmpdirname, pot_id)
-                    tar_name = Path(tmpdirname, f'{pot_id}.tar.gz')
+                    #tar_name = Path(tmpdirname, f'{pot_id}.tar.gz')
                     lammps_potential.download_files(pot_dir=pot_dir)
                     try:
                         self.local_database.add_tar(record=lammps_potential, root_dir=tmpdirname)
@@ -703,16 +702,16 @@ def save_lammps_potential(self, lammps_potential, filenames=None,
                 self.local_database.add_folder(record=lammps_potential,
                                                filenames=filenames)
                 if verbose:
-                    print(f'files saved to local folder')
+                    print('files saved to local folder')
             except:
                 if overwrite is True:
                     self.local_database.update_folder(record=lammps_potential,
                                                       filenames=filenames, clear=True)
                     if verbose:
-                        print(f'files updated in local folder')
+                        print('files updated in local folder')
                 else:
                     if verbose:
-                        print(f'files skipped as local folder exists')
+                        print('files skipped as local folder exists')
 
         # Add files to other database styles
         else:
@@ -728,15 +727,15 @@ def save_lammps_potential(self, lammps_potential, filenames=None,
                 try:
                     self.local_database.add_tar(record=lammps_potential, root_dir=tmpdirname)
                     if verbose:
-                        print(f'files saved to local archive')
+                        print('files saved to local archive')
                 except:
                     if overwrite is True:
                         self.local_database.update_tar(record=lammps_potential, root_dir=tmpdirname)
                         if verbose:
-                            print(f'files updated in local archive')
+                            print('files updated in local archive')
                     else:
                         if verbose:
-                            print(f'files skipped as local archive exists')
+                            print('files skipped as local archive exists')
 
     elif downloadfiles:
         
@@ -753,29 +752,29 @@ def save_lammps_potential(self, lammps_potential, filenames=None,
                     self.local_database.add_folder(record=lammps_potential,
                                                    root_dir=tmpdirname)
                     if verbose:
-                        print(f'files downloaded and saved to local folder')
+                        print('files downloaded and saved to local folder')
                 except:
                     if overwrite is True:
                         self.local_database.update_folder(record=lammps_potential,
                                                           root_dir=tmpdirname)
                         if verbose:
-                            print(f'files downloaded and updated in local folder')
+                            print('files downloaded and updated in local folder')
                     else:
                         if verbose:
-                            print(f'files skipped as local folder exists')
+                            print('files skipped as local folder exists')
             else:
                 try:
                     self.local_database.add_tar(record=lammps_potential, root_dir=tmpdirname)
                     if verbose:
-                        print(f'files downloaded and saved to local archive')
+                        print('files downloaded and saved to local archive')
                 except:
                     if overwrite is True:
                         self.local_database.update_tar(record=lammps_potential, root_dir=tmpdirname)
                         if verbose:
-                            print(f'files downloaded and updated in local archive')
+                            print('files downloaded and updated in local archive')
                     else:
                         if verbose:
-                            print(f'files skipped as local archive exists')
+                            print('files skipped as local archive exists')
 
 def upload_lammps_potential(self, lammps_potential=None, workspace=None,
                             overwrite=False, verbose=False):

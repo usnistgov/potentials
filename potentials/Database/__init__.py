@@ -2,7 +2,6 @@
 from pathlib import Path
 
 from .. import settings
-from ..tools import aslist
 
 from .load_database import load_database
 
@@ -66,7 +65,7 @@ class Database():
             The path to a directory where a local-style directory is to be
             found. This is an alias for local_host, with a local_style of
             "local" and is only retained for backwards compatibility.
-        local_database : datamodelbase.Database
+        local_database : yabadaba.Database
             A pre-existing Database object to use for the local.
         local_name : str, optional
             The name assigned to a pre-defined database to use for the local
@@ -85,7 +84,7 @@ class Database():
             The name assigned to a pre-defined database to use for the remote
             interactions.  Cannot be given with remote_style, remote_host or
             remote_terms.
-        remote_database : datamodelbase.Database
+        remote_database : yabadaba.Database
             A pre-existing Database object to use for the remote.
         remote_style : str, optional
             The database style to use for the remote interactions.
@@ -142,12 +141,12 @@ class Database():
 
     @property
     def remote_database(self):
-        """datamodelbase.CDCSDatabase : Interfaces with the remote CDCS database"""
+        """yabadaba.CDCSDatabase : Interfaces with the remote CDCS database"""
         return self.__remote_database
 
     @property
     def local_database(self):
-        """datamodelbase.LocalDatabase : Interfaces with the local database"""
+        """yabadaba.LocalDatabase : Interfaces with the local database"""
         return self.__local_database
 
     @property
@@ -172,7 +171,7 @@ class Database():
         name : str, optional
             The name assigned to a pre-defined database.  If given, can be the only
             parameter.
-        database : datamodelbase.Database, optional
+        database : yabadaba.Database, optional
             A pre-existing Database object to use for the remote.
         style : str, optional
             The database style to use.
@@ -210,7 +209,7 @@ class Database():
         name : str, optional
             The name assigned to a pre-defined database.  If given, can be the only
             parameter.
-        database : datamodelbase.Database, optional
+        database : yabadaba.Database, optional
             A pre-existing Database object to use for the local.
         style : str, optional
             The database style to use.

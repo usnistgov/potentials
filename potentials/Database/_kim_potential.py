@@ -10,18 +10,13 @@ import numpy as np
 # https://pandas.pydata.org/
 import pandas as pd
 
-# https://requests.readthedocs.io/en/master/
-import requests
 
-from datamodelbase import query
-
-from DataModelDict import DataModelDict as DM
+from yabadaba import query
 
 from potentials.record import PotentialLAMMPSKIM
 
 # Local imports
-from .. import load_record
-from ..tools import aslist, screen_input
+from ..tools import aslist
 from .. import settings
 
 @property

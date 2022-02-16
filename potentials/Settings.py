@@ -1,16 +1,14 @@
 # Standard Python libraries
 from pathlib import Path
-import json
-from copy import deepcopy
 
 # potentials imports
 from .tools import screen_input
 
-import datamodelbase.Settings
+import yabadaba.Settings
 
 __all__ = ['settings']
 
-class Settings(datamodelbase.Settings.Settings):
+class Settings(yabadaba.Settings.Settings):
     """
     Class for handling saved settings.
     """
@@ -200,7 +198,7 @@ class Settings(datamodelbase.Settings.Settings):
         
         # Check if kim_api_directory has been set
         if 'kim_api_directory' not in self.__content:
-            print(f'kim api directory not set')
+            print('kim api directory not set')
         
         else:
             print(f'Remove kim api directory {self.kim_api_directory}?')
@@ -243,7 +241,7 @@ class Settings(datamodelbase.Settings.Settings):
             else: 
                 raise ValueError('Invalid choice')
         
-        with open(kim_models_file, 'w') as f:
+        with open(kim_models_file, 'w', encoding='UTF-8') as f:
             for fullid in kim_models:
                 f.write(f'{fullid}\n')
 
@@ -252,9 +250,9 @@ class Settings(datamodelbase.Settings.Settings):
         Removes the default list of kim models.
         """
         if not self.kim_models_file.is_file():
-            print(f'List of kim models not set')
+            print('List of kim models not set')
         else:
-            print(f'Remove the list of kim models?')
+            print('Remove the list of kim models?')
             test = screen_input('Delete settings? (must type yes):').lower()
             if test == 'yes':
                 self.kim_models_file.unlink()

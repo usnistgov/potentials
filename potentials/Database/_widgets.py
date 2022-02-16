@@ -1,6 +1,5 @@
 # coding: utf-8
 # Standard libraries
-from pathlib import Path
 
 # https://ipython.org/
 from IPython.display import display, clear_output, HTML
@@ -123,7 +122,7 @@ def widget_search_potentials(self, potentials=None, potentials_df=None):
         # Select potential based on dropdown value
         try:
             potential = potentials[potentials_df.id == potential_dropdown.value][0]
-        except:
+        except IndexError:
             with potential_output:
                 clear_output()
                 display(HTML('<b>No matching potentials found: try different selectors</b>'))
@@ -246,7 +245,7 @@ def widget_lammps_potential(self, lammps_potentials=None, lammps_potentials_df=N
         # Select potential based on dropdown value
         try:
             potential = lammps_potentials[lammps_potentials_df.id == potential_dropdown.value][0]
-        except:
+        except IndexError:
             download_button.disabled = True
             with download_output:
                 clear_output()

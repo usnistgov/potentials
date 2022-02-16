@@ -1,16 +1,11 @@
 # coding: utf-8
 # Standard Python libraries
 from pathlib import Path
-import json
-
-from DataModelDict import DataModelDict as DM
 
 import numpy as np
 import pandas as pd
 
-from datamodelbase import load_record
-
-from ..tools import aslist
+from yabadaba import load_record
 
 def get_records(self, style=None, name=None, local=None, remote=None,
                 refresh_cache=False, return_df=False, verbose=False, **kwargs):
@@ -469,12 +464,12 @@ def save_record(self, record=None, style=None, name=None,
     
     try:
         self.local_database.add_record(record=record, verbose=verbose)
-    except ValueError:
+    except ValueError as e:
         if overwrite:
             self.local_database.update_record(record=record,
                                               verbose=verbose)
         else:
-            raise ValueError('Matching record already exists: use overwrite=True to change it')
+            raise ValueError('Matching record already exists: use overwrite=True to change it') from e
 
 def upload_record(self, record=None, style=None, name=None,
                   model=None, workspace=None, overwrite=False, verbose=False):
@@ -511,12 +506,12 @@ def upload_record(self, record=None, style=None, name=None,
     try:
         self.remote_database.add_record(record=record, workspace=workspace,
                                         verbose=verbose) 
-    except ValueError:
+    except ValueError as e:
         if overwrite:
             self.remote_database.update_record(record=record, workspace=workspace,
                                                verbose=verbose)
         else:
-            raise ValueError('Matching record already exists: use overwrite=True to change it')
+            raise ValueError('Matching record already exists: use overwrite=True to change it') from e
 
 def delete_record(self, record=None, style=None, name=None,
                   local=True, remote=False, verbose=False):

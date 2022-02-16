@@ -1,3 +1,4 @@
+# coding: utf-8
 from copy import deepcopy
 import warnings
 
@@ -899,7 +900,7 @@ class EAMFS():
 
         # Set initial dummy symbols info (replaced later)
         for symbol in symbols:
-             self.set_symbol_info(symbol, 0, 0.0, 0.0, 'NA')
+            self.set_symbol_info(symbol, 0, 0.0, 0.0, 'NA')
 
         # Read line 5 for numrho, deltarho, numr, deltar, and cutoffr
         terms = lines[4].split()

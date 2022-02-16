@@ -1,3 +1,4 @@
+# coding: utf-8
 from DataModelDict import DataModelDict as DM
 
 from scipy.special import comb

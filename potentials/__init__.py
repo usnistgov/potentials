@@ -14,7 +14,6 @@ from . import record
 from .record import recordmanager, load_record
 
 # Import database methods
-#from datamodelbase import databasemanager
 from .Database import Database, load_database
 
 from . import buildrecord

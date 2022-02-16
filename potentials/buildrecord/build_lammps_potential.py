@@ -1,3 +1,4 @@
+# coding: utf-8
 from .potential_LAMMPS import (EamBuilder, EimBuilder, LibParamBuilder,
                                PairBuilder, ParamFileBuilder)
 

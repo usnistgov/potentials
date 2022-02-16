@@ -265,7 +265,7 @@ def fetch_citation(self, doi, local=None, remote=None, verbose=False):
     # Fetch from CrossRef if database search failed/skipped
     bibtex = cn.content_negotiation(ids=doi, format="bibtex")
     if verbose:
-        print(f'Citation retrieved from CrossRef')
+        print('Citation retrieved from CrossRef')
 
     return load_record('Citation', bibtex)
 

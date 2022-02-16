@@ -1,4 +1,4 @@
-from copy import deepcopy
+# coding: utf-8
 import warnings
 
 from scipy.interpolate import CubicSpline
@@ -7,7 +7,7 @@ import numpy as np
 
 import matplotlib.pyplot as plt
 
-from ..tools import aslist, numderivative
+from ..tools import numderivative
 
 class EAM():
     """
