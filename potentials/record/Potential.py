@@ -11,8 +11,8 @@ from .Citation import Citation
 from .Implementation import Implementation
 from ..tools import aslist
 
-from datamodelbase.record import Record
-from datamodelbase import query
+from yabadaba.record import Record
+from yabadaba import load_query 
 
 class Potential(Record):
     """
@@ -45,7 +45,6 @@ class Potential(Record):
         self.__implementations = []
 
         super().__init__(model=model, name=name, **kwargs)
-
 
     @property
     def style(self):
@@ -124,7 +123,7 @@ class Potential(Record):
         if self.id != pot_id:
             try:
                 assert self.id == pot_id[:len(self.id)]
-            except:
+            except AssertionError:
                 print(f"Different ids: {self.id} != {pot_id} {self.key}")
             else:
                 self.modelname = pot_id[len(self.id):].strip('-')
@@ -137,11 +136,7 @@ class Potential(Record):
         except:
             self.name = f'potential.{self.id}'
 
-
-    def set_values(self, name=None, elements=None, key=None,
-                   othername=None, fictional=None, modelname=None,
-                   notes=None, recorddate=None, citations=None,
-                   implementations=None):
+    def set_values(self, name=None, **kwargs):
         """
         Set multiple object attributes at the same time.
 
@@ -161,38 +156,36 @@ class Potential(Record):
             Any additional comments to assign to the record.
         """
         
-        if elements is not None:
-            self.elements = elements
-        if key is not None:
-            self.key = key
-        if othername is not None:
-            self.othername = othername
-        if fictional is not None:
-            self.fictional = fictional
-        if modelname is not None:
-            self.modelname = modelname
-        if notes is not None:
-            self.notes = notes
-        if recorddate is not None:
-            self.recorddate = recorddate
+        if 'elements' in kwargs:
+            self.elements = kwargs['elements']
+        if 'key' in kwargs:
+            self.key = kwargs['key']
+        if 'othername' in kwargs:
+            self.othername = kwargs['othername']
+        if 'fictional' in kwargs:
+            self.fictional = kwargs['fictional']
+        if 'modelname' in kwargs:
+            self.modelname = kwargs['modelname']
+        if 'notes' in kwargs:
+            self.notes = kwargs['notes']
+        if 'recorddate' in kwargs:
+            self.recorddate = kwargs['recorddate']
         
-        if citations is not None:
+        if 'citations' in kwargs:
             self.__citations = []
-            if citations is not None:
-                for citation in aslist(citations):
-                    if isinstance(citation, dict):
-                        self.add_citation(**citation)
-                    elif isinstance(citation, Citation):
-                        self.citations.append(citation)
+            for citation in aslist(kwargs['citations']):
+                if isinstance(citation, dict):
+                    self.add_citation(**citation)
+                elif isinstance(citation, Citation):
+                    self.citations.append(citation)
         
-        if implementations is not None:
+        if 'implementations' in kwargs:
             self.__implementations = []
-            if implementations is not None:
-                for implementation in aslist(implementations):
-                    if isinstance(implementation, dict):
-                        self.add_implementation(**implementation)
-                    elif isinstance(implementation, Implementation):
-                        self.implementations.append(implementation)
+            for implementation in aslist(kwargs['implementations']):
+                if isinstance(implementation, dict):
+                    self.add_implementation(**implementation)
+                elif isinstance(implementation, Implementation):
+                    self.implementations.append(implementation)
 
         # Set name
         if name is not None:
@@ -430,6 +423,52 @@ class Potential(Record):
                 raise ValueError(f'Implementation with id {imp.id} already exists')
         self.implementations.append(implementation)
 
+    @property
+    def queries(self):
+        """dict: Query objects and their associated parameter names."""
+        return {
+            'key': load_query(
+                style='str_match',
+                name='key', 
+                path=f'{self.modelroot}.key'),
+            'id': load_query(
+                style='str_match',
+                name='id',
+                path=f'{self.modelroot}.id'),
+            'notes': load_query(
+                style='str_contains',
+                name='notes',
+                path=f'{self.modelroot}.notes'),
+            'fictional': load_query(
+                style='str_match',
+                name='fictional',
+                path=f'{self.modelroot}.'),
+            'element': load_query(
+                style='list_contains',
+                name='element',
+                path=f'{self.modelroot}.element'),
+            'othername': load_query(
+                style='str_match',
+                name='othername',
+                path=f'{self.modelroot}.other-element'),
+            'modelname': load_query(
+                style='str_match',
+                name='modelname',
+                path=f'{self.modelroot}.'),
+            'year': load_query(
+                style='int_match',
+                name='year', parent='citations',
+                path=f'{self.modelroot}.description.citation.publication-date.year'),
+            'author': load_query(
+                style='str_contains',
+                name='author', parent='citations',
+                path=f'{self.modelroot}.description.citation.author.surname'),
+            'abstract': load_query(
+                style='str_contains',
+                name='abstract', parent='citations',
+                path=f'{self.modelroot}.description.citation.abstract'),
+        }
+
     def pandasfilter(self, dataframe, name=None, key=None, id=None,
                      notes=None, fictional=None, element=None,
                      othername=None, modelname=None, year=None, author=None,
@@ -469,19 +508,12 @@ class Potential(Record):
         pandas.Series, numpy.NDArray
             Boolean map of matching values
         """
-        matches = (
-            query.str_match.pandas(dataframe, 'name', name)
-            &query.str_match.pandas(dataframe, 'key', key)
-            &query.str_match.pandas(dataframe, 'id', id)
-            &query.str_contains.pandas(dataframe, 'notes', notes)
-            &query.str_match.pandas(dataframe, 'fictional', fictional)
-            &query.in_list.pandas(dataframe, 'elements', element)
-            &query.str_match.pandas(dataframe, 'othername', othername)
-            &query.str_match.pandas(dataframe, 'modelname', modelname)
-            &query.int_match.pandas(dataframe, 'year', year, parent='citations')
-            &query.str_contains.pandas(dataframe, 'author', author, parent='citations')
-            &query.str_contains.pandas(dataframe, 'abstract', abstract, parent='citations')
-        )
+        matches = super().pandasfilter(dataframe, name=name, key=key, id=id,
+                                       notes=notes, fictional=fictional,
+                                       element=element, othername=othername,
+                                       modelname=modelname, year=year,
+                                       author=author, abstract=abstract)
+
         return matches
 
     def mongoquery(self, name=None, key=None, id=None,
@@ -522,17 +554,11 @@ class Potential(Record):
             The Mongo-style query
         """        
         
-        mquery = {}
-        query.str_match.mongo(mquery, f'name', name)
-
-        root = f'content.{self.modelroot}'
-        query.str_match.mongo(mquery, f'{root}.key', key)
-        query.str_match.mongo(mquery, f'{root}.id', id)
-        query.str_contains.mongo(mquery, f'{root}.notes', notes)
-        
-        query.int_match.mongo(mquery, f'{root}.description.citation.publication-date.year', year)
-        query.str_contains.mongo(mquery, f'{root}.description.citation.author.surname', author)
-        query.str_contains.mongo(mquery, f'{root}.description.citation.abstract', abstract)
+        mquery = super().mongoquery(name=name, key=key, id=id,
+                                    notes=notes, fictional=fictional,
+                                    element=element, othername=othername,
+                                    modelname=modelname, year=year,
+                                    author=author, abstract=abstract)
         return mquery
 
     def cdcsquery(self, key=None, id=None, notes=None,
@@ -570,13 +596,9 @@ class Potential(Record):
             The CDCS-style query
         """
         
-        mquery = {}
-        root = self.modelroot
-        query.str_match.mongo(mquery, f'{root}.key', key)
-        query.str_match.mongo(mquery, f'{root}.id', id)
-        query.str_contains.mongo(mquery, f'{root}.notes', notes)
-        
-        query.int_match.mongo(mquery, f'{root}.description.citation.publication-date.year', year)
-        query.str_contains.mongo(mquery, f'{root}.description.citation.author.surname', author)
-        query.str_contains.mongo(mquery, f'{root}.description.citation.abstract', abstract)
+        mquery = super().cdcsquery(key=key, id=id,
+                                   notes=notes, fictional=fictional,
+                                   element=element, othername=othername,
+                                   modelname=modelname, year=year,
+                                   author=author, abstract=abstract)
         return mquery

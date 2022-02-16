@@ -2,8 +2,8 @@
 # Standard Python libraries
 from pathlib import Path
 
-from datamodelbase.record import Record
-from datamodelbase import query
+from yabadaba.record import Record
+from yabadaba import query 
 
 # atomman imports
 from ..tools import aslist, atomic_mass

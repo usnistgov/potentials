@@ -1,9 +1,10 @@
+# coding: utf-8
 import datetime
 
 from DataModelDict import DataModelDict as DM 
 
-from datamodelbase.record import Record
-from datamodelbase import query 
+from yabadaba.record import Record
+from yabadaba import load_query 
 
 from ..tools import aslist
 
@@ -28,8 +29,8 @@ class System():
             try:
                 assert formula is None
                 assert elements is None
-            except:
-                raise ValueError('model cannot be given with any other arguments')
+            except AssertionError as e:
+                raise ValueError('model cannot be given with any other arguments') from e
             self.load_model(model)
         else:
             self.formula = formula
@@ -293,6 +294,24 @@ class Request(Record):
         """
         self.systems.append(System(model=model, formula=formula, elements=elements))
 
+    @property
+    def queries(self):
+        """dict: Query objects and their associated parameter names."""
+        return {
+            'date': load_query(
+                style='date_match',
+                name='date', 
+                path=f'{self.modelroot}.date'),
+            'element': load_query(
+                style='in_list',
+                name='elements', parent='systems',
+                path=f'{self.modelroot}.system.element'),
+            'comment': load_query(
+                style='str_contains',
+                name='comment',
+                path=f'{self.modelroot}.comment'),
+        }
+
     def pandasfilter(self, dataframe, name=None, date=None, element=None,
                      comment=None):
         """
@@ -316,12 +335,9 @@ class Request(Record):
         pandas.Series, numpy.NDArray
             Boolean map of matching values
         """
-        matches = (
-            query.str_match.pandas(dataframe, 'name', name)
-            &query.date_match.pandas(dataframe, 'date', date)
-            &query.in_list.pandas(dataframe, 'elements', element, parent='systems')
-            &query.str_contains.pandas(dataframe, 'comment', comment)
-        )
+        matches = super().pandasfilter(dataframe, name=name, date=date,
+                                       element=element, comment=comment)
+
         return matches
 
     def mongoquery(self, name=None, date=None,  element=None, comment=None):
@@ -344,14 +360,8 @@ class Request(Record):
         dict
             The Mongo-style query
         """     
-        mquery = {}
-        query.str_match.mongo(mquery, f'name', name)
-
-        root = f'content.{self.modelroot}'
-        query.date_match.mongo(mquery, f'{root}.date', date)
-        query.in_list.mongo(mquery, f'{root}.system.element', element)
-        query.str_contains.mongo(mquery, f'{root}.comment', comment)
-        
+        mquery = super().mongoquery(name=name, date=date,
+                                    element=element, comment=comment)
         return mquery
 
     def cdcsquery(self, date=None,  element=None, comment=None):
@@ -372,9 +382,6 @@ class Request(Record):
         dict
             The CDCS-style query
         """
-        mquery = {}
-        root = self.modelroot
-        query.date_match.mongo(mquery, f'{root}.date', date)
-        query.in_list.mongo(mquery, f'{root}.system.element', element)
-        query.str_contains.mongo(mquery, f'{root}.comment', comment)
+        mquery = super().cdcsquery(date=date,
+                                   element=element, comment=comment)
         return mquery

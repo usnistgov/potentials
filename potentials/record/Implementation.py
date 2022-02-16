@@ -12,21 +12,21 @@ from .Artifact import Artifact
 from .Parameter import Parameter
 from .Link import Link
 
-from datamodelbase.record import Record
+from yabadaba.record import Record
 
 class Implementation(Record):
     """
     Class for representing Implementation metadata records. . Note that this is
     meant as a component class for other record objects.
     """
-    def __init__(self, model=None, type=None, key=None,
-                 id=None, status=None, date=None, notes=None,
-                 artifacts=None, parameters=None, links=None):
+    def __init__(self, model=None, name=None, **kwargs):
         """
         Parameters
         ----------
         model : str or DataModelDict, optional
             Model content or file path to model content.
+        name : str, optional
+            The name to assign to the record.  Not used by this class.
         type : str, optional
             Describes the format for the implementation.
         key : str, optional
@@ -46,27 +46,8 @@ class Implementation(Record):
         links : list, optional
             Any Link objects or data to associate with the implementation.
         """
-        if model is not None:
-            # Load existing record
-            try:
-                assert type is None
-                assert key is None
-                assert id is None
-                assert status is None
-                assert date is None
-                assert notes is None
-                assert artifacts is None
-                assert parameters is None
-                assert links is None
-            except:
-                raise TypeError('model cannot be given with any other parameter')
-            else:
-                self.load_model(model)
-        else:
-            # Build new record
-            self.set_values(type=type, key=key, id=id, status=status,
-                            date=date, notes=notes, artifacts=artifacts,
-                            parameters=parameters, links=links)
+        assert name is None, 'name is not used by this class'
+        super().__init__(model=model, name=name, **kwargs)
 
     @property
     def modelroot(self):
@@ -83,14 +64,14 @@ class Implementation(Record):
         """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'implementation.xsd')
 
-    def set_values(self, type=None, key=None,
-                   id=None, status=None, date=None, notes=None,
-                   artifacts=None, parameters=None, links=None):
+    def set_values(self, name=None, **kwargs):
         """
         Sets an Implementation object's attributes
 
         Parameters
         ----------
+        name : str, optional
+            The name to assign to the record.  Not used by this class.
         type : str, optional
             Describes the format for the implementation.
         key : str, optional
@@ -110,33 +91,35 @@ class Implementation(Record):
         links : list, optional
             Any Link objects or data to associate with the implementation.
         """    
+        assert name is None, 'name is not used by this class'
+        
         # Build new record
-        self.type = type
-        self.key = key
-        self.id = id
-        self.status = status
-        self.date = date
-        self.notes = notes
+        self.type = kwargs.get('type', None)
+        self.key = kwargs.get('key', None)
+        self.id = kwargs.get('id', None)
+        self.status = kwargs.get('status', None)
+        self.date = kwargs.get('date', None)
+        self.notes = kwargs.get('notes', None)
         
         self.artifacts = []
-        if artifacts is not None:
-            for artifact in aslist(artifacts):
+        if 'artifacts' in kwargs:
+            for artifact in aslist(kwargs['artifacts']):
                 if isinstance(artifact, Artifact):
                     self.artifacts.append(artifact)
                 else:
                     self.add_artifact(**artifact)
         
         self.parameters = []
-        if parameters is not None:
-            for parameter in aslist(parameters):
+        if 'parameters' in kwargs:
+            for parameter in aslist(kwargs['parameters']):
                 if isinstance(parameter, Parameter):
                     self.parameters.append(parameter)
                 else:
                     self.add_parameter(**parameter)
         
         self.links = []
-        if links is not None:
-            for link in aslist(links):
+        if 'links' in kwargs:
+            for link in aslist(kwargs['links']):
                 if isinstance(link, Link):
                     self.links.append(link)
                 else:
@@ -218,7 +201,7 @@ class Implementation(Record):
         else:
             self.__notes = str(v)
 
-    def load_model(self, model):
+    def load_model(self, model, name=None):
         """
         Loads the object info from data model content
         
@@ -226,7 +209,10 @@ class Implementation(Record):
         ----------
         model : str or DataModelDict
             Model content or file path to model content.
+        name : str, optional
+            The name to assign to the record.  Not used by this class.
         """
+        assert name is None, 'name is not used by this class'
         model = DM(model)
         imp = model.find('implementation')
         self.key = imp['key']
@@ -310,7 +296,7 @@ class Implementation(Record):
         
         return model
 
-    def add_artifact(self, model=None, filename=None, label=None, url=None):
+    def add_artifact(self, model=None, **kwargs):
         """
         Initializes an Artifact object and adds it to the artifacts list.
 
@@ -325,9 +311,9 @@ class Implementation(Record):
         url : str, optional
             URL for file where downloaded, if available.
         """
-        self.artifacts.append(Artifact(model=model, filename=filename, label=label, url=url))
+        self.artifacts.append(Artifact(model=model, **kwargs))
 
-    def add_link(self, model=None, url=None, label=None, linktext=None):
+    def add_link(self, model=None, **kwargs):
         """
         Initializes a Link object and adds it to the links list.
         
@@ -342,9 +328,9 @@ class Implementation(Record):
         linktext : str, optional
             The text for the link, i.e. what gets clicked on.
         """
-        self.links.append(Link(model=model, url=url, label=label, linktext=linktext))
+        self.links.append(Link(model=model, **kwargs))
 
-    def add_parameter(self, model=None, name=None, value=None, unit=None):
+    def add_parameter(self, model=None, **kwargs):
         """
         Initializes a Parameter object and adds it to the parameters list.
         
@@ -359,4 +345,4 @@ class Implementation(Record):
         unit : str, optional
             Units associated with value.
         """
-        self.parameters.append(Parameter(model=model, name=name, value=value, unit=unit))
+        self.parameters.append(Parameter(model=model, **kwargs))

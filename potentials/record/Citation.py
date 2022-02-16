@@ -1,7 +1,6 @@
 # coding: utf-8
 # Standard libraries
 import string
-from pathlib import Path
 
 # https://github.com/avian2/unidecode
 from unidecode import unidecode
@@ -15,8 +14,8 @@ from bibtexparser.bparser import BibTexParser
 from bibtexparser.customization import convert_to_unicode
 from bibtexparser.bibdatabase import BibDatabase
 
-from datamodelbase.record import Record
-from datamodelbase import query 
+from yabadaba.record import Record
+from yabadaba import load_query 
 
 class Citation(Record):
     """
@@ -198,6 +197,40 @@ class Citation(Record):
         meta.update(self.bib)
         return meta
 
+    @property
+    def queries(self):
+        """dict: Query objects and their associated parameter names."""
+        return {
+            'year': load_query(
+                style='int_match',
+                name='year', 
+                path=f'{self.modelroot}.publication-date.year'),
+            'volume': load_query(
+                style='str_match',
+                name='volume',
+                path=f'{self.modelroot}.volume'),
+            'title': load_query(
+                style='str_contains',
+                name='title',
+                path=f'{self.modelroot}.title'),
+            'journal': load_query(
+                style='str_match',
+                name='journal',
+                path=f'{self.modelroot}..publication-name'),
+            'doi': load_query(
+                style='str_match',
+                name='doi',
+                path=f'{self.modelroot}.DOI'),
+            'author': load_query(
+                style='str_contains',
+                name='author',
+                path=f'{self.modelroot}.author.surname'),
+            'abstract': load_query(
+                style='str_contains',
+                name='abstract',
+                path=f'{self.modelroot}.abstract'),
+        }
+
     def pandasfilter(self, dataframe, name=None, year=None, volume=None,
                      title=None, journal=None, doi=None, author=None,
                      abstract=None):
@@ -230,16 +263,11 @@ class Citation(Record):
         pandas.Series, numpy.NDArray
             Boolean map of matching values
         """
-        matches = (
-            query.str_match.pandas(dataframe, 'name', name)
-            &query.int_match.pandas(dataframe, 'year', year)
-            &query.str_match.pandas(dataframe, 'volume', volume)
-            &query.str_contains.pandas(dataframe, 'title', title)
-            &query.str_match.pandas(dataframe, 'journal', journal)
-            &query.str_match.pandas(dataframe, 'doi', doi)
-            &query.str_contains.pandas(dataframe, 'author', author)
-            &query.str_contains.pandas(dataframe, 'abstract', abstract)
-        )
+        matches = super().pandasfilter(dataframe, name=name, year=year,
+                                       volume=volume, title=title,
+                                       journal=journal, doi=doi, author=author,
+                                       abstract=abstract)
+
         return matches
 
     def mongoquery(self, name=None, year=None, volume=None,
@@ -273,18 +301,10 @@ class Citation(Record):
             The Mongo-style query
         """        
         
-        mquery = {}
-        query.str_match.mongo(mquery, f'name', name)
-
-        root = f'content.{self.modelroot}'
-        query.int_match.mongo(mquery, f'{root}.publication-date.year', year)
-        query.str_match.mongo(mquery, f'{root}.volume', volume)
-        query.str_contains.mongo(mquery, f'{root}.title', title)
-        query.str_match.mongo(mquery, f'{root}.publication-name', journal)
-        query.str_match.mongo(mquery, f'{root}.DOI', doi)
-        query.str_contains.mongo(mquery, f'{root}.author.surname', author)
-        query.str_contains.mongo(mquery, f'{root}.abstract', abstract)
-        
+        mquery = super().mongoquery(name=name, year=year,
+                                    volume=volume, title=title,
+                                    journal=journal, doi=doi, author=author,
+                                    abstract=abstract)
         return mquery
 
     def cdcsquery(self, year=None, volume=None,
@@ -315,16 +335,9 @@ class Citation(Record):
         dict
             The CDCS-style query
         """
-        mquery = {}
-        root = self.modelroot
-        query.int_match.mongo(mquery, f'{root}.publication-date.year', year)
-        query.str_match.mongo(mquery, f'{root}.volume', volume)
-        query.str_contains.mongo(mquery, f'{root}.title', title)
-        query.str_match.mongo(mquery, f'{root}.publication-name', journal)
-        query.str_match.mongo(mquery, f'{root}.DOI', doi)
-        query.str_contains.mongo(mquery, f'{root}.author.surname', author)
-        query.str_contains.mongo(mquery, f'{root}.abstract', abstract)
-        
+        mquery = super().cdcsquery(year=year, volume=volume, title=title,
+                                   journal=journal, doi=doi, author=author,
+                                   abstract=abstract)
         return mquery
 
     @property

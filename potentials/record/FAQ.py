@@ -1,5 +1,6 @@
-from datamodelbase.record import Record
-from datamodelbase import query 
+# coding: utf-8
+from yabadaba.record import Record
+from yabadaba import load_query 
 
 from DataModelDict import DataModelDict as DM
 
@@ -134,6 +135,20 @@ class FAQ(Record):
         meta['answer'] = self.answer
         return meta
 
+    @property
+    def queries(self):
+        """dict: Query objects and their associated parameter names."""
+        return {
+            'question': load_query(
+                style='str_contains',
+                name='question',
+                path=f'{self.modelroot}.question'),
+            'answer': load_query(
+                style='str_contains',
+                name='answer',
+                path=f'{self.modelroot}.answer'),
+        }
+
     def pandasfilter(self, dataframe, name=None, question=None, answer=None):
         """
         Filters a pandas.DataFrame based on kwargs values for the record style.
@@ -154,11 +169,8 @@ class FAQ(Record):
         pandas.Series, numpy.NDArray
             Boolean map of matching values
         """
-        matches = (
-            query.str_match.pandas(dataframe, 'name', name)
-            &query.str_contains.pandas(dataframe, 'question', question)
-            &query.str_contains.pandas(dataframe, 'answer', answer)
-        )
+        matches = super().pandasfilter(dataframe, name=name, question=question,
+                                       answer=answer)
         return matches
 
     def mongoquery(self, name=None, question=None, answer=None):
@@ -179,13 +191,7 @@ class FAQ(Record):
         dict
             The Mongo-style query
         """     
-        mquery = {}
-        query.str_match.mongo(mquery, f'name', name)
-
-        root = f'content.{self.modelroot}'
-        query.str_contains.mongo(mquery, f'{root}.question', question)
-        query.str_contains.mongo(mquery, f'{root}.answer', answer)
-        
+        mquery = super().mongoquery(name=name, question=question, answer=answer)
         return mquery
 
     def cdcsquery(self, question=None, answer=None):
@@ -204,9 +210,5 @@ class FAQ(Record):
         dict
             The CDCS-style query
         """
-        
-        mquery = {}
-        root = self.modelroot
-        query.str_contains.mongo(mquery, f'{root}.question', question)
-        query.str_contains.mongo(mquery, f'{root}.answer', answer)
+        mquery = super().cdcsquery(question=question, answer=answer)
         return mquery

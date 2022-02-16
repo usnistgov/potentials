@@ -12,7 +12,7 @@ from ..tools import atomic_mass, aslist
 from .BasePotentalLAMMPS import BasePotentialLAMMPS
 from .Artifact import Artifact
 
-from datamodelbase import query
+from yabadaba import query
 
 class PotentialLAMMPS(BasePotentialLAMMPS):
     """

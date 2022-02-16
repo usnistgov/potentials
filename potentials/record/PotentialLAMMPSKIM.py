@@ -8,7 +8,7 @@ import numpy as np
 from ..tools import aslist
 from .BasePotentalLAMMPS import BasePotentialLAMMPS
 
-from datamodelbase import query 
+from yabadaba import query 
 
 class PotentialLAMMPSKIM(BasePotentialLAMMPS):
     """

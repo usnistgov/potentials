@@ -2,14 +2,14 @@
 
 from DataModelDict import DataModelDict as DM
 
-from datamodelbase.record import Record
+from yabadaba.record import Record
 
 class Parameter(Record):
     """
     Class for describing parameter values. Note that this is
     meant as a component class for other record objects.
     """
-    def __init__(self, model=None, name=None, value=None, unit=None):
+    def __init__(self, model=None, name=None, **kwargs):
         """
         Initializes a Parameter object to describe parameter values.
 
@@ -18,23 +18,16 @@ class Parameter(Record):
         model : str or DataModelDict.DataModelDict, optional
             Data model content to load.
         name : str, optional
+            The name to assign to the record.  Not used by this class.
+        paramname : str, optional
             The name of the parameter or string parameter line.
         value : float, optional
             The value of the parameter.
         unit : str, optional
             Units associated with value.
         """
-        if model is not None:
-            try:
-                assert name is None
-                assert value is None
-                assert unit is None
-            except:
-                raise TypeError('model cannot be given with any other parameter')
-            else:
-                self.load_model(model)
-        else:
-            self.set_values(name=name, value=value, unit=unit)
+        assert name is None, 'name is not used by this class'
+        super().__init__(model=model, name=name, **kwargs)
 
     @property
     def modelroot(self):
@@ -53,16 +46,16 @@ class Parameter(Record):
 
 
     @property
-    def name(self):
+    def paramname(self):
         """str: The name of the parameter, or a string parameter line"""
-        return self.__name
+        return self.__paramname
     
-    @name.setter
-    def name(self, v):
+    @paramname.setter
+    def paramname(self, v):
         if v is None:
-            self.__name = None
+            self.__paramname = None
         else:
-            self.__name = str(v)
+            self.__paramname = str(v)
     
     @property
     def value(self):
@@ -88,24 +81,27 @@ class Parameter(Record):
         else:
             self.__unit = str(v)
 
-    def set_values(self, name=None, value=None, unit=None):
+    def set_values(self, name=None, **kwargs):
         """
         Sets a Parameter object's attributes
 
         Parameters
         ----------
         name : str, optional
+            The name to assign to the record.  Not used by this class.
+        paramname : str, optional
             The name of the parameter or string parameter line.
         value : float, optional
             The value of the parameter.
         unit : str, optional
             Units associated with value.
         """
-        self.name = name
-        self.value = value
-        self.unit = unit
+        assert name is None, 'name is not used by this class'
+        self.paramname = kwargs.get('paramname', None)
+        self.value = kwargs.get('value', None)
+        self.unit = kwargs.get('unit', None)
 
-    def load_model(self, model):
+    def load_model(self, model, name=None):
         """
         Loads the object info from data model content
         
@@ -113,11 +109,14 @@ class Parameter(Record):
         ----------
         model : str or DataModelDict
             Model content or file path to model content.
+        name : str, optional
+            The name to assign to the record.  Not used by this class.
         """
+        assert name is None, 'name is not used by this class'
         parameter = model.find('parameter')
         self.value = parameter.get('value', None)
         self.unit = parameter.get('unit', None)
-        self.name = parameter.get('name', None)
+        self.paramname = parameter.get('name', None)
         
     def build_model(self):
         """
@@ -134,7 +133,7 @@ class Parameter(Record):
         if self.unit is not None:
             model['parameter']['unit'] = self.unit
         if self.name is not None:
-            model['parameter']['name'] = self.name
+            model['parameter']['name'] = self.paramname
         
         return model
 
@@ -147,6 +146,6 @@ class Parameter(Record):
         meta = {}
         meta['value'] = self.value
         meta['unit'] = self.unit
-        meta['name'] = self.name
+        meta['paramname'] = self.paramname
 
         return meta

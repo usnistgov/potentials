@@ -7,14 +7,14 @@ import requests
 # https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
-from datamodelbase.record import Record
+from yabadaba.record import Record
 
 class Artifact(Record):
     """
     Class for describing artifacts (files accessible online). Note that this is
     meant as a component class for other record objects.
     """
-    def __init__(self, model=None, filename=None, label=None, url=None):
+    def __init__(self, model=None, name=None, **kwargs):
         """
         Initializes an Artifact object to describe a file accessible online
 
@@ -22,6 +22,8 @@ class Artifact(Record):
         ----------
         model : str or DataModelDict, optional
             Model content or file path to model content.
+        name : str, optional
+            The name to assign to the record.  Not used by this class.
         filename : str, optional
             The name of the file without path information.
         label : str, optional
@@ -29,17 +31,8 @@ class Artifact(Record):
         url : str, optional
             URL for file where downloaded, if available.
         """
-        if model is not None:
-            try:
-                assert filename is None
-                assert label is None
-                assert url is None
-            except:
-                raise TypeError('model cannot be given with any other parameter')
-            else:
-                self.load_model(model)
-        else:
-            self.set_values(filename=filename, label=label, url=url)
+        assert name is None, 'name is not used by this class'
+        super().__init__(model=model, name=name, **kwargs)
 
     @property
     def modelroot(self):
@@ -92,12 +85,14 @@ class Artifact(Record):
         else:
             self.__url = str(v)
 
-    def set_values(self, filename=None, label=None, url=None):
+    def set_values(self, name=None, **kwargs):
         """
         Sets an Artifact object's attributes
 
         Parameters
         ----------
+        name : str, optional
+            The name to assign to the record.  Not used by this class.
         filename : str, optional
             The name of the file without path information.
         label : str, optional
@@ -105,11 +100,12 @@ class Artifact(Record):
         url : str, optional
             URL for file where downloaded, if available.
         """
-        self.filename = filename
-        self.label = label
-        self.url = url
+        assert name is None, 'name is not used by this class'
+        self.filename = kwargs.get('filename', None)
+        self.label = kwargs.get('label', None)
+        self.url = kwargs.get('url', None)
 
-    def load_model(self, model):
+    def load_model(self, model, name=None):
         """"
         Loads the object info from data model content
         
@@ -117,7 +113,10 @@ class Artifact(Record):
         ----------
         model : str or DataModelDict
             Model content or file path to model content.
+        name : str, optional
+            The name to assign to the record.  Not used by this class.
         """
+        assert name is None, 'name is not used by this class'
         artifact = DM(model).find('artifact')
         self.url = artifact['web-link'].get('URL', None)
         self.label = artifact['web-link'].get('label', None)

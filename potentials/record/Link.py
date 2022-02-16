@@ -2,13 +2,13 @@
 # https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
-from datamodelbase.record import Record
+from yabadaba.record import Record
 
 class Link(Record):
     """
     Class for describing website link
     """
-    def __init__(self, model=None, url=None, label=None, linktext=None):
+    def __init__(self, model=None, name=None, **kwargs):
         """
         Initializes a Link object providing a hyperlink to content. Note that
         this is meant as a component class for other record objects.
@@ -17,6 +17,8 @@ class Link(Record):
         ----------
         model : str or DataModelDict, optional
             Model content or file path to model content.
+        name : str, optional
+            The name to assign to the record.  Not used by this class.
         url : str, optional
             URL for the link.
         label : str, optional
@@ -24,17 +26,7 @@ class Link(Record):
         linktext : str, optional
             The text for the link, i.e. what gets clicked on.
         """
-        if model is not None:
-            try:
-                assert linktext is None
-                assert label is None
-                assert url is None
-            except:
-                raise TypeError('model cannot be given with any other parameter')
-            else:
-                self.load_model(model)
-        else:
-            self.set_values(linktext=linktext, label=label, url=url)
+        super().__init__(model=model, name=name, **kwargs)
 
     @property
     def modelroot(self):
@@ -87,12 +79,14 @@ class Link(Record):
         else:
             self.__linktext = str(v)
 
-    def set_values(self, url=None, label=None, linktext=None):
+    def set_values(self, name=None, **kwargs):
         """
         Sets an Artifact object's attributes
 
         Parameters
         ----------
+        name : str, optional
+            The name to assign to the record.  Not used by this class.
         url : str, optional
             URL for the link.
         label : str, optional
@@ -100,11 +94,12 @@ class Link(Record):
         linktext : str, optional
             The text for the link, i.e. what gets clicked on.
         """
-        self.linktext = linktext
-        self.label = label
-        self.url = url
+        assert name is None, 'name is not used by this class'
+        self.linktext = kwargs.get('linktext', None)
+        self.label = kwargs.get('label', None)
+        self.url = kwargs.get('url', None)
 
-    def load_model(self, model):
+    def load_model(self, model, name=None):
         """
         Loads the object info from data model content
         
@@ -112,7 +107,10 @@ class Link(Record):
         ----------
         model : str or DataModelDict
             Model content or file path to model content.
+        name : str, optional
+            The name to assign to the record.  Not used by this class.
         """
+        assert name is None, 'name is not used by this class'
         link = DM(model).find('link')
         self.url = link['web-link'].get('URL', None)
         self.label = link['web-link'].get('label', None)

@@ -2,8 +2,8 @@ import datetime
 
 from DataModelDict import DataModelDict as DM
 
-from datamodelbase.record import Record
-from datamodelbase import query 
+from yabadaba.record import Record
+from yabadaba import load_query 
 
 from . import Potential
 
@@ -344,6 +344,36 @@ class Action(Record):
         
         return data
 
+    @property
+    def queries(self):
+        """dict: Query objects and their associated parameter names."""
+        return {
+            'date': load_query(
+                style='date_match',
+                name='date', 
+                path=f'{self.modelroot}.date'),
+            'type': load_query(
+                style='str_match',
+                name='type',
+                path=f'{self.modelroot}.type'),
+            'potential_id': load_query(
+                style='str_match',
+                name='id', parent='potentials',
+                path=f'{self.modelroot}.potential.id'),
+            'potential_key': load_query(
+                style='str_match',
+                name='key', parent='potentials',
+                path=f'{self.modelroot}.potential.key'),
+            'element': load_query(
+                style='in_list',
+                name='element', parent='potentials',
+                path=f'{self.modelroot}.potential.element'),
+            'comment': load_query(
+                style='str_contains',
+                name='comment',
+                path=f'{self.modelroot}.comment'),
+        }
+
     def pandasfilter(self, dataframe, name=None, date=None, type=None,
                      potential_id=None, potential_key=None, element=None,
                      comment=None):
@@ -376,15 +406,10 @@ class Action(Record):
         pandas.Series, numpy.NDArray
             Boolean map of matching values
         """
-        matches = (
-            query.str_match.pandas(dataframe, 'name', name)
-            &query.date_match.pandas(dataframe, 'date', date)
-            &query.str_match.pandas(dataframe, 'type', type)
-            &query.str_match.pandas(dataframe, 'id', potential_id, parent='potentials')
-            &query.str_match.pandas(dataframe, 'key', potential_key, parent='potentials')
-            &query.in_list.pandas(dataframe, 'element', element, parent='potentials')
-            &query.str_contains.pandas(dataframe, 'comment', comment)
-        )
+        matches = super().pandasfilter(dataframe, name=name, date=date, type=type,
+                                       potential_id=potential_id,
+                                       potential_key=potential_key, element=element,
+                                       comment=comment)
         return matches
 
     def mongoquery(self, name=None, date=None, type=None, potential_id=None,
@@ -416,17 +441,10 @@ class Action(Record):
         dict
             The Mongo-style query
         """        
-        mquery = {}
-        query.str_match.mongo(mquery, f'name', name)
-
-        root = f'content.{self.modelroot}'
-        query.date_match.mongo(mquery, f'{root}.date', date)
-        query.str_match.mongo(mquery, f'{root}.type', type)
-        query.str_match.mongo(mquery, f'{root}.potential.id', potential_id)
-        query.str_match.mongo(mquery, f'{root}.potential.key', potential_key)
-        query.in_list.mongo(mquery, f'{root}.potential.element', element)
-        query.str_contains.mongo(mquery, f'{root}.comment', comment)
-        
+        mquery = super().mongoquery(name=name, date=date, type=type,
+                                       potential_id=potential_id,
+                                       potential_key=potential_key, element=element,
+                                       comment=comment)
         return mquery
 
     def cdcsquery(self, date=None, type=None, potential_id=None, potential_key=None,
@@ -456,13 +474,8 @@ class Action(Record):
         dict
             The CDCS-style query
         """
-        
-        mquery = {}
-        root = self.modelroot
-        query.date_match.mongo(mquery, f'{root}.date', date)
-        query.str_match.mongo(mquery, f'{root}.type', type)
-        query.str_match.mongo(mquery, f'{root}.potential.id', potential_id)
-        query.str_match.mongo(mquery, f'{root}.potential.key', potential_key)
-        query.in_list.mongo(mquery, f'{root}.potential.element', element)
-        query.str_contains.mongo(mquery, f'{root}.comment', comment)
+        mquery = super().cdcsquery(date=date, type=type,
+                                   potential_id=potential_id,
+                                   potential_key=potential_key, element=element,
+                                   comment=comment)
         return mquery
