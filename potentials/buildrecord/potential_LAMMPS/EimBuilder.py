@@ -1,3 +1,4 @@
+# coding: utf-8
 from DataModelDict import DataModelDict as DM
 
 from . import PotentialLAMMPSBuilder
@@ -10,7 +11,7 @@ class EimBuilder(PotentialLAMMPSBuilder):
         pair_coeff * * Sym1 Sym2 paramfile Sym1 Sym2
     """
 
-    def __init__(self, libfile=None, paramfile=None, **kwargs):
+    def __init__(self, paramfile=None, **kwargs):
         """
         Class initializer
 
