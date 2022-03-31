@@ -1,6 +1,7 @@
 # coding: utf-8
 
 __all__ = ['load_record', 'Record',  'recordmanager']
+__all__.sort()
 
 from yabadaba.record import Record, load_record, recordmanager
 
