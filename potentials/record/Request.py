@@ -303,7 +303,7 @@ class Request(Record):
                 name='date', 
                 path=f'{self.modelroot}.date'),
             'element': load_query(
-                style='in_list',
+                style='list_contains',
                 name='elements', parent='systems',
                 path=f'{self.modelroot}.system.element'),
             'comment': load_query(

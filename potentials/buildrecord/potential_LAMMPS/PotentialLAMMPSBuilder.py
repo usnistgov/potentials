@@ -5,7 +5,7 @@ import uuid
 from DataModelDict import DataModelDict as DM
 
 from ...tools import aslist
-from ...record import PotentialLAMMPS
+from ... import load_record
 from ...record.Artifact import Artifact
 
 class PotentialLAMMPSBuilder(object):
@@ -387,7 +387,7 @@ class PotentialLAMMPSBuilder(object):
         return model
 
     def potential(self, pot_dir=None):
-        return PotentialLAMMPS(self.build(), pot_dir=pot_dir)
+        return load_record('potential_LAMMPS', self.build(), pot_dir=pot_dir)
 
     @property
     def supported_pair_styles(self):

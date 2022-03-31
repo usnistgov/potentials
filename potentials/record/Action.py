@@ -25,7 +25,7 @@ class PotInfo():
             record.  This prodives the information to link the Potential to the
             Action.
         """
-        if isinstance(potential, Potential):
+        if isinstance(potential, Potential.Potential):
             
             # Extract relevant properties from the Potential object
             self.__id = potential.id
@@ -365,7 +365,7 @@ class Action(Record):
                 name='key', parent='potentials',
                 path=f'{self.modelroot}.potential.key'),
             'element': load_query(
-                style='in_list',
+                style='list_contains',
                 name='element', parent='potentials',
                 path=f'{self.modelroot}.potential.element'),
             'comment': load_query(

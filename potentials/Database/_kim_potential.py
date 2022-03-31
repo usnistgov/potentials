@@ -13,11 +13,9 @@ import pandas as pd
 
 from yabadaba import query
 
-from potentials.record import PotentialLAMMPSKIM
-
 # Local imports
 from ..tools import aslist
-from .. import settings
+from .. import settings, load_record
 
 @property
 def kim_models(self):
@@ -134,7 +132,7 @@ def get_kim_lammps_potentials(self, name=None, key=None, id=None,
                 matches = df1[df1.name == shortcode]
                 if len(matches) == 1:
                     dbrecord = records1[matches.index.tolist()[0]]
-                    record = PotentialLAMMPSKIM(model=dbrecord.model, id=fullid)
+                    record = load_record('potential_LAMMPS_KIM', model=dbrecord.model, id=fullid)
 
                     # Capture records as is if associated with one potential
                     if len(record.potkeys) == 1:
