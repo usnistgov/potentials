@@ -1,6 +1,14 @@
 Updates
 =======
 
+0.3.3
+-----
+
+- The underlying datamodelbase module is now moved to the new separate
+  yabadaba package.  Tons of minor updates associated with this and new
+  yabadaba features.
+- Random bug fixes.
+
 0.3.2
 -----
 
