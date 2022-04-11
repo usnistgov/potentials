@@ -1,6 +1,7 @@
 # coding: utf-8
 # Standard Python libraries
 from pathlib import Path
+import datetime
 
 from yabadaba.record import Record
 from yabadaba import query 
@@ -407,7 +408,8 @@ class BasePotentialLAMMPS(Record):
             raise AttributeError('No model information loaded')
         return self.model
 
-    def pair_info(self, symbols=None, masses=None, prompt=False):
+    def pair_info(self, symbols=None, masses=None, units=None, prompt=False,
+                  comments=True, lammpsdate=datetime.date(2020, 10, 29)):
         """
         Generates the LAMMPS input command lines associated with a KIM
         Potential and a list of atom-model symbols.
@@ -423,10 +425,19 @@ class BasePotentialLAMMPS(Record):
             atom type.  Must be a list of the same length as symbols.  Any
             values of None in the list indicate that the default value be used
             for that atom type.
+        units : str, optional
+            The LAMMPS unit setting to use for the output.  If not given,
+            will use the default value set for the potential.
         prompt : bool, optional
             If True, then a screen prompt will appear for radioactive elements
             with no standard mass to ask for the isotope to use. If False
             (default), then the most stable isotope will be automatically used.
+        comments : bool, optional
+            Indicates if print command lines detailing information on the potential
+            are to be included.  Default value is True.
+        lammpsdate : datetime, optional
+            The LAMMPS version date that is to be used.  The generated commands
+            may differ based on the version of LAMMPS used.
 
         Returns
         -------
@@ -436,7 +447,9 @@ class BasePotentialLAMMPS(Record):
         raise NotImplementedError('Needs to be defined by the child class')
 
     def pair_data_info(self, filename, pbc, symbols=None, masses=None,
-                       atom_style=None, units=None, prompt=False):
+                       atom_style=None, units=None, prompt=False,
+                       comments=True,
+                       lammpsdate=datetime.date(2020, 10, 29)):
         """
         Generates the LAMMPS command lines associated with both a potential
         and reading an atom data file.
@@ -466,6 +479,12 @@ class BasePotentialLAMMPS(Record):
             If True, then a screen prompt will appear for radioactive elements
             with no standard mass to ask for the isotope to use. If False
             (default), then the most stable isotope will be automatically used.
+        comments : bool, optional
+            Indicates if print command lines detailing information on the potential
+            are to be included.  Default value is True.
+        lammpsdate : datetime, optional
+            The LAMMPS version date that is to be used.  The generated commands
+            may differ based on the version of LAMMPS used.
         
         Returns
         -------
@@ -475,5 +494,44 @@ class BasePotentialLAMMPS(Record):
         """
         raise NotImplementedError('Needs to be defined by the child class')
 
-    def pair_restart_info(self):
+    def pair_restart_info(self, filename, symbols=None, masses=None,
+                          units=None, prompt=False, comments=True,
+                          lammpsdate=datetime.date(2020, 10, 29)):
+        """
+        Generates the LAMMPS command lines associated with both a potential
+        and reading an atom data file.
+
+        Parameters
+        ----------
+        filename : path-like object
+            The file path to the restart file for LAMMPS to read in.
+        symbols : list of str, optional
+            List of atom-model symbols corresponding to the atom types in a
+            system.  If None (default), then all atom-model symbols will
+            be included in the order that they are listed in the data model.
+        masses : list, optional
+            Can be given to override the default symbol-based masses for each
+            atom type.  Must be a list of the same length as symbols.  Any
+            values of None in the list indicate that the default value be used
+            for that atom type.
+        units : str, optional
+            The LAMMPS unit setting to use for the output.  If not given,
+            will use the default value set for the potential.
+        prompt : bool, optional
+            If True, then a screen prompt will appear for radioactive elements
+            with no standard mass to ask for the isotope to use. If False
+            (default), then the most stable isotope will be automatically used.
+        comments : bool, optional
+            Indicates if print command lines detailing information on the potential
+            are to be included.  Default value is True.
+        lammpsdate : datetime, optional
+            The LAMMPS version date that is to be used.  The generated commands
+            may differ based on the version of LAMMPS used.
+
+        Returns
+        -------
+        str
+            The LAMMPS input command lines that specifies the potential and a restart
+            file to read.
+        """
         raise NotImplementedError('Needs to be defined by the child class')

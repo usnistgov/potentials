@@ -1,13 +1,15 @@
 # coding: utf-8
 # Standard Python libraries
 from pathlib import Path
+import datetime
 
+# https://numpy.org/
 import numpy as np
 
 # https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
-# atomman imports
+# local imports
 from ..tools import atomic_mass, aslist
 from .BasePotentalLAMMPS import BasePotentialLAMMPS
 from .Artifact import Artifact
@@ -232,7 +234,8 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
 
         return d
 
-    def pair_info(self, symbols=None, masses=None, prompt=False, comments=True):
+    def pair_info(self, symbols=None, masses=None, units=None, prompt=False,
+                  comments=True, lammpsdate=datetime.date(2020, 10, 29)):
         """
         Generates the LAMMPS input command lines associated with the Potential
         and a list of atom-model symbols.
@@ -248,6 +251,9 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             atom type.  Must be a list of the same length as symbols.  Any
             values of None in the list indicate that the default value be used
             for that atom type.
+        units : str, optional
+            The LAMMPS unit setting to use for the output.  If not given,
+            will use the default value set for the potential.
         prompt : bool, optional
             If True, then a screen prompt will appear for radioactive elements
             with no standard mass to ask for the isotope to use. If False
@@ -255,6 +261,9 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         comments : bool, optional
             Indicates if print command lines detailing information on the potential
             are to be included.  Default value is True.
+        lammpsdate : datetime, optional
+            The LAMMPS version date that is to be used.  The generated commands
+            may differ based on the version of LAMMPS used.
 
         Returns
         -------
@@ -404,7 +413,8 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
     
     def pair_data_info(self, filename, pbc, symbols=None, masses=None,
                        atom_style=None, units=None, prompt=False,
-                       comments=True):
+                       comments=True,
+                       lammpsdate=datetime.date(2020, 10, 29)):
         """
         Generates the LAMMPS command lines associated with both a potential
         and reading an atom data file.
@@ -437,6 +447,9 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         comments : bool, optional
             Indicates if print command lines detailing information on the potential
             are to be included.  Default value is True.
+        lammpsdate : datetime, optional
+            The LAMMPS version date that is to be used.  The generated commands
+            may differ based on the version of LAMMPS used.
 
         Returns
         -------
@@ -473,7 +486,8 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         return info
 
     def pair_restart_info(self, filename, symbols=None, masses=None,
-                          prompt=False, comments=True):
+                          units=None, prompt=False, comments=True,
+                          lammpsdate=datetime.date(2020, 10, 29)):
         """
         Generates the LAMMPS command lines associated with both a potential
         and reading an atom data file.
@@ -491,6 +505,9 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             atom type.  Must be a list of the same length as symbols.  Any
             values of None in the list indicate that the default value be used
             for that atom type.
+        units : str, optional
+            The LAMMPS unit setting to use for the output.  If not given,
+            will use the default value set for the potential.
         prompt : bool, optional
             If True, then a screen prompt will appear for radioactive elements
             with no standard mass to ask for the isotope to use. If False
@@ -498,6 +515,9 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         comments : bool, optional
             Indicates if print command lines detailing information on the potential
             are to be included.  Default value is True.
+        lammpsdate : datetime, optional
+            The LAMMPS version date that is to be used.  The generated commands
+            may differ based on the version of LAMMPS used.
 
         Returns
         -------

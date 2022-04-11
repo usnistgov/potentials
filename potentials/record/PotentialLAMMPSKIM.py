@@ -1,6 +1,7 @@
 # coding: utf-8
 # Standard Python libraries
 import warnings
+import datetime
 
 import numpy as np
 
@@ -459,7 +460,8 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
 
         return symbols
 
-    def pair_info(self, symbols=None, masses=None, units=None, prompt=False):
+    def pair_info(self, symbols=None, masses=None, units=None, prompt=False,
+                  comments=True, lammpsdate=datetime.date(2020, 10, 29)):
         """
         Generates the LAMMPS input command lines associated with a KIM
         Potential and a list of atom-model symbols.
@@ -482,6 +484,12 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             If True, then a screen prompt will appear for radioactive elements
             with no standard mass to ask for the isotope to use. If False
             (default), then the most stable isotope will be automatically used.
+        comments : bool, optional
+            Indicates if print command lines detailing information on the potential
+            are to be included.  Default value is True.
+        lammpsdate : datetime, optional
+            The LAMMPS version date that is to be used.  The generated commands
+            may differ based on the version of LAMMPS used.
 
         Returns
         -------
@@ -513,10 +521,16 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             masses = self.masses(symbols, prompt=prompt)
         
         # Generate kim_init line
-        info = f'kim_init {self.id} {units}\n'
+        if lammpsdate >= datetime.date(2021, 3, 10):
+            info = f'kim init {self.id} {units}\n'
+        else:        
+            info = f'kim_init {self.id} {units}\n'
 
         # Generate kim_interactions  line
-        info += f'kim_interactions {" ".join(symbols)}\n'
+        if lammpsdate >= datetime.date(2021, 3, 10):
+            info += f'kim interactions {" ".join(symbols)}\n'
+        else:        
+            info += f'kim_interactions {" ".join(symbols)}\n'
         
         # Generate mass lines
         for i in range(len(masses)):
@@ -527,7 +541,8 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
 
     def pair_data_info(self, filename, pbc, symbols=None, masses=None,
                        atom_style=None, units=None, prompt=False,
-                       comments=True):
+                       comments=True,
+                       lammpsdate=datetime.date(2020, 10, 29)):
         """
         Generates the LAMMPS command lines associated with both a potential
         and reading an atom data file.
@@ -560,7 +575,10 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         comments : bool, optional
             Indicates if print command lines detailing information on the potential
             are to be included.  Default value is True.
-        
+        lammpsdate : datetime, optional
+            The LAMMPS version date that is to be used.  The generated commands
+            may differ based on the version of LAMMPS used.
+
         Returns
         -------
         str
@@ -595,7 +613,10 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         info = '# Script and atom data file prepared using atomman Python package\n\n'
 
         # Generate kim_init line
-        info += f'kim_init {self.id} {units}\n'
+        if lammpsdate >= datetime.date(2021, 3, 10):
+            info = f'kim init {self.id} {units}\n'
+        else:        
+            info = f'kim_init {self.id} {units}\n'
 
         # Change atom_style if needed
         if atom_style is not None:
@@ -610,7 +631,10 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         info += f'read_data {filename}\n\n'
 
         # Generate kim_interactions  line
-        info += f'kim_interactions {" ".join(symbols)}\n'
+        if lammpsdate >= datetime.date(2021, 3, 10):
+            info += f'kim interactions {" ".join(symbols)}\n'
+        else:        
+            info += f'kim_interactions {" ".join(symbols)}\n'
         
         # Generate mass lines
         for i in range(len(masses)):
@@ -620,7 +644,8 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         return info
 
     def pair_restart_info(self, filename, symbols=None, masses=None,
-                          units=None, prompt=False, comments=True):
+                          units=None, prompt=False, comments=True,
+                          lammpsdate=datetime.date(2020, 10, 29)):
         """
         Generates the LAMMPS command lines associated with both a potential
         and reading an atom data file.
@@ -638,6 +663,9 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             atom type.  Must be a list of the same length as symbols.  Any
             values of None in the list indicate that the default value be used
             for that atom type.
+        units : str, optional
+            The LAMMPS unit setting to use for the output.  If not given,
+            will use the default value set for the potential.
         prompt : bool, optional
             If True, then a screen prompt will appear for radioactive elements
             with no standard mass to ask for the isotope to use. If False
@@ -645,6 +673,9 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         comments : bool, optional
             Indicates if print command lines detailing information on the potential
             are to be included.  Default value is True.
+        lammpsdate : datetime, optional
+            The LAMMPS version date that is to be used.  The generated commands
+            may differ based on the version of LAMMPS used.
 
         Returns
         -------
@@ -680,13 +711,19 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         info = '# Script prepared using atomman Python package\n\n'
     
         # Generate kim_init line
-        info += f'kim_init {self.id} {units}\n'
+        if lammpsdate >= datetime.date(2021, 3, 10):
+            info = f'kim init {self.id} {units}\n'
+        else:        
+            info = f'kim_init {self.id} {units}\n'
 
         # Set read_data command 
         info += f'read_restart {filename}\n'
 
         # Generate kim_interactions  line
-        info += f'kim_interactions {" ".join(symbols)}\n'
+        if lammpsdate >= datetime.date(2021, 3, 10):
+            info += f'kim interactions {" ".join(symbols)}\n'
+        else:        
+            info += f'kim_interactions {" ".join(symbols)}\n'
 
         # Generate mass lines
         for i in range(len(masses)):
