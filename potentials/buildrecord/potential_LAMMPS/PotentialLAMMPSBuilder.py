@@ -387,7 +387,7 @@ class PotentialLAMMPSBuilder(object):
         return model
 
     def potential(self, pot_dir=None):
-        return load_record('potential_LAMMPS', self.build(), pot_dir=pot_dir)
+        return load_record('potential_LAMMPS', model=self.build(), pot_dir=pot_dir)
 
     @property
     def supported_pair_styles(self):
