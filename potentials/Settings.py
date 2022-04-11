@@ -1,5 +1,7 @@
+# coding: utf-8
 # Standard Python libraries
 from pathlib import Path
+from typing import Optional
 
 # potentials imports
 from .tools import screen_input
@@ -20,13 +22,20 @@ class Settings(yabadaba.Settings.Settings):
 
     @property
     def remote(self):
-        """The default value for the database initialization parameter 'remote'"""
+        """bool: The default value for the database initialization parameter 'remote'"""
         return self.__content.get('remote', True)
 
-    def set_remote(self, flag=None):
+    def set_remote(self,
+                   flag: Optional[bool] = None):
         """
         Sets the default value for the database initialization parameter
         'remote'.
+
+        Parameters
+        ----------
+        flag : bool, optional
+            The value to set the default remote value to.  If None (default),
+            then a prompt will ask for a value. 
         """      
         # Ask for flag if not given
         if flag is None:
@@ -53,13 +62,20 @@ class Settings(yabadaba.Settings.Settings):
 
     @property
     def local(self):
-        """The default value for the database initialization parameter 'local'"""
+        """bool: The default value for the database initialization parameter 'local'"""
         return self.__content.get('local', True)
 
-    def set_local(self, flag=None):
+    def set_local(self,
+                  flag: Optional[bool] = None):
         """
         Sets the default value for the database initialization parameter
         'local'.
+
+        Parameters
+        ----------
+        flag : bool, optional
+            The value to set the default remote value to.  If None (default),
+            then a prompt will ask for a value. 
         """   
         # Ask for flag if not given
         if flag is None:
@@ -84,7 +100,10 @@ class Settings(yabadaba.Settings.Settings):
         # Save changes
         self.save()
 
-    def set_local_database(self, localpath=None, format='json', indent=4):
+    def set_local_database(self,
+                           localpath: Optional[Path] = None,
+                           format: str = 'json',
+                           indent: Optional[int] = 4):
         """
         Set the default local interaction settings for potential.Database
         objects.
@@ -110,10 +129,11 @@ class Settings(yabadaba.Settings.Settings):
 
     @property
     def pot_dir_style(self):
-        """The default value for 'pot_dir_style' used when loading LAMMPS potentials."""
+        """str: The default value for 'pot_dir_style' used when loading LAMMPS potentials."""
         return self.__content.get('pot_dir_style', 'working')
 
-    def set_pot_dir_style(self, value=None):
+    def set_pot_dir_style(self,
+                          value: Optional[str] = None):
         """
         Sets the default pot_dir_style option.
 
@@ -162,7 +182,8 @@ class Settings(yabadaba.Settings.Settings):
         else:
             return None
 
-    def set_kim_api_directory(self, path=None):
+    def set_kim_api_directory(self,
+                              path: Optional[Path] = None):
         """
         Sets the default kim api directory.
 
@@ -214,7 +235,9 @@ class Settings(yabadaba.Settings.Settings):
         """pathlib.Path : Path to the default KIM models file."""
         return Path(self.directory, 'kim_models.txt')
 
-    def set_kim_models(self, kim_models, kim_models_file=None):
+    def set_kim_models(self,
+                       kim_models: list,
+                       kim_models_file: Optional[Path] = None):
         """
         Saves a default list of kim models.
 
