@@ -1,0 +1,4 @@
+include README.rst
+include potentials/VERSION
+
+graft potentials/tools

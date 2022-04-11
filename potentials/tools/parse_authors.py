@@ -1,9 +1,27 @@
 # coding: utf-8
 import string
 
-def parse_authors(authors, initials=True):
+def parse_authors(authors: str,
+                  initials: bool = True) -> list:
     """
-    Parse bibtex authors field.
+    Parse a bibtex authors field and return dicts containing separate givenname
+    and surname fields.
+
+    Parameters
+    ----------
+    authors : str
+        The bibtex authors field.
+    initials : bool, optional
+        If True (default), the generated givenname fields will only include
+        the givenname initials.  If False, the givenname fields will reflect
+        what is in the bibtex authors string which may be full names or
+        initials.
+    
+    Returns 
+    -------
+    list of dict
+        The parsed bibtex authors field divided by author and into separate
+        givenname and surname fields.
     """
     author_dicts = []
     

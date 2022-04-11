@@ -52,6 +52,6 @@ setup(
         'ipywidgets',
         'yabadaba'
     ],
-    package_data={'': ['*']},
+    include_package_data = True,
     zip_safe = False
 )

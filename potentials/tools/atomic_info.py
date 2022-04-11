@@ -1,24 +1,33 @@
 # coding: utf-8
+# Standard Python libraries
+from importlib.resources import open_text
+from typing import Optional, Tuple, Union
 
-__all__ = ['atomic_number', 'atomic_symbol', 'atomic_mass']
-
+# https://numpy.org/
 import numpy as np
+
+# https://pandas.pydata.org/
 import pandas as pd
 
-from .atomicdata import atomicdata
-
+__all__ = ['atomic_number', 'atomic_symbol', 'atomic_mass']
 class AtomicInfo():
     
     def __init__(self):
         """Class initializer"""
-        self.__data = atomicdata
+
+        # atomicdata.csv contains the data processed by the load method from
+        # https://www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses
+        # with last update date January 2015
+        self.__data = pd.read_csv(open_text('potentials.tools',
+                                            'atomicdata.csv'))
     
     @property
-    def data(self):
+    def data(self) -> pd.DataFrame:
+        """pandas.DataFrame: Tabulated atomic and ionic data"""
         return self.__data
     
     @property
-    def renames(self):
+    def renames(self) -> dict:
         """dict : Matches systematic element symbols to their now assigned symbols"""
         return {
             'Unq': 'Rf',
@@ -38,9 +47,17 @@ class AtomicInfo():
             'Uuo': 'Og',
         }        
     
-    def load(self, datafile):
+    def load(self, datafile: str):
         """
-        Reads in the "Linearized ASCII Output" as found at https://www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses
+        Reads in the "Linearized ASCII Output" as found at 
+        https://www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses
+        and processes it into the csv/pandas format.  It is then saved to the
+        object's data attribute.
+
+        Parameters
+        ----------
+        datafile : str
+            The raw data in the format listed above.
         """
         with open(datafile) as f:
             lines = f.readlines()
@@ -71,7 +88,7 @@ class AtomicInfo():
         self.__data = data
 
     @property
-    def most_stable_isotope(self):
+    def most_stable_isotope(self) -> dict:
         """dict: Specifies the mass number for the most stable isotope of the radioactive elements"""
         return {
             'Tc': 97,
@@ -110,7 +127,7 @@ class AtomicInfo():
             'Og': 294,
         }
 
-    def atomic_number(self, atomic_symbol):
+    def atomic_number(self, atomic_symbol: str) -> int:
         """
         Return the corresponding atomic number for a given atomic symbol.
 
@@ -135,7 +152,7 @@ class AtomicInfo():
         else:
             raise ValueError(f'No matches for atomic symbol {atomic_symbol} found')
     
-    def atomic_symbol(self, atomic_number):
+    def atomic_symbol(self, atomic_number: int) -> str:
         """
         Return the corresponding atomic symbol for a given atomic number.
 
@@ -144,10 +161,15 @@ class AtomicInfo():
         atomic_number : int
             An atomic number.
 
-        Return
-        ------
-        int
+        Returns
+        -------
+        str
             The corresponding atomic symbol.
+
+        Raises
+        ------
+        IndexError
+            If no matches for the atomic number are found.
         """
         matches = self.data[self.data['Atomic Number'] == atomic_number]
         if len(matches) > 0:
@@ -155,7 +177,10 @@ class AtomicInfo():
         else:
             raise IndexError(f'No matches for atomic number {atomic_number} found')
     
-    def atomic_mass(self, atomic_info, mass_number=None, prompt=False):
+    def atomic_mass(self,
+                    atomic_info: Union[int, str],
+                    mass_number: Optional[int] = None,
+                    prompt: bool = False) -> float:
         """
         Returns either the median standard atomic weight for an element or the relative
         atomic mass for an isotope.
@@ -176,6 +201,11 @@ class AtomicInfo():
         float
             The average standard atomic weight of an element or the relative
             atomic mass of an isotope.
+
+        Raises
+        ------
+        ValueError
+            For invalid input values or combinations of values.
         """
 
         # Try converting atomic_info to an int - fetch atomic_symbol if needed
@@ -249,7 +279,9 @@ class AtomicInfo():
         else:
             raise ValueError('Multiple matches found!!!')
         
-    def __handle_hydrogen(self, atomic_symbol, mass_number=None):
+    def __handle_hydrogen(self,
+                          atomic_symbol: str,
+                          mass_number: Optional[int] = None) -> Tuple[str, Optional[int]]:
         """
         Special handling of hydrogen isotopes due to isotope symbols D and T
         

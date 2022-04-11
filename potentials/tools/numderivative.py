@@ -1,7 +1,13 @@
 # coding: utf-8
-import numpy as np
 
-def numderivative(x, y, n=1):
+# https://numpy.org/
+from typing import Tuple
+import numpy as np
+import numpy.typing as npt
+
+def numderivative(x: npt.ArrayLike,
+                  y: npt.ArrayLike,
+                  n: int = 1) -> Tuple[np.ndarray, np.ndarray]:
     """
     Computes the numerical derivative for a tabulated function.
     
@@ -31,11 +37,12 @@ def numderivative(x, y, n=1):
         return x, y
     
     elif n > 0:
-        # 
+        # Compute the numerical derivative
         deltax = x[1] - x[0]
         newx = x[:-1] + deltax / 2
         newy = (y[1:] - y[:-1]) / deltax
         
+        # Iterate until n=0
         return numderivative(newx, newy, n=n-1)
     
     else:
