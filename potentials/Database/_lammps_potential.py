@@ -28,10 +28,10 @@ def get_lammps_potentials(self, name=None, key=None, id=None, potid=None,
         The unique UUID4 record key(s) to parse by. 
     id : str or list
         The unique record id(s) labeling the records to parse by.
-    potid : str or list, optional
+    potkey : str or list, optional
         The unique UUID4 record key(s) for the associated potential records to
         parse by.
-    potkey : str or list, optional
+    potid : str or list, optional
         The unique record id(s) labeling the associated potential records to
         parse by.
     units : str or list, optional
@@ -168,10 +168,10 @@ def get_lammps_potential(self, name=None, key=None, id=None, potid=None,
         The unique UUID4 record key(s) to parse by. 
     id : str or list, optional
         The unique record id(s) labeling the records to parse by.
-    potid : str or list, optional
+    potkey : str or list, optional
         The unique UUID4 record key(s) for the associated potential records to
         parse by.
-    potkey : str or list, optional
+    potid : str or list, optional
         The unique record id(s) labeling the associated potential records to
         parse by.
     units : str or list, optional
@@ -306,10 +306,10 @@ def retrieve_lammps_potential(self, name=None, dest=None, key=None, id=None,
         The unique UUID4 record key(s) to parse by. 
     id : str or list
         The unique record id(s) labeling the records to parse by.
-    potid : str or list
+    potkey : str or list, optional
         The unique UUID4 record key(s) for the associated potential records to
         parse by.
-    potkey : str or list
+    potid : str or list, optional
         The unique record id(s) labeling the associated potential records to
         parse by.
     units : str or list
@@ -432,10 +432,10 @@ def download_lammps_potentials(self, name=None, key=None, id=None,
         The unique UUID4 record key(s) to parse by. 
     id : str or list, optional
         The unique record id(s) labeling the records to parse by.
-    potid : str or list, optional
+    potkey : str or list, optional
         The unique UUID4 record key(s) for the associated potential records to
         parse by.
-    potkey : str or list, optional
+    potid : str or list, optional
         The unique record id(s) labeling the associated potential records to
         parse by.
     units : str or list, optional
