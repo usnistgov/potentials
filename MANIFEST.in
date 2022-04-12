@@ -2,3 +2,5 @@ include README.rst
 include potentials/VERSION
 
 graft potentials/tools
+graft potentials/xsd
+graft potentials/xsl
