@@ -1,8 +1,11 @@
 # coding: utf-8
+
+# Local imports
 from .potential_LAMMPS import (EamBuilder, EimBuilder, LibParamBuilder,
                                PairBuilder, ParamFileBuilder)
 
-def build_lammps_potential(pair_style, **kwargs):
+def build_lammps_potential(pair_style: str,
+                           **kwargs):
     """
     Wrapper function for the PotentialLAMMPSBuilder subclasses.
     
@@ -10,13 +13,14 @@ def build_lammps_potential(pair_style, **kwargs):
     ----------
     pair_style : str
         The LAMMPS pair_style setting associated with the potential.
-    **kwargs : dict
+    **kwargs : any
         Any keyword parameters supported by PotentialLAMMPSBuilder and the
         subclass that matches the pair_style.
     """
     
     subclasses = [PairBuilder, ParamFileBuilder, LibParamBuilder, 
                   EamBuilder, EimBuilder]
+
     # Strip acceleration tags
     gputags = ['gpu', 'intel', 'kk', 'omp', 'opt']
     terms = pair_style.split('/')

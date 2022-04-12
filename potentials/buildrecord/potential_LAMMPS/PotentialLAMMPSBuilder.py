@@ -1,12 +1,16 @@
 # coding: utf-8
 # Standard libraries
 import uuid
+from typing import Generator, Optional, Union
 
+# https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
+# Local imports
 from ...tools import aslist
 from ... import load_record
 from ...record.Artifact import Artifact
+from ...record.PotentialLAMMPS import PotentialLAMMPS
 
 class PotentialLAMMPSBuilder(object):
     """
@@ -15,11 +19,7 @@ class PotentialLAMMPSBuilder(object):
     Note: terms for pair_coeff lines are not included as they are style-specific.
     """
 
-    def __init__(self, id=None, key=None, potid=None, potkey=None,
-                 units=None, atom_style=None, pair_style=None,
-                 pair_style_terms=None, status='active', comments=None, dois=None,
-                 allsymbols=False, elements=None, masses=None, charges=None,
-                 symbols=None, command_terms=None, artifacts=None):
+    def __init__(self, **kwargs):
         """
         Builder class initializer.
         
@@ -86,114 +86,117 @@ class PotentialLAMMPSBuilder(object):
             Artifact objects detailing any associated parameter or data files
             and the URLs where they can be downloaded from.
         """
-        self.id = id
-        self.key = key
-        self.potid = potid
-        self.potkey = potkey
+        self.id = kwargs.pop('id', None)
+        self.key = kwargs.pop('key', None)
+        self.potid = kwargs.pop('potid', None)
+        self.potkey = kwargs.pop('potkey', None)
         
-        self.units = units
-        self.atom_style = atom_style
-        self.pair_style = pair_style
+        self.units = kwargs.pop('units', None)
+        self.atom_style = kwargs.pop('atom_style', None)
+        self.pair_style = kwargs.pop('pair_style', None)
         
-        self.allsymbols = allsymbols
-        self.status = status
-        self.comments = comments
-        self.dois = dois
+        self.allsymbols = kwargs.pop('allsymbols', None)
+        self.status = kwargs.pop('status', 'active')
+        self.comments = kwargs.pop('comments', None)
+        self.dois = kwargs.pop('dois', None)
 
-        self.symbols = symbols
-        self.elements = elements
-        self.masses = masses
-        self.charges = charges
+        self.symbols = kwargs.pop('symbols', None)
+        self.elements = kwargs.pop('elements', None)
+        self.masses = kwargs.pop('masses', None)
+        self.charges = kwargs.pop('charges', None)
         
-        self.pair_style_terms = pair_style_terms
-        self.command_terms = command_terms
+        self.pair_style_terms = kwargs.pop('pair_style_terms', None)
+        self.command_terms = kwargs.pop('command_terms', None)
 
-        self.artifacts = artifacts
+        self.artifacts = kwargs.pop('artifacts', None)
+
+        if len(kwargs) > 0:
+            raise ValueError(f'Unrecognized kwargs found: {kwargs.keys()}')
 
     @property
-    def id(self):
-        """Human-readable id for LAMMPS implementation of the potential."""
+    def id(self) -> Optional[str]:
+        """str: Human-readable id for LAMMPS implementation of the potential."""
         return self.__id
 
     @id.setter
-    def id(self, value):
+    def id(self, value: Optional[str]):
         if value is not None:
             value = str(value)
         self.__id = value
 
     @property
-    def key(self):
+    def key(self) -> str:
         """Unique UUID4 key for the LAMMPS implementation."""
         return self.__key
 
     @key.setter
-    def key(self, value):
+    def key(self, value: Optional[str]):
         if value is None:
             value = uuid.uuid4()
         self.__key = str(value)
 
     @property
-    def potid(self):
+    def potid(self) -> Optional[str]:
         """Human-readable id for the potential model."""
         return self.__potid
 
     @potid.setter
-    def potid(self, value):
+    def potid(self, value: Optional[str]):
         if value is not None:
             value = str(value)
         self.__potid = value
 
     @property
-    def potkey(self):
+    def potkey(self) -> str:
         """Unique UUID4 key for the potential model."""
         return self.__potkey
 
     @potkey.setter
-    def potkey(self, value):
+    def potkey(self, value: Optional[str]):
         if value is None:
             value = uuid.uuid4()
         self.__potkey = str(value)
 
     @property
-    def units(self):
+    def units(self) -> Optional[str]:
         """str : LAMMPS units option."""
         return self.__units
 
     @units.setter
-    def units(self, value):
+    def units(self, value: Optional[str]):
         if value is not None:
             value = str(value)
         self.__units = value
 
     @property
-    def atom_style(self):
+    def atom_style(self) -> Optional[str]:
         """str : LAMMPS atom_style option."""
         return self.__atom_style
 
     @atom_style.setter
-    def atom_style(self, value):
+    def atom_style(self, value: Optional[str]):
         if value is not None:
             value = str(value)
         self.__atom_style = value
 
     @property
-    def pair_style(self):
+    def pair_style(self) -> Optional[str]:
         """str : LAMMPS pair_style option."""
         return self.__pair_style
 
     @pair_style.setter
-    def pair_style(self, value):
+    def pair_style(self, value: Optional[str]):
         if value is not None:
             value = str(value)
         self.__pair_style = value
 
     @property
-    def allsymbols(self):
+    def allsymbols(self) -> bool:
         """bool : Flag indicating if the coefficient lines must be defined for every particle model in the potential even if those particles are not used."""
         return self.__allsymbols
 
     @allsymbols.setter
-    def allsymbols(self, value):
+    def allsymbols(self, value: Union[str, bool]):
         if isinstance(value, bool):
             self.__allsymbols = value
         elif value.lower() == 'true':
@@ -204,102 +207,102 @@ class PotentialLAMMPSBuilder(object):
             raise ValueError(f'Invalid allsymbols value "{value}"')
 
     @property
-    def status(self):
+    def status(self) -> str:
         """str : The status of the LAMMPS potential: active, superseded or retracted"""
         return self.__status
 
     @status.setter
-    def status(self, value):
+    def status(self, value: str):
         if value not in ['active', 'superseded', 'retracted']:
             raise ValueError('Invalid status: allowed values are active, superseded, and retracted')
         self.__status = value
 
     @property
-    def comments(self):
+    def comments(self) -> Optional[str]:
         """str : Descriptive information about the potential"""
         return self.__comments
 
     @comments.setter
-    def comments(self, value):
+    def comments(self, value: Optional[str]):
         if value is not None:
             value = str(value)
         self.__comments = value
 
     @property
-    def dois(self):
+    def dois(self) -> list:
         """list : Any DOIs associated with the potential"""
         return self.__dois
 
     @dois.setter
-    def dois(self, value):
+    def dois(self, value: Union[str, list, None]):
         if value is not None:
             self.__dois = aslist(value)
         else:
             self.__dois = []
 
     @property
-    def symbols(self):
+    def symbols(self) -> Optional[list]:
         """list : The interaction models defined by the potential"""
         return self.__symbols
 
     @symbols.setter
-    def symbols(self, value):
+    def symbols(self, value: Union[str, list, None]):
         if value is not None:
             value = aslist(value)
         self.__symbols = value
 
     @property
-    def elements(self):
+    def elements(self) -> Optional[list]:
         """list : The elements associated with each interaction model"""
         return self.__elements
 
     @elements.setter
-    def elements(self, value):
+    def elements(self, value: Union[str, list, None]):
         if value is not None:
             value = aslist(value)
         self.__elements = value
 
     @property
-    def masses(self):
+    def masses(self) -> Optional[list]:
         """list : The atomic or particle mass associated with each interaction model"""
         return self.__masses
 
     @masses.setter
-    def masses(self, value):
+    def masses(self, value: Union[float, list, None]):
         if value is not None:
             value = aslist(value)
         self.__masses = value
 
     @property
-    def charges(self):
+    def charges(self) -> Optional[list]:
         """list : The atomic or particle charge associated with each interaction model"""
         return self.__charges
 
     @charges.setter
-    def charges(self, value):
+    def charges(self, value: Union[float, list, None]):
         if value is not None:
             value = aslist(value)
         self.__charges = value
 
     @property
-    def pair_style_terms(self):
+    def pair_style_terms(self) -> list:
         """list : All extra terms to include in the pair_style command line"""
         return self.__pair_style_terms
 
     @pair_style_terms.setter
-    def pair_style_terms(self, value):
+    def pair_style_terms(self, value: Union[str, list, None]):
         if value is not None:
             self.__pair_style_terms = aslist(value)
         else:
             self.__pair_style_terms = []
 
     @property
-    def command_terms(self):
+    def command_terms(self) -> list:
         """list : All extra command lines to include"""
         return self.__command_terms
 
     @command_terms.setter
-    def command_terms(self, value):
+    def command_terms(self, value: Union[str, list, None]):
         if value is not None:
             value = aslist(value)
             if not isinstance(value[0], list):
@@ -309,11 +312,11 @@ class PotentialLAMMPSBuilder(object):
             self.__command_terms = []
 
     @property
-    def artifacts(self):
+    def artifacts(self) -> list:
         return self.__artifacts
 
     @artifacts.setter
-    def artifacts(self, value):
+    def artifacts(self, value: Union[Artifact, list, dict, None]):
         self.__artifacts = []
         if value is not None:
             value = aslist(value)
@@ -325,16 +328,17 @@ class PotentialLAMMPSBuilder(object):
                 else:
                     raise TypeError('Invalid artifact object: must be an Artifact or dict')
 
-    def build(self):
+    def build(self) -> DM:
         """
         Generates a PotentialLAMMPS data model using the given parameters.
 
         Returns
         -------
-        DataModelDict
+        DataModelDict.DataModelDict
             The PotentialLAMMPS data model.
             
         Raises
+        ------
         ValueError
             If elements and/or symbols not set, if masses not set when elements
             are not given, or if pair_style is not set.
@@ -382,29 +386,38 @@ class PotentialLAMMPSBuilder(object):
 
         # Add artifacts
         for artifact in self.artifacts:
-            model['potential-LAMMPS'].append('artifact', artifact.build_model()['artifact'])
+            model['potential-LAMMPS'].append('artifact',
+                                              artifact.build_model()['artifact'])
 
         return model
 
-    def potential(self, pot_dir=None):
-        return load_record('potential_LAMMPS', model=self.build(), pot_dir=pot_dir)
+    def potential(self, pot_dir: Optional[str] = None) -> PotentialLAMMPS:
+        return load_record('potential_LAMMPS', model=self.build(),
+                           pot_dir=pot_dir)
 
     @property
-    def supported_pair_styles(self):
+    def supported_pair_styles(self) -> tuple:
         """tuple : The list of known pair styles that use this format."""
         return ()
 
     @property
-    def symbollist(self):
-        """The list of all of the model symbols defined by the potential"""
+    def symbollist(self) -> str:
+        """str: The list of all of the model symbols defined by the potential"""
         if self.symbols is not None:
             return ' '.join(self.symbols)
         else:
             return ' '.join(self.elements)
 
-    def iteratoms(self):
+    def iteratoms(self) -> Generator[dict, None, None]:
         """
-        Iterates through the list of atoms with fields element, symbol, mass, charge
+        Iterates through the list of defined atoms and returns the atom model
+        information.
+
+        Yields
+        ------
+        dict
+            The per-atom type info consisting of element, symbol, mass and
+            charge values.
         """
         if self.symbols is not None:
             symbols = self.symbols
@@ -442,8 +455,15 @@ class PotentialLAMMPSBuilder(object):
                 atom['charge'] = charge
             yield atom
 
-    def buildpairstyle(self):
-        """Builds the pair_style command line"""
+    def buildpairstyle(self) -> str:
+        """
+        Builds the LAMMPS pair_style command line.
+        
+        Returns
+        -------
+        str
+            The LAMMPS pair_style command line.
+        """
         pairstyle = DM()
         pairstyle['type'] = self.pair_style
         
@@ -454,14 +474,28 @@ class PotentialLAMMPSBuilder(object):
                 pairstyle.append('term', DM([('option', str(term))]))
         return pairstyle
 
-    def buildpaircoeff(self):
-        """Builds the pair_coeff command lines"""
+    def buildpaircoeff(self) -> str:
+        """
+        Builds the LAMMPS pair_coeff command lines.
+        
+        Returns
+        -------
+        str
+            The LAMMPS pair_coeff command line.
+        """
         paircoeff = None
 
         return paircoeff
 
-    def buildcommands(self):
-        """Builds extra command lines from command_terms"""
+    def buildcommands(self) -> str:
+        """
+        Builds extra LAMMPS command lines from command_terms.
+
+        Returns
+        -------
+        str
+            Any extra LAMMPS command lines.        
+        """
         commands = []
         for line in self.command_terms:
             if len(line) == 0:
@@ -475,5 +509,25 @@ class PotentialLAMMPSBuilder(object):
             commands.append(command)
         return commands
 
-    def add_artifact(self, model=None, filename=None, label=None, url=None):
-        self.artifacts.append(Artifact(model=model, filename=filename, label=label, url=url))
+    def add_artifact(self,
+                     model: Union[DM, str, None] = None,
+                     filename: Optional[str] = None,
+                     label: Optional[str] = None,
+                     url: Optional[str] = None):
+        """
+        Initializes a new Artifact object and appends it to the artifacts
+        attribute.
+
+        Parameters
+        ----------
+        model : str or DataModelDict, optional
+            Model content or file path to model content.
+        filename : str, optional
+            The name of the file without path information.
+        label : str, optional
+            A short description label.
+        url : str, optional
+            URL for file where downloaded, if available.
+        """
+        self.artifacts.append(Artifact(model=model, filename=filename,
+                                       label=label, url=url))
