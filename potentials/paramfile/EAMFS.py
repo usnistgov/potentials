@@ -1,13 +1,22 @@
 # coding: utf-8
+# Standard libraries
 from copy import deepcopy
+import io
 import warnings
+from pathlib import Path
+from typing import Callable, Optional, Tuple, Union
 
+# https://scipy.org/
 from scipy.interpolate import CubicSpline
 
+# https://numpy.org/
 import numpy as np
+import numpy.typing as npt
 
+# https://matplotlib.org/
 import matplotlib.pyplot as plt
 
+# Local imports
 from ..tools import aslist, numderivative
 
 class EAMFS():
@@ -15,15 +24,34 @@ class EAMFS():
     Class for building and analyzing LAMMPS setfl eam/fs parameter files 
     """
 
-    def __init__(self, filename=None, header=None,
-                 symbol=None, number=None, mass=None, alat=None, lattice=None,
-                 numr=None, cutoffr=None, deltar=None,
-                 numrho=None, cutoffrho=None, deltarho=None):
+    def __init__(self,
+                 f: Union[str, Path, io.IOBase, None] = None,
+                 header: Optional[str] = None,
+                 symbol: Union[str, list, None] = None,
+                 number: Union[int, list, None] = None,
+                 mass: Union[float, list, None] = None,
+                 alat: Union[float, list, None] = None,
+                 lattice: Union[str, list, None] = None,
+                 numr: Optional[int] = None,
+                 cutoffr: Optional[float] = None,
+                 deltar: Optional[float] = None,
+                 numrho: Optional[int] = None,
+                 cutoffrho: Optional[float] = None,
+                 deltarho: Optional[float] = None):
         """
         Class initializer. Element information can be set at this time.
         
         Parameters
         ----------
+        f : path-like object or file-like object, optional
+            An existing parameter file to read in, either as a file path or as
+            an open file-like object.  The default values of all other init
+            parameters will be set based on the contents of this file if given.
+            Not required if the potential functions are to be manually defined.
+        header : str, optional
+            Specifies the comments header to include at the beginning of the
+            parameter file when generated.  Note that setfl comments are
+            limited to three lines.
         symbol : str or list, optional
             Model symbol(s).  Equal numbers of symbol, number, mass, alat and
             lattice must be given.
@@ -39,6 +67,24 @@ class EAMFS():
         lattice : str or list, optional
             Lattice type(s). Equal numbers of symbol, number, mass,
             alat and lattice must be given.
+        numr : int, optional
+            The number of r values for which rho(r) and r*phi(r) should be
+            tabulated. 
+        cutoffr : float, optional
+            The cutoff r value to use. If not given, will be set as 
+            (numr - 1) * deltar.
+        deltar : float, optional
+            The r step size to use for the tabulation.  If not given, will
+            be set as cutoffr / (numr - 1).
+        numrho : int, optional
+            The number of rho values for which F(rho) should be
+            tabulated. 
+        cutoff : float, optional
+            The cutoff rho value to use. If not given, will be set as 
+            (numrho - 1) * deltarho.
+        delta : float, optional
+            The rho step size to use for the tabulation.  If not given, will
+            be set as cutoffrho / (numrho - 1).
         """
 
         # Initialize F terms
@@ -66,8 +112,8 @@ class EAMFS():
         self.__alat = {}
         self.__lattice = {}
 
-        if filename is not None:
-            self.load(filename)
+        if f is not None:
+            self.load(f)
 
         else:
             # Initialize header
@@ -97,16 +143,16 @@ class EAMFS():
                 self.set_rho(num=numrho, cutoff=cutoffrho, delta=deltarho)
 
     @property
-    def pair_style(self):
+    def pair_style(self) -> str:
         """The LAMMPS pair_style associated with the class"""
         return 'eam/fs'
 
     @property
-    def header(self):
+    def header(self) -> str:
         return self.__header
     
     @header.setter
-    def header(self, value):
+    def header(self, value: str):
         if isinstance(value, str):
             test = value.split('\n')
             if len(test) <= 3:
@@ -117,22 +163,22 @@ class EAMFS():
             raise TypeError('header must be a string')
 
     @property
-    def numr(self):
+    def numr(self) -> int:
         """int : The number of r values"""
         return self.__numr
 
     @property
-    def cutoffr(self):
+    def cutoffr(self) -> float:
         """float : The cutoff r value"""
         return self.__cutoffr
     
     @property
-    def deltar(self):
+    def deltar(self) -> float:
         """float : The step size between the r values"""
         return self.__deltar
 
     @property
-    def r(self):
+    def r(self) -> np.ndarray:
         """numpy.NDArray : The r values associated with the tabulated functions"""
         try:
             self.numr
@@ -140,13 +186,16 @@ class EAMFS():
             raise AttributeError('r values not set: use set_r()')
         return np.linspace(0, self.numr * self.deltar, self.numr, endpoint=False)        
 
-    def set_r(self, num, cutoff=None, delta=None):
+    def set_r(self,
+              num: Optional[int] = None,
+              cutoff: Optional[float] = None,
+              delta: Optional[float] = None):
         """
         Sets the r values to use for tabulation.
 
         Parameters
         ----------
-        num : int
+        num : int, optional
             The number of r values for which rho(r) and r*phi(r) should be
             tabulated. 
         cutoff : float, optional
@@ -154,7 +203,7 @@ class EAMFS():
             (num - 1) * delta.
         delta : float, optional
             The r step size to use for the tabulation.  If not given, will
-            be set as cutoff / (num - 1)
+            be set as cutoff / (num - 1).
         """
         # Get current r values if they exist
         try:
@@ -189,22 +238,22 @@ class EAMFS():
                 self.set_phi_r(symbols, table=self.phi_r(symbols), r=old_r)
 
     @property
-    def numrho(self):
+    def numrho(self) -> int:
         """int : The number of rho values"""
         return self.__numrho
 
     @property
-    def cutoffrho(self):
+    def cutoffrho(self) -> float:
         """float : The cutoff rho value"""
         return self.__cutoffrho
     
     @property
-    def deltarho(self):
+    def deltarho(self) -> float:
         """float : The step size between the rho values"""
         return self.__deltarho
 
     @property
-    def rho(self):
+    def rho(self) -> np.ndarray:
         """numpy.NDArray : The rho values associated with the tabulated functions"""
         try:
             self.numrho
@@ -212,13 +261,16 @@ class EAMFS():
             raise AttributeError('rho values not set: use set_rho()')
         return np.linspace(0, self.numrho * self.deltarho, self.numrho, endpoint=False)
     
-    def set_rho(self, num=None, cutoff=None, delta=None):
+    def set_rho(self,
+                num: Optional[int] = None,
+                cutoff: Optional[float] = None,
+                delta: Optional[float] = None):
         """
         Sets the rho values to use for tabulation.
 
         Parameters
         ----------
-        num : int
+        num : int, optional
             The number of rho values for which F(rho) should be
             tabulated. 
         cutoff : float, optional
@@ -226,7 +278,7 @@ class EAMFS():
             (num - 1) * delta.
         delta : float, optional
             The rho step size to use for the tabulation.  If not given, will
-            be set as cutoff / (num - 1)
+            be set as cutoff / (num - 1).
         """
         # Get current rho values if they exist
         try:
@@ -254,13 +306,27 @@ class EAMFS():
                 self.set_F_rho(symbol, table=self.F_rho(symbol), rho=old_rho)
 
     @property
-    def symbols(self):
+    def symbols(self) -> list:
         """list : The list of symbol models currently set"""
         return deepcopy(self.__symbol)
 
-    def symbol_info(self, symbol=None):
+    def symbol_info(self,
+                    symbol: Optional[str] = None) -> dict:
         """
-        Gets the assigned information associated with a symbol.
+        Gets the assigned information associated with one of the potential's
+        symbol models.
+
+        Parameters
+        ----------
+        symbol: str, optional
+            The symbol model to get information for.  Optional if the potential
+            only has one model, i.e. is a single element model.
+
+        Returns
+        -------
+        dict
+            Contains the symbol model values of symbol, number, mass, alat and
+            lattice.
         """
         if symbol is None:
             if len(self.symbols) == 1:
@@ -279,25 +345,30 @@ class EAMFS():
             'lattice': self.__lattice[symbol],
         }
 
-    def set_symbol_info(self, symbol, number, mass, alat, lattice):
+    def set_symbol_info(self,
+                        symbol: Union[str, list],
+                        number: Union[int, list],
+                        mass: Union[float, list],
+                        alat: Union[float, list],
+                        lattice: Union[str, list]):
         """
-        Sets information for symbol model(s).
+        Sets the information for one or more of the potential's symbol models.
         
         Parameters
         ----------
-        symbol : str or list, optional
+        symbol : str or list
             Model symbol(s).  Equal numbers of symbol, number, mass, alat and
             lattice must be given.
-        number : int or list, optional
+        number : int or list
             Element number(s).  Equal numbers of symbol, number, mass, alat and
             lattice must be given.
-        mass : float or list, optional
+        mass : float or list
             Particle mass(es).  Equal numbers of symbol, number, mass, alat and
             lattice must be given.
-        alat : float or list, optional
+        alat : float or list
             Lattice constant(s).  Equal numbers of symbol, number,
             mass, alat and lattice must be given.
-        lattice : str or list, optional
+        lattice : str or list
             Lattice type(s). Equal numbers of symbol, number, mass,
             alat and lattice must be given.
         """
@@ -322,7 +393,9 @@ class EAMFS():
             self.__alat[symbol[i]] = alat[i]
             self.__lattice[symbol[i]] = lattice[i]
 
-    def F_rho(self, symbol=None, rho=None):
+    def F_rho(self,
+              symbol: Optional[str] = None,
+              rho: Optional[npt.ArrayLike] = None) -> np.ndarray:
         """
         Returns F(rho) values for a given symbol model.
 
@@ -334,6 +407,11 @@ class EAMFS():
         rho : array-like, optional
             The value(s) of rho to evaluate F_rho at.  If not given, will
             use the rho values set.
+        
+        Returns
+        -------
+        numpy.ndarray
+            The F(rho) values corresponding to the given/set rho values.
         """
         # Handle default symbol
         if symbol is None:
@@ -370,7 +448,12 @@ class EAMFS():
         else:
             raise KeyError(f'F(rho) not set for {symbol}')
 
-    def set_F_rho(self, symbol, table=None, rho=None, fxn=None, **kwargs):
+    def set_F_rho(self,
+                  symbol: str,
+                  table: Optional[npt.ArrayLike] = None,
+                  rho: Optional[npt.ArrayLike] = None,
+                  fxn: Optional[Callable] = None,
+                  **kwargs):
         """
         Sets the F(rho) function for a symbol.
         
@@ -428,20 +511,27 @@ class EAMFS():
             if symbol in self.__F_rho_table:
                 del self.__F_rho_table[symbol]
 
-    def rho_r(self, symbol=None, r=None):
+    def rho_r(self,
+              symbol: Union[str, list, None] = None,
+              r: Optional[npt.ArrayLike] = None) -> np.ndarray:
         """
         Returns rho(r) values for an atom of symbol[1] at an atom of
         symbol[0].
 
         Paramters
         ---------
-        symbol : str, optional
+        symbol : str or list, optional
             The model symbol(s) associated with the function.  If one symbol is
             given, it is assumed to be that symbol's elemental interaction. Not
             required if only one symbol has been set.
         r : array-like, optional
             The value(s) of r to evaluate rho(r) at.  If not given, will
             use the r values set.
+        
+        Returns
+        -------
+        numpy.ndarray
+            The rho(r) values corresponding to the given/set r values.
         """
         # Handle default symbol
         if symbol is None:
@@ -487,14 +577,19 @@ class EAMFS():
         else:
             raise KeyError(f'rho(r) not set for {symbolstr}')
 
-    def set_rho_r(self, symbol, table=None, r=None, fxn=None, **kwargs):
+    def set_rho_r(self,
+                  symbol: Union[str, list],
+                  table: Optional[npt.ArrayLike] = None,
+                  r: Optional[npt.ArrayLike] = None,
+                  fxn: Optional[Callable] = None,
+                  **kwargs):
         """
         Sets the rho(r) function for an atom of symbol[1] at an atom of
         symbol[0].
         
         Parameters
         ----------
-        symbol : str
+        symbol : str or list
             The model symbol(s) to associate the function with. If one symbol is
             given, it is assumed to be that symbol's elemental interaction.
         table : array-like, optional
@@ -555,7 +650,9 @@ class EAMFS():
             if symbolstr in self.__rho_r_table:
                 del self.__rho_r_table[symbolstr]
 
-    def rphi_r(self, symbol=None, r=None):
+    def rphi_r(self,
+               symbol: Union[str, list, None] = None,
+               r: Optional[npt.ArrayLike] = None) -> np.ndarray:
         """
         Returns r*phi(r) values for a pair interaction.
 
@@ -568,6 +665,11 @@ class EAMFS():
         r : array-like, optional
             The value(s) of r to evaluate r*phi(r) at.  If not given, will
             use the r values set.
+        
+        Returns
+        -------
+        numpy.ndarray
+            The r*phi(r) values corresponding to the given/set r values.
         """
         # Handle default symbol
         if symbol is None:
@@ -621,7 +723,12 @@ class EAMFS():
         else:
             raise KeyError(f'Neither r*phi(r) nor phi(r) set for {symbolstr}')
 
-    def set_rphi_r(self, symbol, table=None, r=None, fxn=None, **kwargs):
+    def set_rphi_r(self,
+                   symbol: Union[str, list],
+                   table: Optional[npt.ArrayLike] = None,
+                   r: Optional[npt.ArrayLike] = None,
+                   fxn: Optional[Callable] = None,
+                   **kwargs):
         """
         Sets the r*phi(r) function for a pair interaction.
         
@@ -694,19 +801,26 @@ class EAMFS():
         if symbolstr in self.__phi_r_table:
             del self.__phi_r_table[symbolstr]
 
-    def phi_r(self, symbol=None, r=None):
+    def phi_r(self,
+              symbol: Union[str, list, None] = None,
+              r: Optional[npt.ArrayLike] = None) -> np.ndarray:
         """
         Returns phi(r) values for a pair interaction.
 
         Paramters
         ---------
-        symbol : str, optional
+        symbol : str or list, optional
             The model symbol(s) associated with the function.  Can be either
             a single symbol for elemental interactions, or a pair of symbols.
             Not required if only one symbol has been set.
         r : array-like, optional
             The value(s) of r to evaluate phi(r) at.  If not given, will
             use the r values set.
+
+        Returns
+        -------
+        numpy.ndarray
+            The phi(r) values corresponding to the given/set r values.
         """
         # Handle default symbol
         if symbol is None:
@@ -762,7 +876,12 @@ class EAMFS():
         else:
             raise KeyError(f'Neither r*phi(r) nor phi(r) set for {symbolstr}')
 
-    def set_phi_r(self, symbol, table=None, r=None, fxn=None, **kwargs):
+    def set_phi_r(self,
+                  symbol: Union[str, list],
+                  table: Optional[npt.ArrayLike] = None,
+                  r: Optional[npt.ArrayLike] = None,
+                  fxn: Optional[Callable] = None,
+                  **kwargs):
         """
         Sets the phi(r) function for a pair interaction.
         
@@ -880,8 +999,16 @@ class EAMFS():
                 except:
                     print(symbols[0], symbols[1], 'not set')
 
-    def load(self, f):
-        """Reads in an eam/fs setfl file"""
+    def load(self, f: Union[str, Path, io.IOBase]):
+        """
+        Reads in an eam/fs setfl file.
+        
+        Parameters
+        ----------
+        f : path-like object or file-like object
+            The parameter file to read in, either as a file path or as an open
+            file-like object.
+        """
         
         if hasattr(f, 'readlines'):
             lines = f.readlines()
@@ -964,7 +1091,10 @@ class EAMFS():
 
                 c += self.numr
 
-    def build(self, f=None, xf='%25.16e', ncolumns=5):
+    def build(self,
+              f: Union[str, Path, io.IOBase, None] = None,
+              xf: str = '%25.16e',
+              ncolumns: int = 5) -> Optional[str]:
         """
         Constructs an eam/fs setfl parameter file.
         
@@ -1070,9 +1200,45 @@ class EAMFS():
         else:
             raise TypeError('f must be a path or a file-like object')
     
-    def plot_F_rho(self, symbols=None, n=0, figsize=None, matplotlib_axes=None,
-                   xlim=None, ylim=None):
+    def plot_F_rho(self,
+                   symbols: Union[str, list, None] = None,
+                   n: int = 0,
+                   figsize: Tuple[float, float] = None,
+                   matplotlib_axes: Optional[plt.axes] = None,
+                   xlim: Optional[Tuple[float, float]] = None,
+                   ylim: Optional[Tuple[float, float]] = None,
+                   ) -> Optional[plt.figure]:
+        """
+        Generates a plot of F(rho) vs. rho.
 
+        Parameters
+        ----------
+        symbols : str or list, optional
+            The symbol model(s) to include in the plot.  If not given, all
+            F(rho) functions will be plotted.
+        n : int, optional
+            Indicates which derivative of the function to plot.  Default
+            value is 0 (no derivative).  Derivatives are computed numerically
+            based on the tabulation values.
+        figsize : tuple, optional
+            The figsize parameter of matplotlib.pyplot.figure to use in
+            generating the figure.  Default value is (10, 6).  Ignored if
+            matplotlib_axes is given.
+        matplotlib_axes : matplotlib.pyplot.axes, optional
+            Allows for the plot to be added to an existing plotting axes rather
+            than generating a new figure.
+        xlim : tuple, optional
+            The range of values to plot along the x axis.  If not given will be
+            set to (0, max rho). 
+        ylim : tuple, optional
+            The range of values to plot along the y axis.  If not given will
+            use the default pyplot settings.
+
+        Returns
+        -------
+        matplotlib.pyplot.figure
+            The generated figure.  Returned if matplotlib_axes is not given.
+        """
         # Initial plot setup and parameters
         if matplotlib_axes is None:
             if figsize is None:
@@ -1115,9 +1281,47 @@ class EAMFS():
         if matplotlib_axes is None:
             return fig
 
-    def plot_rho_r(self, symbols=None, n=0, figsize=None, matplotlib_axes=None,
-                   xlim=None, ylim=None):
+    def plot_rho_r(self,
+                   symbols: Union[str, list, None] = None,
+                   n: int = 0,
+                   figsize: Tuple[float, float] = None,
+                   matplotlib_axes: Optional[plt.axes] = None,
+                   xlim: Optional[Tuple[float, float]] = None,
+                   ylim: Optional[Tuple[float, float]] = None,
+                   ) -> Optional[plt.figure]:
+        """
+        Generates a plot of rho(r) vs. r.
 
+        Parameters
+        ----------
+        symbols : str or list, optional
+            A list of the symbol model pairs to include in the plot.  For each
+            pair, the two symbols can be specified as a list or a single symbol
+            can be given for the self-interaction.  If no value is given, all
+            rho(r) functions will be plotted.
+        n : int, optional
+            Indicates which derivative of the function to plot.  Default
+            value is 0 (no derivative).  Derivatives are computed numerically
+            based on the tabulation values.
+        figsize : tuple, optional
+            The figsize parameter of matplotlib.pyplot.figure to use in
+            generating the figure.  Default value is (10, 6).  Ignored if
+            matplotlib_axes is given.
+        matplotlib_axes : matplotlib.pyplot.axes, optional
+            Allows for the plot to be added to an existing plotting axes rather
+            than generating a new figure.
+        xlim : tuple, optional
+            The range of values to plot along the x axis.  If not given will be
+            set to (0, max r). 
+        ylim : tuple, optional
+            The range of values to plot along the y axis.  If not given will
+            use the default pyplot settings.
+
+        Returns
+        -------
+        matplotlib.pyplot.figure
+            The generated figure.  Returned if matplotlib_axes is not given.
+        """
         # Initial plot setup and parameters
         if matplotlib_axes is None:
             if figsize is None:
@@ -1166,9 +1370,47 @@ class EAMFS():
         if matplotlib_axes is None:
             return fig
         
-    def plot_rphi_r(self, symbols=None, n=0, figsize=None, matplotlib_axes=None,
-                    xlim=None, ylim=None):
+    def plot_rphi_r(self,
+                    symbols: Union[str, list, None] = None,
+                    n: int = 0,
+                    figsize: Tuple[float, float] = None,
+                    matplotlib_axes: Optional[plt.axes] = None,
+                    xlim: Optional[Tuple[float, float]] = None,
+                    ylim: Optional[Tuple[float, float]] = None,
+                    ) -> Optional[plt.figure]:
+        """
+        Generates a plot of r*phi(r) vs. r.
 
+        Parameters
+        ----------
+        symbols : str or list, optional
+            A list of the symbol model pairs to include in the plot.  For each
+            pair, the two symbols can be specified as a list or a single symbol
+            can be given for the self-interaction.  If no value is given, all
+            r*phi(r) functions will be plotted.
+        n : int, optional
+            Indicates which derivative of the function to plot.  Default
+            value is 0 (no derivative).  Derivatives are computed numerically
+            based on the tabulation values.
+        figsize : tuple, optional
+            The figsize parameter of matplotlib.pyplot.figure to use in
+            generating the figure.  Default value is (10, 6).  Ignored if
+            matplotlib_axes is given.
+        matplotlib_axes : matplotlib.pyplot.axes, optional
+            Allows for the plot to be added to an existing plotting axes rather
+            than generating a new figure.
+        xlim : tuple, optional
+            The range of values to plot along the x axis.  If not given will be
+            set to (0, max r). 
+        ylim : tuple, optional
+            The range of values to plot along the y axis.  If not given will
+            use the default pyplot settings.
+
+        Returns
+        -------
+        matplotlib.pyplot.figure
+            The generated figure.  Returned if matplotlib_axes is not given.
+        """
         # Initial plot setup and parameters
         if matplotlib_axes is None:
             if figsize is None:
@@ -1216,9 +1458,47 @@ class EAMFS():
         if matplotlib_axes is None:
             return fig
         
-    def plot_phi_r(self, symbols=None, n=0, figsize=None, matplotlib_axes=None,
-                   xlim=None, ylim=None):
+    def plot_phi_r(self,
+                   symbols: Union[str, list, None] = None,
+                   n: int = 0,
+                   figsize: Tuple[float, float] = None,
+                   matplotlib_axes: Optional[plt.axes] = None,
+                   xlim: Optional[Tuple[float, float]] = None,
+                   ylim: Optional[Tuple[float, float]] = None,
+                   ) -> Optional[plt.figure]:
+        """
+        Generates a plot of rho(r) vs. r.
 
+        Parameters
+        ----------
+        symbols : str or list, optional
+            A list of the symbol model pairs to include in the plot.  For each
+            pair, the two symbols can be specified as a list or a single symbol
+            can be given for the self-interaction.  If no value is given, all
+            phi(r) functions will be plotted.
+        n : int, optional
+            Indicates which derivative of the function to plot.  Default
+            value is 0 (no derivative).  Derivatives are computed numerically
+            based on the tabulation values.
+        figsize : tuple, optional
+            The figsize parameter of matplotlib.pyplot.figure to use in
+            generating the figure.  Default value is (10, 6).  Ignored if
+            matplotlib_axes is given.
+        matplotlib_axes : matplotlib.pyplot.axes, optional
+            Allows for the plot to be added to an existing plotting axes rather
+            than generating a new figure.
+        xlim : tuple, optional
+            The range of values to plot along the x axis.  If not given will be
+            set to (0, max r). 
+        ylim : tuple, optional
+            The range of values to plot along the y axis.  If not given will
+            use the default pyplot settings.
+
+        Returns
+        -------
+        matplotlib.pyplot.figure
+            The generated figure.  Returned if matplotlib_axes is not given.
+        """
         # Initial plot setup and parameters
         if matplotlib_axes is None:
             if figsize is None:

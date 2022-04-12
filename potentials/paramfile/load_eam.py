@@ -1,7 +1,13 @@
 # coding: utf-8
+# Standard libraries
+import io
+from typing import Optional, Union
+
+# Local imports
 from . import EAM, EAMAlloy, EAMFS
 
-def load_eam(f, style=None):
+def load_eam(f: Union[str, io.IOBase],
+             style: Optional[str] = None) -> Union[EAM, EAMAlloy, EAMFS]:
     """
     Loads a LAMMPS-compatible EAM parameter file.
     
