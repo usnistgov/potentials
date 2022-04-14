@@ -1140,7 +1140,7 @@ class EAMAlloy():
         for i in range(nsymbols):
             for j in range(i+1):
                 symbolpair = [self.symbols[i], self.symbols[j]]
-                vals.append(self.phi_r(symbolpair))
+                vals.append(self.rphi_r(symbolpair))
         vals = np.hstack(vals)
 
         # Tabulate values
