@@ -95,7 +95,7 @@ class PotentialLAMMPSBuilder(object):
         self.atom_style = kwargs.pop('atom_style', None)
         self.pair_style = kwargs.pop('pair_style', None)
         
-        self.allsymbols = kwargs.pop('allsymbols', None)
+        self.allsymbols = kwargs.pop('allsymbols', False)
         self.status = kwargs.pop('status', 'active')
         self.comments = kwargs.pop('comments', None)
         self.dois = kwargs.pop('dois', None)
@@ -199,12 +199,15 @@ class PotentialLAMMPSBuilder(object):
     def allsymbols(self, value: Union[str, bool]):
         if isinstance(value, bool):
             self.__allsymbols = value
-        elif value.lower() == 'true':
-            self.__allsymbols = True
-        elif value.lower() == 'false':
-            self.__allsymbols = False
+        elif isinstance(value, str):
+            if value.lower() == 'true':
+                self.__allsymbols = True
+            elif value.lower() == 'false':
+                self.__allsymbols = False
+            else:
+                raise ValueError(f'Invalid allsymbols value "{value}"')
         else:
-            raise ValueError(f'Invalid allsymbols value "{value}"')
+            raise TypeError('allsymbols must be bool or bool string.')   
 
     @property
     def status(self) -> str:
