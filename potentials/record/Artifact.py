@@ -1,5 +1,8 @@
 # coding: utf-8
+# Standard Python libraries
+import io
 from pathlib import Path
+from typing import Optional, Tuple, Union
 
 # https://requests.readthedocs.io/en/master/
 import requests
@@ -7,6 +10,7 @@ import requests
 # https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
+# https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
 
 class Artifact(Record):
@@ -14,14 +18,17 @@ class Artifact(Record):
     Class for describing artifacts (files accessible online). Note that this is
     meant as a component class for other record objects.
     """
-    def __init__(self, model=None, name=None, **kwargs):
+    def __init__(self,
+                 model: Union[str, io.IOBase, DM, None] = None,
+                 name: Optional[str] = None,
+                 **kwargs):
         """
         Initializes an Artifact object to describe a file accessible online
 
         Parameters
         ----------
-        model : str or DataModelDict, optional
-            Model content or file path to model content.
+        model : str, file-like object or DataModelDict, optional
+            A JSON/XML data model for the content.
         name : str, optional
             The name to assign to the record.  Not used by this class.
         filename : str, optional
@@ -35,57 +42,59 @@ class Artifact(Record):
         super().__init__(model=model, name=name, **kwargs)
 
     @property
-    def modelroot(self):
+    def modelroot(self) -> str:
         """str: The root element of the content"""
         return 'artifact'
 
     @property
-    def xsl_filename(self):
+    def xsl_filename(self) -> Tuple[str, str]:
         """tuple: The module path and file name of the record's xsl html transformer"""
         return ('potentials.xsl', 'artifact.xsl')
 
     @property
-    def xsd_filename(self):
+    def xsd_filename(self) -> Tuple[str, str]:
         """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'artifact.xsd')
 
     @property
-    def filename(self):
+    def filename(self) -> Optional[str]:
         """str or None: name of the file"""
         return self.__filename
     
     @filename.setter
-    def filename(self, v):
+    def filename(self, v: Optional[str]):
         if v is None:
             self.__filename = None
         else:
             self.__filename = str(v)
 
     @property
-    def label(self):
+    def label(self) -> Optional[str]:
         """str or None: short descriptive label"""
         return self.__label
     
     @label.setter
-    def label(self, v):
+    def label(self, v: Optional[str]):
         if v is None:
             self.__label = None
         else:
             self.__label = str(v)
     
     @property
-    def url(self):
+    def url(self) -> Optional[str]:
         """str or None: URL where file can be downloaded"""
         return self.__url
     
     @url.setter
-    def url(self, v):
+    def url(self, v: Optional[str]):
         if v is None:
             self.__url = None
         else:
             self.__url = str(v)
 
-    def set_values(self, name=None, **kwargs):
+    def set_values(self,
+                   name: Optional[str] = None,
+                   **kwargs):
         """
         Sets an Artifact object's attributes
 
@@ -105,7 +114,9 @@ class Artifact(Record):
         self.label = kwargs.get('label', None)
         self.url = kwargs.get('url', None)
 
-    def load_model(self, model, name=None):
+    def load_model(self,
+                   model: Union[str, io.IOBase, DM],
+                   name: Optional[str] = None):
         """"
         Loads the object info from data model content
         
@@ -122,7 +133,7 @@ class Artifact(Record):
         self.label = artifact['web-link'].get('label', None)
         self.filename = artifact['web-link'].get('link-text', None)
     
-    def build_model(self):
+    def build_model(self) -> DM:
         """
         Returns the object info as data model content
         
@@ -145,7 +156,7 @@ class Artifact(Record):
         self._set_model(model)
         return model
 
-    def metadata(self):
+    def metadata(self) -> dict:
         """
         Generates a dict of simple metadata values associated with the record.
         Useful for quickly comparing records and for building pandas.DataFrames
@@ -158,7 +169,10 @@ class Artifact(Record):
 
         return meta
 
-    def download(self, targetdir, overwrite=False, verbose=False):
+    def download(self,
+                 targetdir: Union[str, Path],
+                 overwrite: bool = False,
+                 verbose: bool = False):
         """
         Downloads the artifact from its URL to the given target directory.
 

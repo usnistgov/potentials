@@ -1,34 +1,41 @@
 # coding: utf-8
 # Standard Python libraries
+import io
+from typing import Optional, Tuple, Union
 from pathlib import Path
 import datetime
 
 # https://numpy.org/
 import numpy as np
+import numpy.typing as npt
 
 # https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
+
+# https://github.com/usnistgov/yabadaba
+from yabadaba import query
 
 # local imports
 from ..tools import atomic_mass, aslist
 from .BasePotentalLAMMPS import BasePotentialLAMMPS
 from .Artifact import Artifact
 
-from yabadaba import query
-
 class PotentialLAMMPS(BasePotentialLAMMPS):
     """
     Class for building LAMMPS input lines from a potential-LAMMPS data model.
     """
     
-    def __init__(self, model=None, name=None, pot_dir=None):
+    def __init__(self,
+                 model: Union[str, io.IOBase, DM, None] = None,
+                 name: Optional[str] = None,
+                 pot_dir: Optional[str] = None):
         """
         Initializes an instance and loads content from a data model.
         
         Parameters
         ----------
-        model : str or file-like object
-            A JSON/XML data model containing a potential-LAMMPS branch.
+        model : str, file-like object or DataModelDict, optional
+            A JSON/XML data model for the content.
         name : str, optional
             The record name to use.  If not given, this will be set to the
             potential's id.
@@ -42,17 +49,17 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             self.pot_dir = pot_dir
 
     @property
-    def style(self):
+    def style(self) -> str:
         """str: The record style"""
         return 'potential_LAMMPS'
 
     @property
-    def modelroot(self):
+    def modelroot(self) -> str:
         """str : The root element for the associated data model"""
         return 'potential-LAMMPS'
 
     @property
-    def fileurls(self):
+    def fileurls(self) -> list:
         """list : The URLs where the associated files can be downloaded"""
         urls = []
         for artifact in self.artifacts:
@@ -60,21 +67,21 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         return urls
     
     @property
-    def dois(self):
+    def dois(self) -> list:
         """list : The publication DOIs associated with the potential"""
         if self.model is None:
             raise AttributeError('No model information loaded')
         return self.__dois
 
     @property
-    def comments(self):
+    def comments(self) -> str:
         """str : Descriptive comments detailing the potential information"""
         if self.model is None:
             raise AttributeError('No model information loaded')
         return self.__comments
 
     @property
-    def print_comments(self):
+    def print_comments(self) -> str:
         """str : LAMMPS print commands of the potential comments"""
 
         # Split defined comments
@@ -98,7 +105,7 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         return out
  
     @property
-    def artifacts(self):
+    def artifacts(self) -> list:
         """list : The list of file artifacts for the potential including download URLs."""
         return self.__artifacts
 
@@ -108,8 +115,11 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         
         Parameters
         ----------
-        model : str or file-like object
-            A JSON/XML data model containing a potential-LAMMPS branch.
+        model : str, file-like object or DataModelDict
+            A JSON/XML data model for the content.
+        name : str, optional
+            The name to assign to the record.  Often inferred from other
+            attributes if not given.
         pot_dir : str, optional
             The path to a directory containing any artifacts associated with
             the potential.  Default value is None, which assumes any required
@@ -163,11 +173,55 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             self._masses.append(mass)
             self._charges.append(charge)
     
-    def mongoquery(self, name=None, key=None, id=None,
-                   potid=None, potkey=None, units=None,
-                   atom_style=None, pair_style=None, status=None,
-                   symbols=None, elements=None):
+    def mongoquery(self,
+                   name: Union[str, list, None] = None,
+                   key: Union[str, list, None] = None,
+                   id: Union[str, list, None] = None,
+                   potid: Union[str, list, None] = None,
+                   potkey: Union[str, list, None] = None,
+                   units: Union[str, list, None] = None,
+                   atom_style: Union[str, list, None] = None,
+                   pair_style: Union[str, list, None] = None,
+                   status: Union[str, list, None] = None,
+                   symbols: Union[str, list, None] = None,
+                   elements: Union[str, list, None] = None) -> dict:
+        """
+        Builds a Mongo-style query based on kwargs values for the record style.
         
+        Parameters
+        ----------
+        name : str or list, optional
+            The record name(s) to parse by.
+        key : str or list, optional
+            The UUID4 key(s) associated with the LAMMPS implementations to
+            parse by.
+        id : str or list, optional
+            The unique id(s) associated with the LAMMPS implementations to
+            parse by.
+        potid : str or list, optional
+            The unique id(s) associated with the general potential model to
+            parse by.
+        potkey : str or list, optional
+            The UUID4 key(s) associated with the general potential model to
+            parse by.
+        units : str or list, optional
+            The LAMMPS unit style(s) to parse by.
+        atom_style : str or list, optional
+            The LAMMPS atom_style values(s) to parse by.
+        pair_style : str or list, optional
+            The LAMMPS pair_style values(s) to parse by.
+        status : str or list, optional
+            The implementation status value(s) to parse by.
+        symbols : str or list, optional
+            Symbol model(s) to parse by.
+        elements : str or list, optional
+            Elemental tag(s) to parse by.
+        
+        Returns
+        -------
+        dict
+            The Mongo-style query
+        """
         if status is not None:
             status = aslist(status)
             if 'active' in status:
@@ -190,10 +244,52 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
 
         return mquery
 
-    def cdcsquery(self, key=None, id=None, potid=None, potkey=None,
-                  units=None, atom_style=None, pair_style=None, status=None,
-                  symbols=None, elements=None):
-
+    def cdcsquery(self,
+                  key: Union[str, list, None] = None,
+                  id: Union[str, list, None] = None,
+                  potid: Union[str, list, None] = None,
+                  potkey: Union[str, list, None] = None,
+                  units: Union[str, list, None] = None,
+                  atom_style: Union[str, list, None] = None,
+                  pair_style: Union[str, list, None] = None,
+                  status: Union[str, list, None] = None,
+                  symbols: Union[str, list, None] = None,
+                  elements: Union[str, list, None] = None) -> dict:
+        """
+        Builds a CDCS-style query based on kwargs values for the record style.
+        
+        Parameters
+        ----------
+        key : str or list, optional
+            The UUID4 key(s) associated with the LAMMPS implementations to
+            parse by.
+        id : str or list, optional
+            The unique id(s) associated with the LAMMPS implementations to
+            parse by.
+        potid : str or list, optional
+            The unique id(s) associated with the general potential model to
+            parse by.
+        potkey : str or list, optional
+            The UUID4 key(s) associated with the general potential model to
+            parse by.
+        units : str or list, optional
+            The LAMMPS unit style(s) to parse by.
+        atom_style : str or list, optional
+            The LAMMPS atom_style values(s) to parse by.
+        pair_style : str or list, optional
+            The LAMMPS pair_style values(s) to parse by.
+        status : str or list, optional
+            The implementation status value(s) to parse by.
+        symbols : str or list, optional
+            Symbol model(s) to parse by.
+        elements : str or list, optional
+            Elemental tag(s) to parse by.
+        
+        Returns
+        -------
+        dict
+            The CDCS-style query
+        """
         if status is not None:
             status = aslist(status)
             if 'active' in status:
@@ -216,13 +312,11 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         return mquery
     
     @property
-    def symbolsets(self):
+    def symbolsets(self) -> list:
         """list : The sets of symbols that correspond to all related potentials"""
         return [self._symbols]
 
-    
-
-    def metadata(self):
+    def metadata(self) -> dict:
         """Returns a flat dict of the metadata fields"""
         
         d = super().metadata()
@@ -234,19 +328,25 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
 
         return d
 
-    def pair_info(self, symbols=None, masses=None, units=None, prompt=False,
-                  comments=True, lammpsdate=datetime.date(2020, 10, 29)):
+    def pair_info(self,
+                  symbols: Union[str, list, None] = None,
+                  masses: Union[float, list, None] = None,
+                  units: Optional[str] = None,
+                  prompt: bool = False,
+                  comments: bool = True,
+                  lammpsdate: datetime.date = datetime.date(2020, 10, 29)
+                  ) -> str:
         """
         Generates the LAMMPS input command lines associated with the Potential
         and a list of atom-model symbols.
         
         Parameters
         ----------
-        symbols : list of str, optional
+        symbols : str or list, optional
             List of atom-model symbols corresponding to the atom types in a
             system.  If None (default), then all atom-model symbols will
             be included in the order that they are listed in the data model.
-        masses : list, optional
+        masses : float or list, optional
             Can be given to override the default symbol-based masses for each
             atom type.  Must be a list of the same length as symbols.  Any
             values of None in the list indicate that the default value be used
@@ -375,7 +475,10 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         
         return info
     
-    def __pair_terms(self, terms, system_symbols=None, coeff_symbols=None):
+    def __pair_terms(self,
+                     terms: list,
+                     system_symbols: Optional[list] = None,
+                     coeff_symbols: Optional[list ] = None) -> str:
         """utility function used by self.pair_info() for composing lines from terms"""
         if system_symbols is None:
             system_symbols = []
@@ -411,10 +514,17 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         
         return line
     
-    def pair_data_info(self, filename, pbc, symbols=None, masses=None,
-                       atom_style=None, units=None, prompt=False,
-                       comments=True,
-                       lammpsdate=datetime.date(2020, 10, 29)):
+    def pair_data_info(self,
+                       filename: Union[str, Path],
+                       pbc: npt.ArrayLike,
+                       symbols: Union[str, list, None] = None,
+                       masses: Union[float, list, None] = None,
+                       atom_style: Optional[str] = None,
+                       units: Optional[str] = None,
+                       prompt: bool = False,
+                       comments: bool = True,
+                       lammpsdate: datetime.date = datetime.date(2020, 10, 29)
+                       ) -> str:
         """
         Generates the LAMMPS command lines associated with both a potential
         and reading an atom data file.
@@ -425,11 +535,11 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             The file path to the atom data file for LAMMPS to read in.
         pbc : array-like object
             The three boolean periodic boundary conditions.
-        symbols : list of str, optional
+        symbols : str or list, optional
             List of atom-model symbols corresponding to the atom types in a
             system.  If None (default), then all atom-model symbols will
             be included in the order that they are listed in the data model.
-        masses : list, optional
+        masses : float or list, optional
             Can be given to override the default symbol-based masses for each
             atom type.  Must be a list of the same length as symbols.  Any
             values of None in the list indicate that the default value be used
@@ -485,9 +595,15 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
 
         return info
 
-    def pair_restart_info(self, filename, symbols=None, masses=None,
-                          units=None, prompt=False, comments=True,
-                          lammpsdate=datetime.date(2020, 10, 29)):
+    def pair_restart_info(self,
+                          filename: Union[str, Path],
+                          symbols: Union[str, list, None] = None,
+                          masses: Union[float, list, None] = None,
+                          units: Optional[str] = None,
+                          prompt: bool = False,
+                          comments: bool = True,
+                          lammpsdate: datetime.date = datetime.date(2020, 10, 29)
+                          ) -> str:
         """
         Generates the LAMMPS command lines associated with both a potential
         and reading an atom data file.
@@ -496,11 +612,11 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         ----------
         filename : path-like object
             The file path to the restart file for LAMMPS to read in.
-        symbols : list of str, optional
+        symbols : str or list, optional
             List of atom-model symbols corresponding to the atom types in a
             system.  If None (default), then all atom-model symbols will
             be included in the order that they are listed in the data model.
-        masses : list, optional
+        masses : float or list, optional
             Can be given to override the default symbol-based masses for each
             atom type.  Must be a list of the same length as symbols.  Any
             values of None in the list indicate that the default value be used

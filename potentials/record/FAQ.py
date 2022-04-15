@@ -1,8 +1,17 @@
 # coding: utf-8
+# Standard Python libraries
+import io
+from typing import Optional, Tuple, Union
+
+# https://github.com/usnistgov/DataModelDict
+from DataModelDict import DataModelDict as DM
+
+# https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
 from yabadaba import load_query 
 
-from DataModelDict import DataModelDict as DM
+# https://pandas.pydata.org/
+import pandas as pd
 
 __all__ = ['FAQ']
 
@@ -11,14 +20,17 @@ class FAQ(Record):
     Class for representing FAQ records that document the FAQs for the NIST
     Interatomic Potentials Repository.
     """
-    def __init__(self, model=None, name=None, **kwargs):
+    def __init__(self,
+                 model: Union[str, io.IOBase, DM, None] = None,
+                 name: Optional[str] = None,
+                 **kwargs):
         """
         Initializes a Record object for a given style.
         
         Parameters
         ----------
-        model : str, file-like object, DataModelDict
-            The contents of the record.
+        model : str, file-like object or DataModelDict, optional
+            A JSON/XML data model for the content.
         name : str, optional
             The unique name to assign to the record.  If model is a file
             path, then the default record name is the file name without
@@ -29,57 +41,59 @@ class FAQ(Record):
         super().__init__(model=model, name=name, **kwargs)
 
     @property
-    def style(self):
+    def style(self) -> str:
         """str: The record style"""
         return 'FAQ'
 
     @property
-    def modelroot(self):
+    def modelroot(self) -> str:
         """str: The root element of the content"""
         return 'faq'
     
     @property
-    def xsl_filename(self):
+    def xsl_filename(self) -> Tuple[str, str]:
         """tuple: The module path and file name of the record's xsl html transformer"""
         return ('potentials.xsl', 'FAQ.xsl')
 
     @property
-    def xsd_filename(self):
+    def xsd_filename(self) -> Tuple[str, str]:
         """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'FAQ.xsd')
 
     @property
-    def question(self):
+    def question(self) -> Optional[str]:
         """str: The frequently asked question."""
         return self.__question
 
     @question.setter
-    def question(self, value):
+    def question(self, value: Optional[str]):
         if value is None:
             self.__question = None
         else:
             self.__question = str(value)
 
     @property
-    def answer(self):
+    def answer(self) -> Optional[str]:
         """str: The answer to the frequently asked question."""
         return self.__answer
 
     @answer.setter
-    def answer(self, value):
+    def answer(self, value: Optional[str]):
         if value is None:
             self.__answer = None
         else:
             self.__answer = str(value)
 
-    def load_model(self, model, name=None):
+    def load_model(self,
+                   model: Union[str, io.IOBase, DM],
+                   name: Optional[str] = None):
         """
         Loads record contents from a given model.
 
         Parameters
         ----------
-        model : str or DataModelDict
-            The model contents of the record to load.
+        model : str, file-like object or DataModelDict
+            A JSON/XML data model for the content.
         name : str, optional
             The name to assign to the record.  Often inferred from other
             attributes if not given.
@@ -90,7 +104,10 @@ class FAQ(Record):
         self.question = faq['question']
         self.answer = faq['answer']
 
-    def set_values(self, name=None, question=None, answer=None):
+    def set_values(self,
+                   name: Optional[str] = None,
+                   question: Optional[str] = None,
+                   answer: Optional[str] = None):
         """
         Set multiple object attributes at the same time.
 
@@ -111,7 +128,7 @@ class FAQ(Record):
         if name is not None:
             self.name = name
 
-    def build_model(self):
+    def build_model(self) -> DM:
         """
         Generates and returns model content based on the values set to object.
         """
@@ -123,7 +140,7 @@ class FAQ(Record):
         self._set_model(model)
         return model
 
-    def metadata(self):
+    def metadata(self) -> dict:
         """
         Generates a dict of simple metadata values associated with the record.
         Useful for quickly comparing records and for building pandas.DataFrames
@@ -136,7 +153,7 @@ class FAQ(Record):
         return meta
 
     @property
-    def queries(self):
+    def queries(self) -> dict:
         """dict: Query objects and their associated parameter names."""
         return {
             'question': load_query(
@@ -149,7 +166,11 @@ class FAQ(Record):
                 path=f'{self.modelroot}.answer'),
         }
 
-    def pandasfilter(self, dataframe, name=None, question=None, answer=None):
+    def pandasfilter(self,
+                     dataframe: pd.DataFrame,
+                     name: Union[str, list, None] = None,
+                     question: Union[str, list, None] = None,
+                     answer: Union[str, list, None] = None) -> pd.Series:
         """
         Filters a pandas.DataFrame based on kwargs values for the record style.
         
@@ -173,7 +194,10 @@ class FAQ(Record):
                                        answer=answer)
         return matches
 
-    def mongoquery(self, name=None, question=None, answer=None):
+    def mongoquery(self,
+                   name: Union[str, list, None] = None,
+                   question: Union[str, list, None] = None,
+                   answer: Union[str, list, None] = None) -> dict:
         """
         Builds a Mongo-style query based on kwargs values for the record style.
         
@@ -194,7 +218,9 @@ class FAQ(Record):
         mquery = super().mongoquery(name=name, question=question, answer=answer)
         return mquery
 
-    def cdcsquery(self, question=None, answer=None):
+    def cdcsquery(self,
+                  question: Union[str, list, None] = None,
+                  answer: Union[str, list, None] = None) -> dict:
         """
         Builds a CDCS-style query based on kwargs values for the record style.
         

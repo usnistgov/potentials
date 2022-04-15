@@ -1,6 +1,8 @@
 # coding: utf-8
 # Standard libraries
+import io
 import string
+from typing import Optional, Tuple, Union
 
 # https://github.com/avian2/unidecode
 from unidecode import unidecode
@@ -14,22 +16,28 @@ from bibtexparser.bparser import BibTexParser
 from bibtexparser.customization import convert_to_unicode
 from bibtexparser.bibdatabase import BibDatabase
 
+# https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
 from yabadaba import load_query 
 
+# https://pandas.pydata.org/
+import pandas as pd
 class Citation(Record):
     """
     Class for representing Citation metadata records.
     """
 
-    def __init__(self, model=None, name=None, **kwargs):
+    def __init__(self,
+                 model: Union[str, io.IOBase, DM, None] = None,
+                 name: Optional[str] = None,
+                 **kwargs):
         """
         Initializes a Record object for a given style.
         
         Parameters
         ----------
-        model : str, file-like object, DataModelDict
-            The contents of the record.
+        model : str, file-like object or DataModelDict, optional
+            A JSON/XML data model for the content.
         name : str, optional
             The unique name to assign to the record.  If model is a file
             path, then the default record name is the file name without
@@ -43,32 +51,32 @@ class Citation(Record):
         super().__init__(model=model, name=name, **kwargs)
 
     @property
-    def style(self):
+    def style(self) -> str:
         """str: The record style"""
         return 'Citation'
 
     @property
-    def modelroot(self):
+    def modelroot(self) -> str:
         """str: The root element of the content"""
         return 'citation'
     
     @property
-    def xsl_filename(self):
+    def xsl_filename(self) -> Tuple[str, str]:
         """tuple: The module path and file name of the record's xsl html transformer"""
         return ('potentials.xsl', 'Citation.xsl')
 
     @property
-    def xsd_filename(self):
+    def xsd_filename(self) -> Tuple[str, str]:
         """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'Citation.xsd')
 
     @property
-    def bib(self):
+    def bib(self) -> dict:
         """dict : Contains the bibtex fields"""
         return self.__bib
 
     @property
-    def doifname(self):
+    def doifname(self) -> str:
         """str: file path compatible form of doi"""
         try:
             name = self.bib['doi']
@@ -76,14 +84,16 @@ class Citation(Record):
             name = self.bib['note']
         return name.lower().replace('/', '_')
 
-    def load_model(self, model, name=None):
+    def load_model(self,
+                   model: Union[str, io.IOBase, DM],
+                   name: Optional[str] = None):
         """
         Loads the object info from data model content
         
         Parameters
         ----------
-        model : str or DataModelDict
-            Model content or file path to model content.
+        model : str, file-like object or DataModelDict
+            A JSON/XML data model for the content.
         name : str, optional
             The name to use when saving the record.
         """
@@ -111,7 +121,9 @@ class Citation(Record):
         except:
             self.build_model()
     
-    def set_values(self, name=None, **kwargs):
+    def set_values(self,
+                   name: Optional[str] = None,
+                   **kwargs):
         """
         Set multiple object attributes at the same time.
 
@@ -133,7 +145,7 @@ class Citation(Record):
         else:
             self.name = name
 
-    def build_model(self):
+    def build_model(self) -> DM:
         """
         Returns the object info as data model content
         
@@ -183,13 +195,13 @@ class Citation(Record):
         self._set_model(model)
         return model
     
-    def build_bibtex(self):
+    def build_bibtex(self) -> str:
         """str : bibtex of citation"""
         bib_database = BibDatabase()
         bib_database.entries = [self.bib]
         return bibtexparser.dumps(bib_database)
 
-    def metadata(self):
+    def metadata(self) -> dict:
         """Returns a flat dict representation of the object"""
         meta = {}
         meta['name'] = self.name
@@ -198,7 +210,7 @@ class Citation(Record):
         return meta
 
     @property
-    def queries(self):
+    def queries(self) -> dict:
         """dict: Query objects and their associated parameter names."""
         return {
             'year': load_query(
@@ -231,9 +243,16 @@ class Citation(Record):
                 path=f'{self.modelroot}.abstract'),
         }
 
-    def pandasfilter(self, dataframe, name=None, year=None, volume=None,
-                     title=None, journal=None, doi=None, author=None,
-                     abstract=None):
+    def pandasfilter(self,
+                     dataframe: pd.DataFrame,
+                     name: Union[str, list, None] = None,
+                     year: Union[int, list, None] = None,
+                     volume: Union[int, list, None] = None,
+                     title: Union[str, list, None] = None,
+                     journal: Union[str, list, None] = None,
+                     doi: Union[str, list, None] = None,
+                     author: Union[str, list, None] = None,
+                     abstract: Union[str, list, None] = None) -> pd.Series:
         """
         Filters a pandas.DataFrame based on kwargs values for the record style.
         
@@ -270,9 +289,15 @@ class Citation(Record):
 
         return matches
 
-    def mongoquery(self, name=None, year=None, volume=None,
-                   title=None, journal=None, doi=None, author=None,
-                   abstract=None):
+    def mongoquery(self,
+                   name: Union[str, list, None] = None,
+                   year: Union[int, list, None] = None,
+                   volume: Union[int, list, None] = None,
+                   title: Union[str, list, None] = None,
+                   journal: Union[str, list, None] = None,
+                   doi: Union[str, list, None] = None,
+                   author: Union[str, list, None] = None,
+                   abstract: Union[str, list, None] = None) -> dict:
         """
         Builds a Mongo-style query based on kwargs values for the record style.
         
@@ -307,9 +332,14 @@ class Citation(Record):
                                     abstract=abstract)
         return mquery
 
-    def cdcsquery(self, year=None, volume=None,
-                  title=None, journal=None, doi=None, author=None,
-                  abstract=None):
+    def cdcsquery(self,
+                  year: Union[int, list, None] = None,
+                  volume: Union[int, list, None] = None,
+                  title: Union[str, list, None] = None,
+                  journal: Union[str, list, None] = None,
+                  doi: Union[str, list, None] = None,
+                  author: Union[str, list, None] = None,
+                  abstract: Union[str, list, None] = None) -> dict:
         """
         Builds a CDCS-style query based on kwargs values for the record style.
         
@@ -341,7 +371,7 @@ class Citation(Record):
         return mquery
 
     @property
-    def year_authors(self):
+    def year_authors(self) -> str:
         """
         str: Partial id for potentials that uses YEAR--LAST-F-M with up to 4 authors.
         """
@@ -360,7 +390,7 @@ class Citation(Record):
         return unidecode(partialid.replace("'", '').replace(" ", '-'))
 
     @property
-    def year_first_author(self):
+    def year_first_author(self) -> str:
         """
         str: Partial id for implementations that uses YEAR--LAST-F-M with only the first author.
         """
@@ -371,7 +401,7 @@ class Citation(Record):
         
         return unidecode(partialid.replace("'", '').replace(" ", '-'))
     
-    def parse_authors(self, authors):
+    def parse_authors(self, authors: str) -> DM:
         """
         Parse bibtex authors field.
 

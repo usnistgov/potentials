@@ -1,7 +1,8 @@
 # coding: utf-8
+# Standard Python libraries
+from typing import Tuple
 
 # https://numpy.org/
-from typing import Tuple
 import numpy as np
 import numpy.typing as npt
 

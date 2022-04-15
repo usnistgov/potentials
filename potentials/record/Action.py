@@ -1,10 +1,20 @@
+# coding: utf-8
+# Standard Python libraries
 import datetime
+import io
+from typing import Optional, Tuple, Union
 
+# https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
+# https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
 from yabadaba import load_query 
 
+# https://pandas.pydata.org/
+import pandas as pd
+
+# Local imports
 from . import Potential
 
 __all__ = ['Action']
@@ -14,7 +24,7 @@ class PotInfo():
     Component class for connecting information from a Potential Record to the
     Action record.
     """
-    def __init__(self, potential):
+    def __init__(self, potential: Union[str, DM, Potential.Potential]):
         """
         Builds a PotInfo component class.
 
@@ -67,36 +77,36 @@ class PotInfo():
                 self.__othername = None
     
     @property
-    def id(self):
+    def id(self) -> str:
         """str: The Potential's id"""
         return self.__id
 
     @property
-    def key(self):
+    def key(self) -> str:
         """str: The Potential's key"""
         return self.__key
 
     @property
-    def dois(self):
+    def dois(self) -> list:
         """list: The Potential's DOIs"""
         return self.__dois
 
     @property
-    def elements(self):
+    def elements(self) -> list:
         """list: The elements modeled by the Potential"""
         return self.__elements
     
     @property
-    def othername(self):
+    def othername(self) -> Optional[str]:
         """str or None: The Potential's othername"""
         return self.__othername
     
     @property
-    def fictional(self):
+    def fictional(self) -> bool:
         """bool: Flag indicating if the Potential is classified as fictional."""
         return self.__fictional
 
-    def build_model(self):
+    def build_model(self) -> DM:
         """
         Generates and returns model content based on the values set to object.
         """
@@ -125,7 +135,7 @@ class PotInfo():
         #self._set_model(model)
         return model
 
-    def metadata(self):
+    def metadata(self) -> dict:
         return {'id': self.id,
                 'key': self.key,
                 'dois': self.dois,
@@ -139,14 +149,17 @@ class Action(Record):
     Interatomic Potentials Repository.
     """
 
-    def __init__(self, model=None, name=None, **kwargs):
+    def __init__(self,
+                 model: Union[str, io.IOBase, DM, None] = None,
+                 name: Optional[str] = None,
+                 **kwargs):
         """
         Initializes a Record object for a given style.
         
         Parameters
         ----------
-        model : str, file-like object, DataModelDict
-            The contents of the record.
+        model : str, file-like object or DataModelDict, optional
+            A JSON/XML data model for the content.
         name : str, optional
             The unique name to assign to the record.  If model is a file
             path, then the default record name is the file name without
@@ -170,79 +183,81 @@ class Action(Record):
         super().__init__(model=model, name=name, **kwargs)
 
     @property
-    def style(self):
+    def style(self) -> str:
         """str: The record style"""
         return 'Action'
 
     @property
-    def modelroot(self):
+    def modelroot(self) -> str:
         """str: The root element of the content"""
         return 'action'
     
     @property
-    def xsl_filename(self):
+    def xsl_filename(self) -> Tuple[str, str]:
         """tuple: The module path and file name of the record's xsl html transformer"""
         return ('potentials.xsl', 'Action.xsl')
 
     @property
-    def xsd_filename(self):
+    def xsd_filename(self) -> Tuple[str, str]:
         """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'Action.xsd')
 
     @property
-    def date(self):
+    def date(self) -> datetime.date:
         """datetime.date: The date associated with the action."""
         return self.__date
 
     @date.setter
-    def date(self, value):
+    def date(self, value: Union[datetime.date, str]):
         if isinstance(value, datetime.date):
             self.__date = value
         else:
             self.__date = datetime.datetime.strptime(value, '%Y-%m-%d').date()
 
     @property
-    def allowedtypes(self):
+    def allowedtypes(self) -> list:
         """list: The allowed values that the Action's type can be."""
         return ['new posting', 'updated posting', 'retraction', 'site change']
 
     @property
-    def type(self):
+    def type(self) -> str:
         """str: Broad category describing what the Action did."""
         return self.__type
 
     @type.setter
-    def type(self, value):
+    def type(self, value: str):
         value = str(value)
         if value not in self.allowedtypes:
             raise ValueError('Invalid action type')
         self.__type = str(value)
 
     @property
-    def comment(self):
-        """str: Any comments further describing the Action."""
+    def comment(self) -> Optional[str]:
+        """str or None: Any comments further describing the Action."""
         return self.__comment
 
     @comment.setter
-    def comment(self, value):
+    def comment(self, value: Optional[str]):
         if value is None:
             self.__comment = None
         else:
             self.__comment = str(value)
 
     @property
-    def potentials(self):
+    def potentials(self) -> list:
         """list: Any potentials associated with the action as PotInfo objects"""
         return self.__potentials
 
-    def load_model(self, model, name=None):
+    def load_model(self,
+                   model: Union[str, io.IOBase, DM],
+                   name: Optional[str] = None):
         """
         Loads record contents from a given model.
 
         Parameters
         ----------
-        model : str or DataModelDict
-            The model contents of the record to load.
+        model : str, file-like object or DataModelDict
+            A JSON/XML data model for the content.
         name : str, optional
             The name to assign to the record.  Often inferred from other
             attributes if not given.
@@ -262,8 +277,12 @@ class Action(Record):
         else:
             self.build_name()
 
-    def set_values(self, name=None, date=None, type=None, potentials=None,
-                   comment=None):
+    def set_values(self,
+                   name: Optional[str] = None,
+                   date: Union[datetime.date, str, None] = None,
+                   type: Optional[str] = None,
+                   potentials: Optional[list] = None,
+                   comment: Optional[str] = None):
         """
         Set multiple object attributes at the same time.
 
@@ -305,7 +324,7 @@ class Action(Record):
         else:
             self.name = f"{self.date} {self.comment[:90]}"
 
-    def build_model(self):
+    def build_model(self) -> DM:
         """
         Generates and returns model content based on the values set to object.
         """
@@ -326,7 +345,7 @@ class Action(Record):
         self._set_model(model)
         return model
 
-    def metadata(self):
+    def metadata(self) -> dict:
         """
         Generates a dict of simple metadata values associated with the record.
         Useful for quickly comparing records and for building pandas.DataFrames
@@ -345,38 +364,44 @@ class Action(Record):
         return data
 
     @property
-    def queries(self):
+    def queries(self) -> dict:
         """dict: Query objects and their associated parameter names."""
         return {
             'date': load_query(
-                style='date_match',
-                name='date', 
-                path=f'{self.modelroot}.date'),
+                style = 'date_match',
+                name = 'date', 
+                path = f'{self.modelroot}.date'),
             'type': load_query(
-                style='str_match',
-                name='type',
-                path=f'{self.modelroot}.type'),
+                style = 'str_match',
+                name = 'type',
+                path = f'{self.modelroot}.type'),
             'potential_id': load_query(
-                style='str_match',
-                name='id', parent='potentials',
-                path=f'{self.modelroot}.potential.id'),
+                style = 'str_match',
+                name = 'id', parent = 'potentials',
+                path = f'{self.modelroot}.potential.id'),
             'potential_key': load_query(
-                style='str_match',
-                name='key', parent='potentials',
-                path=f'{self.modelroot}.potential.key'),
+                style = 'str_match',
+                name = 'key', parent = 'potentials',
+                path = f'{self.modelroot}.potential.key'),
             'element': load_query(
-                style='list_contains',
-                name='element', parent='potentials',
-                path=f'{self.modelroot}.potential.element'),
+                style = 'list_contains',
+                name = 'element', parent = 'potentials',
+                path = f'{self.modelroot}.potential.element'),
             'comment': load_query(
-                style='str_contains',
-                name='comment',
-                path=f'{self.modelroot}.comment'),
+                style = 'str_contains',
+                name = 'comment',
+                path = f'{self.modelroot}.comment'),
         }
 
-    def pandasfilter(self, dataframe, name=None, date=None, type=None,
-                     potential_id=None, potential_key=None, element=None,
-                     comment=None):
+    def pandasfilter(self,
+                     dataframe: pd.DataFrame,
+                     name: Union[str, list, None] = None,
+                     date: Union[str, list, None] = None,
+                     type: Union[str, list, None] = None,
+                     potential_id: Union[str, list, None] = None,
+                     potential_key: Union[str, list, None] = None,
+                     element: Union[str, list, None] = None,
+                     comment: Union[str, list, None] = None) -> pd.Series:
         """
         Filters a pandas.DataFrame based on kwargs values for the record style.
         
@@ -384,26 +409,26 @@ class Action(Record):
         ----------
         dataframe : pandas.DataFrame
             A table of metadata for multiple records of the record style.
-        name : str or list
+        name : str or list, optional
             The record name(s) to parse by.
-        date : str or list
+        date : str or list, optional
             The date associated with the record.
-        type : str or list
+        type : str or list, optional
             The type of action: 'new posting', 'updated posting', 'retraction',
             or 'site change'.
-        potential_id : str or list
+        potential_id : str or list, optional
             Limits results to entries related to the given potential id.
-        potential_key : str or list
+        potential_key : str or list, optional
             Limits results to entries related to the given potential key.
-        element : str or list
+        element : str or list, optional
             Limits results to entries related to potentials with the given
             element(s).
-        comment : str or list
+        comment : str or list, optional
             Term(s) to search for in the action's comment field.
         
         Returns
         -------
-        pandas.Series, numpy.NDArray
+        pandas.Series
             Boolean map of matching values
         """
         matches = super().pandasfilter(dataframe, name=name, date=date, type=type,
@@ -412,28 +437,34 @@ class Action(Record):
                                        comment=comment)
         return matches
 
-    def mongoquery(self, name=None, date=None, type=None, potential_id=None,
-                   potential_key=None, element=None, comment=None):
+    def mongoquery(self, 
+                   name: Union[str, list, None] = None,
+                   date: Union[str, list, None] = None,
+                   type: Union[str, list, None] = None,
+                   potential_id: Union[str, list, None] = None,
+                   potential_key: Union[str, list, None] = None,
+                   element: Union[str, list, None] = None,
+                   comment: Union[str, list, None] = None) -> dict:
         """
         Builds a Mongo-style query based on kwargs values for the record style.
         
         Parameters
         ----------
-        name : str or list
+        name : str or list, optional
             The record name(s) to parse by.
-        date : str or list
+        date : str or list, optional
             The date associated with the record.
-        type : str or list
+        type : str or list, optional
             The type of action: 'new posting', 'updated posting', 'retraction',
             or 'site change'.
-        potential_id : str or list
+        potential_id : str or list, optional
             Limits results to entries related to the given potential id.
-        potential_key : str or list
+        potential_key : str or list, optional
             Limits results to entries related to the given potential key.
-        element : str or list
+        element : str or list, optional
             Limits results to entries related to potentials with the given
             element(s).
-        comment : str or list
+        comment : str or list, optional
             Term(s) to search for in the action's comment field.
         
         Returns
@@ -447,26 +478,31 @@ class Action(Record):
                                        comment=comment)
         return mquery
 
-    def cdcsquery(self, date=None, type=None, potential_id=None, potential_key=None,
-                  element=None, comment=None):
+    def cdcsquery(self,
+                  date: Union[str, list, None] = None,
+                  type: Union[str, list, None] = None,
+                  potential_id: Union[str, list, None] = None,
+                  potential_key: Union[str, list, None] = None,
+                  element: Union[str, list, None] = None,
+                  comment: Union[str, list, None] = None) -> dict:
         """
         Builds a CDCS-style query based on kwargs values for the record style.
         
         Parameters
         ----------
-        date : str or list
+        date : str or list, optional
             The date associated with the record.
-        type : str or list
+        type : str or list, optional
             The type of action: 'new posting', 'updated posting', 'retraction',
             or 'site change'.
-        potential_id : str or list
+        potential_id : str or list, optional
             Limits results to entries related to the given potential id.
-        potential_key : str or list
+        potential_key : str or list, optional
             Limits results to entries related to the given potential key.
-        element : str or list
+        element : str or list, optional
             Limits results to entries related to potentials with the given
             element(s).
-        comment : str or list
+        comment : str or list, optional
             Term(s) to search for in the action's comment field.
         
         Returns

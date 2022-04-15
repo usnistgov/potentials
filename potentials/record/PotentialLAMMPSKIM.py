@@ -1,30 +1,43 @@
 # coding: utf-8
 # Standard Python libraries
+import io
+from pathlib import Path
+from typing import Optional, Tuple, Union
 import warnings
 import datetime
 
+# https://github.com/usnistgov/DataModelDict
+from DataModelDict import DataModelDict as DM
+
+# https://numpy.org/
 import numpy as np
+import numpy.typing as npt
 
-# atomman imports
-from ..tools import aslist
-from .BasePotentalLAMMPS import BasePotentialLAMMPS
-
+# https://github.com/usnistgov/yabadaba
 from yabadaba import query 
 
+# local imports
+from ..tools import aslist
+from .BasePotentalLAMMPS import BasePotentialLAMMPS
 class PotentialLAMMPSKIM(BasePotentialLAMMPS):
     """
     Class for building LAMMPS input lines from a potential-LAMMPS-KIM data model.
     """
     
-    def __init__(self, model=None, name=None, id=None, 
-                 potkey=None, potid=None, symbolset=None):
+    def __init__(self,
+                 model: Union[str, io.IOBase, DM, None] = None,
+                 name: Optional[str] = None,
+                 id: Optional[str] = None, 
+                 potkey: Optional[str] = None,
+                 potid: Optional[str] = None,
+                 symbolset: Union[str, list, None] = None):
         """
         Initializes an instance and loads content from a data model.
         
         Parameters
         ----------
-        model : str or file-like object, optional
-            A JSON/XML data model containing a potential-LAMMPS-KIM branch.
+        model : str, file-like object or DataModelDict, optional
+            A JSON/XML data model for the content.
         name : str, optional
             The record name to use.  If not given, this will be set to the
             potential's id.
@@ -51,47 +64,74 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             self.id = id
     
     @property
-    def style(self):
+    def style(self) -> str:
         """str: The record style"""
         return 'potential_LAMMPS_KIM'
 
     @property
-    def shortcode(self):
+    def shortcode(self) -> str:
+        """str : The kim model shortcode"""
         if self.model is None:
             raise AttributeError('No model information loaded')
         return self.__shortcode
 
     @property
-    def modelroot(self):
+    def modelroot(self) -> str:
         """str : The root element for the associated data model"""
         return 'potential-LAMMPS-KIM'
 
-    def download_files(self, *args, **kwargs):
+    def download_files(self,
+                       pot_dir: Optional[str] = None,
+                       overwrite: bool = False,
+                       verbose: bool = False) -> Tuple[int, int]:
         """
-        Downloads artifact files associated with the potential.  Note that
-        no files exist to download for openKIM models
+        Downloads all artifact files associated with the potential.  The files
+        will be saved to the pot_dir directory.
+
+        Note kim potentials never have files to download.
 
         Parameters
         ----------
-        *args, **kwargs : any
-            Allows any parameters in - all are ignored.
-        
+        pot_dir : str, optional
+            The path to the directory where the files are to be saved.  If not
+            given, will use whatever pot_dir value was previously set.  If
+            given here, will change the pot_dir value so that the pair_info
+            lines properly point to the downloaded files.
+        overwrite : bool, optional
+            If False (default), then the files will not be downloaded if
+            similarly named files already exist in the pot_dir.
+        verbose : bool, optional
+            If True, info statements will be printed.  Default
+            value is False.
+
         Returns
         -------
-        count : int
-            The number of files downloaded - always 0
+        num_downloaded : int
+            The number of artifacts downloaded.
+        num_skipped : int
+            The number of artifacts not downloaded.
         """
-        return 0
+        if verbose:
+            print('no files for kim potentials')
+        return (0, 0)
 
-    def load_model(self, model, name=None, id=None, potkey=None, potid=None,
-                   symbolset=None):
+    def load_model(self,
+                   model,
+                   name: Optional[str] = None,
+                   id: Optional[str] = None, 
+                   potkey: Optional[str] = None,
+                   potid: Optional[str] = None,
+                   symbolset: Union[str, list, None] = None):
         """
         Loads data model info associated with a LAMMPS potential.
         
         Parameters
         ----------
-        model : str or file-like object
+        model : str, file-like object or DataModelDict
             A JSON/XML data model for the content.
+        name : str, optional
+            The name to assign to the record.  Often inferred from other
+            attributes if not given.
         id : str, optional
             The full KIM model id indicating the version to use.  If not given,
             then the newest known version will be used.
@@ -198,11 +238,56 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         # Select the potential model
         self.select_potential(potkey=potkey, potid=potid, symbolset=symbolset)
 
-    def mongoquery(self, name=None, key=None, id=None,
-                     potid=None, potkey=None, units=None,
-                     atom_style=None, pair_style=None, status=None,
-                     symbols=None, elements=None):
+    def mongoquery(self,
+                   name: Union[str, list, None] = None,
+                   key: Union[str, list, None] = None,
+                   id: Union[str, list, None] = None,
+                   potid: Union[str, list, None] = None,
+                   potkey: Union[str, list, None] = None,
+                   units: Union[str, list, None] = None,
+                   atom_style: Union[str, list, None] = None,
+                   pair_style: Union[str, list, None] = None,
+                   status: Union[str, list, None] = None,
+                   symbols: Union[str, list, None] = None,
+                   elements: Union[str, list, None] = None) -> dict:
+        """
+        Builds a Mongo-style query based on kwargs values for the record style.
         
+        Parameters
+        ----------
+        name : str or list, optional
+            The record name(s) to parse by.
+        key : str or list, optional
+            The UUID4 key(s) associated with the LAMMPS implementations to
+            parse by.
+        id : str or list, optional
+            The unique id(s) associated with the LAMMPS implementations to
+            parse by.
+        potid : str or list, optional
+            The unique id(s) associated with the general potential model to
+            parse by.
+        potkey : str or list, optional
+            The UUID4 key(s) associated with the general potential model to
+            parse by.
+        units : str or list, optional
+            The LAMMPS unit style(s) to parse by.
+        atom_style : str or list, optional
+            The LAMMPS atom_style values(s) to parse by.
+        pair_style : str or list, optional
+            The LAMMPS pair_style values(s) to parse by.
+        status : str or list, optional
+            The implementation status value(s) to parse by.
+        symbols : str or list, optional
+            Symbol model(s) to parse by.
+        elements : str or list, optional
+            Elemental tag(s) to parse by.
+        
+        Returns
+        -------
+        dict
+            The Mongo-style query
+        """
+
         # Return bad query if pair_style kim not included
         if pair_style is not None and 'kim' not in aslist(pair_style):
             return {"not.kim.pair_style":"get nothing"}
@@ -243,10 +328,52 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         
         return mquery
 
-    def cdcsquery(self, key=None, id=None, potid=None, potkey=None,
-                  units=None, atom_style=None, pair_style=None, status=None,
-                  symbols=None, elements=None):
+    def cdcsquery(self,
+                  key: Union[str, list, None] = None,
+                  id: Union[str, list, None] = None,
+                  potid: Union[str, list, None] = None,
+                  potkey: Union[str, list, None] = None,
+                  units: Union[str, list, None] = None,
+                  atom_style: Union[str, list, None] = None,
+                  pair_style: Union[str, list, None] = None,
+                  status: Union[str, list, None] = None,
+                  symbols: Union[str, list, None] = None,
+                  elements: Union[str, list, None] = None) -> dict:
+        """
+        Builds a CDCS-style query based on kwargs values for the record style.
         
+        Parameters
+        ----------
+        key : str or list, optional
+            The UUID4 key(s) associated with the LAMMPS implementations to
+            parse by.
+        id : str or list, optional
+            The unique id(s) associated with the LAMMPS implementations to
+            parse by.
+        potid : str or list, optional
+            The unique id(s) associated with the general potential model to
+            parse by.
+        potkey : str or list, optional
+            The UUID4 key(s) associated with the general potential model to
+            parse by.
+        units : str or list, optional
+            The LAMMPS unit style(s) to parse by.
+        atom_style : str or list, optional
+            The LAMMPS atom_style values(s) to parse by.
+        pair_style : str or list, optional
+            The LAMMPS pair_style values(s) to parse by.
+        status : str or list, optional
+            The implementation status value(s) to parse by.
+        symbols : str or list, optional
+            Symbol model(s) to parse by.
+        elements : str or list, optional
+            Elemental tag(s) to parse by.
+        
+        Returns
+        -------
+        dict
+            The CDCS-style query
+        """
         #  Return bad query if pair_style kim not included
         if pair_style is not None and 'kim' not in aslist(pair_style):
             return {"not.kim.pair_style":"get nothing"}
@@ -287,27 +414,30 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         return mquery
 
     @property
-    def symbolsets(self):
+    def symbolsets(self) -> list:
         """list : The sets of symbols that correspond to all related potentials"""
         if self.model is None:
             raise AttributeError('No model information loaded')
         return self._symbolsets
 
     @property
-    def potids(self):
+    def potids(self) -> list:
         """list : The ids of all related potentials"""
         if self.model is None:
             raise AttributeError('No model information loaded')
         return self._potids
     
     @property
-    def potkeys(self):
+    def potkeys(self) -> list:
         """list : The keys of all related potentials"""
         if self.model is None:
             raise AttributeError('No model information loaded')
         return self._potkeys
 
-    def select_potential(self, potkey=None, potid=None, symbolset=None):
+    def select_potential(self,
+                         potkey: Optional[str] = None,
+                         potid: Optional[str] = None,
+                         symbolset: Union[str, list, None] = None):
         """
         Sets the potkey, potid, symbols, elements, masses and charges values
         based on identifying which potential associated with the KIM model
@@ -435,7 +565,8 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
                     self._masses = self._fullmasses
                     self._charges = self._fullcharges
 
-    def normalize_symbols(self, symbols):
+    def normalize_symbols(self,
+                          symbols: Union[str, list]) -> list:
         """
         Modifies a given list of symbols to be compatible with the potential.
         Mostly, this converts symbols to a list if it is not already one, and
@@ -460,19 +591,25 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
 
         return symbols
 
-    def pair_info(self, symbols=None, masses=None, units=None, prompt=False,
-                  comments=True, lammpsdate=datetime.date(2020, 10, 29)):
+    def pair_info(self,
+                  symbols: Union[str, list, None] = None,
+                  masses: Union[float, list, None] = None,
+                  units: Optional[str] = None,
+                  prompt: bool = False,
+                  comments: bool = True,
+                  lammpsdate: datetime.date = datetime.date(2020, 10, 29)
+                  ) -> str:
         """
         Generates the LAMMPS input command lines associated with a KIM
         Potential and a list of atom-model symbols.
         
         Parameters
         ----------
-        symbols : list of str, optional
+        symbols : str or list, optional
             List of atom-model symbols corresponding to the atom types in a
             system.  If None (default), then all atom-model symbols will
             be included in the order that they are listed in the data model.
-        masses : list, optional
+        masses : float or list, optional
             Can be given to override the default symbol-based masses for each
             atom type.  Must be a list of the same length as symbols.  Any
             values of None in the list indicate that the default value be used
@@ -539,10 +676,17 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
 
         return info
 
-    def pair_data_info(self, filename, pbc, symbols=None, masses=None,
-                       atom_style=None, units=None, prompt=False,
-                       comments=True,
-                       lammpsdate=datetime.date(2020, 10, 29)):
+    def pair_data_info(self,
+                       filename: Union[str, Path],
+                       pbc: npt.ArrayLike,
+                       symbols: Union[str, list, None] = None,
+                       masses: Union[float, list, None] = None,
+                       atom_style: Optional[str] = None,
+                       units: Optional[str] = None,
+                       prompt: bool = False,
+                       comments: bool = True,
+                       lammpsdate: datetime.date = datetime.date(2020, 10, 29)
+                       ) -> str:
         """
         Generates the LAMMPS command lines associated with both a potential
         and reading an atom data file.
@@ -553,11 +697,11 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             The file path to the atom data file for LAMMPS to read in.
         pbc : array-like object
             The three boolean periodic boundary conditions.
-        symbols : list of str, optional
+        symbols : str or list, optional
             List of atom-model symbols corresponding to the atom types in a
             system.  If None (default), then all atom-model symbols will
             be included in the order that they are listed in the data model.
-        masses : list, optional
+        masses : float or list, optional
             Can be given to override the default symbol-based masses for each
             atom type.  Must be a list of the same length as symbols.  Any
             values of None in the list indicate that the default value be used
@@ -643,9 +787,15 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
 
         return info
 
-    def pair_restart_info(self, filename, symbols=None, masses=None,
-                          units=None, prompt=False, comments=True,
-                          lammpsdate=datetime.date(2020, 10, 29)):
+    def pair_restart_info(self,
+                          filename: Union[str, Path],
+                          symbols: Union[str, list, None] = None,
+                          masses: Union[float, list, None] = None,
+                          units: Optional[str] = None,
+                          prompt: bool = False,
+                          comments: bool = True,
+                          lammpsdate: datetime.date = datetime.date(2020, 10, 29)
+                          ) -> str:
         """
         Generates the LAMMPS command lines associated with both a potential
         and reading an atom data file.
@@ -654,11 +804,11 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         ----------
         filename : path-like object
             The file path to the restart file for LAMMPS to read in.
-        symbols : list of str, optional
+        symbols : str or list, optional
             List of atom-model symbols corresponding to the atom types in a
             system.  If None (default), then all atom-model symbols will
             be included in the order that they are listed in the data model.
-        masses : list, optional
+        masses : float or list, optional
             Can be given to override the default symbol-based masses for each
             atom type.  Must be a list of the same length as symbols.  Any
             values of None in the list indicate that the default value be used

@@ -1,32 +1,41 @@
 # coding: utf-8
-# Standard libraries
+# Standard Python libraries
+import io
+from typing import Optional, Tuple, Union
 import uuid
 import datetime
 
 # https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
+# https://github.com/usnistgov/yabadaba
+from yabadaba.record import Record
+from yabadaba import load_query 
+
+# https://pandas.pydata.org/
+import pandas as pd
+
 # Local imports
 from .Citation import Citation
 from .Implementation import Implementation
 from ..tools import aslist
-
-from yabadaba.record import Record
-from yabadaba import load_query 
 
 class Potential(Record):
     """
     Class for representing Potential metadata records.
     """
 
-    def __init__(self, model=None, name=None, **kwargs):
+    def __init__(self,
+                 model: Union[str, io.IOBase, DM, None] = None,
+                 name: Optional[str] = None,
+                 **kwargs):
         """
         Initializes a Record object for a given style.
         
         Parameters
         ----------
-        model : str, file-like object, DataModelDict
-            The contents of the record.
+        model : str, file-like object or DataModelDict, optional
+            A JSON/XML data model for the content.
         name : str, optional
             The unique name to assign to the record.  If model is a file
             path, then the default record name is the file name without
@@ -47,33 +56,35 @@ class Potential(Record):
         super().__init__(model=model, name=name, **kwargs)
 
     @property
-    def style(self):
+    def style(self) -> str:
         """str: The record style"""
         return 'Potential'
 
     @property
-    def xsl_filename(self):
+    def xsl_filename(self) -> Tuple[str, str]:
         """tuple: The module path and file name of the record's xsl html transformer"""
         return ('potentials.xsl', 'Potential.xsl')
 
     @property
-    def xsd_filename(self):
+    def xsd_filename(self) -> Tuple[str, str]:
         """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'Potential.xsd')
 
     @property
-    def modelroot(self):
+    def modelroot(self) -> str:
         """str: The root element of the content"""
         return 'interatomic-potential'
 
-    def load_model(self, model, name=None):
+    def load_model(self,
+                   model: Union[str, io.IOBase, DM],
+                   name: Optional[str] = None):
         """
         Loads record contents from a given model.
 
         Parameters
         ----------
-        model : str or DataModelDict
-            The model contents of the record to load.
+        model : str, file-like object or DataModelDict
+            A JSON/XML data model for the content.
         name : str, optional
             The name to assign to the record.  Often inferred from other
             attributes if not given.
@@ -136,7 +147,9 @@ class Potential(Record):
         except:
             self.name = f'potential.{self.id}'
 
-    def set_values(self, name=None, **kwargs):
+    def set_values(self,
+                   name: Optional[str] = None,
+                   **kwargs):
         """
         Set multiple object attributes at the same time.
 
@@ -197,19 +210,19 @@ class Potential(Record):
                 self.name = 'potential.unknown'
 
     @property
-    def key(self):
+    def key(self) -> str:
         """str : The potential's uuid4 key"""
         return self.__key
     
     @key.setter
-    def key(self, v):
+    def key(self, v: Optional[str]):
         if v is None:
             self.__key = str(uuid.uuid4())
         else:
             self.__key = str(v)
 
     @property
-    def id(self):
+    def id(self) -> str:
         """str : The potential's unique id generated from citation info"""
         # Check for a citation
         if len(self.citations) > 0:
@@ -234,7 +247,7 @@ class Potential(Record):
         return potential_id
 
     @property
-    def impid_prefix(self):
+    def impid_prefix(self) -> str:
         """str : The recommended prefix to use for implementation ids"""
         if len(self.citations) > 0:
             potential_id = self.citations[0].year_first_author
@@ -258,12 +271,12 @@ class Potential(Record):
         return potential_id
 
     @property
-    def recorddate(self):
+    def recorddate(self) -> datetime.date:
         """datetime.date : The date associated with the record"""
         return self.__recorddate
     
     @recorddate.setter
-    def recorddate(self, v):
+    def recorddate(self, v: Union[datetime.date, str, None]):
         if v is None:
             self.__recorddate = datetime.date.today()
         elif isinstance(v, datetime.date):
@@ -274,74 +287,74 @@ class Potential(Record):
             raise TypeError('Invalid date type')
 
     @property
-    def citations(self):
+    def citations(self) -> list:
         """list: Any associated Citation objects"""
         return self.__citations
 
     @property
-    def implementations(self):
+    def implementations(self) -> list:
         """list: Any associated Implementation objects"""
         return self.__implementations
 
     @property
-    def elements(self):
+    def elements(self) -> list:
         """list: elements associated with the potential"""
         return self.__elements
 
     @elements.setter
-    def elements(self, v):
+    def elements(self, v: Union[str, list, None]):
         if v is None:
             self.__elements = None
         else:
             self.__elements = aslist(v)
     
     @property
-    def othername(self):
+    def othername(self) -> Optional[str]:
         """str or None: Alternate name for what the potential models"""
         return self.__othername
     
     @othername.setter
-    def othername(self, v):
+    def othername(self, v: Optional[str]):
         if v is None:
             self.__othername = None
         else:
             self.__othername = str(v)
     
     @property
-    def fictional(self):
+    def fictional(self) -> bool:
         """bool: Indicates if the potential is classified as fictional"""
         return self.__fictional
     
     @fictional.setter
-    def fictional(self, v):
+    def fictional(self, v: bool):
         assert isinstance(v, bool)
         self.__fictional = v
     
     @property
-    def modelname(self):
+    def modelname(self) -> Optional[str]:
         """str: Extra tag for differentiating potentials when needed"""
         return self.__modelname
     
     @modelname.setter
-    def modelname(self, v):
+    def modelname(self, v: Optional[str]):
         if v is None:
             self.__modelname = None
         else:
             self.__modelname = str(v)
 
     @property
-    def notes(self):
+    def notes(self) -> Optional[str]:
         """str or None: Any extra notes associated with the potential"""
         return self.__notes
 
     @notes.setter
-    def notes(self, v):
+    def notes(self, v: Optional[str]):
         if v is None:
             self.__notes = None
         else:
             self.__notes = str(v)
 
-    def metadata(self):
+    def metadata(self) -> dict:
         """
         Generates a dict of simple metadata values associated with the record.
         Useful for quickly comparing records and for building pandas.DataFrames
@@ -370,7 +383,7 @@ class Potential(Record):
 
         return data
 
-    def build_model(self):
+    def build_model(self) -> DM:
         """
         Generates and returns model content based on the values set to object.
         """
@@ -424,7 +437,7 @@ class Potential(Record):
         self.implementations.append(implementation)
 
     @property
-    def queries(self):
+    def queries(self) -> dict:
         """dict: Query objects and their associated parameter names."""
         return {
             'key': load_query(
@@ -469,10 +482,19 @@ class Potential(Record):
                 path=f'{self.modelroot}.description.citation.abstract'),
         }
 
-    def pandasfilter(self, dataframe, name=None, key=None, id=None,
-                     notes=None, fictional=None, element=None,
-                     othername=None, modelname=None, year=None, author=None,
-                     abstract=None):
+    def pandasfilter(self,
+                     dataframe: pd.DataFrame,
+                     name: Union[str, list, None] = None,
+                     key: Union[str, list, None] = None,
+                     id: Union[str, list, None] = None,
+                     notes: Union[str, list, None] = None,
+                     fictional: Union[bool, list, None] = None,
+                     element: Union[str, list, None] = None,
+                     othername: Union[str, list, None] = None,
+                     modelname: Union[str, list, None] = None,
+                     year: Union[int, list, None] = None,
+                     author: Union[str, list, None] = None,
+                     abstract: Union[str, list, None] = None) -> pd.Series:
         """
         Filters a pandas.DataFrame based on kwargs values for the record style.
         
@@ -505,7 +527,7 @@ class Potential(Record):
         
         Returns
         -------
-        pandas.Series, numpy.NDArray
+        pandas.Series
             Boolean map of matching values
         """
         matches = super().pandasfilter(dataframe, name=name, key=key, id=id,
@@ -516,10 +538,18 @@ class Potential(Record):
 
         return matches
 
-    def mongoquery(self, name=None, key=None, id=None,
-                   notes=None, fictional=None, element=None,
-                   othername=None, modelname=None, year=None, author=None,
-                   abstract=None):
+    def mongoquery(self, 
+                   name: Union[str, list, None] = None,
+                   key: Union[str, list, None] = None,
+                   id: Union[str, list, None] = None,
+                   notes: Union[str, list, None] = None,
+                   fictional: Union[bool, list, None] = None,
+                   element: Union[str, list, None] = None,
+                   othername: Union[str, list, None] = None,
+                   modelname: Union[str, list, None] = None,
+                   year: Union[int, list, None] = None,
+                   author: Union[str, list, None] = None,
+                   abstract: Union[str, list, None] = None) -> dict:
         """
         Builds a Mongo-style query based on kwargs values for the record style.
         
@@ -561,9 +591,17 @@ class Potential(Record):
                                     author=author, abstract=abstract)
         return mquery
 
-    def cdcsquery(self, key=None, id=None, notes=None,
-                  fictional=None, element=None, othername=None, modelname=None,
-                  year=None, author=None, abstract=None):
+    def cdcsquery(self,
+                  key: Union[str, list, None] = None,
+                  id: Union[str, list, None] = None,
+                  notes: Union[str, list, None] = None,
+                  fictional: Union[bool, list, None] = None,
+                  element: Union[str, list, None] = None,
+                  othername: Union[str, list, None] = None,
+                  modelname: Union[str, list, None] = None,
+                  year: Union[int, list, None] = None,
+                  author: Union[str, list, None] = None,
+                  abstract: Union[str, list, None] = None) -> dict:
         """
         Builds a CDCS-style query based on kwargs values for the record style.
         
