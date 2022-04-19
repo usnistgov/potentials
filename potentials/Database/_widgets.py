@@ -1,5 +1,6 @@
 # coding: utf-8
 # Standard libraries
+from typing import Optional
 
 # https://ipython.org/
 from IPython.display import display, clear_output, HTML
@@ -9,12 +10,17 @@ import ipywidgets as widgets
 
 # https://numpy.org/
 import numpy as np
+import numpy.typing as npt
 
+# https://pandas.pydata.org/
 import pandas as pd
 
+# Local imports
 from ..record import Potential, PotentialLAMMPS
 
-def widget_search_potentials(self, potentials=None, potentials_df=None):
+def widget_search_potentials(self,
+                             potentials: Optional[npt.ArrayLike] = None,
+                             potentials_df: Optional[pd.DataFrame] = None):
     """
     Builds ipywidgets for selecting an interatomic potential from the database
     and displaying its full html representation (citation plus implementations)
@@ -139,8 +145,10 @@ def widget_search_potentials(self, potentials=None, potentials_df=None):
     display(header1_output, element1_dropdown, element2_dropdown, element3_dropdown,
             year_dropdown, author_text, potential_dropdown, potential_output)
 
-def widget_lammps_potential(self, lammps_potentials=None, lammps_potentials_df=None,
-                            results=None):
+def widget_lammps_potential(self,
+                            lammps_potentials: Optional[npt.ArrayLike] = None,
+                            lammps_potentials_df: Optional[pd.DataFrame] = None,
+                            results: Optional[dict] = None):
     """
     Builds ipywidgets for selecting a LAMMPS implemented potential from the
     database, downloading the files, and displaying the LAMMPS commands

@@ -1,8 +1,13 @@
 # coding: utf-8
+# Standard libraries
+from ctypes import Union
 from pathlib import Path
+from typing import Optional
 
+import yabadaba
+
+# Local imports
 from .. import settings
-
 from .load_database import load_database
 
 class Database():
@@ -43,10 +48,23 @@ class Database():
 
     from ._widgets import (widget_search_potentials, widget_lammps_potential)
 
-    def __init__(self, local=None, remote=None, localpath=None,
-                 local_name=None, local_database=None, local_style=None, local_host=None, local_terms=None,
-                 remote_name=None, remote_database=None, remote_style=None, remote_host=None, remote_terms=None, 
-                 kim_models=None, kim_api_directory=None, kim_models_file=None):
+    def __init__(self,
+                 local: Optional[bool] = None,
+                 remote: Optional[bool] = None,
+                 localpath: Optional[str] = None,
+                 local_name: Optional[str] = None,
+                 local_database: Optional[yabadaba.database.Database] = None,
+                 local_style: Optional[str] = None,
+                 local_host: Optional[str] = None,
+                 local_terms: Optional[dict] = None,
+                 remote_name: Optional[str] = None,
+                 remote_database: Optional[yabadaba.database.Database] = None,
+                 remote_style: Optional[str] = None,
+                 remote_host: Optional[str] = None,
+                 remote_terms: Optional[dict] = None, 
+                 kim_models: Union[str, list, None] = None,
+                 kim_api_directory: Optional[Path] = None,
+                 kim_models_file: Optional[Path] = None):
         """
         Class initializer
 
@@ -140,26 +158,30 @@ class Database():
                              kim_api_directory=kim_api_directory)
 
     @property
-    def remote_database(self):
-        """yabadaba.CDCSDatabase : Interfaces with the remote CDCS database"""
+    def remote_database(self) -> yabadaba.database.Database:
+        """yabadaba.database.Database : Interfaces with the remote database"""
         return self.__remote_database
 
     @property
-    def local_database(self):
-        """yabadaba.LocalDatabase : Interfaces with the local database"""
+    def local_database(self) -> yabadaba.database.Database:
+        """yabadaba.database.Database : Interfaces with the local database"""
         return self.__local_database
 
     @property
-    def local(self):
+    def local(self) -> bool:
         """bool : Indicates if load operations will check localpath"""
         return self.__local
 
     @property
-    def remote(self):
+    def remote(self) -> bool:
         """bool : Indicates if load operations will check remote database"""
         return self.__remote
 
-    def set_remote_database(self, name=None, database=None, style=None, host=None,
+    def set_remote_database(self,
+                            name: Optional[str] = None,
+                            database: Optional[yabadaba.database.Database] = None,
+                            style: Optional[str] = None,
+                            host: Optional[str] = None,
                             **kwargs):
         """
         Sets the remote database to interact with.  If no parameters are given,
@@ -171,7 +193,7 @@ class Database():
         name : str, optional
             The name assigned to a pre-defined database.  If given, can be the only
             parameter.
-        database : yabadaba.Database, optional
+        database : yabadaba.database.Database, optional
             A pre-existing Database object to use for the remote.
         style : str, optional
             The database style to use.
@@ -196,8 +218,13 @@ class Database():
         else:
             self.__remote_database = load_database(name=name, style=style, host=host, **kwargs)
 
-    def set_local_database(self, localpath=None, name=None, database=None, style=None,
-                           host=None, **kwargs):
+    def set_local_database(self,
+                           localpath: Optional[str] = None,
+                           name: Optional[str] = None,
+                           database: Optional[yabadaba.database.Database] = None,
+                           style: Optional[str] = None,
+                           host: Optional[str] = None,
+                           **kwargs):
         """
         Sets the local database to interact with.  If no parameters are given,
         will load settings for "potentials_local" database if they have been
@@ -247,8 +274,11 @@ class Database():
         else:
             self.__local_database = load_database(name=name, style=style, host=host, **kwargs)
 
-    def download_all(self, status=None, downloadfiles=True, overwrite=False,
-                     verbose=False):
+    def download_all(self,
+                     status: Union[str, list, None] = None,
+                     downloadfiles: bool = True,
+                     overwrite: bool = False,
+                     verbose: bool = False):
         """
         Downloads all potential-related records from the remote location to the
         local location.

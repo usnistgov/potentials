@@ -1,16 +1,38 @@
 # coding: utf-8
 # Standard libraries
 from pathlib import Path
+from typing import Optional, Tuple, Union
+
+# https://numpy.org/
+import numpy as np
+
+# https://pandas.pydata.org/
+import pandas as pd
 
 # https://github.com/sckott/habanero
 from habanero import cn
 
+# https://github.com/usnistgov/yabadaba
+from yabadaba.record import Record
+
+# Local imports
 from .. import load_record
 
-def get_citations(self, name=None, year=None, volume=None, title=None,
-                  journal=None, doi=None, author=None, abstract=None,
-                  local=None, remote=None, refresh_cache=False,
-                  return_df=False, verbose=False):
+def get_citations(self, 
+                  name: Union[str, list, None] = None,
+                  year: Union[int, list, None] = None,
+                  volume: Union[int, list, None] = None,
+                  title: Union[str, list, None] = None,
+                  journal: Union[str, list, None] = None,
+                  doi: Union[str, list, None] = None,
+                  author: Union[str, list, None] = None,
+                  abstract: Union[str, list, None] = None,
+                  local: Optional[bool] = None,
+                  remote: Optional[bool] = None,
+                  refresh_cache: bool = False,
+                  return_df: bool = False,
+                  verbose: bool = False
+                  ) -> Union[np.ndarray, Tuple[np.ndarray, pd.DataFrame]]:
     """
     Gets all matching citations from the database.
 
@@ -51,6 +73,13 @@ def get_citations(self, name=None, year=None, volume=None, title=None,
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
+    
+    Returns
+    -------
+    numpy.NDArray of Record subclasses
+        The retrived records.
+    pandas.DataFrame
+        A table of the records' metadata.  Returned if return_df = True.
     """
     return self.get_records(
         style='Citation', name=name, local=local, remote=remote, 
@@ -58,10 +87,20 @@ def get_citations(self, name=None, year=None, volume=None, title=None,
         year=year, volume=volume, title=title, journal=journal, doi=doi,
         author=author, abstract=abstract)
 
-def get_citation(self, name=None, year=None, volume=None, title=None,
-                 journal=None, doi=None, author=None, abstract=None,
-                 local=None, remote=None, prompt=True, refresh_cache=False,
-                 verbose=False):
+def get_citation(self, 
+                name: Union[str, list, None] = None,
+                  year: Union[int, list, None] = None,
+                  volume: Union[int, list, None] = None,
+                  title: Union[str, list, None] = None,
+                  journal: Union[str, list, None] = None,
+                  doi: Union[str, list, None] = None,
+                  author: Union[str, list, None] = None,
+                  abstract: Union[str, list, None] = None,
+                  local: Optional[bool] = None,
+                  remote: Optional[bool] = None, 
+                  prompt: bool = True,
+                  refresh_cache: bool = False,
+                  verbose: bool = False) -> Record:
     """
     Gets exactly one matching citation from the database.
 
@@ -128,11 +167,23 @@ def get_citation(self, name=None, year=None, volume=None, title=None,
         year=year, volume=volume, title=title, journal=journal, doi=doi,
         author=author, abstract=abstract)
 
-def retrieve_citation(self, name=None, dest=None, year=None, volume=None,
-                      title=None, journal=None, doi=None, author=None,
-                      abstract=None, local=None, remote=None, prompt=True,
-                      format='json', indent=4, refresh_cache=False,
-                      verbose=False):
+def retrieve_citation(self,
+                      name: Union[str, list, None] = None,
+                      dest: Optional[Path] = None,
+                      year: Union[int, list, None] = None,
+                      volume: Union[int, list, None] = None,
+                      title: Union[str, list, None] = None,
+                      journal: Union[str, list, None] = None,
+                      doi: Union[str, list, None] = None,
+                      author: Union[str, list, None] = None,
+                      abstract: Union[str, list, None] = None,
+                      local: Optional[bool] = None,
+                      remote: Optional[bool] = None, 
+                      prompt: bool = True,
+                      format: str = 'json',
+                      indent: int = 4, 
+                      refresh_cache: bool = False,
+                      verbose: bool = False):
     """
     Gets a single matching citation from the database and saves it to a
     file based on the record's name.
@@ -228,7 +279,11 @@ def retrieve_citation(self, name=None, dest=None, year=None, volume=None,
     else:
         raise ValueError('Invalid format: must be json, xml or bib.')
 
-def fetch_citation(self, doi, local=None, remote=None, verbose=False):
+def fetch_citation(self,
+                   doi: str,
+                   local: Optional[str] = None,
+                   remote: Optional[str] = None,
+                   verbose: bool = False):
     """
     Retrieves a single citation based on its DOI.  First, the database is checked
     for matches with the DOI, then with the record name.  If no matches are found
@@ -269,9 +324,18 @@ def fetch_citation(self, doi, local=None, remote=None, verbose=False):
 
     return load_record('Citation', bibtex)
 
-def download_citations(self, name=None, year=None, volume=None, title=None,
-                       journal=None, doi=None, author=None, abstract=None,
-                       overwrite=False, return_records=False, verbose=False):
+def download_citations(self,
+                       name: Union[str, list, None] = None,
+                       year: Union[int, list, None] = None,
+                       volume: Union[int, list, None] = None,
+                       title: Union[str, list, None] = None,
+                       journal: Union[str, list, None] = None,
+                       doi: Union[str, list, None] = None,
+                       author: Union[str, list, None] = None,
+                       abstract: Union[str, list, None] = None,
+                       overwrite: bool = False,
+                       return_records: bool = False,
+                       verbose: bool = False) -> Optional[np.ndarray]:
     """
     Downloads citations from the remote to the local.
 
@@ -311,7 +375,10 @@ def download_citations(self, name=None, year=None, volume=None, title=None,
         year=year, volume=volume, title=title, journal=journal, doi=doi,
         author=author, abstract=abstract)
 
-def save_citation(self, citation, overwrite=False, verbose=False):
+def save_citation(self,
+                  citation: Record,
+                  overwrite: bool = False,
+                  verbose: bool = False):
     """
     Saves a citation to the local database.
     
@@ -329,8 +396,11 @@ def save_citation(self, citation, overwrite=False, verbose=False):
     """
     self.save_record(record=citation, overwrite=overwrite, verbose=verbose)
 
-def upload_citation(self, citation, workspace=None, overwrite=False,
-                    verbose=False):
+def upload_citation(self,
+                    citation: Record,
+                    workspace: Union[str, pd.Series, None] = None,
+                    overwrite: bool = False,
+                    verbose: bool = False):
     """
     Uploads a citation to the remote database.
     
@@ -352,7 +422,11 @@ def upload_citation(self, citation, workspace=None, overwrite=False,
     self.upload_record(record=citation, workspace=workspace,
                        overwrite=overwrite, verbose=verbose)
 
-def delete_citation(self, citation, local=True, remote=False, verbose=False):
+def delete_citation(self,
+                    citation: Record,
+                    local: bool = True,
+                    remote: bool = False,
+                    verbose: bool = False):
     """
     Deletes a citation from the local and/or remote locations.  
 

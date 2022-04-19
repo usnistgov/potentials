@@ -3,19 +3,42 @@
 from pathlib import Path
 import shutil
 import tempfile
+from typing import Optional, Tuple, Union
 
+# https://numpy.org/
 import numpy as np
+
+# https://pandas.pydata.org/
 import pandas as pd
 
+# https://github.com/usnistgov/yabadaba
+from yabadaba.record import Record
+
+# Local imports
 from .. import settings
 
-def get_lammps_potentials(self, name=None, key=None, id=None, potid=None,
-                          potkey=None, units=None, atom_style=None,
-                          pair_style=None, status=None, symbols=None,
-                          elements=None, pot_dir_style=None, kim_models=None,
-                          kim_api_directory=None, kim_models_file=None,
-                          local=None, remote=None, refresh_cache=False,
-                          return_df=False, verbose=False):
+def get_lammps_potentials(self,
+                          name: Union[str, list, None] = None,
+                          key: Union[str, list, None] = None,
+                          id: Union[str, list, None] = None,
+                          potid: Union[str, list, None] = None,
+                          potkey: Union[str, list, None] = None,
+                          units: Union[str, list, None] = None,
+                          atom_style: Union[str, list, None] = None,
+                          pair_style: Union[str, list, None] = None,
+                          status: Union[str, list, None] = None,
+                          symbols: Union[str, list, None] = None,
+                          elements: Union[str, list, None] = None,
+                          pot_dir_style: Optional[str] = None, 
+                          kim_models: Union[str, list, None] = None,
+                          kim_api_directory: Optional[Path] = None,
+                          kim_models_file: Optional[Path] = None, 
+                          local: Optional[bool] = None,
+                          remote: Optional[bool] = None,
+                          refresh_cache: bool = False,
+                          return_df: bool = False,
+                          verbose: bool = False
+                          ) -> Union[np.ndarray, Tuple[np.ndarray, pd.DataFrame]]:
     """
     Gets all matching LAMMPS potentials from the database.
 
@@ -84,6 +107,13 @@ def get_lammps_potentials(self, name=None, key=None, id=None, potid=None,
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
+    
+    Returns
+    -------
+    numpy.NDArray of Record subclasses
+        The retrived records.
+    pandas.DataFrame
+        A table of the records' metadata.  Returned if return_df = True.
     """
     # Check pot_dir_style values
     if pot_dir_style is None:
@@ -149,13 +179,27 @@ def promptfxn(df):
 
     return js[i]
 
-def get_lammps_potential(self, name=None, key=None, id=None, potid=None,
-                         potkey=None, units=None, atom_style=None,
-                         pair_style=None, status=None, symbols=None,
-                         elements=None, pot_dir_style=None, kim_models=None,
-                         kim_api_directory=None, kim_models_file=None, 
-                         local=None, remote=None, prompt=True,
-                         refresh_cache=False, verbose=False):
+def get_lammps_potential(self,
+                         name: Union[str, list, None] = None,
+                         key: Union[str, list, None] = None,
+                         id: Union[str, list, None] = None,
+                         potid: Union[str, list, None] = None,
+                         potkey: Union[str, list, None] = None,
+                         units: Union[str, list, None] = None,
+                         atom_style: Union[str, list, None] = None,
+                         pair_style: Union[str, list, None] = None,
+                         status: Union[str, list, None] = None,
+                         symbols: Union[str, list, None] = None,
+                         elements: Union[str, list, None] = None,
+                         pot_dir_style: Optional[str] = None, 
+                         kim_models: Union[str, list, None] = None,
+                         kim_api_directory: Optional[Path] = None,
+                         kim_models_file: Optional[Path] = None, 
+                         local: Optional[bool] = None,
+                         remote: Optional[bool] = None, 
+                         prompt: bool = True,
+                         refresh_cache: bool = False,
+                         verbose: bool = False) -> Record:
     """
     Gets a single matching LAMMPS potential from the database.
 
@@ -281,14 +325,31 @@ def get_lammps_potential(self, name=None, key=None, id=None, potid=None,
 
     raise ValueError('No matching LAMMPS potentials found')
 
-def retrieve_lammps_potential(self, name=None, dest=None, key=None, id=None,
-                              potid=None, potkey=None, units=None,
-                              atom_style=None, pair_style=None, status='active',
-                              symbols=None, elements=None, pot_dir_style=None,
-                              kim_models=None, kim_api_directory=None,
-                              kim_models_file=None, getfiles=False, local=None,
-                              remote=None, prompt=True, format='json',
-                              indent=4, refresh_cache=False, verbose=False):
+def retrieve_lammps_potential(self,
+                              name: Union[str, list, None] = None,
+                              dest: Optional[Path] = None,
+                              key: Union[str, list, None] = None,
+                              id: Union[str, list, None] = None,
+                              potid: Union[str, list, None] = None,
+                              potkey: Union[str, list, None] = None,
+                              units: Union[str, list, None] = None,
+                              atom_style: Union[str, list, None] = None,
+                              pair_style: Union[str, list, None] = None,
+                              status: Union[str, list, None] = None,
+                              symbols: Union[str, list, None] = None,
+                              elements: Union[str, list, None] = None,
+                              pot_dir_style: Optional[str] = None, 
+                              kim_models: Union[str, list, None] = None,
+                              kim_api_directory: Optional[Path] = None,
+                              kim_models_file: Optional[Path] = None, 
+                              getfiles: bool = False, 
+                              local: Optional[bool] = None,
+                              remote: Optional[bool] = None, 
+                              prompt: bool = True,
+                              format: str = 'json',
+                              indent: int = 4, 
+                              refresh_cache: bool = False,
+                              verbose: bool = False):
     """
     Gets a single matching PotentialLAMMPS or PotentialLAMMPSKIM record from
     the database and saves it to a file based on the record's name.  Any
@@ -412,13 +473,23 @@ def retrieve_lammps_potential(self, name=None, dest=None, key=None, id=None,
         self.get_lammps_potential_files(lmppot, local=local, remote=remote,
                                         pot_dir=pot_dir, verbose=verbose)
     
-
-def download_lammps_potentials(self, name=None, key=None, id=None,
-                               potid=None, potkey=None, units=None,
-                               atom_style=None, pair_style=None, status=None,
-                               symbols=None, elements=None, include_kim=True,
-                               overwrite=False, return_records=False,
-                               downloadfiles=False, verbose=False):
+def download_lammps_potentials(self,
+                               name: Union[str, list, None] = None,
+                               key: Union[str, list, None] = None,
+                               id: Union[str, list, None] = None,
+                               potid: Union[str, list, None] = None,
+                               potkey: Union[str, list, None] = None,
+                               units: Union[str, list, None] = None,
+                               atom_style: Union[str, list, None] = None,
+                               pair_style: Union[str, list, None] = None,
+                               status: Union[str, list, None] = None,
+                               symbols: Union[str, list, None] = None,
+                               elements: Union[str, list, None] = None,
+                               include_kim: bool = True,
+                               overwrite: bool = False,
+                               return_records: bool = False,
+                               downloadfiles: bool = False,
+                               verbose: bool = False) -> Optional[np.ndarray]:
     """
     Downloads PotentialLAMMPS and PotentialLAMMPSKIM records and any associated
     parameter files from the database.
@@ -535,9 +606,14 @@ def download_lammps_potentials(self, name=None, key=None, id=None,
     elif return_records:
         return records
 
-def get_lammps_potential_files(self, lammps_potential, local=None, remote=None,
-                               download=True, pot_dir=None, overwrite=False,
-                               verbose=False):
+def get_lammps_potential_files(self,
+                               lammps_potential: Record,
+                               local: Optional[bool] = None,
+                               remote: Optional[bool] = None,
+                               download: bool = True,
+                               pot_dir: Optional[Path] = None,
+                               overwrite: bool = False,
+                               verbose: bool = False):
     """
     Retrieves the potential parameter files for a LAMMPS potential and saves
     them to the pot_dir of the potential object.  If local is True and the
@@ -657,9 +733,12 @@ def get_lammps_potential_files(self, lammps_potential, local=None, remote=None,
                 if verbose:
                     print(f'{artifact.filename} already in {pot_dir}')
 
-def save_lammps_potential(self, lammps_potential, filenames=None,
-                          downloadfiles=False, overwrite=False,
-                          verbose=False):
+def save_lammps_potential(self,
+                          lammps_potential: Record,
+                          filenames: Optional[list] = None,
+                          downloadfiles: bool = False,
+                          overwrite: bool = False,
+                          verbose: bool = False):
     """
     Saves a LAMMPS potential to the local.
 
@@ -776,8 +855,11 @@ def save_lammps_potential(self, lammps_potential, filenames=None,
                         if verbose:
                             print('files skipped as local archive exists')
 
-def upload_lammps_potential(self, lammps_potential=None, workspace=None,
-                            overwrite=False, verbose=False):
+def upload_lammps_potential(self,
+                            lammps_potential: Record,
+                            workspace: Union[str, pd.Series, None] = None,
+                            overwrite: bool = False,
+                            verbose: bool = False):
     """
     Uploads a LAMMPS potential to the remote database.
     
@@ -799,8 +881,11 @@ def upload_lammps_potential(self, lammps_potential=None, workspace=None,
     self.upload_record(record=lammps_potential, workspace=workspace,
                        overwrite=overwrite, verbose=verbose)
 
-def delete_lammps_potential(self, lammps_potential, local=True, remote=False,
-                            verbose=False):
+def delete_lammps_potential(self,
+                            lammps_potential: Record,
+                            local: bool = True,
+                            remote: bool = False,
+                            verbose: bool = False):
     """ 
     Deletes a LAMMPS potential record from the local and/or remote locations.
 
@@ -830,7 +915,7 @@ def delete_lammps_potential(self, lammps_potential, local=True, remote=False,
         shutil.rmtree(pot_dir)
 
 @property
-def bad_lammps_potentials(self):
+def bad_lammps_potentials(self) -> list:
     """list: ids of potential_LAMMPS records that are invalid and should fail with LAMMPS"""
     return [
         # Listings with invalid parameter files that do not work in LAMMPS

@@ -1,7 +1,27 @@
 # coding: utf-8
+# Standard libraries
+from pathlib import Path
+from typing import Optional, Tuple, Union
 
-def get_faqs(self, name=None, question=None, answer=None, local=None,
-             remote=None, refresh_cache=False, return_df=False, verbose=False):
+# https://numpy.org/
+import numpy as np
+
+# https://pandas.pydata.org/
+import pandas as pd
+
+# https://github.com/usnistgov/yabadaba
+from yabadaba.record import Record
+
+def get_faqs(self, 
+             name: Union[str, list, None] = None,
+             question: Union[str, list, None] = None,
+             answer: Union[str, list, None] = None,
+             local: Optional[bool] = None,
+             remote: Optional[bool] = None,
+             refresh_cache: bool = False,
+             return_df: bool = False,
+             verbose: bool = False
+             ) -> Union[np.ndarray, Tuple[np.ndarray, pd.DataFrame]]:
     """
     Gets all matching FAQs from the database.
 
@@ -32,14 +52,28 @@ def get_faqs(self, name=None, question=None, answer=None, local=None,
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
+    
+    Returns
+    -------
+    numpy.NDArray of Record subclasses
+        The retrived records.
+    pandas.DataFrame
+        A table of the records' metadata.  Returned if return_df = True.
     """
     return self.get_records(
         style='FAQ', name=name, local=local, remote=remote,
         refresh_cache=refresh_cache, return_df=return_df, verbose=verbose,
         question=question, answer=answer)
 
-def get_faq(self, name=None, question=None, answer=None, local=None,
-            remote=None, prompt=True, refresh_cache=False, verbose=False):
+def get_faq(self, 
+            name: Union[str, list, None] = None,
+            question: Union[str, list, None] = None,
+            answer: Union[str, list, None] = None,
+            local: Optional[bool] = None,
+            remote: Optional[bool] = None, 
+            prompt: bool = True,
+            refresh_cache: bool = False,
+            verbose: bool = False) -> Record:
     """
     Gets exactly one matching FAQ from the database.
 
@@ -77,9 +111,18 @@ def get_faq(self, name=None, question=None, answer=None, local=None,
         prompt=prompt, refresh_cache=refresh_cache, verbose=verbose,
         question=question, answer=answer)
 
-def retrieve_faq(self, name=None, dest=None, question=None,
-                 answer=None, local=None, remote=None, prompt=True,
-                 format='json', indent=4, refresh_cache=False, verbose=False):
+def retrieve_faq(self, 
+                name: Union[str, list, None] = None,
+                dest: Optional[Path] = None,
+                question: Union[str, list, None] = None,
+                answer: Union[str, list, None] = None,
+                local: Optional[bool] = None,
+                remote: Optional[bool] = None, 
+                prompt: bool = True,
+                format: str = 'json',
+                indent: int = 4, 
+                refresh_cache: bool = False,
+                verbose: bool = False):
     """
     Gets a single matching FAQ from the database and saves it to a
     file based on the record's name.
@@ -137,8 +180,13 @@ def retrieve_faq(self, name=None, dest=None, question=None,
         refresh_cache=refresh_cache, verbose=verbose,
         question=question, answer=answer)
 
-def download_faqs(self, name=None, question=None, answer=None, 
-                  overwrite=False, return_records=False, verbose=False):
+def download_faqs(self, 
+                  name: Union[str, list, None] = None,
+                  question: Union[str, list, None] = None,
+                  answer: Union[str, list, None] = None,
+                  overwrite: bool = False,
+                  return_records: bool = False,
+                  verbose: bool = False) -> Optional[np.ndarray]:
     """
     Downloads FAQs from the remote to the local.
 
@@ -166,7 +214,10 @@ def download_faqs(self, name=None, question=None, answer=None,
         return_records=return_records, verbose=verbose,
         question=question, answer=answer)
 
-def save_faq(self, faq, overwrite=False, verbose=False):
+def save_faq(self,
+             faq: Record,
+             overwrite: bool = False,
+             verbose: bool = False):
     """
     Saves a FAQ to the local database.
     
@@ -184,8 +235,11 @@ def save_faq(self, faq, overwrite=False, verbose=False):
     """
     self.save_record(record=faq, overwrite=overwrite, verbose=verbose)
 
-def upload_faq(self, faq=None, workspace=None, overwrite=False,
-                    verbose=False):
+def upload_faq(self,
+               faq: Record,
+               workspace: Union[str, pd.Series, None] = None,
+               overwrite: bool = False,
+               verbose: bool = False):
     """
     Uploads a FAQ to the remote database.
     
@@ -207,7 +261,11 @@ def upload_faq(self, faq=None, workspace=None, overwrite=False,
     self.upload_record(record=faq, workspace=workspace,
                        overwrite=overwrite, verbose=verbose)
 
-def delete_faq(self, faq, local=True, remote=False, verbose=False):
+def delete_faq(self,
+               faq: Record,
+               local: bool = True,
+               remote: bool = False,
+               verbose: bool = False):
     """
     Deletes a FAQ from the local and/or remote locations.  
 

@@ -1,14 +1,32 @@
 # coding: utf-8
 # Standard Python libraries
+import io
 from pathlib import Path
+from typing import Callable, Optional, Tuple, Union
 
+# https://numpy.org/
 import numpy as np
+
+# https://pandas.pydata.org/
 import pandas as pd
 
+# https://github.com/usnistgov/DataModelDict
+from DataModelDict import DataModelDict as DM
+
+# https://github.com/usnistgov/yabadaba
+from yabadaba.record import Record
 from yabadaba import load_record
 
-def get_records(self, style=None, name=None, local=None, remote=None,
-                refresh_cache=False, return_df=False, verbose=False, **kwargs):
+def get_records(self,
+                style: Optional[str] = None,
+                name: Union[str, list, None] = None,
+                local: Optional[bool] = None,
+                remote: Optional[bool] = None,
+                refresh_cache: bool = False,
+                return_df: bool = False,
+                verbose: bool = False,
+                **kwargs
+                ) -> Union[np.ndarray, Tuple[np.ndarray, pd.DataFrame]]:
     """
     Gets all matching records from the local and/or remote locations.  If
     records with the same record name are retrieved from both locations, then
@@ -125,9 +143,16 @@ def get_records(self, style=None, name=None, local=None, remote=None,
     else:
         return records
     
-def get_record(self, style=None, name=None, local=None, remote=None,
-               prompt=True, promptfxn=None, refresh_cache=False, verbose=False,
-               **kwargs):
+def get_record(self, 
+               style: Optional[str] = None,
+               name: Union[str, list, None] = None,
+               local: Optional[bool] = None,
+               remote: Optional[bool] = None, 
+               prompt: bool = True,
+               promptfxn: Optional[Callable] = None,
+               refresh_cache: bool = False,
+               verbose: bool = False,
+               **kwargs) -> Record:
     """
     Gets a single matching record from the local and/or remote locations.
     If local is True and the record is found there, then the local copy of the
@@ -244,9 +269,19 @@ def get_record(self, style=None, name=None, local=None, remote=None,
     
     raise ValueError('No matching records found')
 
-def retrieve_record(self, style=None, name=None, dest=None, local=None,
-                    remote=None, prompt=True, promptfxn=None, format='json',
-                    indent=4, refresh_cache=False, verbose=False, **kwargs):
+def retrieve_record(self, 
+                    style: Optional[str] = None,
+                    name: Union[str, list, None] = None,
+                    dest: Optional[Path] = None,
+                    local: Optional[bool] = None,
+                    remote: Optional[bool] = None, 
+                    prompt: bool = True,
+                    promptfxn: Optional[Callable] = None,
+                    format: str = 'json',
+                    indent: int = 4, 
+                    refresh_cache: bool = False,
+                    verbose: bool = False,
+                    **kwargs):
     """
     Gets a single matching record from the database and saves it to a
     file based on the record's name.
@@ -331,8 +366,13 @@ def retrieve_record(self, style=None, name=None, dest=None, local=None,
     else:
         raise ValueError('Invalid format: must be json or xml.')
 
-def remote_query(self, style=None, keyword=None, query=None, name=None,
-                 return_df=False):
+def remote_query(self,
+                 style: Optional[str] = None,
+                 keyword: Optional[str] = None,
+                 query: Optional[dict] = None,
+                 name: Union[str, list, None] = None,
+                 return_df: bool = False
+                 )-> Union[np.ndarray, Tuple[np.ndarray, pd.DataFrame]]:
     """
     Allows for custom Mongo-style or keyword search queries to be performed on
     records from the remote database.
@@ -341,17 +381,17 @@ def remote_query(self, style=None, keyword=None, query=None, name=None,
     ----------
     style : str, optional
         The record style to search. If not given, a prompt will ask for it.
+    keyword : str, optional
+        Allows for a search of records whose contents contain a keyword.
+        Cannot be given with query.
+    query : dict, optional
+        A custom-built CDCS Mongo-style query to use for the record search.
+        Cannot be given with keyword.
     name : str or list, optional
         The name(s) of records to limit the search by.
     return_df : bool, optional
         If True, then the corresponding pandas.Dataframe of metadata
         will also be returned
-    query : dict, optional
-        A custom-built CDCS Mongo-style query to use for the record search.
-        Cannot be given with keyword.
-    keyword : str, optional
-        Allows for a search of records whose contents contain a keyword.
-        Cannot be given with query.
     
     Returns
     -------
@@ -363,8 +403,13 @@ def remote_query(self, style=None, keyword=None, query=None, name=None,
     return self.remote_database.get_records(style=style, return_df=return_df,
                                             query=query, keyword=keyword, name=name)
 
-def download_records(self, style=None, name=None, overwrite=False,
-                     return_records=False, verbose=False, **kwargs):
+def download_records(self,
+                     style: Optional[str] = None,
+                     name: Union[str, list, None] = None,
+                     overwrite: bool = False,
+                     return_records: bool = False,
+                     verbose: bool = False,
+                     **kwargs) -> Optional[np.ndarray]:
     """
     Retrieves all matching records from the remote location and saves them to
     the local location.
@@ -434,8 +479,13 @@ def download_records(self, style=None, name=None, overwrite=False,
     if return_records is True:
         return records
 
-def save_record(self, record=None, style=None, name=None,
-                  model=None, overwrite=False, verbose=False):
+def save_record(self,
+                record: Optional[Record] = None,
+                style: Optional[str] = None,
+                name: Optional[str] = None,
+                model: Union[str, io.IOBase, DM, None] = None,
+                overwrite: bool = False,
+                verbose: bool = False):
     """
     Saves a record to the local database.
     
@@ -471,8 +521,14 @@ def save_record(self, record=None, style=None, name=None,
         else:
             raise ValueError('Matching record already exists: use overwrite=True to change it') from e
 
-def upload_record(self, record=None, style=None, name=None,
-                  model=None, workspace=None, overwrite=False, verbose=False):
+def upload_record(self,
+                  record: Optional[Record] = None,
+                  style: Optional[str] = None,
+                  name: Optional[str] = None,
+                  model: Union[str, io.IOBase, DM, None] = None,
+                  workspace: Union[str, pd.Series, None] = None,
+                  overwrite: bool = False,
+                  verbose: bool = False):
     """
     Uploads a record to the remote database.  Requires an account for the remote
     location with write permissions.
@@ -489,9 +545,10 @@ def upload_record(self, record=None, style=None, name=None,
     name : str, optional
         The name to assign to the record.  Required if record is not given and
         model is not a file name.
-    workspace : str, optional
-        The workspace to assign the record to. If not given, no workspace will
-        be assigned (only accessible to user who submitted it).
+    workspace : str or pandas.Series, optional
+        The CDCS workspace or workspace name to assign the record to. If not
+        given, no workspace will be assigned (only accessible to user who
+        submitted it).
     overwrite : bool, optional
         Indicates what to do when a matching record is found in the remote
         location.  If False (default), then the record is not updated.  If
@@ -513,8 +570,13 @@ def upload_record(self, record=None, style=None, name=None,
         else:
             raise ValueError('Matching record already exists: use overwrite=True to change it') from e
 
-def delete_record(self, record=None, style=None, name=None,
-                  local=True, remote=False, verbose=False):
+def delete_record(self,
+                  record: Optional[Record] = None,
+                  style: Optional[str] = None,
+                  name: Optional[str] = None,
+                  local: bool = True,
+                  remote: bool = False,
+                  verbose: bool = False):
     """
     Deletes a record from the local and/or remote locations.  
 

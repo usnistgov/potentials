@@ -1,8 +1,28 @@
 # coding: utf-8
+# Standard Python libraries
+from pathlib import Path
+from typing import Optional, Tuple, Union
 
-def get_requests(self, name=None, date=None, element=None, comment=None,
-                 local=None, remote=None, refresh_cache=False, return_df=False,
-                 verbose=False):
+# https://numpy.org/
+import numpy as np
+
+# https://pandas.pydata.org/
+import pandas as pd
+
+# https://github.com/usnistgov/yabadaba
+from yabadaba.record import Record
+
+def get_requests(self, 
+                 name: Union[str, list, None] = None,
+                 date: Union[str, list, None] = None,
+                 element: Union[str, list, None] = None,
+                 comment: Union[str, list, None] = None,
+                 local: Optional[bool] = None,
+                 remote: Optional[bool] = None,
+                 refresh_cache: bool = False,
+                 return_df: bool = False,
+                 verbose: bool = False
+                 ) -> Union[np.ndarray, Tuple[np.ndarray, pd.DataFrame]]:
     """
     Gets all matching requests from the database.
 
@@ -35,15 +55,29 @@ def get_requests(self, name=None, date=None, element=None, comment=None,
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
+    
+    Returns
+    -------
+    numpy.NDArray of Record subclasses
+        The retrived records.
+    pandas.DataFrame
+        A table of the records' metadata.  Returned if return_df = True.
     """
     return self.get_records(
         style='Request', name=name, local=local, remote=remote, 
         refresh_cache=refresh_cache, return_df=return_df, verbose=verbose,
         date=date, element=element, comment=comment)
 
-def get_request(self, name=None, date=None, element=None, comment=None,
-                local=None, remote=None, prompt=True, refresh_cache=False,
-                verbose=False):
+def get_request(self, 
+                name: Union[str, list, None] = None,
+                date: Union[str, list, None] = None,
+                element: Union[str, list, None] = None,
+                comment: Union[str, list, None] = None,
+                local: Optional[bool] = None,
+                remote: Optional[bool] = None, 
+                prompt: bool = True,
+                refresh_cache: bool = False,
+                verbose: bool = False) -> Record:
     """
     Gets exactly one matching request from the database.
 
@@ -83,10 +117,19 @@ def get_request(self, name=None, date=None, element=None, comment=None,
         prompt=prompt, refresh_cache=refresh_cache, verbose=verbose,
         date=date, element=element, comment=comment)
 
-def retrieve_request(self, name=None, dest=None, date=None, element=None,
-                     comment=None, local=None, remote=None, prompt=True,
-                     format='json', indent=4, refresh_cache=False,
-                     verbose=False):
+def retrieve_request(self, 
+                    name: Union[str, list, None] = None,
+                    dest: Optional[Path] = None,
+                    date: Union[str, list, None] = None,
+                    element: Union[str, list, None] = None,
+                    comment: Union[str, list, None] = None, 
+                    local: Optional[bool] = None,
+                    remote: Optional[bool] = None, 
+                    prompt: bool = True,
+                    format: str = 'json',
+                    indent: int = 4, 
+                    refresh_cache: bool = False,
+                    verbose: bool = False):
     """
     Gets a single matching Request from the database and saves it to a
     file based on the record's name.
@@ -146,9 +189,14 @@ def retrieve_request(self, name=None, dest=None, date=None, element=None,
         refresh_cache=refresh_cache, verbose=verbose,
         date=date, element=element, comment=comment)
 
-def download_requests(self, name=None, date=None, element=None,
-                     comment=None, overwrite=False, return_records=False,
-                     verbose=False):
+def download_requests(self, 
+                      name: Union[str, list, None] = None,
+                      date: Union[str, list, None] = None,
+                      element: Union[str, list, None] = None,
+                      comment: Union[str, list, None] = None,
+                      overwrite: bool = False,
+                      return_records: bool = False,
+                      verbose: bool = False) -> Optional[np.ndarray]:
     """
     Downloads requests from the remote to the local.
 
@@ -178,7 +226,10 @@ def download_requests(self, name=None, date=None, element=None,
         return_records=return_records, verbose=verbose,        
         date=date, element=element, comment=comment)
 
-def save_request(self, request, overwrite=False, verbose=False):
+def save_request(self,
+                 request: Record,
+                 overwrite: bool = False,
+                 verbose: bool = False):
     """
     Saves a request to the local database.
     
@@ -196,8 +247,11 @@ def save_request(self, request, overwrite=False, verbose=False):
     """
     self.save_record(record=request, overwrite=overwrite, verbose=verbose)
 
-def upload_request(self, request=None, workspace=None, overwrite=False,
-                    verbose=False):
+def upload_request(self,
+                   request: Record,
+                   workspace: Union[str, pd.Series, None] = None,
+                   overwrite: bool = False,
+                   verbose: bool = False):
     """
     Uploads a request to the remote database.
     
@@ -219,7 +273,11 @@ def upload_request(self, request=None, workspace=None, overwrite=False,
     self.upload_record(record=request, workspace=workspace,
                        overwrite=overwrite, verbose=verbose)
 
-def delete_request(self, request, local=True, remote=False, verbose=False):
+def delete_request(self,
+                   request: Record,
+                   local: bool = True,
+                   remote: bool = False,
+                   verbose: bool = False):
     """
     Deletes a request from the local and/or remote locations.  
 

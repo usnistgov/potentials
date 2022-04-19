@@ -1,9 +1,17 @@
 # coding: utf-8
+# Standard Python libraries
+from typing import Optional
+
+# https://github.com/usnistgov/yabadaba
 import yabadaba
 
+# Local imports
 from .. import settings
 
-def load_database(name=None, style=None, host=None, **kwargs):
+def load_database(name: Optional[str] = None,
+                  style: Optional[str] = None,
+                  host: Optional[str] = None,
+                  **kwargs) -> yabadaba.database.Database:
     """
     Loads a database object.  Can be either loaded from stored settings or
     by defining all needed access information.

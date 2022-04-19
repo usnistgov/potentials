@@ -3,6 +3,7 @@
 from pathlib import Path
 import subprocess
 from copy import deepcopy
+from typing import Optional, Tuple, Union
 
 # https://numpy.org/
 import numpy as np
@@ -10,7 +11,7 @@ import numpy as np
 # https://pandas.pydata.org/
 import pandas as pd
 
-
+# https://github.com/usnistgov/yabadaba
 from yabadaba import query
 
 # Local imports
@@ -18,18 +19,31 @@ from ..tools import aslist
 from .. import settings, load_record
 
 @property
-def kim_models(self):
+def kim_models(self) -> list:
     """list: The full KIM ids of the installed KIM models"""
     return self.__kim_models
 
-def get_kim_lammps_potentials(self, name=None, key=None, id=None,
-                              potid=None, potkey=None, units=None,
-                              atom_style=None, pair_style=None, status=None,
-                              symbols=None, elements=None,
-                              kim_models=None, kim_api_directory=None,
-                              kim_models_file=None, local=None, remote=None,
-                              refresh_cache=False, return_df=False,
-                              verbose=False):
+def get_kim_lammps_potentials(self, 
+                              name: Union[str, list, None] = None,
+                              key: Union[str, list, None] = None,
+                              id: Union[str, list, None] = None,
+                              potid: Union[str, list, None] = None,
+                              potkey: Union[str, list, None] = None,
+                              units: Union[str, list, None] = None,
+                              atom_style: Union[str, list, None] = None,
+                              pair_style: Union[str, list, None] = None,
+                              status: Union[str, list, None] = None,
+                              symbols: Union[str, list, None] = None,
+                              elements: Union[str, list, None] = None,
+                              kim_models: Union[str, list, None] = None,
+                              kim_api_directory: Optional[Path] = None,
+                              kim_models_file: Optional[Path] = None, 
+                              local: Optional[bool] = None,
+                              remote: Optional[bool] = None,
+                              refresh_cache: bool = False,
+                              return_df: bool = False,
+                              verbose: bool = False
+                              ) -> Union[np.ndarray, Tuple[np.ndarray, pd.DataFrame]]:
     """
     Builds LAMMPS potential entries for KIM models.  The returned entries
     depend both on the parsing parameters and the list of installed kim models
@@ -95,6 +109,13 @@ def get_kim_lammps_potentials(self, name=None, key=None, id=None,
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
+    
+    Returns
+    -------
+    numpy.NDArray of Record subclasses
+        The retrived records.
+    pandas.DataFrame
+        A table of the records' metadata.  Returned if return_df = True.
     """
     # Change kim models list if any related parameter is given
     if (kim_models is not None
@@ -192,8 +213,10 @@ def get_kim_lammps_potentials(self, name=None, key=None, id=None,
     else:
         return records2
 
-def init_kim_models(self, kim_models=None, kim_api_directory=None,
-                    kim_models_file=None):
+def init_kim_models(self,
+                    kim_models: Union[str, list, None] = None,
+                    kim_api_directory: Optional[Path] = None,
+                    kim_models_file: Optional[Path] = None):
     """
     Initializes the list of installed kim models.  If any one of the parameters
     are given, then the list will be based on that.  Otherwise, will first
@@ -237,7 +260,7 @@ def init_kim_models(self, kim_models=None, kim_api_directory=None,
     else:
         self.__kim_models = []
 
-def find_kim_models(self, kim_api_directory=None):
+def find_kim_models(self, kim_api_directory: Optional[Path] = None):
     """
     Uses the kim api to discover the installed KIM models.
 
@@ -279,7 +302,7 @@ def find_kim_models(self, kim_api_directory=None):
         elif 'Portable Models:' in line:
             capture=True
 
-def set_kim_models(self, kim_models):
+def set_kim_models(self, kim_models: Union[str, list]):
     """
     Allows for the list of KIM models to be directly set.  Useful if
     the kim api is on a different machine or if the list should include models
@@ -292,7 +315,7 @@ def set_kim_models(self, kim_models):
     """
     self.__kim_models = aslist(kim_models)
 
-def save_kim_models_file(self, kim_models_file=None):
+def save_kim_models_file(self, kim_models_file: Optional[Path] = None):
     """
     Saves the current list of kim models so that they can be retrieved later.
 
@@ -312,7 +335,7 @@ def delete_kim_models_file(self):
     """
     settings.unset_kim_models()
 
-def load_kim_models_file(self, kim_models_file=None):
+def load_kim_models_file(self, kim_models_file: Optional[Path] = None):
     """
     Loads the list of kim models from a whitespace-delimited file.
 

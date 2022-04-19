@@ -2,13 +2,16 @@
 # Standard Python libraries
 from pathlib import Path
 import json
+from typing import Optional, Union
 
+# https://docs.python-requests.org/
 import requests
 
+# Local imports
 from ..tools import aslist
 
 @property
-def related_models(self):
+def related_models(self) -> dict:
     """dict : The list of all related models by interactions"""
     try:
         return self.__related_models
@@ -16,7 +19,10 @@ def related_models(self):
         self.load_related_models()
         return self.__related_models
 
-def load_related_models(self, local=None, remote=None, verbose=False):
+def load_related_models(self,
+                        local: Optional[bool] = None,
+                        remote: Optional[bool] = None,
+                        verbose: Optional[bool] = False):
     """
     Loads the related-interactions.json file from either the local location
     or the NIST Interatomic Potentials Repository website.
@@ -58,7 +64,7 @@ def load_related_models(self, local=None, remote=None, verbose=False):
     
     raise ValueError('Failed to find related-interactions.json')
 
-def get_related_models(self, potid):
+def get_related_models(self, potid: str) -> dict:
     """
     Finds all known related interaction models for a given interatomic potential.
 
@@ -66,6 +72,11 @@ def get_related_models(self, potid):
     ----------
     potid : str
         The id of a potential entry to find all related models for.
+    
+    Returns
+    -------
+    dict
+        The list of all matching related models by interactions
     """
     related_models = self.related_models
 
@@ -93,7 +104,9 @@ def get_related_models(self, potid):
 
     return related
 
-def save_related_models(self, local=True, altpath=None):
+def save_related_models(self,
+                        local: bool = True,
+                        altpath: Optional[Path] = None):
     """
     Saves the related-interactions.json file.
 
@@ -124,8 +137,11 @@ def save_related_models(self, local=True, altpath=None):
         with open(filename, 'w') as f:
             json.dump(self.related_models, fp=f)
 
-def add_related_models(self, potid, interactions, related_ids=None,
-                       verbose=False):
+def add_related_models(self,
+                       potid: str,
+                       interactions: Union[str, list],
+                       related_ids: Union[str, list, None] = None,
+                       verbose: bool = False):
     """
     Adds an interatomic potential to the related-interactions.json.  Note
     that this only changes values in the loaded related_models object and any

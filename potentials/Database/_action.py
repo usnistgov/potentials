@@ -1,9 +1,32 @@
 # coding: utf-8
+# Standard Python libraries
+from pathlib import Path
+from typing import Optional, Tuple, Union
 
-def get_actions(self, name=None, date=None, type=None,
-                potential_id=None, potential_key=None, element=None,
-                comment=None, local=None, remote=None, refresh_cache=False,
-                return_df=False, verbose=False):
+# https://numpy.org/
+import numpy as np
+import numpy.typing as npt
+
+# https://github.com/usnistgov/yabadaba
+from yabadaba.record import Record
+
+# https://pandas.pydata.org/
+import pandas as pd
+
+def get_actions(self,
+                name: Union[str, list, None] = None,
+                date: Union[str, list, None] = None,
+                type: Union[str, list, None] = None,
+                potential_id: Union[str, list, None] = None,
+                potential_key: Union[str, list, None] = None,
+                element: Union[str, list, None] = None,
+                comment: Union[str, list, None] = None,
+                local: Optional[bool] = None,
+                remote: Optional[bool] = None,
+                refresh_cache: bool = False,
+                return_df: bool = False,
+                verbose: bool = False
+                ) -> Union[np.ndarray, Tuple[np.ndarray, pd.DataFrame]]:
     """
     Gets all matching actions from the database.
 
@@ -44,6 +67,13 @@ def get_actions(self, name=None, date=None, type=None,
     verbose : bool, optional
         If True, info messages will be printed during operations.  Default
         value is False.
+
+    Returns
+    -------
+    numpy.NDArray of Record subclasses
+        The retrived records.
+    pandas.DataFrame
+        A table of the records' metadata.  Returned if return_df = True.
     """
     return self.get_records(
         style='Action', name=name, local=local, remote=remote,
@@ -51,9 +81,19 @@ def get_actions(self, name=None, date=None, type=None,
         date=date, type=type, potential_id=potential_id,
         potential_key=potential_key, element=element, comment=comment)
 
-def get_action(self, name=None, date=None, type=None, potential_id=None,
-               potential_key=None, element=None, comment=None, local=None,
-               remote=None, prompt=True, refresh_cache=False, verbose=False):
+def get_action(self,
+               name: Union[str, list, None] = None,
+               date: Union[str, list, None] = None,
+               type: Union[str, list, None] = None,
+               potential_id: Union[str, list, None] = None,
+               potential_key: Union[str, list, None] = None,
+               element: Union[str, list, None] = None,
+               comment: Union[str, list, None] = None,
+               local: Optional[bool] = None,
+               remote: Optional[bool] = None, 
+               prompt: bool = True,
+               refresh_cache: bool = False,
+               verbose: bool = False) -> Record:
     """
     Gets exactly one matching action from the database.
 
@@ -102,10 +142,22 @@ def get_action(self, name=None, date=None, type=None, potential_id=None,
         date=date, type=type, potential_id=potential_id,
         potential_key=potential_key, element=element, comment=comment)
 
-def retrieve_action(self, name=None, dest=None, date=None, type=None, potential_id=None,
-                    potential_key=None, element=None, comment=None, local=None,
-                    remote=None, prompt=True, format='json', indent=4,
-                    refresh_cache=False, verbose=False):
+def retrieve_action(self,
+                    name: Union[str, list, None] = None,
+                    dest: Optional[Path] = None,
+                    date: Union[str, list, None] = None,
+                    type: Union[str, list, None] = None,
+                    potential_id: Union[str, list, None] = None,
+                    potential_key: Union[str, list, None] = None,
+                    element: Union[str, list, None] = None,
+                    comment: Union[str, list, None] = None,
+                    local: Optional[bool] = None,
+                    remote: Optional[bool] = None, 
+                    prompt: bool = True,
+                    format: str = 'json',
+                    indent: int = 4, 
+                    refresh_cache: bool = False,
+                    verbose: bool = False):
     """
     Gets a single matching action from the database and saves it to a
     file based on the record's name.
@@ -174,9 +226,17 @@ def retrieve_action(self, name=None, dest=None, date=None, type=None, potential_
         date=date, type=type, potential_id=potential_id,
         potential_key=potential_key, element=element, comment=comment)
 
-def download_actions(self, name=None, date=None, type=None, potential_id=None,
-                     potential_key=None, element=None, comment=None,
-                     overwrite=False, return_records=False, verbose=False):
+def download_actions(self, 
+                     name: Union[str, list, None] = None,
+                     date: Union[str, list, None] = None,
+                     type: Union[str, list, None] = None,
+                     potential_id: Union[str, list, None] = None,
+                     potential_key: Union[str, list, None] = None,
+                     element: Union[str, list, None] = None,
+                     comment: Union[str, list, None] = None,
+                     overwrite: bool = False,
+                     return_records: bool = False,
+                     verbose: bool = False) -> Optional[np.ndarray]:
     """
     Downloads actions from the remote to the local.
 
@@ -215,7 +275,10 @@ def download_actions(self, name=None, date=None, type=None, potential_id=None,
         date=date, type=type, potential_id=potential_id,
         potential_key=potential_key, element=element, comment=comment)
 
-def save_action(self, action, overwrite=False, verbose=False):
+def save_action(self,
+                action: Record,
+                overwrite: bool = False,
+                verbose: bool = False):
     """
     Saves an action to the local database.
     
@@ -233,8 +296,11 @@ def save_action(self, action, overwrite=False, verbose=False):
     """
     self.save_record(record=action, overwrite=overwrite, verbose=verbose)
 
-def upload_action(self, action=None, workspace=None, overwrite=False,
-                    verbose=False):
+def upload_action(self,
+                  action: Record,
+                  workspace: Union[str, pd.Series, None] = None,
+                  overwrite: bool = False,
+                  verbose: bool = False):
     """
     Uploads an action to the remote database.
     
@@ -256,7 +322,11 @@ def upload_action(self, action=None, workspace=None, overwrite=False,
     self.upload_record(record=action, workspace=workspace,
                        overwrite=overwrite, verbose=verbose)
 
-def delete_action(self, action, local=True, remote=False, verbose=False):
+def delete_action(self,
+                  action: Record,
+                  local: bool = True,
+                  remote: bool = False,
+                  verbose: bool = False):
     """
     Deletes an action from the local and/or remote locations.  
 
