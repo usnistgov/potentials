@@ -1,8 +1,7 @@
 # coding: utf-8
 # Standard libraries
-from ctypes import Union
 from pathlib import Path
-from typing import Optional
+from typing import Optional, Union
 
 import yabadaba
 
