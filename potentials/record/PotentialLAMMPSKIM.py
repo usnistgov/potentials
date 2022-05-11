@@ -18,7 +18,7 @@ from yabadaba import query
 
 # local imports
 from ..tools import aslist
-from .BasePotentalLAMMPS import BasePotentialLAMMPS
+from .BasePotentialLAMMPS import BasePotentialLAMMPS
 class PotentialLAMMPSKIM(BasePotentialLAMMPS):
     """
     Class for building LAMMPS input lines from a potential-LAMMPS-KIM data model.

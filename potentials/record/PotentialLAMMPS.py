@@ -17,7 +17,7 @@ from yabadaba import query
 
 # local imports
 from ..tools import atomic_mass, aslist
-from .BasePotentalLAMMPS import BasePotentialLAMMPS
+from .BasePotentialLAMMPS import BasePotentialLAMMPS
 from .Artifact import Artifact
 
 class PotentialLAMMPS(BasePotentialLAMMPS):
