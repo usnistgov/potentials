@@ -1,6 +1,12 @@
 Updates
 =======
 
+0.3.4
+-----
+
+- Typing hints added throughout the code.
+- Random bug fixes and docstring typo fixes.
+
 0.3.3
 -----
 

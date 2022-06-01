@@ -1,5 +1,7 @@
 include README.rst
 include potentials/VERSION
+include UPDATES.rst
+include LICENSE.txt
 
 graft potentials/tools
 graft potentials/xsd
