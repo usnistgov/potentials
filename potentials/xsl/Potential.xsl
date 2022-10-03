@@ -144,102 +144,96 @@
               <b><xsl:text>Notes: </xsl:text></b>
               <xsl:value-of select = "notes/text" disable-output-escaping="yes"/>
               <br/>
+                
+              <!-- List artifact files -->
+              <xsl:if test="artifact">
+                <b>
+                  <xsl:text>File(s): </xsl:text>
+                  <xsl:if test="status != 'active'">
+                    <xsl:value-of select="status"/>
+                  </xsl:if>
+                </b>
+                <div id="{key}">
+                  <!-- Show or hide div based on status -->
+                  <xsl:choose>
+                    <xsl:when test="status != 'active'">
+                      <xsl:attribute name="style">display:none</xsl:attribute>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:attribute name="style">display:block</xsl:attribute>
+                    </xsl:otherwise>
+                  </xsl:choose>
+
+                  <xsl:for-each select = "artifact">
+                    <xsl:if test="web-link/label">
+                      <xsl:value-of select="web-link/label" disable-output-escaping="yes"/><xsl:text> </xsl:text>
+                    </xsl:if>
+                    <a href = "{web-link/URL}">
+                      <xsl:value-of select="web-link/link-text"/>
+                    </a>
+                    <br/>
+                  </xsl:for-each>
+                </div>
+              </xsl:if>
               
-              <!-- Content choice -->
-              <xsl:choose>
-                
-                <!-- List artifact files -->
-                <xsl:when test="artifact">
-                  <b>
-                    <xsl:text>File(s): </xsl:text>
-                    <xsl:if test="status != 'active'">
-                      <xsl:value-of select="status"/>
-                    </xsl:if>
-                  </b>
-                  <div id="{key}">
-                    <!-- Show or hide div based on status -->
-                    <xsl:choose>
-                      <xsl:when test="status != 'active'">
-                        <xsl:attribute name="style">display:none</xsl:attribute>
-                      </xsl:when>
-                      <xsl:otherwise>
-                        <xsl:attribute name="style">display:block</xsl:attribute>
-                      </xsl:otherwise>
-                    </xsl:choose>
+              <!-- List web links -->
+              <xsl:if test="link">
+                <b>
+                  <xsl:text>Link(s): </xsl:text>
+                  <xsl:if test="status != 'active'">
+                    <xsl:value-of select="status"/>
+                  </xsl:if>
+                </b>
+                <div id="{key}">
+                  <!-- Show or hide div based on status -->
+                  <xsl:choose>
+                    <xsl:when test="status != 'active'">
+                      <xsl:attribute name="style">display:none</xsl:attribute>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:attribute name="style">display:block</xsl:attribute>
+                    </xsl:otherwise>
+                  </xsl:choose>
 
-                    <xsl:for-each select = "artifact">
-                      <xsl:if test="web-link/label">
-                        <xsl:value-of select="web-link/label" disable-output-escaping="yes"/><xsl:text> </xsl:text>
-                      </xsl:if>
-                      <a href = "{web-link/URL}">
-                        <xsl:value-of select="web-link/link-text"/>
-                      </a>
-                      <br/>
-                    </xsl:for-each>
-                  </div><br/>
-                </xsl:when>
-                
-                <!-- List web links -->
-                <xsl:when test="link">
-                  <b>
-                    <xsl:text>Link(s): </xsl:text>
-                    <xsl:if test="status != 'active'">
-                      <xsl:value-of select="status"/>
+                  <xsl:for-each select = "link">
+                    <xsl:if test="web-link/label">
+                      <xsl:value-of select="web-link/label" disable-output-escaping="yes"/><xsl:text> </xsl:text>
                     </xsl:if>
-                  </b>
-                  <div id="{key}">
-                    <!-- Show or hide div based on status -->
-                    <xsl:choose>
-                      <xsl:when test="status != 'active'">
-                        <xsl:attribute name="style">display:none</xsl:attribute>
-                      </xsl:when>
-                      <xsl:otherwise>
-                        <xsl:attribute name="style">display:block</xsl:attribute>
-                      </xsl:otherwise>
-                    </xsl:choose>
-
-                    <xsl:for-each select = "link">
-                      <xsl:if test="web-link/label">
-                        <xsl:value-of select="web-link/label" disable-output-escaping="yes"/><xsl:text> </xsl:text>
-                      </xsl:if>
-                      <a href = "{web-link/URL}">
-                        <xsl:value-of select="web-link/link-text"/>
-                      </a>
-                      <br/>
-                    </xsl:for-each>
-                  </div><br/>
-                </xsl:when>
-                
+                    <a href = "{web-link/URL}">
+                      <xsl:value-of select="web-link/link-text"/>
+                    </a>
+                    <br/>
+                  </xsl:for-each>
+                </div>
+              </xsl:if>
               
-                <!-- List parameters -->
-                <xsl:when test="parameter">
-                  <b>
-                    <xsl:text>Parameters: </xsl:text>
-                    <xsl:if test="status != 'active'">
-                      <xsl:value-of select = "status"/>
-                    </xsl:if>
-                  </b>
-                  <div id="{key}">
-                    <!-- Show or hide div based on status -->
-                    <xsl:choose>
-                      <xsl:when test="status != 'active'">
-                        <xsl:attribute name="style">display:none</xsl:attribute>
-                      </xsl:when>
-                      <xsl:otherwise>
-                        <xsl:attribute name="style">display:block</xsl:attribute>
-                      </xsl:otherwise>
-                    </xsl:choose>
-
-                    <xsl:for-each select = "parameter">
-                      <xsl:value-of select="name"/><br/>
-                    </xsl:for-each>
-                  </div><br/>
-                </xsl:when>
-
-                <!-- Otherwise, do nothing-->
-                <xsl:otherwise></xsl:otherwise>
-              </xsl:choose>
             
+              <!-- List parameters -->
+              <xsl:if test="parameter">
+                <b>
+                  <xsl:text>Parameters: </xsl:text>
+                  <xsl:if test="status != 'active'">
+                    <xsl:value-of select = "status"/>
+                  </xsl:if>
+                </b>
+                <div id="{key}">
+                  <!-- Show or hide div based on status -->
+                  <xsl:choose>
+                    <xsl:when test="status != 'active'">
+                      <xsl:attribute name="style">display:none</xsl:attribute>
+                    </xsl:when>
+                    <xsl:otherwise>
+                      <xsl:attribute name="style">display:block</xsl:attribute>
+                    </xsl:otherwise>
+                  </xsl:choose>
+
+                  <xsl:for-each select = "parameter">
+                    <xsl:value-of select="name"/><br/>
+                  </xsl:for-each>
+                </div>
+              </xsl:if>
+              <br/>
+              
               <!-- Add button if status not active -->
               <xsl:if test="status != 'active'">
                 <div id="button-{key}" style= "display:block">
