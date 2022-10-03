@@ -1,6 +1,16 @@
 Updates
 =======
 
+0.3.5
+-----
+
+- URL fields added to Potential and BasePotentialLAMMPS records which are
+  used as PIDs on potentials.nist.gov, i.e. permanent hyperlinks for the
+  records.
+- XSL and XSD representations updated to coincide with record structure and
+  how the records are viewed on potentials.nist.gov.
+- pytests (barely) started.
+
 0.3.4
 -----
 
