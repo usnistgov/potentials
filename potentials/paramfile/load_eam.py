@@ -43,7 +43,7 @@ def load_eam(f: Union[str, io.IOBase],
     if hasattr(f, 'readlines'):
         closefile = False
     else:
-        f = open(f)
+        f = open(f, encoding='UTF-8')
         closefile = True
     
     def test_style(f, cls):
