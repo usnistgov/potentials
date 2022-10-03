@@ -80,6 +80,16 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         """str : The root element for the associated data model"""
         return 'potential-LAMMPS-KIM'
 
+    @property
+    def xsl_filename(self) -> Tuple[str, str]:
+        """tuple: The module path and file name of the record's xsl html transformer"""
+        return ('potentials.xsl', 'potential_LAMMPS_KIM.xsl')
+
+    @property
+    def xsd_filename(self) -> Tuple[str, str]:
+        """tuple: The module path and file name of the record's xsd schema"""
+        return ('potentials.xsd', 'potential_LAMMPS_KIM.xsd')
+
     def download_files(self,
                        pot_dir: Optional[str] = None,
                        overwrite: bool = False,

@@ -71,6 +71,11 @@ class BasePotentialLAMMPS(Record):
         return self._key
     
     @property
+    def url(self):
+        """str : URL for an online copy of the record."""
+        return self._url
+
+    @property
     def potid(self) -> str:
         """str : Human-readable identifier for the potential model."""
         if self.model is None:
@@ -84,6 +89,11 @@ class BasePotentialLAMMPS(Record):
             raise AttributeError('No model information loaded')
         return self._potkey
     
+    @property
+    def poturl(self):
+        """str : URL for an online copy of the record."""
+        return self._poturl
+
     @property
     def units(self) -> str:
         """str : LAMMPS units option."""
@@ -216,6 +226,7 @@ class BasePotentialLAMMPS(Record):
             self.name = self.id
 
         self._key = pot['key']
+        self._url = pot.get('key', None)
         try:
             self._potid = pot['potential']['id']
         except:
@@ -224,6 +235,10 @@ class BasePotentialLAMMPS(Record):
             self._potkey = pot['potential']['key']
         except:
             self._potkey = None
+        try:
+            self._poturl = pot['potential']['url']
+        except:
+            self._poturl = None
         self._units = pot.get('units', 'metal')
         self._atom_style = pot.get('atom_style', 'atomic')
         try:
@@ -397,8 +412,10 @@ class BasePotentialLAMMPS(Record):
         d['name'] = self.name
         d['id'] = self.id
         d['key'] = self.key
+        d['url'] = self.url
         d['potid'] = self.potid
         d['potkey'] = self.potkey
+        d['poturl'] = self.poturl
         d['units'] = self.units
         d['atom_style'] = self.atom_style
         d['allsymbols'] = self.allsymbols

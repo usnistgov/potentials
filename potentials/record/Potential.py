@@ -10,7 +10,7 @@ from DataModelDict import DataModelDict as DM
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
-from yabadaba import load_query 
+from yabadaba import load_query
 
 # https://pandas.pydata.org/
 import pandas as pd
@@ -43,6 +43,7 @@ class Potential(Record):
         
         """
         # Set default values
+        self.url = None
         self.elements = None
         self.key = None
         self.othername = None
@@ -94,6 +95,7 @@ class Potential(Record):
         
         # Extract information
         self.key = potential['key']
+        self.url = potential.get('URL', None)
         self.recorddate = potential['record-version']
         
         description = potential['description']
@@ -168,7 +170,8 @@ class Potential(Record):
         comment : str, optional
             Any additional comments to assign to the record.
         """
-        
+        if 'url' in kwargs:
+            self.url = kwargs['url']
         if 'elements' in kwargs:
             self.elements = kwargs['elements']
         if 'key' in kwargs:
@@ -245,6 +248,18 @@ class Potential(Record):
             potential_id += '-' + str(self.modelname)
         
         return potential_id
+
+    @property
+    def url(self):
+        """str : URL for an online copy of the record."""
+        return self.__url
+
+    @url.setter
+    def url(self, v: Union[str, None]):
+        if v is None:
+            self.__url = None
+        else:
+            self.__url = str(v)
 
     @property
     def impid_prefix(self) -> str:
@@ -366,6 +381,7 @@ class Potential(Record):
         data['name'] = self.name
         data['key'] = self.key
         data['id'] = self.id
+        data['url'] = self.url
         data['recorddate'] = self.recorddate
         data['notes'] = self.notes
         data['fictional'] = self.fictional
@@ -394,6 +410,8 @@ class Potential(Record):
         # Build identifiers
         potential['key'] = self.key
         potential['id'] = self.id
+        if self.url is not None:
+            potential['URL'] = self.url
         potential['record-version'] = str(self.recorddate)
         
         # Build description

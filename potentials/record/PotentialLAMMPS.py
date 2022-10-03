@@ -59,6 +59,16 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         return 'potential-LAMMPS'
 
     @property
+    def xsl_filename(self) -> Tuple[str, str]:
+        """tuple: The module path and file name of the record's xsl html transformer"""
+        return ('potentials.xsl', 'potential_LAMMPS.xsl')
+
+    @property
+    def xsd_filename(self) -> Tuple[str, str]:
+        """tuple: The module path and file name of the record's xsd schema"""
+        return ('potentials.xsd', 'potential_LAMMPS.xsd')
+
+    @property
     def fileurls(self) -> list:
         """list : The URLs where the associated files can be downloaded"""
         urls = []
