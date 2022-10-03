@@ -203,6 +203,7 @@
         <xsd:sequence>
             <xsd:element form="qualified" name="key" type="xsd:string"/>
             <xsd:element form="qualified" name="id" type="xsd:string"/>
+            <xsd:element form="qualified" name="URL" minOccurs="0" maxOccurs="1" type="xsd:string" />
             <xsd:element form="qualified" minOccurs="0" name="record-version" type="xsd:string"/>
             <xsd:element form="qualified" minOccurs="0" name="description">
                 <xsd:complexType>
