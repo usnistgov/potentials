@@ -48,9 +48,9 @@ setup(
         'requests',
         'habanero',
         'bibtexparser',
-        'cdcs>=0.1.5',
         'ipywidgets',
-        'yabadaba'
+        'cdcs',
+        'yabadaba>=0.2.0'
     ],
     include_package_data = True,
     zip_safe = False
