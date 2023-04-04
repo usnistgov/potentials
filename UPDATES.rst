@@ -1,6 +1,13 @@
 Updates
 =======
 
+0.3.6
+-----
+
+- Code adjustments related to yabadaba 0.2.0 updates to Query handling.
+  The parameters supported by query operations can now be viewed with
+  querydoc.
+
 0.3.5
 -----
 
