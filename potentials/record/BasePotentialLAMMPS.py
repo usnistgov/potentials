@@ -13,10 +13,6 @@ from DataModelDict import DataModelDict as DM
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
-from yabadaba import query 
-
-# https://pandas.pydata.org/
-import pandas as pd
 
 # atomman imports
 from ..tools import aslist, atomic_mass
@@ -27,8 +23,7 @@ class BasePotentialLAMMPS(Record):
     """
     def __init__(self,
                  model: Union[str, io.IOBase, DM, None] = None,
-                 name: Optional[str] = None,
-                 **kwargs):
+                 name: Optional[str] = None):
         """
         Initializes an instance and loads content from a data model.
         
@@ -44,17 +39,30 @@ class BasePotentialLAMMPS(Record):
         """
         # Check if base class is initialized directly
         if self.__module__ == __name__:
-            raise TypeError("Don't use base class")
-        
+            raise TypeError("don't use base class")
+
         # Set default values
         self.pot_dir = ''
         self.__artifacts = []
+        self._id = None
+        self._key = None
+        self._url = None
+        self._potid = None
+        self._potkey = None
+        self._poturl = None
+        self._units = None
+        self._atom_style = None
+        self._elements = []
+        self._symbols = []
+        self._masses = []
+        self._charges = []
+        self._pair_style = None
+        self._allsymbols = False
+        self._status = None
+
 
         # Pass parameters to load
-        if model is not None:
-            self.load_model(model, name=name, **kwargs)
-        elif name is not None:
-            self.name = name
+        super().__init__(model, name=name)
         
     @property
     def id(self) -> str:
@@ -201,8 +209,7 @@ class BasePotentialLAMMPS(Record):
 
     def load_model(self,
                    model: Union[str, io.IOBase, DM],
-                   name: Optional[str] = None,
-                   **kwargs):
+                   name: Optional[str] = None):
         """
         Loads data model info associated with a LAMMPS potential.
         
@@ -222,28 +229,28 @@ class BasePotentialLAMMPS(Record):
         self._id = pot['id']
         try:
             self.name
-        except:
+        except AttributeError:
             self.name = self.id
 
         self._key = pot['key']
         self._url = pot.get('key', None)
         try:
             self._potid = pot['potential']['id']
-        except:
+        except (KeyError, TypeError):
             self._potid = None
         try:
             self._potkey = pot['potential']['key']
-        except:
+        except (KeyError, TypeError):
             self._potkey = None
         try:
             self._poturl = pot['potential']['url']
-        except:
+        except (KeyError, TypeError):
             self._poturl = None
         self._units = pot.get('units', 'metal')
         self._atom_style = pot.get('atom_style', 'atomic')
         try:
             self._pair_style = pot['pair_style']['type']
-        except:
+        except (KeyError, TypeError):
             self._pair_style = None
 
         allsymbols = pot.get('allsymbols', False)
@@ -425,73 +432,6 @@ class BasePotentialLAMMPS(Record):
         d['elements'] = self.elements()
 
         return d
-
-    def pandasfilter(self,
-                     dataframe: pd.DataFrame,
-                     name: Union[str, list, None] = None,
-                     key: Union[str, list, None] = None,
-                     id: Union[str, list, None] = None,
-                     potid: Union[str, list, None] = None,
-                     potkey: Union[str, list, None] = None,
-                     units: Union[str, list, None] = None,
-                     atom_style: Union[str, list, None] = None,
-                     pair_style: Union[str, list, None] = None,
-                     status: Union[str, list, None] = None,
-                     symbols: Union[str, list, None] = None,
-                     elements: Union[str, list, None] = None) -> pd.Series:
-        """
-        Filters a pandas.DataFrame based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        dataframe : pandas.DataFrame
-            A table of metadata for multiple records of the record style.
-        name : str or list, optional
-            The record name(s) to parse by.
-        key : str or list, optional
-            The UUID4 key(s) associated with the LAMMPS implementations to
-            parse by.
-        id : str or list, optional
-            The unique id(s) associated with the LAMMPS implementations to
-            parse by.
-        potid : str or list, optional
-            The unique id(s) associated with the general potential model to
-            parse by.
-        potkey : str or list, optional
-            The UUID4 key(s) associated with the general potential model to
-            parse by.
-        units : str or list, optional
-            The LAMMPS unit style(s) to parse by.
-        atom_style : str or list, optional
-            The LAMMPS atom_style values(s) to parse by.
-        pair_style : str or list, optional
-            The LAMMPS pair_style values(s) to parse by.
-        status : str or list, optional
-            The implementation status value(s) to parse by.
-        symbols : str or list, optional
-            Symbol model(s) to parse by.
-        elements : str or list, optional
-            Elemental tag(s) to parse by.
-
-        Returns
-        -------
-        pandas.Series
-            Boolean map of matching values
-        """
-        matches = (
-            query.str_match.pandas(dataframe, 'name', name)
-            &query.str_match.pandas(dataframe, 'key', key)
-            &query.str_match.pandas(dataframe, 'id', id)
-            &query.str_match.pandas(dataframe, 'potkey', potkey)
-            &query.str_match.pandas(dataframe, 'potid', potid)
-            &query.str_match.pandas(dataframe, 'units', units)
-            &query.str_match.pandas(dataframe, 'atom_style', atom_style)
-            &query.str_match.pandas(dataframe, 'pair_style', pair_style)
-            &query.str_match.pandas(dataframe, 'status', status)
-            &query.in_list.pandas(dataframe, 'symbols', symbols)
-            &query.in_list.pandas(dataframe, 'elements', elements)
-        )
-        return matches
 
     def build_model(self) -> DM:
         if self.model is None:

@@ -14,7 +14,7 @@ import numpy as np
 import numpy.typing as npt
 
 # https://github.com/usnistgov/yabadaba
-from yabadaba import query 
+from yabadaba import load_query
 
 # local imports
 from ..tools import aslist
@@ -58,11 +58,27 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             If potkey or potid is not given, then the first potential entry
             found with all listed symbols will be selected.
         """
-        super().__init__(model=model, name=name, id=id, potkey=potkey, potid=potid,
-                         symbolset=symbolset)
-        if model is None and id is not None:
-            self.id = id
-    
+
+        # Call super with only name
+        super().__init__(model=None, name=name)
+
+        # Call load_model if needed
+        if model is not None:
+            self.load_model(model=model, name=name, id=id, potkey=potkey,
+                            potid=potid, symbolset=symbolset)
+        
+        elif id is not None:
+            raise ValueError('model must be given with id')
+        elif potkey is not None:
+            raise ValueError('model must be given with potkey')
+        elif potid is not None:
+            raise ValueError('model must be given with potid')
+        elif symbolset is not None:
+            raise ValueError('model must be given with symbolset')
+
+        # Explicitly set pair_style
+        self._pair_style = 'kim'
+
     @property
     def style(self) -> str:
         """str: The record style"""
@@ -163,6 +179,9 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         super().load_model(model, name=name)
         kimpot = self.model[self.modelroot]
         
+        # Explicitly set pair_style
+        self._pair_style = 'kim'
+        
         # Handle shortcode, id and name identifiers
         self.__shortcode = kimpot['id']
         if id is not None:
@@ -177,9 +196,6 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         # Set name as shortcode
         if self.name is None:
             self.name = self.shortcode
-        
-        # Explicitly set pair_style
-        self._pair_style = 'kim'
         
         # Initialize fields for atomic info
         self._potkeys = []
@@ -248,49 +264,74 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         # Select the potential model
         self.select_potential(potkey=potkey, potid=potid, symbolset=symbolset)
 
+    @property
+    def queries(self) -> dict:
+        """dict: Query objects and their associated parameter names."""
+        return {
+            'key': load_query(
+                style='str_match',
+                name='key',
+                path=f'{self.modelroot}.key',
+                description="search based on the implementation's UUID key"),
+            'id': load_query(
+                style='str_match',
+                name='id',
+                path=f'{self.modelroot}.id',
+                description="search based on the implementation's id (KIM ID)"),
+            'potkey': load_query(
+                style='str_match',
+                name='potkey',
+                path=f'{self.modelroot}.potential.key',
+                description="search based on the potential's UUID key"),
+            'potid': load_query(
+                style='str_match',
+                name='potid',
+                path=f'{self.modelroot}.potential.id',
+                description="search based on the potential's id"),
+            'units': load_query(
+                style='str_match',
+                name='units',
+                path=None,
+                description="search based on LAMMPS units setting"),
+            'atom_style': load_query(
+                style='str_match',
+                name='atom_style',
+                path=None,
+                description="search based on LAMMPS atom_style setting"),
+            'pair_style': load_query(
+                style='str_match',
+                name='pair_style',
+                path=None,
+                description="search based on LAMMPS pair_style setting"),
+            'status': load_query(
+                style='str_match',
+                name='status',
+                path=f'{self.modelroot}.status',
+                description="search based on implementation status: active, superseded or retracted"),
+            'symbols': load_query(
+                style='list_contains',
+                name='symbols',
+                path=f'{self.modelroot}.potential.atom.symbol',
+                description="search based on atomic model symbols"),
+            'elements': load_query(
+                style='list_contains',
+                name='elements',
+                path=f'{self.modelroot}.potential.atom.element',
+                description="search based on atomic model elements"),
+        }
+
     def mongoquery(self,
                    name: Union[str, list, None] = None,
-                   key: Union[str, list, None] = None,
-                   id: Union[str, list, None] = None,
-                   potid: Union[str, list, None] = None,
-                   potkey: Union[str, list, None] = None,
-                   units: Union[str, list, None] = None,
-                   atom_style: Union[str, list, None] = None,
-                   pair_style: Union[str, list, None] = None,
-                   status: Union[str, list, None] = None,
-                   symbols: Union[str, list, None] = None,
-                   elements: Union[str, list, None] = None) -> dict:
+                   **kwargs) -> dict:
         """
         Builds a Mongo-style query based on kwargs values for the record style.
         
         Parameters
         ----------
-        name : str or list, optional
+        name : str or list
             The record name(s) to parse by.
-        key : str or list, optional
-            The UUID4 key(s) associated with the LAMMPS implementations to
-            parse by.
-        id : str or list, optional
-            The unique id(s) associated with the LAMMPS implementations to
-            parse by.
-        potid : str or list, optional
-            The unique id(s) associated with the general potential model to
-            parse by.
-        potkey : str or list, optional
-            The UUID4 key(s) associated with the general potential model to
-            parse by.
-        units : str or list, optional
-            The LAMMPS unit style(s) to parse by.
-        atom_style : str or list, optional
-            The LAMMPS atom_style values(s) to parse by.
-        pair_style : str or list, optional
-            The LAMMPS pair_style values(s) to parse by.
-        status : str or list, optional
-            The implementation status value(s) to parse by.
-        symbols : str or list, optional
-            Symbol model(s) to parse by.
-        elements : str or list, optional
-            Elemental tag(s) to parse by.
+        **kwargs : any
+            Any of the record style-specific search parameters.
         
         Returns
         -------
@@ -299,17 +340,21 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         """
 
         # Return bad query if pair_style kim not included
-        if pair_style is not None and 'kim' not in aslist(pair_style):
+        if ('pair_style' in kwargs and
+            kwargs['pair_style'] is not None and 
+            'kim' not in aslist(kwargs['pair_style'])):
             return {"not.kim.pair_style":"get nothing"}
-        
-        # Transform key, id values into shortcodes for query
+
+        # Modify status
+        if 'status' in kwargs and kwargs['status'] is not None:
+            kwargs['status'] = aslist(kwargs['status'])
+            if 'active' in kwargs['status']:
+                kwargs['status'].append(None)
+
+        # Transform id values into shortcodes for query
         shortcodes = set()
-        if key is not None:
-            for k in aslist(key):
-                shortcode = '_'.join(k.split('_')[:-1])
-                shortcodes.add(shortcode)
-        if id is not None:
-            for i in aslist(id):
+        if 'id' in kwargs and kwargs['id'] is not None:
+            for i in aslist(kwargs['id']):
                 k = i.split('__')[-1]
                 shortcode = '_'.join(k.split('_')[:-1])
                 shortcodes.add(shortcode)
@@ -317,85 +362,50 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             shortcodes = None
         else:
             shortcodes = list(shortcodes)
+        kwargs['id'] = shortcodes
 
-        mquery = {}
-        query.str_match.mongo(mquery, f'name', name)
+        # Remove terms ignored by queries
+        if 'pair_style' in kwargs:
+            del kwargs['pair_style']
+        if 'units' in kwargs:
+            del kwargs['units']
+        if 'atom_style' in kwargs:
+            del kwargs['atom_style']
 
-        root = f'content.{self.modelroot}'
-        #query.str_match.mongo(mquery, f'{root}.key', key)
-        query.str_match.mongo(mquery, f'{root}.id', shortcodes)
-        query.str_match.mongo(mquery, f'{root}.potential.id', potid)
-        query.str_match.mongo(mquery, f'{root}.potential.key', potkey)
-        query.in_list.mongo(mquery, f'{root}.potential.atom.symbol', symbols)
-        query.in_list.mongo(mquery, f'{root}.potential.atom.element', elements)
-        
-        if status is not None:
-            status = aslist(status)
-            if 'active' in status:
-                status.append(None)
-
-        query.str_match.mongo(mquery, f'{root}.status', status)
+        mquery = super().mongoquery(name=name, **kwargs)
         
         return mquery
 
-    def cdcsquery(self,
-                  key: Union[str, list, None] = None,
-                  id: Union[str, list, None] = None,
-                  potid: Union[str, list, None] = None,
-                  potkey: Union[str, list, None] = None,
-                  units: Union[str, list, None] = None,
-                  atom_style: Union[str, list, None] = None,
-                  pair_style: Union[str, list, None] = None,
-                  status: Union[str, list, None] = None,
-                  symbols: Union[str, list, None] = None,
-                  elements: Union[str, list, None] = None) -> dict:
+    def cdcsquery(self, **kwargs) -> dict:
         """
         Builds a CDCS-style query based on kwargs values for the record style.
         
         Parameters
         ----------
-        key : str or list, optional
-            The UUID4 key(s) associated with the LAMMPS implementations to
-            parse by.
-        id : str or list, optional
-            The unique id(s) associated with the LAMMPS implementations to
-            parse by.
-        potid : str or list, optional
-            The unique id(s) associated with the general potential model to
-            parse by.
-        potkey : str or list, optional
-            The UUID4 key(s) associated with the general potential model to
-            parse by.
-        units : str or list, optional
-            The LAMMPS unit style(s) to parse by.
-        atom_style : str or list, optional
-            The LAMMPS atom_style values(s) to parse by.
-        pair_style : str or list, optional
-            The LAMMPS pair_style values(s) to parse by.
-        status : str or list, optional
-            The implementation status value(s) to parse by.
-        symbols : str or list, optional
-            Symbol model(s) to parse by.
-        elements : str or list, optional
-            Elemental tag(s) to parse by.
+        **kwargs : any
+            Any of the record style-specific search parameters.
         
         Returns
         -------
         dict
             The CDCS-style query
         """
-        #  Return bad query if pair_style kim not included
-        if pair_style is not None and 'kim' not in aslist(pair_style):
+        # Return bad query if pair_style kim not included
+        if ('pair_style' in kwargs and
+            kwargs['pair_style'] is not None and 
+            'kim' not in aslist(kwargs['pair_style'])):
             return {"not.kim.pair_style":"get nothing"}
 
-        # Transform key, id values into shortcodes for query
+        # Modify status
+        if 'status' in kwargs and kwargs['status'] is not None:
+            kwargs['status'] = aslist(kwargs['status'])
+            if 'active' in kwargs['status']:
+                kwargs['status'].append(None)
+
+        # Transform id values into shortcodes for query
         shortcodes = set()
-        if key is not None:
-            for k in aslist(key):
-                shortcode = '_'.join(k.split('_')[:-1])
-                shortcodes.add(shortcode)
-        if id is not None:
-            for i in aslist(id):
+        if 'id' in kwargs and kwargs['id'] is not None:
+            for i in aslist(kwargs['id']):
                 k = i.split('__')[-1]
                 shortcode = '_'.join(k.split('_')[:-1])
                 shortcodes.add(shortcode)
@@ -403,23 +413,17 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             shortcodes = None
         else:
             shortcodes = list(shortcodes)
+        kwargs['id'] = shortcodes
 
-        mquery = {}
-        root = self.modelroot
+        # Remove terms ignored by queries
+        if 'pair_style' in kwargs:
+            del kwargs['pair_style']
+        if 'units' in kwargs:
+            del kwargs['units']
+        if 'atom_style' in kwargs:
+            del kwargs['atom_style']
 
-        #query.str_match.mongo(mquery, f'{root}.key', key)
-        query.str_match.mongo(mquery, f'{root}.id', shortcodes)
-        query.str_match.mongo(mquery, f'{root}.potential.id', potid)
-        query.str_match.mongo(mquery, f'{root}.potential.key', potkey)
-        query.in_list.mongo(mquery, f'{root}.potential.atom.symbol', symbols)
-        query.in_list.mongo(mquery, f'{root}.potential.atom.element', elements)
-
-        if status is not None:
-            status = aslist(status)
-            if 'active' in status:
-                status.append(None)
-
-        query.str_match.mongo(mquery, f'{root}.status', status)
+        mquery = super().cdcsquery(**kwargs)
 
         return mquery
 
@@ -484,7 +488,7 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
                 # Check that symbols are in symbolset
                 for symbol in aslist(symbolset):
                     if symbol not in self.symbols:
-                        raise ValueError(f'symbolset does not match potential')
+                        raise ValueError('symbolset does not match potential')
             if potkey is not None:
                 if potkey != self.potkey:
                     raise ValueError('potkey does not match potential')
@@ -522,7 +526,7 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
                 if symbolset is not None:
                     for symbol in aslist(symbolset):
                         if symbol not in self.symbols:
-                            raise ValueError(f'symbolset does not match potential given by potid')
+                            raise ValueError('symbolset does not match potential given by potid')
                 
             elif potkey is not None:
                 # Find match and set values

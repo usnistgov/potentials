@@ -9,10 +9,7 @@ from DataModelDict import DataModelDict as DM
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
-from yabadaba import load_query 
-
-# https://pandas.pydata.org/
-import pandas as pd
+from yabadaba import load_query
 
 # Local imports
 from . import Potential
@@ -301,6 +298,7 @@ class Action(Record):
         comment : str, optional
             Any additional comments to assign to the record.
         """
+        
         if date is not None:
             self.date = date
         if type is not None:
@@ -313,7 +311,7 @@ class Action(Record):
                 self.potentials.append(PotInfo(potential))
 
         if name is not None:
-            self.name = name
+            super().set_values(name=name)
         elif date is not None or comment is not None:
             self.build_name()
 
@@ -370,148 +368,31 @@ class Action(Record):
             'date': load_query(
                 style = 'date_match',
                 name = 'date', 
-                path = f'{self.modelroot}.date'),
+                path = f'{self.modelroot}.date',
+                description='query for web update actions on specific dates'),
             'type': load_query(
                 style = 'str_match',
                 name = 'type',
-                path = f'{self.modelroot}.type'),
+                path = f'{self.modelroot}.type',
+                description="query by the action type: 'new posting', 'updated posting', 'retraction', 'site change'"),
             'potential_id': load_query(
                 style = 'str_match',
                 name = 'id', parent = 'potentials',
-                path = f'{self.modelroot}.potential.id'),
+                path = f'{self.modelroot}.potential.id',
+                description="query based on the ids of the involved potentials"),
             'potential_key': load_query(
                 style = 'str_match',
                 name = 'key', parent = 'potentials',
-                path = f'{self.modelroot}.potential.key'),
+                path = f'{self.modelroot}.potential.key',
+                description="query based on the UUID keys of the involved potentials"),
             'element': load_query(
                 style = 'list_contains',
                 name = 'element', parent = 'potentials',
-                path = f'{self.modelroot}.potential.element'),
+                path = f'{self.modelroot}.potential.element',
+                description='query based on the elements of the involved potentials'),
             'comment': load_query(
                 style = 'str_contains',
                 name = 'comment',
-                path = f'{self.modelroot}.comment'),
+                path = f'{self.modelroot}.comment',
+                description='query for comments containing specific strings'),
         }
-
-    def pandasfilter(self,
-                     dataframe: pd.DataFrame,
-                     name: Union[str, list, None] = None,
-                     date: Union[str, list, None] = None,
-                     type: Union[str, list, None] = None,
-                     potential_id: Union[str, list, None] = None,
-                     potential_key: Union[str, list, None] = None,
-                     element: Union[str, list, None] = None,
-                     comment: Union[str, list, None] = None) -> pd.Series:
-        """
-        Filters a pandas.DataFrame based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        dataframe : pandas.DataFrame
-            A table of metadata for multiple records of the record style.
-        name : str or list, optional
-            The record name(s) to parse by.
-        date : str or list, optional
-            The date associated with the record.
-        type : str or list, optional
-            The type of action: 'new posting', 'updated posting', 'retraction',
-            or 'site change'.
-        potential_id : str or list, optional
-            Limits results to entries related to the given potential id.
-        potential_key : str or list, optional
-            Limits results to entries related to the given potential key.
-        element : str or list, optional
-            Limits results to entries related to potentials with the given
-            element(s).
-        comment : str or list, optional
-            Term(s) to search for in the action's comment field.
-        
-        Returns
-        -------
-        pandas.Series
-            Boolean map of matching values
-        """
-        matches = super().pandasfilter(dataframe, name=name, date=date, type=type,
-                                       potential_id=potential_id,
-                                       potential_key=potential_key, element=element,
-                                       comment=comment)
-        return matches
-
-    def mongoquery(self, 
-                   name: Union[str, list, None] = None,
-                   date: Union[str, list, None] = None,
-                   type: Union[str, list, None] = None,
-                   potential_id: Union[str, list, None] = None,
-                   potential_key: Union[str, list, None] = None,
-                   element: Union[str, list, None] = None,
-                   comment: Union[str, list, None] = None) -> dict:
-        """
-        Builds a Mongo-style query based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        name : str or list, optional
-            The record name(s) to parse by.
-        date : str or list, optional
-            The date associated with the record.
-        type : str or list, optional
-            The type of action: 'new posting', 'updated posting', 'retraction',
-            or 'site change'.
-        potential_id : str or list, optional
-            Limits results to entries related to the given potential id.
-        potential_key : str or list, optional
-            Limits results to entries related to the given potential key.
-        element : str or list, optional
-            Limits results to entries related to potentials with the given
-            element(s).
-        comment : str or list, optional
-            Term(s) to search for in the action's comment field.
-        
-        Returns
-        -------
-        dict
-            The Mongo-style query
-        """        
-        mquery = super().mongoquery(name=name, date=date, type=type,
-                                       potential_id=potential_id,
-                                       potential_key=potential_key, element=element,
-                                       comment=comment)
-        return mquery
-
-    def cdcsquery(self,
-                  date: Union[str, list, None] = None,
-                  type: Union[str, list, None] = None,
-                  potential_id: Union[str, list, None] = None,
-                  potential_key: Union[str, list, None] = None,
-                  element: Union[str, list, None] = None,
-                  comment: Union[str, list, None] = None) -> dict:
-        """
-        Builds a CDCS-style query based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        date : str or list, optional
-            The date associated with the record.
-        type : str or list, optional
-            The type of action: 'new posting', 'updated posting', 'retraction',
-            or 'site change'.
-        potential_id : str or list, optional
-            Limits results to entries related to the given potential id.
-        potential_key : str or list, optional
-            Limits results to entries related to the given potential key.
-        element : str or list, optional
-            Limits results to entries related to potentials with the given
-            element(s).
-        comment : str or list, optional
-            Term(s) to search for in the action's comment field.
-        
-        Returns
-        -------
-        dict
-            The CDCS-style query
-        """
-        mquery = super().cdcsquery(date=date, type=type,
-                                   potential_id=potential_id,
-                                   potential_key=potential_key, element=element,
-                                   comment=comment)
-        return mquery

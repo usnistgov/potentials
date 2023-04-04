@@ -12,7 +12,7 @@ import numpy as np
 import pandas as pd
 
 # https://github.com/usnistgov/yabadaba
-from yabadaba import query
+from yabadaba import load_query
 
 # Local imports
 from ..tools import aslist
@@ -198,8 +198,8 @@ def get_kim_lammps_potentials(self,
     # Filter by key and id if needed
     if len(records2) > 0:
         matches = (
-            query.str_match.pandas(df2, 'key', key)
-            &query.str_match.pandas(df2, 'id', id)
+            load_query('str_match', name='key').pandas(df2, key)
+            &load_query('str_match', name='id').pandas(df2, id)
         )
         df2 = df2[matches]
         records2 = records2[matches]
@@ -285,7 +285,7 @@ def find_kim_models(self, kim_api_directory: Optional[Path] = None):
     
     # Run commands as a subprocess
     process = subprocess.Popen('/bin/bash', stdin=subprocess.PIPE, stdout=subprocess.PIPE, text=True)
-    out, err = process.communicate(commands)
+    out = process.communicate(commands)[0]
 
     # Parse output to extract installed KIM models
     self.__kim_models = []

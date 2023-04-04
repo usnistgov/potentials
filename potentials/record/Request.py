@@ -5,14 +5,11 @@ from typing import Optional, Tuple, Union
 import datetime
 
 # https://github.com/usnistgov/DataModelDict
-from DataModelDict import DataModelDict as DM 
+from DataModelDict import DataModelDict as DM
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
-from yabadaba import load_query 
-
-# https://pandas.pydata.org/
-import pandas as pd
+from yabadaba import load_query
 
 # local imports
 from ..tools import aslist
@@ -325,98 +322,16 @@ class Request(Record):
             'date': load_query(
                 style='date_match',
                 name='date', 
-                path=f'{self.modelroot}.date'),
+                path=f'{self.modelroot}.date',
+                description='search based on request date'),
             'element': load_query(
                 style='list_contains',
                 name='elements', parent='systems',
-                path=f'{self.modelroot}.system.element'),
+                path=f'{self.modelroot}.system.element',
+                description='search based on request elements'),
             'comment': load_query(
                 style='str_contains',
                 name='comment',
-                path=f'{self.modelroot}.comment'),
+                path=f'{self.modelroot}.comment',
+                description='search request comment for contained strings'),
         }
-
-    def pandasfilter(self,
-                     dataframe: pd.DataFrame,
-                     name: Union[str, list, None] = None,
-                     date: Union[str, list, None] = None,
-                     element: Union[str, list, None] = None,
-                     comment: Union[str, list, None] = None) -> pd.Series:
-        """
-        Filters a pandas.DataFrame based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        dataframe : pandas.DataFrame
-            A table of metadata for multiple records of the record style.
-        name : str or list
-            The record name(s) to parse by.
-        date : str or list
-            The date associated with the record.
-        element : str or list
-            Element(s) to search for in the request.
-        comment : str or list
-            Term(s) to search for in the action's comment field.
-        
-        Returns
-        -------
-        pandas.Series
-            Boolean map of matching values
-        """
-        matches = super().pandasfilter(dataframe, name=name, date=date,
-                                       element=element, comment=comment)
-
-        return matches
-
-    def mongoquery(self,
-                   name: Union[str, list, None] = None,
-                   date: Union[str, list, None] = None,
-                   element: Union[str, list, None] = None,
-                   comment: Union[str, list, None] = None) -> dict:
-        """
-        Builds a Mongo-style query based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        name : str or list
-            The record name(s) to parse by.
-        date : str or list
-            The date associated with the record.
-        element : str or list
-            Element(s) to search for in the request.
-        comment : str or list
-            Term(s) to search for in the action's comment field.
-        
-        Returns
-        -------
-        dict
-            The Mongo-style query
-        """     
-        mquery = super().mongoquery(name=name, date=date,
-                                    element=element, comment=comment)
-        return mquery
-
-    def cdcsquery(self,
-                  date: Union[str, list, None] = None,
-                  element: Union[str, list, None] = None,
-                  comment: Union[str, list, None] = None) -> dict:
-        """
-        Builds a CDCS-style query based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        date : str or list
-            The date associated with the record.
-        element : str or list
-            Element(s) to search for in the request.
-        comment : str or list
-            Term(s) to search for in the action's comment field.
-        
-        Returns
-        -------
-        dict
-            The CDCS-style query
-        """
-        mquery = super().cdcsquery(date=date,
-                                   element=element, comment=comment)
-        return mquery

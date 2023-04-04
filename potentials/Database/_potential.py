@@ -20,7 +20,6 @@ def get_potentials(self,
                    fictional: Union[bool, list, None] = None,
                    element: Union[str, list, None] = None,
                    othername: Union[str, list, None] = None,
-                   modelname: Union[str, list, None] = None,
                    year: Union[int, list, None] = None,
                    author: Union[str, list, None] = None,
                    abstract: Union[str, list, None] = None,
@@ -49,11 +48,7 @@ def get_potentials(self,
     element : str or list
         Element(s) in the model to parse by.
     othername : str or list
-        Alternate system names (often compounds or molecules) to parse by.
-    modelname : str or list
-        Identifying model names to parse by.  These are used to differentiate
-        between potentials that would otherwise have the same id based on year,
-        primary author and elements. 
+        Alternate system names (often compounds or molecules) to parse by. 
     year : int or list
         Publication year(s) to parse by.
     author : str or list
@@ -91,7 +86,7 @@ def get_potentials(self,
         style='Potential', name=name, local=local, remote=remote,
         refresh_cache=refresh_cache, return_df=return_df, verbose=verbose,
         key=key, id=id, notes=notes, fictional=fictional, element=element,
-        othername=othername, modelname=modelname, year=year, author=author,
+        othername=othername, year=year, author=author,
         abstract=abstract)
 
 def get_potential(self, 
@@ -102,7 +97,6 @@ def get_potential(self,
                   fictional: Union[bool, list, None] = None,
                   element: Union[str, list, None] = None,
                   othername: Union[str, list, None] = None,
-                  modelname: Union[str, list, None] = None,
                   year: Union[int, list, None] = None,
                   author: Union[str, list, None] = None,
                   abstract: Union[str, list, None] = None,
@@ -131,10 +125,6 @@ def get_potential(self,
         Element(s) in the model to parse by.
     othername : str or list
         Alternate system names (often compounds or molecules) to parse by.
-    modelname : str or list
-        Identifying model names to parse by.  These are used to differentiate
-        between potentials that would otherwise have the same id based on year,
-        primary author and elements. 
     year : int or list
         Publication year(s) to parse by.
     author : str or list
@@ -166,7 +156,7 @@ def get_potential(self,
         style='Potential', name=name, local=local, remote=remote, 
         prompt=prompt, refresh_cache=refresh_cache, verbose=verbose,
         key=key, id=id, notes=notes, fictional=fictional, element=element,
-        othername=othername, modelname=modelname, year=year, author=author,
+        othername=othername, year=year, author=author,
         abstract=abstract)
 
 def retrieve_potential(self, 
@@ -178,7 +168,6 @@ def retrieve_potential(self,
                        fictional: Union[bool, list, None] = None,
                        element: Union[str, list, None] = None,
                        othername: Union[str, list, None] = None,
-                       modelname: Union[str, list, None] = None,
                        year: Union[int, list, None] = None,
                        author: Union[str, list, None] = None,
                        abstract: Union[str, list, None] = None,
@@ -212,10 +201,6 @@ def retrieve_potential(self,
         Element(s) in the model to parse by.
     othername : str or list
         Alternate system names (often compounds or molecules) to parse by.
-    modelname : str or list
-        Identifying model names to parse by.  These are used to differentiate
-        between potentials that would otherwise have the same id based on year,
-        primary author and elements. 
     year : int or list
         Publication year(s) to parse by.
     author : str or list
@@ -263,7 +248,7 @@ def retrieve_potential(self,
         prompt=prompt, format=format, indent=indent,
         refresh_cache=refresh_cache, verbose=verbose,
         key=key, id=id, notes=notes, fictional=fictional, element=element,
-        othername=othername, modelname=modelname, year=year, author=author,
+        othername=othername, year=year, author=author,
         abstract=abstract)
 
 def download_potentials(self, 
@@ -274,7 +259,6 @@ def download_potentials(self,
                         fictional: Union[bool, list, None] = None,
                         element: Union[str, list, None] = None,
                         othername: Union[str, list, None] = None,
-                        modelname: Union[str, list, None] = None,
                         year: Union[int, list, None] = None,
                         author: Union[str, list, None] = None,
                         abstract: Union[str, list, None] = None,
@@ -301,10 +285,6 @@ def download_potentials(self,
         Element(s) in the model to parse by.
     othername : str or list
         Alternate system names (often compounds or molecules) to parse by.
-    modelname : str or list
-        Identifying model names to parse by.  These are used to differentiate
-        between potentials that would otherwise have the same id based on year,
-        primary author and elements. 
     year : int or list
         Publication year(s) to parse by.
     author : str or list
@@ -327,7 +307,7 @@ def download_potentials(self,
         style='Potential', name=name, overwrite=overwrite,
         return_records=return_records, verbose=verbose,
         key=key, id=id, notes=notes, fictional=fictional, element=element,
-        othername=othername, modelname=modelname, year=year, author=author,
+        othername=othername, year=year, author=author,
         abstract=abstract)
 
 def save_potential(self,

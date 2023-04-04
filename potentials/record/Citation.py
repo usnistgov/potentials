@@ -18,10 +18,8 @@ from bibtexparser.bibdatabase import BibDatabase
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
-from yabadaba import load_query 
+from yabadaba import load_query
 
-# https://pandas.pydata.org/
-import pandas as pd
 class Citation(Record):
     """
     Class for representing Citation metadata records.
@@ -80,7 +78,7 @@ class Citation(Record):
         """str: file path compatible form of doi"""
         try:
             name = self.bib['doi']
-        except:
+        except KeyError:
             name = self.bib['note']
         return name.lower().replace('/', '_')
 
@@ -158,11 +156,11 @@ class Citation(Record):
         def asint(val):
             try:
                 return int(val)
-            except:
+            except (TypeError, ValueError):
                 return val
 
         if self.bib['ENTRYTYPE'] == 'article':
-            citmodel['document-type'] = 'journal' 
+            citmodel['document-type'] = 'journal'
             citmodel['title'] = self.bib['title']
             citmodel['author'] = self.parse_authors(self.bib['author'])
             if 'journal' in self.bib:
@@ -216,159 +214,39 @@ class Citation(Record):
             'year': load_query(
                 style='int_match',
                 name='year', 
-                path=f'{self.modelroot}.publication-date.year'),
+                path=f'{self.modelroot}.publication-date.year',
+                description="search based on publication year"),
             'volume': load_query(
                 style='str_match',
                 name='volume',
-                path=f'{self.modelroot}.volume'),
+                path=f'{self.modelroot}.volume',
+                description="search based on volume number"),
             'title': load_query(
                 style='str_contains',
                 name='title',
-                path=f'{self.modelroot}.title'),
+                path=f'{self.modelroot}.title',
+                description="search article titles for contained strings"),
             'journal': load_query(
                 style='str_match',
                 name='journal',
-                path=f'{self.modelroot}..publication-name'),
+                path=f'{self.modelroot}..publication-name',
+                description="search based on publication journal name"),
             'doi': load_query(
                 style='str_match',
                 name='doi',
-                path=f'{self.modelroot}.DOI'),
+                path=f'{self.modelroot}.DOI',
+                description="search based on publication DOI"),
             'author': load_query(
                 style='str_contains',
                 name='author',
-                path=f'{self.modelroot}.author.surname'),
+                path=f'{self.modelroot}.author.surname',
+                description="search based on publication author"),
             'abstract': load_query(
                 style='str_contains',
                 name='abstract',
-                path=f'{self.modelroot}.abstract'),
+                path=f'{self.modelroot}.abstract',
+                description="search article abstract for contained strings"),
         }
-
-    def pandasfilter(self,
-                     dataframe: pd.DataFrame,
-                     name: Union[str, list, None] = None,
-                     year: Union[int, list, None] = None,
-                     volume: Union[int, list, None] = None,
-                     title: Union[str, list, None] = None,
-                     journal: Union[str, list, None] = None,
-                     doi: Union[str, list, None] = None,
-                     author: Union[str, list, None] = None,
-                     abstract: Union[str, list, None] = None) -> pd.Series:
-        """
-        Filters a pandas.DataFrame based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        dataframe : pandas.DataFrame
-            A table of metadata for multiple records of the record style.
-        name : str or list
-            The record name(s) to parse by.
-        year : int or list
-            The publication/creation year for the citation.
-        volume : int or list
-            The journal volume for the citation.
-        title : str or list
-            The article title for the citation.
-        journal : str or list
-            The journal name.
-        doi : str or list
-            The citation's DOI.
-        author : str or list
-            Author names to search for - only guaranteed to work with last names.
-        abstract : str or list
-            Key words to search for in the citation abstract.
-
-        Returns
-        -------
-        pandas.Series, numpy.NDArray
-            Boolean map of matching values
-        """
-        matches = super().pandasfilter(dataframe, name=name, year=year,
-                                       volume=volume, title=title,
-                                       journal=journal, doi=doi, author=author,
-                                       abstract=abstract)
-
-        return matches
-
-    def mongoquery(self,
-                   name: Union[str, list, None] = None,
-                   year: Union[int, list, None] = None,
-                   volume: Union[int, list, None] = None,
-                   title: Union[str, list, None] = None,
-                   journal: Union[str, list, None] = None,
-                   doi: Union[str, list, None] = None,
-                   author: Union[str, list, None] = None,
-                   abstract: Union[str, list, None] = None) -> dict:
-        """
-        Builds a Mongo-style query based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        name : str or list
-            The record name(s) to parse by.
-        year : int or list
-            The publication/creation year for the citation.
-        volume : int or list
-            The journal volume for the citation.
-        title : str or list
-            The article title for the citation.
-        journal : str or list
-            The journal name.
-        doi : str or list
-            The citation's DOI.
-        author : str or list
-            Author names to search for - only guaranteed to work with last names.
-        abstract : str or list
-            Key words to search for in the citation abstract.
-        
-        Returns
-        -------
-        dict
-            The Mongo-style query
-        """        
-        
-        mquery = super().mongoquery(name=name, year=year,
-                                    volume=volume, title=title,
-                                    journal=journal, doi=doi, author=author,
-                                    abstract=abstract)
-        return mquery
-
-    def cdcsquery(self,
-                  year: Union[int, list, None] = None,
-                  volume: Union[int, list, None] = None,
-                  title: Union[str, list, None] = None,
-                  journal: Union[str, list, None] = None,
-                  doi: Union[str, list, None] = None,
-                  author: Union[str, list, None] = None,
-                  abstract: Union[str, list, None] = None) -> dict:
-        """
-        Builds a CDCS-style query based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        year : int or list
-            The publication/creation year for the citation.
-        volume : int or list
-            The journal volume for the citation.
-        title : str or list
-            The article title for the citation.
-        journal : str or list
-            The journal name.
-        doi : str or list
-            The citation's DOI.
-        author : str or list
-            Author names to search for - only guaranteed to work with last names.
-        abstract : str or list
-            Key words to search for in the citation abstract.
-        
-        Returns
-        -------
-        dict
-            The CDCS-style query
-        """
-        mquery = super().cdcsquery(year=year, volume=volume, title=title,
-                                   journal=journal, doi=doi, author=author,
-                                   abstract=abstract)
-        return mquery
 
     @property
     def year_authors(self) -> str:

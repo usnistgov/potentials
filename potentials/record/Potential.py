@@ -12,9 +12,6 @@ from DataModelDict import DataModelDict as DM
 from yabadaba.record import Record
 from yabadaba import load_query
 
-# https://pandas.pydata.org/
-import pandas as pd
-
 # Local imports
 from .Citation import Citation
 from .Implementation import Implementation
@@ -461,200 +458,46 @@ class Potential(Record):
             'key': load_query(
                 style='str_match',
                 name='key', 
-                path=f'{self.modelroot}.key'),
+                path=f'{self.modelroot}.key',
+                description="search based on potential UUID key"),
             'id': load_query(
                 style='str_match',
                 name='id',
-                path=f'{self.modelroot}.id'),
+                path=f'{self.modelroot}.id',
+                description="search based on potential id"),
             'notes': load_query(
                 style='str_contains',
                 name='notes',
-                path=f'{self.modelroot}.notes'),
+                path=f'{self.modelroot}.notes',
+                description='search potential notes for contained strings'),
             'fictional': load_query(
                 style='str_match',
                 name='fictional',
-                path=f'{self.modelroot}.'),
+                path=f'{self.modelroot}.fictional-element',
+                description='search for fictional potentials'),
             'element': load_query(
                 style='list_contains',
-                name='element',
-                path=f'{self.modelroot}.element'),
+                name='elements',
+                path=f'{self.modelroot}.element',
+                description='search based on potential elements'),
             'othername': load_query(
                 style='str_match',
                 name='othername',
-                path=f'{self.modelroot}.other-element'),
-            'modelname': load_query(
-                style='str_match',
-                name='modelname',
-                path=f'{self.modelroot}.'),
+                path=f'{self.modelroot}.other-element',
+                description='search based on the othername field'),
             'year': load_query(
                 style='int_match',
                 name='year', parent='citations',
-                path=f'{self.modelroot}.description.citation.publication-date.year'),
+                path=f'{self.modelroot}.description.citation.publication-date.year',
+                description='search based on publication year'),
             'author': load_query(
                 style='str_contains',
                 name='author', parent='citations',
-                path=f'{self.modelroot}.description.citation.author.surname'),
+                path=f'{self.modelroot}.description.citation.author.surname',
+                description='search based on publication authors'),
             'abstract': load_query(
                 style='str_contains',
                 name='abstract', parent='citations',
-                path=f'{self.modelroot}.description.citation.abstract'),
+                path=f'{self.modelroot}.description.citation.abstract',
+                description='search publication abstract for contained strings'),
         }
-
-    def pandasfilter(self,
-                     dataframe: pd.DataFrame,
-                     name: Union[str, list, None] = None,
-                     key: Union[str, list, None] = None,
-                     id: Union[str, list, None] = None,
-                     notes: Union[str, list, None] = None,
-                     fictional: Union[bool, list, None] = None,
-                     element: Union[str, list, None] = None,
-                     othername: Union[str, list, None] = None,
-                     modelname: Union[str, list, None] = None,
-                     year: Union[int, list, None] = None,
-                     author: Union[str, list, None] = None,
-                     abstract: Union[str, list, None] = None) -> pd.Series:
-        """
-        Filters a pandas.DataFrame based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        dataframe : pandas.DataFrame
-            A table of metadata for multiple records of the record style.
-        name : str or list
-            The record name(s) to parse by.
-        key : str or list
-            The unique potential id(s) to parse by.
-        id : str or list
-            The UUID4 potential key(s) to parse by.
-        notes : str or list
-            Terms in the notes to parse for.
-        fictional : bool or list
-            Value of fictional to parse for.
-        element : str or list
-            Element(s) to parse by.
-        othername : str or list
-            Other name(s) to parse by.
-        modelname : str or list
-            Model name(s) to parse by.
-        year : int or list
-            Publication/creation year(s) to parse by.
-        author : str or list
-            Author(s) to parse by.  Only last names guaranteed to work.
-        abstract : str or list
-            Terms in the publication abstracts to parse for.
-        
-        Returns
-        -------
-        pandas.Series
-            Boolean map of matching values
-        """
-        matches = super().pandasfilter(dataframe, name=name, key=key, id=id,
-                                       notes=notes, fictional=fictional,
-                                       element=element, othername=othername,
-                                       modelname=modelname, year=year,
-                                       author=author, abstract=abstract)
-
-        return matches
-
-    def mongoquery(self, 
-                   name: Union[str, list, None] = None,
-                   key: Union[str, list, None] = None,
-                   id: Union[str, list, None] = None,
-                   notes: Union[str, list, None] = None,
-                   fictional: Union[bool, list, None] = None,
-                   element: Union[str, list, None] = None,
-                   othername: Union[str, list, None] = None,
-                   modelname: Union[str, list, None] = None,
-                   year: Union[int, list, None] = None,
-                   author: Union[str, list, None] = None,
-                   abstract: Union[str, list, None] = None) -> dict:
-        """
-        Builds a Mongo-style query based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        name : str or list
-            The record name(s) to parse by.
-        key : str or list
-            The unique potential id(s) to parse by.
-        id : str or list
-            The UUID4 potential key(s) to parse by.
-        notes : str or list
-            Terms in the notes to parse for.
-        fictional : bool or list
-            Value of fictional to parse for.
-        element : str or list
-            Element(s) to parse by.
-        othername : str or list
-            Other name(s) to parse by.
-        modelname : str or list
-            Model name(s) to parse by.
-        year : int or list
-            Publication/creation year(s) to parse by.
-        author : str or list
-            Author(s) to parse by.  Only last names guaranteed to work.
-        abstract : str or list
-            Terms in the publication abstracts to parse for.
-        
-        Returns
-        -------
-        dict
-            The Mongo-style query
-        """        
-        
-        mquery = super().mongoquery(name=name, key=key, id=id,
-                                    notes=notes, fictional=fictional,
-                                    element=element, othername=othername,
-                                    modelname=modelname, year=year,
-                                    author=author, abstract=abstract)
-        return mquery
-
-    def cdcsquery(self,
-                  key: Union[str, list, None] = None,
-                  id: Union[str, list, None] = None,
-                  notes: Union[str, list, None] = None,
-                  fictional: Union[bool, list, None] = None,
-                  element: Union[str, list, None] = None,
-                  othername: Union[str, list, None] = None,
-                  modelname: Union[str, list, None] = None,
-                  year: Union[int, list, None] = None,
-                  author: Union[str, list, None] = None,
-                  abstract: Union[str, list, None] = None) -> dict:
-        """
-        Builds a CDCS-style query based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        key : str or list
-            The unique potential id(s) to parse by.
-        id : str or list
-            The UUID4 potential key(s) to parse by.
-        notes : str or list
-            Terms in the notes to parse for.
-        fictional : bool or list
-            Value of fictional to parse for.
-        element : str or list
-            Element(s) to parse by.
-        othername : str or list
-            Other name(s) to parse by.
-        modelname : str or list
-            Model name(s) to parse by.
-        year : int or list
-            Publication/creation year(s) to parse by.
-        author : str or list
-            Author(s) to parse by.  Only last names guaranteed to work.
-        abstract : str or list
-            Terms in the publication abstracts to parse for.
-        
-        Returns
-        -------
-        dict
-            The CDCS-style query
-        """
-        
-        mquery = super().cdcsquery(key=key, id=id,
-                                   notes=notes, fictional=fictional,
-                                   element=element, othername=othername,
-                                   modelname=modelname, year=year,
-                                   author=author, abstract=abstract)
-        return mquery

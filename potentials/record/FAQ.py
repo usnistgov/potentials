@@ -8,10 +8,7 @@ from DataModelDict import DataModelDict as DM
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
-from yabadaba import load_query 
-
-# https://pandas.pydata.org/
-import pandas as pd
+from yabadaba import load_query
 
 __all__ = ['FAQ']
 
@@ -159,82 +156,11 @@ class FAQ(Record):
             'question': load_query(
                 style='str_contains',
                 name='question',
-                path=f'{self.modelroot}.question'),
+                path=f'{self.modelroot}.question',
+                description="search FAQ question for matching strings"),
             'answer': load_query(
                 style='str_contains',
                 name='answer',
-                path=f'{self.modelroot}.answer'),
+                path=f'{self.modelroot}.answer',
+                description="search FAQ answer for matching strings"),
         }
-
-    def pandasfilter(self,
-                     dataframe: pd.DataFrame,
-                     name: Union[str, list, None] = None,
-                     question: Union[str, list, None] = None,
-                     answer: Union[str, list, None] = None) -> pd.Series:
-        """
-        Filters a pandas.DataFrame based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        dataframe : pandas.DataFrame
-            A table of metadata for multiple records of the record style.
-        name : str or list
-            The record name(s) to parse by.
-        question : str or list
-            Term(s) to search for in the question field.
-        answer : str or list
-            Term(s) to search for in the answer field.
-        
-        Returns
-        -------
-        pandas.Series, numpy.NDArray
-            Boolean map of matching values
-        """
-        matches = super().pandasfilter(dataframe, name=name, question=question,
-                                       answer=answer)
-        return matches
-
-    def mongoquery(self,
-                   name: Union[str, list, None] = None,
-                   question: Union[str, list, None] = None,
-                   answer: Union[str, list, None] = None) -> dict:
-        """
-        Builds a Mongo-style query based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        name : str or list
-            The record name(s) to parse by.
-        question : str or list
-            Term(s) to search for in the question field.
-        answer : str or list
-            Term(s) to search for in the answer field.
-        
-        Returns
-        -------
-        dict
-            The Mongo-style query
-        """     
-        mquery = super().mongoquery(name=name, question=question, answer=answer)
-        return mquery
-
-    def cdcsquery(self,
-                  question: Union[str, list, None] = None,
-                  answer: Union[str, list, None] = None) -> dict:
-        """
-        Builds a CDCS-style query based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        question : str or list
-            Term(s) to search for in the question field.
-        answer : str or list
-            Term(s) to search for in the answer field.
-        
-        Returns
-        -------
-        dict
-            The CDCS-style query
-        """
-        mquery = super().cdcsquery(question=question, answer=answer)
-        return mquery

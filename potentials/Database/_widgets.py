@@ -16,7 +16,7 @@ import numpy.typing as npt
 import pandas as pd
 
 # Local imports
-from ..record import Potential, PotentialLAMMPS
+from .. import load_record
 
 def widget_search_potentials(self,
                              potentials: Optional[npt.ArrayLike] = None,
@@ -110,7 +110,7 @@ def widget_search_potentials(self,
             author = None
 
         # Parse potentials using author, year, elements
-        matches = potentials_df[Potential().pandasfilter(potentials_df, author=author, year=year, element=elements)]
+        matches = potentials_df[load_record('Potential').pandasfilter(potentials_df, author=author, year=year, element=elements)]
         
         # Update potential dropdown accordingly
         potential_dropdown.options = matches.id.tolist()
@@ -236,7 +236,7 @@ def widget_lammps_potential(self,
             pair_style = None
 
         # Parse for pair_style and elements
-        matches = lammps_potentials_df[PotentialLAMMPS().pandasfilter(lammps_potentials_df, pair_style=pair_style, elements=elements)]
+        matches = lammps_potentials_df[load_record('potential_LAMMPS').pandasfilter(lammps_potentials_df, pair_style=pair_style, elements=elements)]
         
         # Update potential dropdown accordingly
         potential_dropdown.options = matches.id.tolist()

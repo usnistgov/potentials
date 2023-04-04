@@ -13,10 +13,10 @@ import numpy.typing as npt
 from DataModelDict import DataModelDict as DM
 
 # https://github.com/usnistgov/yabadaba
-from yabadaba import query
+from yabadaba import load_query
 
 # local imports
-from ..tools import atomic_mass, aslist
+from ..tools import aslist
 from .BasePotentialLAMMPS import BasePotentialLAMMPS
 from .Artifact import Artifact
 
@@ -44,8 +44,8 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             the potential.  Default value is None, which assumes any required
             files will be in the working directory when LAMMPS is executed.
         """
-        super().__init__(model=model, name=name, pot_dir=pot_dir)
-        if model is None and pot_dir is not None:
+        super().__init__(model=model, name=name)
+        if pot_dir is not None:
             self.pot_dir = pot_dir
 
     @property
@@ -119,7 +119,10 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         """list : The list of file artifacts for the potential including download URLs."""
         return self.__artifacts
 
-    def load_model(self, model, name=None, pot_dir=None):
+    def load_model(self,
+                   model: Union[str, io.IOBase, DM],
+                   name: Optional[str] = None,
+                   pot_dir: Optional[str] = None):
         """
         Loads potential-LAMMPS data model info.
         
@@ -183,141 +186,111 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             self._masses.append(mass)
             self._charges.append(charge)
     
+    @property
+    def queries(self) -> dict:
+        """dict: Query objects and their associated parameter names."""
+        return {
+            'key': load_query(
+                style='str_match',
+                name='key',
+                path=f'{self.modelroot}.key',
+                description="search based on the implementation's UUID key"),
+            'id': load_query(
+                style='str_match',
+                name='id',
+                path=f'{self.modelroot}.id',
+                description="search based on the implementation's id"),
+            'potkey': load_query(
+                style='str_match',
+                name='potkey',
+                path=f'{self.modelroot}.potential.key',
+                description="search based on the potential's UUID key"),
+            'potid': load_query(
+                style='str_match',
+                name='potid',
+                path=f'{self.modelroot}.potential.id',
+                description="search based on the potential's id"),
+            'units': load_query(
+                style='str_match',
+                name='units',
+                path=f'{self.modelroot}.units',
+                description="search based on LAMMPS units setting"),
+            'atom_style': load_query(
+                style='str_match',
+                name='atom_style',
+                path=f'{self.modelroot}.atom_style',
+                description="search based on LAMMPS atom_style setting"),
+            'pair_style': load_query(
+                style='str_match',
+                name='pair_style',
+                path=f'{self.modelroot}.pair_style.type',
+                description="search based on LAMMPS pair_style setting"),
+            'status': load_query(
+                style='str_match',
+                name='status',
+                path=f'{self.modelroot}.status',
+                description="search based on implementation status: active, superseded or retracted"),
+            'symbols': load_query(
+                style='list_contains',
+                name='symbols',
+                path=f'{self.modelroot}.atom.symbol',
+                description="search based on atomic model symbols"),
+            'elements': load_query(
+                style='list_contains',
+                name='elements',
+                path=f'{self.modelroot}.atom.element',
+                description="search based on atomic model elements"),
+        }
+
     def mongoquery(self,
                    name: Union[str, list, None] = None,
-                   key: Union[str, list, None] = None,
-                   id: Union[str, list, None] = None,
-                   potid: Union[str, list, None] = None,
-                   potkey: Union[str, list, None] = None,
-                   units: Union[str, list, None] = None,
-                   atom_style: Union[str, list, None] = None,
-                   pair_style: Union[str, list, None] = None,
-                   status: Union[str, list, None] = None,
-                   symbols: Union[str, list, None] = None,
-                   elements: Union[str, list, None] = None) -> dict:
+                   **kwargs) -> dict:
         """
         Builds a Mongo-style query based on kwargs values for the record style.
         
         Parameters
         ----------
-        name : str or list, optional
+        name : str or list
             The record name(s) to parse by.
-        key : str or list, optional
-            The UUID4 key(s) associated with the LAMMPS implementations to
-            parse by.
-        id : str or list, optional
-            The unique id(s) associated with the LAMMPS implementations to
-            parse by.
-        potid : str or list, optional
-            The unique id(s) associated with the general potential model to
-            parse by.
-        potkey : str or list, optional
-            The UUID4 key(s) associated with the general potential model to
-            parse by.
-        units : str or list, optional
-            The LAMMPS unit style(s) to parse by.
-        atom_style : str or list, optional
-            The LAMMPS atom_style values(s) to parse by.
-        pair_style : str or list, optional
-            The LAMMPS pair_style values(s) to parse by.
-        status : str or list, optional
-            The implementation status value(s) to parse by.
-        symbols : str or list, optional
-            Symbol model(s) to parse by.
-        elements : str or list, optional
-            Elemental tag(s) to parse by.
+        **kwargs : any
+            Any of the record style-specific search parameters.
         
         Returns
         -------
         dict
             The Mongo-style query
         """
-        if status is not None:
-            status = aslist(status)
-            if 'active' in status:
-                status.append(None)
+        # Modify status
+        if 'status' in kwargs and kwargs['status'] is not None:
+            kwargs['status'] = aslist(kwargs['status'])
+            if 'active' in kwargs['status']:
+                kwargs['status'].append(None)
 
-        mquery = {}
-        query.str_match.mongo(mquery, f'name', name)
-
-        root = f'content.{self.modelroot}'
-        query.str_match.mongo(mquery, f'{root}.key', key)
-        query.str_match.mongo(mquery, f'{root}.id', id)
-        query.str_match.mongo(mquery, f'{root}.potential.id', potid)
-        query.str_match.mongo(mquery, f'{root}.potential.key', potkey)
-        query.str_match.mongo(mquery, f'{root}.units', units)
-        query.str_match.mongo(mquery, f'{root}.atom_style', atom_style)
-        query.str_match.mongo(mquery, f'{root}.pair_style.type', pair_style)
-        query.str_match.mongo(mquery, f'{root}.status', status)
-        query.in_list.mongo(mquery, f'{root}.atom.element', elements)
-        query.in_list.mongo(mquery, f'{root}.atom.symbol', symbols)
+        mquery = super().mongoquery(name=name, **kwargs)
 
         return mquery
 
-    def cdcsquery(self,
-                  key: Union[str, list, None] = None,
-                  id: Union[str, list, None] = None,
-                  potid: Union[str, list, None] = None,
-                  potkey: Union[str, list, None] = None,
-                  units: Union[str, list, None] = None,
-                  atom_style: Union[str, list, None] = None,
-                  pair_style: Union[str, list, None] = None,
-                  status: Union[str, list, None] = None,
-                  symbols: Union[str, list, None] = None,
-                  elements: Union[str, list, None] = None) -> dict:
+    def cdcsquery(self, **kwargs) -> dict:
         """
         Builds a CDCS-style query based on kwargs values for the record style.
         
         Parameters
         ----------
-        key : str or list, optional
-            The UUID4 key(s) associated with the LAMMPS implementations to
-            parse by.
-        id : str or list, optional
-            The unique id(s) associated with the LAMMPS implementations to
-            parse by.
-        potid : str or list, optional
-            The unique id(s) associated with the general potential model to
-            parse by.
-        potkey : str or list, optional
-            The UUID4 key(s) associated with the general potential model to
-            parse by.
-        units : str or list, optional
-            The LAMMPS unit style(s) to parse by.
-        atom_style : str or list, optional
-            The LAMMPS atom_style values(s) to parse by.
-        pair_style : str or list, optional
-            The LAMMPS pair_style values(s) to parse by.
-        status : str or list, optional
-            The implementation status value(s) to parse by.
-        symbols : str or list, optional
-            Symbol model(s) to parse by.
-        elements : str or list, optional
-            Elemental tag(s) to parse by.
+        **kwargs : any
+            Any of the record style-specific search parameters.
         
         Returns
         -------
         dict
             The CDCS-style query
         """
-        if status is not None:
-            status = aslist(status)
-            if 'active' in status:
-                status.append(None)
+        # Modify status
+        if 'status' in kwargs and kwargs['status'] is not None:
+            kwargs['status'] = aslist(kwargs['status'])
+            if 'active' in kwargs['status']:
+                kwargs['status'].append(None)
 
-        mquery = {}
-        root = self.modelroot
-
-        query.str_match.mongo(mquery, f'{root}.key', key)
-        query.str_match.mongo(mquery, f'{root}.id', id)
-        query.str_match.mongo(mquery, f'{root}.potential.id', potid)
-        query.str_match.mongo(mquery, f'{root}.potential.key', potkey)
-        query.str_match.mongo(mquery, f'{root}.units', units)
-        query.str_match.mongo(mquery, f'{root}.atom_style', atom_style)
-        query.str_match.mongo(mquery, f'{root}.pair_style.type', pair_style)
-        query.str_match.mongo(mquery, f'{root}.status', status)
-        query.in_list.mongo(mquery, f'{root}.atom.element', elements)
-        query.in_list.mongo(mquery, f'{root}.atom.symbol', symbols)
+        mquery = super().cdcsquery(**kwargs)
 
         return mquery
     
