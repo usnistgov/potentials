@@ -33,7 +33,7 @@ class PotInfo():
             Action.
         """
         if isinstance(potential, Potential.Potential):
-            
+
             # Extract relevant properties from the Potential object
             self.__id = potential.id
             self.__key = potential.key
@@ -46,7 +46,7 @@ class PotInfo():
             self.__fictional = potential.fictional
             self.__elements = potential.elements
             self.__othername = potential.othername
-            
+
         else:
 
             # Extract relevant properties from potential record contents
@@ -58,7 +58,7 @@ class PotInfo():
             felements = model.aslist('fictional-element')
             oelements = model.aslist('other-element')
             elements = model.aslist('element')
-            
+
             if len(felements) > 0:
                 assert len(elements) == 0
                 self.__fictional = True
@@ -72,7 +72,7 @@ class PotInfo():
                 self.__othername = oelements[0]
             else:
                 self.__othername = None
-    
+
     @property
     def id(self) -> str:
         """str: The Potential's id"""
@@ -92,12 +92,12 @@ class PotInfo():
     def elements(self) -> list:
         """list: The elements modeled by the Potential"""
         return self.__elements
-    
+
     @property
     def othername(self) -> Optional[str]:
         """str or None: The Potential's othername"""
         return self.__othername
-    
+
     @property
     def fictional(self) -> bool:
         """bool: Flag indicating if the Potential is classified as fictional."""
@@ -112,7 +112,7 @@ class PotInfo():
         model['potential'] = DM()
         model['potential']['key'] = self.key
         model['potential']['id'] = self.id
-        
+
         # Append DOIs
         for doi in self.dois:
             model['potential'].append('doi', doi)
@@ -124,7 +124,7 @@ class PotInfo():
         else:
             for element in self.elements:
                 model['potential'].append('element', element)
-        
+
         # Add othername if set
         if self.othername is not None:
             model['potential']['other-element'] = self.othername
@@ -188,7 +188,7 @@ class Action(Record):
     def modelroot(self) -> str:
         """str: The root element of the content"""
         return 'action'
-    
+
     @property
     def xsl_filename(self) -> Tuple[str, str]:
         """tuple: The module path and file name of the record's xsl html transformer"""
@@ -298,7 +298,7 @@ class Action(Record):
         comment : str, optional
             Any additional comments to assign to the record.
         """
-        
+
         if date is not None:
             self.date = date
         if type is not None:
@@ -331,7 +331,7 @@ class Action(Record):
         model['action'] = DM()
         model['action']['date'] = str(self.date)
         model['action']['type'] = self.type 
-        
+
         # Add any related potentials
         for potential in self.potentials:
             model['action'].append('potential', potential.build_model()['potential'])
@@ -354,11 +354,11 @@ class Action(Record):
         data['date'] = self.date
         data['type'] = self.type
         data['comment'] = self.comment
-        
+
         data['potentials'] = []
         for pot in self.potentials:
             data['potentials'].append(pot.metadata())
-        
+
         return data
 
     @property
@@ -367,32 +367,32 @@ class Action(Record):
         return {
             'date': load_query(
                 style = 'date_match',
-                name = 'date', 
+                name = 'date',
                 path = f'{self.modelroot}.date',
-                description='query for web update actions on specific dates'),
+                description='search for web update actions on specific dates'),
             'type': load_query(
                 style = 'str_match',
                 name = 'type',
                 path = f'{self.modelroot}.type',
-                description="query by the action type: 'new posting', 'updated posting', 'retraction', 'site change'"),
+                description="search by the action type: 'new posting', 'updated posting', 'retraction', 'site change'"),
             'potential_id': load_query(
                 style = 'str_match',
                 name = 'id', parent = 'potentials',
                 path = f'{self.modelroot}.potential.id',
-                description="query based on the ids of the involved potentials"),
+                description="search based on the ids of the involved potentials"),
             'potential_key': load_query(
                 style = 'str_match',
                 name = 'key', parent = 'potentials',
                 path = f'{self.modelroot}.potential.key',
-                description="query based on the UUID keys of the involved potentials"),
+                description="search based on the UUID keys of the involved potentials"),
             'element': load_query(
                 style = 'list_contains',
                 name = 'element', parent = 'potentials',
                 path = f'{self.modelroot}.potential.element',
-                description='query based on the elements of the involved potentials'),
+                description='search based on the elements of the involved potentials'),
             'comment': load_query(
                 style = 'str_contains',
                 name = 'comment',
                 path = f'{self.modelroot}.comment',
-                description='query for comments containing specific strings'),
+                description='search for comments containing specific strings'),
         }
