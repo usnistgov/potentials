@@ -28,6 +28,7 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
     def __init__(self,
                  model: Union[str, io.IOBase, DM, None] = None,
                  name: Optional[str] = None,
+                 database = None,
                  pot_dir: Optional[str] = None):
         """
         Initializes an instance and loads content from a data model.
@@ -39,12 +40,14 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         name : str, optional
             The record name to use.  If not given, this will be set to the
             potential's id.
+        database : yabadaba.Database, optional
+            Allows for a default database to be associated with the record.
         pot_dir : str, optional
             The path to a directory containing any artifacts associated with
             the potential.  Default value is None, which assumes any required
             files will be in the working directory when LAMMPS is executed.
         """
-        super().__init__(model=model, name=name)
+        super().__init__(model=model, name=name, database=database)
         if pot_dir is not None:
             self.pot_dir = pot_dir
 
@@ -637,4 +640,36 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
 
         return info
 
-    
+    def get_file(self,
+                 filename: Union[str, Path],
+                 localroot: Union[str, Path, None] = None):
+        """
+        Retrieves a file either locally or from the record's tar archive.
+
+        Parameters
+        ----------
+        filename : str or Path
+            The name/path for the file.  For local files, this is taken
+            relative to localroot.  For files in the tar archive, this is taken
+            relative to the tar's root directory which is always named for the
+            record, i.e., {self.name}/{filename}.
+        localroot : str, Path or None, optional
+            The local root directory that filename (if it exists) is relative
+            to.  The default value of None will use the pot_dir directory.
+        
+        Raises
+        ------
+        ValueError
+            If filename exists in the tar but is not a file.
+
+        Returns
+        -------
+        io.IOBase
+            A file-like object in binary read mode that allows for the file
+            contents to be read.
+        """
+        # Set default root path
+        if localroot is None:
+            localroot = self.pot_dir
+
+        return super().get_file(filename, localroot)

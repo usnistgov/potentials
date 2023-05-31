@@ -21,6 +21,7 @@ class Artifact(Record):
     def __init__(self,
                  model: Union[str, io.IOBase, DM, None] = None,
                  name: Optional[str] = None,
+                 database = None,
                  **kwargs):
         """
         Initializes an Artifact object to describe a file accessible online
@@ -31,6 +32,9 @@ class Artifact(Record):
             A JSON/XML data model for the content.
         name : str, optional
             The name to assign to the record.  Not used by this class.
+        database : yabadaba.Database, optional
+            Allows for a default database to be associated with the record.
+            Not used by this class.
         filename : str, optional
             The name of the file without path information.
         label : str, optional
@@ -39,7 +43,8 @@ class Artifact(Record):
             URL for file where downloaded, if available.
         """
         assert name is None, 'name is not used by this class'
-        super().__init__(model=model, name=name, **kwargs)
+        assert database is None, 'database is not used by this class'
+        super().__init__(model=model, name=name, database=database, **kwargs)
 
     @property
     def modelroot(self) -> str:

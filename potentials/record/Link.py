@@ -16,6 +16,7 @@ class Link(Record):
     def __init__(self,
                  model: Union[str, io.IOBase, DM, None] = None,
                  name: Optional[str] = None,
+                 database = None,
                  **kwargs):
         """
         Initializes a Link object providing a hyperlink to content. Note that
@@ -27,6 +28,8 @@ class Link(Record):
             A JSON/XML data model for the content.
         name : str, optional
             The name to assign to the record.  Not used by this class.
+        database : yabadaba.Database, optional
+            Allows for a default database to be associated with the record.
         url : str, optional
             URL for the link.
         label : str, optional
@@ -34,7 +37,9 @@ class Link(Record):
         linktext : str, optional
             The text for the link, i.e. what gets clicked on.
         """
-        super().__init__(model=model, name=name, **kwargs)
+        assert name is None, 'name is not used by this class'
+        assert database is None, 'database is not used by this class'
+        super().__init__(model=model, name=name, database=database, **kwargs)
 
     @property
     def modelroot(self) -> str:
