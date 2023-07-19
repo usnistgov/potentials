@@ -113,6 +113,7 @@ class Request(Record):
     def __init__(self,
                  model: Union[str, io.IOBase, DM, None] = None,
                  name: Optional[str] = None,
+                 database = None,
                  **kwargs):
         """
         Initializes a Record object for a given style.
@@ -139,7 +140,7 @@ class Request(Record):
         self.date = datetime.date.today()
         self.comment = None
 
-        super().__init__(model=model, name=name, **kwargs)
+        super().__init__(model=model, name=name, database=database, **kwargs)
 
     @property
     def style(self) -> str:

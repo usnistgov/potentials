@@ -27,6 +27,7 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
     def __init__(self,
                  model: Union[str, io.IOBase, DM, None] = None,
                  name: Optional[str] = None,
+                 database = None,
                  id: Optional[str] = None, 
                  potkey: Optional[str] = None,
                  potid: Optional[str] = None,
@@ -41,6 +42,8 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         name : str, optional
             The record name to use.  If not given, this will be set to the
             potential's id.
+        database : yabadaba.Database, optional
+            Allows for a default database to be associated with the record.
         id : str, optional
             The full KIM model id indicating the version to use.  If not given,
             then the newest known version will be used.
@@ -60,7 +63,7 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         """
 
         # Call super with only name
-        super().__init__(model=None, name=name)
+        super().__init__(model=None, name=name, database=database)
 
         # Call load_model if needed
         if model is not None:

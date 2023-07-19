@@ -23,7 +23,8 @@ class BasePotentialLAMMPS(Record):
     """
     def __init__(self,
                  model: Union[str, io.IOBase, DM, None] = None,
-                 name: Optional[str] = None):
+                 name: Optional[str] = None,
+                 database = None):
         """
         Initializes an instance and loads content from a data model.
         
@@ -34,6 +35,8 @@ class BasePotentialLAMMPS(Record):
         name : str, optional
             The record name to use.  If not given, this will be set to the
             potential's id.
+        database : yabadaba.Database, optional
+            Allows for a default database to be associated with the record.
         **kwargs : any, optional
             Any other keyword parameters supported by the child class.
         """
@@ -60,24 +63,23 @@ class BasePotentialLAMMPS(Record):
         self._allsymbols = False
         self._status = None
 
-
         # Pass parameters to load
-        super().__init__(model, name=name)
-        
+        super().__init__(model, name=name, database=database)
+
     @property
     def id(self) -> str:
         """str : Human-readable identifier for the LAMMPS implementation."""
         if self.model is None:
             raise AttributeError('No model information loaded')
         return self._id
-    
+
     @property
     def key(self) -> str:
         """str : uuid hash-key for the LAMMPS implementation."""
         if self.model is None:
             raise AttributeError('No model information loaded')
         return self._key
-    
+
     @property
     def url(self):
         """str : URL for an online copy of the record."""
@@ -89,14 +91,14 @@ class BasePotentialLAMMPS(Record):
         if self.model is None:
             raise AttributeError('No model information loaded')
         return self._potid
-    
+
     @property
     def potkey(self) -> str:
         """str : uuid hash-key for the potential model."""
         if self.model is None:
             raise AttributeError('No model information loaded')
         return self._potkey
-    
+
     @property
     def poturl(self):
         """str : URL for an online copy of the record."""
@@ -108,28 +110,28 @@ class BasePotentialLAMMPS(Record):
         if self.model is None:
             raise AttributeError('No model information loaded')
         return self._units
-    
+
     @property
     def atom_style(self) -> str:
         """str : LAMMPS atom_style option."""
         if self.model is None:
             raise AttributeError('No model information loaded')
         return self._atom_style
-    
+
     @property
     def symbols(self) -> list:
         """list of str : All atom-model symbols."""
         if self.model is None:
             raise AttributeError('No model information loaded')
         return self._symbols
-    
+
     @property
     def pair_style(self) -> str:
         """str : LAMMPS pair_style option."""
         if self.model is None:
             raise AttributeError('No model information loaded')
         return self._pair_style
-    
+
     @property
     def allsymbols(self) -> bool:
         """bool : indicates if all model symbols must be listed."""
@@ -148,7 +150,7 @@ class BasePotentialLAMMPS(Record):
     def pot_dir(self):
         """str : The directory containing files associated with a given potential."""
         return self.__pot_dir
-    
+
     @pot_dir.setter
     def pot_dir(self, value: str):
         self.__pot_dir = str(value)
@@ -187,10 +189,10 @@ class BasePotentialLAMMPS(Record):
         num_skipped : int
             The number of artifacts not downloaded.
         """
-        
+
         if pot_dir is not None:
             self.pot_dir = pot_dir
-        
+
         num_downloaded = 0
         num_skipped = 0
         if len(self.artifacts) > 0:
@@ -289,17 +291,17 @@ class BasePotentialLAMMPS(Record):
         """
         # Convert symbols to a list if needed
         symbols = aslist(symbols)
-        
+
         # Check that all symbols are set
         for symbol in symbols:
             assert symbol is not None, 'symbols list incomplete: found None value'
-        
+
         # Add missing symbols if potential's allsymbols is True
         if self.allsymbols:
             for symbol in self.symbols:
                 if symbol not in symbols:
                     symbols.append(symbol)
-        
+
         return symbols
 
     def elements(self,
@@ -321,16 +323,16 @@ class BasePotentialLAMMPS(Record):
         # Return all elements if symbols is None
         if symbols is None:
             return self._elements
-        
+
         # Normalize symbols
         symbols = self.normalize_symbols(symbols)
-        
+
         # Get all matching elements
         elements = []
         for symbol in symbols:
             i = self.symbols.index(symbol)
             elements.append(self._elements[i])
-        
+
         return elements
 
     def masses(self,
@@ -362,7 +364,7 @@ class BasePotentialLAMMPS(Record):
         else:
             # Normalize symbols
             symbols = self.normalize_symbols(symbols)
-        
+
         # Get all matching masses
         masses = []
         for symbol in symbols:
@@ -371,7 +373,7 @@ class BasePotentialLAMMPS(Record):
                 masses.append(atomic_mass(self._elements[i], prompt=prompt))
             else:
                 masses.append(self._masses[i])
-        
+
         return masses
 
     def charges(self,
@@ -397,13 +399,13 @@ class BasePotentialLAMMPS(Record):
         else:
             # Normalize symbols
             symbols = self.normalize_symbols(symbols)
-        
+
         # Get all matching charges
         charges = []
         for symbol in symbols:
             i = self.symbols.index(symbol)
             charges.append(self._charges[i])
-        
+
         return charges
 
     def metadata(self) -> dict:

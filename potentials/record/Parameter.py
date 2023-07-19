@@ -17,6 +17,7 @@ class Parameter(Record):
     def __init__(self,
                  model: Union[str, io.IOBase, DM, None] = None,
                  name: Optional[str] = None,
+                 database = None,
                  **kwargs):
         """
         Initializes a Parameter object to describe parameter values.
@@ -27,6 +28,8 @@ class Parameter(Record):
             A JSON/XML data model for the content.
         name : str, optional
             The name to assign to the record.  Not used by this class.
+        database : yabadaba.Database, optional
+            Allows for a default database to be associated with the record.
         paramname : str, optional
             The name of the parameter or string parameter line.
         value : float, optional
@@ -35,7 +38,8 @@ class Parameter(Record):
             Units associated with value.
         """
         assert name is None, 'name is not used by this class'
-        super().__init__(model=model, name=name, **kwargs)
+        assert database is None, 'database is not used by this class'
+        super().__init__(model=model, name=name, database=database, **kwargs)
 
     @property
     def modelroot(self) -> str:

@@ -24,6 +24,7 @@ class Implementation(Record):
     def __init__(self,
                  model: Union[str, io.IOBase, DM, None] = None,
                  name: Optional[str] = None,
+                 database = None,
                  **kwargs):
         """
         Parameters
@@ -32,6 +33,8 @@ class Implementation(Record):
             A JSON/XML data model for the content.
         name : str, optional
             The name to assign to the record.  Not used by this class.
+        database : yabadaba.Database, optional
+            Allows for a default database to be associated with the record.
         type : str, optional
             Describes the format for the implementation.
         key : str, optional
@@ -52,7 +55,8 @@ class Implementation(Record):
             Any Link objects or data to associate with the implementation.
         """
         assert name is None, 'name is not used by this class'
-        super().__init__(model=model, name=name, **kwargs)
+        assert database is None, 'database is not used by this class'
+        super().__init__(model=model, name=name, database=database, **kwargs)
 
     @property
     def modelroot(self) -> str:
