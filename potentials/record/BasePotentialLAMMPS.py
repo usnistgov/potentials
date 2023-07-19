@@ -233,7 +233,7 @@ class BasePotentialLAMMPS(Record):
             self.name = self.id
 
         self._key = pot['key']
-        self._url = pot.get('key', None)
+        self._url = pot.get('url', None)
         try:
             self._potid = pot['potential']['id']
         except (KeyError, TypeError):
