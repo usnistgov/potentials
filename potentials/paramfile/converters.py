@@ -8,7 +8,7 @@ import numpy as np
 
 # Local imports
 from ..tools import aslist
-from . import EAM, EAMAlloy, EAMFS
+from . import EAM, EAMAlloy, EAMFS, ADP
 
 def eam_to_eam_alloy(eam: Union[str, io.IOBase, EAM, list],
                      symbol: Union[str, list],
@@ -195,3 +195,59 @@ def eam_alloy_to_eam_fs(alloy: EAMAlloy) -> EAMFS:
             fs.set_rphi_r(symbolpair, table=alloy.rphi_r(symbolpair))
     
     return fs
+
+def eam_alloy_to_adp(alloy: EAMAlloy) -> ADP:
+    """
+    Converts a parameter file in the eam/alloy format to the adp format.
+    NOTE: the u(r) and w(r) tables are automatically set to all zeros.
+    
+    Parameters
+    ----------
+    alloy : path, file-like object, or potentials.paramfile.EAMAlloy
+        A parameter file in the LAMMPS pair_style eam/alloy setfl format.
+    
+    Returns
+    -------
+    potentials.paramfile.ADP
+        The eam/alloy setfl parameter file converted and combined into an
+        adp setfl file representation.
+    """
+    # Load parameter file
+    if not isinstance(alloy, EAMAlloy):
+        alloy = EAMAlloy(alloy)
+    
+    # Initialize fs object
+    adp = ADP()
+    
+    # Copy over header
+    adp.header = alloy.header
+
+    # Copy over r
+    adp.set_r(num=alloy.numr, cutoff=alloy.cutoffr, delta=alloy.deltar)
+
+    # Copy over rho
+    adp.set_rho(num=alloy.numrho, cutoff=alloy.cutoffrho, delta=alloy.deltarho)
+    
+    for i, symbol in enumerate(alloy.symbols):
+        
+        # Copy over symbol info
+        adp.set_symbol_info(**alloy.symbol_info(symbol))
+    
+    for i, symbol in enumerate(alloy.symbols):
+        
+        # Copy over F(rho)
+        adp.set_F_rho(symbol, table=alloy.F_rho(symbol))
+        
+        # Copy over rho(r)
+        adp.set_rho_r(symbol, table=alloy.rho_r(symbol))
+    
+        # Copy over r*phi(r)
+        for symbol2 in alloy.symbols[:i+1]:
+            symbolpair = [symbol, symbol2]
+            adp.set_rphi_r(symbolpair, table=alloy.rphi_r(symbolpair))
+            
+            # Set u(r) and w(r) to all zeros
+            adp.set_u_r(symbolpair, table=np.zeros_like(adp.r))
+            adp.set_w_r(symbolpair, table=np.zeros_like(adp.r))
+    
+    return adp
