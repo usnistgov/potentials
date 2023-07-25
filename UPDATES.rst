@@ -1,6 +1,14 @@
 Updates
 =======
 
+0.3.7
+-----
+
+- Record objects are updated allowing for each to be assigned a default
+  database object from which record methods can retrieve additional database
+  content as needed.
+- A new parameter file builder tool has been added for ADP potentials.
+
 0.3.6
 -----
 
