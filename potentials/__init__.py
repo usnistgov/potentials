@@ -3,11 +3,13 @@
 from importlib import resources
 
 # Read version from VERSION file
-__version__ = resources.read_text('potentials', 'VERSION').strip()
+if hasattr(resources, 'files'):
+    __version__ = resources.files('potentials').joinpath('VERSION').read_text(encoding='UTF-8')
+else:
+    __version__ = resources.read_text('potentials', 'VERSION', encoding='UTF-8').strip()
 
 from . import tools
 from .Settings import settings
-
 
 # Import records and load local record styles
 from . import record
@@ -21,8 +23,7 @@ from .buildrecord import build_lammps_potential
 
 from . import paramfile
 
-__all__ = sorted([
-    '__version__', 'tools', 'settings',
-    'record', 'load_record', 'recordmanager',
-    'Database', 'load_database', 'buildrecord', 'build_lammps_potential',
-])
+__all__ = ['__version__', 'tools', 'settings', 'paramfile',
+           'record', 'load_record', 'recordmanager', 'buildrecord',
+           'Database', 'load_database',  'build_lammps_potential',]
+__all__.sort()
