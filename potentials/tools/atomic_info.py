@@ -1,6 +1,6 @@
 # coding: utf-8
 # Standard Python libraries
-from importlib.resources import open_text
+from importlib import resources
 from typing import Optional, Tuple, Union
 
 # https://numpy.org/
@@ -18,8 +18,11 @@ class AtomicInfo():
         # atomicdata.csv contains the data processed by the load method from
         # https://www.nist.gov/pml/atomic-weights-and-isotopic-compositions-relative-atomic-masses
         # with last update date January 2015
-        self.__data = pd.read_csv(open_text('potentials.tools',
-                                            'atomicdata.csv'))
+        if hasattr(resources, 'files'):
+            ftext = resources.files('potentials.tools').joinpath('atomicdata.csv').open('r', encoding='UTF-8')
+        else:
+            ftext = resources.open_text('potentials.tools', 'atomicdata.csv', encoding='UTF-8')
+        self.__data = pd.read_csv(ftext)
     
     @property
     def data(self) -> pd.DataFrame:
