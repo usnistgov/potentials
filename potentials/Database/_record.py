@@ -93,6 +93,8 @@ def get_records(self,
             else:
                 kwargs['refresh_cache'] = refresh_cache
         l_recs, l_df = self.local_database.get_records(style, name=name, return_df=True, **kwargs)
+        if len(l_recs) == 0:
+            l_df = pd.DataFrame({'name':[]})
         if verbose:
             print(f'Found {len(l_recs)} matching {style} records in local library')
     else:
