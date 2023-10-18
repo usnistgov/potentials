@@ -33,6 +33,8 @@ class PotentialLAMMPSBuilder(object):
             A UUID4 code to uniquely identify the LAMMPS potential
             implementation.  If not specified, a new UUID4 code is
             automatically generated.
+        url : str, optional
+            A URL where an online copy of the record can be found.
         potid : str, optional
             A human-readable identifier to refer to the conceptual potential
             model that the potential is based on.  This should be shared by
@@ -42,6 +44,9 @@ class PotentialLAMMPSBuilder(object):
             This should be shared by alternate implementations of the same
             potential. If not specified, a new UUID4 code is automatically
             generated.
+        poturl : str, optional
+            A URL where an online copy of the potential model record can be
+            found.
         units : str, optional
             The LAMMPS units option to use.
         atom_style : str, optional
@@ -88,8 +93,11 @@ class PotentialLAMMPSBuilder(object):
         """
         self.id = kwargs.pop('id', None)
         self.key = kwargs.pop('key', None)
+        self.url = kwargs.pop('url', None)
+
         self.potid = kwargs.pop('potid', None)
         self.potkey = kwargs.pop('potkey', None)
+        self.poturl = kwargs.pop('poturl', None)
         
         self.units = kwargs.pop('units', None)
         self.atom_style = kwargs.pop('atom_style', None)
@@ -136,6 +144,17 @@ class PotentialLAMMPSBuilder(object):
         self.__key = str(value)
 
     @property
+    def url(self) -> Optional[str]:
+        """str: URL for an online copy of the record."""
+        return self.__url
+
+    @url.setter
+    def url(self, value: Optional[str]):
+        if value is not None:
+            value = str(value)
+        self.__url = value
+
+    @property
     def potid(self) -> Optional[str]:
         """Human-readable id for the potential model."""
         return self.__potid
@@ -156,6 +175,17 @@ class PotentialLAMMPSBuilder(object):
         if value is None:
             value = uuid.uuid4()
         self.__potkey = str(value)
+
+    @property
+    def poturl(self) -> Optional[str]:
+        """str: URL for an online copy of the potential model record."""
+        return self.__poturl
+
+    @poturl.setter
+    def poturl(self, value: Optional[str]):
+        if value is not None:
+            value = str(value)
+        self.__poturl = value
 
     @property
     def units(self) -> Optional[str]:
@@ -359,12 +389,16 @@ class PotentialLAMMPSBuilder(object):
         model['potential-LAMMPS'] = DM()
         model['potential-LAMMPS']['key'] = self.key
         model['potential-LAMMPS']['id'] = self.id
+        if self.url is not None:
+            model['potential-LAMMPS']['URL'] = self.url
         if self.status != 'active':
             model['potential-LAMMPS']['status'] = self.status
         
         model['potential-LAMMPS']['potential'] = DM()
         model['potential-LAMMPS']['potential']['key'] = self.potkey
         model['potential-LAMMPS']['potential']['id'] = self.potid
+        if self.poturl is not None:
+            model['potential-LAMMPS']['potential']['URL'] = self.poturl
         for doi in self.dois:
             model['potential-LAMMPS']['potential'].append('doi', doi)
 

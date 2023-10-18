@@ -37,6 +37,8 @@ class LibParamBuilder(PotentialLAMMPSBuilder):
             A UUID4 code to uniquely identify the LAMMPS potential
             implementation.  If not specified, a new UUID4 code is
             automatically generated.
+        url : str, optional
+            A URL where an online copy of the record can be found.
         potid : str, optional
             A human-readable identifier to refer to the conceptual potential
             model that the potential is based on.  This should be shared by
@@ -46,6 +48,9 @@ class LibParamBuilder(PotentialLAMMPSBuilder):
             This should be shared by alternate implementations of the same
             potential. If not specified, a new UUID4 code is automatically
             generated.
+        poturl : str, optional
+            A URL where an online copy of the potential model record can be
+            found.
         units : str, optional
             The LAMMPS units option to use.  Default value is 'metal'.
         atom_style : str, optional
