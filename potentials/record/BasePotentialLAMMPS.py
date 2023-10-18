@@ -101,7 +101,7 @@ class BasePotentialLAMMPS(Record):
 
     @property
     def poturl(self):
-        """str : URL for an online copy of the record."""
+        """str : URL for an online copy of the potential model record."""
         return self._poturl
 
     @property
@@ -235,7 +235,7 @@ class BasePotentialLAMMPS(Record):
             self.name = self.id
 
         self._key = pot['key']
-        self._url = pot.get('url', None)
+        self._url = pot.get('URL', None)
         try:
             self._potid = pot['potential']['id']
         except (KeyError, TypeError):
@@ -245,7 +245,7 @@ class BasePotentialLAMMPS(Record):
         except (KeyError, TypeError):
             self._potkey = None
         try:
-            self._poturl = pot['potential']['url']
+            self._poturl = pot['potential']['URL']
         except (KeyError, TypeError):
             self._poturl = None
         self._units = pot.get('units', 'metal')
