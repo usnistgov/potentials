@@ -166,7 +166,7 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         self._charges = []
         for atom in pot.iteraslist('atom'):
             element = atom.get('element', None)
-            symbol = atom.get('symbol', None)
+            symbol = str(atom.get('symbol', None))
             mass = atom.get('mass', None)
             charge = float(atom.get('charge', 0.0))
             
