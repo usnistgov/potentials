@@ -529,6 +529,7 @@ def upload_record(self,
                   name: Optional[str] = None,
                   model: Union[str, io.IOBase, DM, None] = None,
                   workspace: Union[str, pd.Series, None] = None,
+                  auto_set_pid_off: bool = False,
                   overwrite: bool = False,
                   verbose: bool = False):
     """
@@ -551,6 +552,12 @@ def upload_record(self,
         The CDCS workspace or workspace name to assign the record to. If not
         given, no workspace will be assigned (only accessible to user who
         submitted it).
+    auto_set_pid_off : bool, optional
+        If True then the CDCS auto_set_pid setting will be turned off during
+        the upload and automatically turned back on afterwards.  Use this if
+        your records contain PID URL values and you are only uploading one
+        entry.  For multiple records with PIDs, manually turn the setting off
+        or use the CDCS.auto_set_pid_off() context manager. 
     overwrite : bool, optional
         Indicates what to do when a matching record is found in the remote
         location.  If False (default), then the record is not updated.  If
@@ -564,10 +571,12 @@ def upload_record(self,
     
     try:
         self.remote_database.add_record(record=record, workspace=workspace,
+                                        auto_set_pid_off=auto_set_pid_off,
                                         verbose=verbose) 
     except ValueError as e:
         if overwrite:
             self.remote_database.update_record(record=record, workspace=workspace,
+                                               auto_set_pid_off=auto_set_pid_off,
                                                verbose=verbose)
         else:
             raise ValueError('Matching record already exists: use overwrite=True to change it') from e
