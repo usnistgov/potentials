@@ -51,7 +51,7 @@ setup(
         'bibtexparser',
         'ipywidgets',
         'cdcs',
-        'yabadaba>=0.2.1'
+        'yabadaba>=0.2.2'
     ],
     include_package_data = True,
     zip_safe = False
