@@ -1,6 +1,17 @@
 Updates
 =======
 
+0.3.8
+-----
+
+- auto_set_pid_off option added to the record upload options to turn off the
+  associated CDCS database setting to avoid database errors.
+- Support has been added to the potential_LAMMPS record class and builders for
+  the URL fields that become the PID values for the records once uploaded. 
+- Depreciation fix for importlib.
+- Bug fix related to finding no matching records.
+- Bug fix to make int symbol values be str.
+
 0.3.7
 -----
 
