@@ -281,13 +281,14 @@ class Citation(Record):
         
         return unidecode(partialid.replace("'", '').replace(" ", '-'))
     
-    def parse_authors(self, authors: str) -> DM:
+    @staticmethod
+    def parse_authors(authortex: str) -> DM:
         """
         Parse bibtex authors field.
 
         Parameters
         ----------
-        authors : str
+        authortex : str
             bibtex-formatted author field.
 
         Returns
@@ -297,29 +298,35 @@ class Citation(Record):
         """
         author_dicts = []
         
-        # remove ands from bib
-        splAuth = authors.split(' and ') 
+        # Split up authors in authortex by ' and '
+        if ' and ' in authortex:
+            authors = authortex.split(' and ')
+        elif ' AND ' in authortex:
+            authors = authortex.split(' AND ')
+        else:
+            authors = [authortex]
         
-        author = ' , '.join(splAuth)
-        list_authors = author.split(' , ') #used for given/surname splitting 
-        for k in range(len(list_authors)):
+        for author in authors:
             author_dict = DM()
             
-            # if . is in initials, find the most right and strip given name and surname
-            if '.' in list_authors[k]:  
-                l = list_authors[k].rindex(".")
-                author_dict['given-name'] = list_authors[k][:l+1].strip()
-                author_dict['surname'] = list_authors[k][l+1:].strip()
+            if ', ' in author:
+                terms = author.split(', ')
+                if len(terms) == 2:
+                    author_dict['given-name'] = terms[1].strip()
+                    author_dict['surname'] = terms[0].strip()
+                elif len(terms) == 3:
+                    author_dict['given-name'] = terms[2].strip()
+                    author_dict['surname'] = ' '.join(terms[:2]).strip()
+                    
+            else:
+                terms = author.split(' ')
+                author_dict['given-name'] = ' '.join(terms[:-1]).strip()
+                author_dict['surname'] = terms[-1].strip()
             
-            # otherwise just split by the most right space
-            else: 
-                l = list_authors[k].rindex(" ")
-                author_dict['given-name'] = list_authors[k][:l+1].strip()
-                author_dict['surname'] = list_authors[k][l+1:].strip()
-                
+            
             # Change given-name just into initials
             given = ''
-            for letter in str(author_dict['given-name']).replace(' ', '').replace('.', ''):
+            for letter in author_dict['given-name'].replace(' ', '').replace('.', ''):
                 if letter in string.ascii_uppercase:
                     given += letter +'.'
                 elif letter in ['-']:
