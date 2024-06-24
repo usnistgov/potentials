@@ -319,10 +319,14 @@ class Citation(Record):
                     author_dict['surname'] = ' '.join(terms[:2]).strip()
                     
             else:
-                terms = author.split(' ')
-                author_dict['given-name'] = ' '.join(terms[:-1]).strip()
-                author_dict['surname'] = terms[-1].strip()
-            
+                # Split based on most-right . or space
+                if '.' in author:  
+                    l = author.rindex(".")
+                else: 
+                    l = author.rindex(" ")
+                
+                author_dict['given-name'] = author[:l+1].strip()
+                author_dict['surname'] = author[l+1:].strip()
             
             # Change given-name just into initials
             given = ''
