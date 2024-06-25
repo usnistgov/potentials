@@ -56,10 +56,9 @@ class FAQ(Record):
         value_objects = super()._init_value_objects()
         
         self.__question = load_value('longstr', 'question', self)
-        value_objects.append(self.__question)
-
         self.__answer = load_value('longstr', 'answer', self)
-        value_objects.append(self.__answer)
+
+        value_objects.extend([self.__question, self.__answer])
 
         return value_objects
 
