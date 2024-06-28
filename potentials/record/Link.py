@@ -8,38 +8,18 @@ from DataModelDict import DataModelDict as DM
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
+from yabadaba import load_value
 
 class Link(Record):
     """
     Class for describing website link
     """
-    def __init__(self,
-                 model: Union[str, io.IOBase, DM, None] = None,
-                 name: Optional[str] = None,
-                 database = None,
-                 **kwargs):
-        """
-        Initializes a Link object providing a hyperlink to content. Note that
-        this is meant as a component class for other record objects.
+    ########################## Basic metadata fields ##########################
 
-        Parameters
-        ----------
-        model : str, file-like object or DataModelDict, optional
-            A JSON/XML data model for the content.
-        name : str, optional
-            The name to assign to the record.  Not used by this class.
-        database : yabadaba.Database, optional
-            Allows for a default database to be associated with the record.
-        url : str, optional
-            URL for the link.
-        label : str, optional
-            A short description label.
-        linktext : str, optional
-            The text for the link, i.e. what gets clicked on.
-        """
-        assert name is None, 'name is not used by this class'
-        assert database is None, 'database is not used by this class'
-        super().__init__(model=model, name=name, database=database, **kwargs)
+    @property
+    def style(self):
+        """str: The record style"""
+        return 'implementation_link'
 
     @property
     def modelroot(self) -> str:
@@ -56,112 +36,56 @@ class Link(Record):
         """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'link.xsd')
 
+    ####################### Define Values and attributes #######################
+
+    def _init_value_objects(self) -> list:
+        """
+        Method that defines the value objects for the Record.  This should
+        1. Call the method's super() to get default Value objects.
+        2. Use yabadaba.load_value() to build Value objects that are set to
+           private attributes of self.
+        3. Append the list returned by the super() with the new Value objects.
+
+        Returns
+        -------
+        value_objects: A list of all value objects.
+        """
+        value_objects = super()._init_value_objects()
+        
+        self.__url = load_value('str', 'url', self,
+                                modelpath='web-link.URL')
+        self.__label = load_value('longstr', 'label', self,
+                                  modelpath='web-link.label')
+        self.__linktext = load_value('longstr', 'linktext', self,
+                                     modelpath='web-link.link-text')
+        
+        value_objects.extend([self.__url, self.__label, self.__linktext])
+
+        return value_objects
+
     @property
     def url(self) -> Optional[str]:
-        """str: URL for the link"""
-        return self.__url
+        """str or None: URL for the link"""
+        return self.__url.value
     
     @url.setter
-    def url(self, v: Optional[str]):
-        if v is None:
-            self.__url = None
-        else:
-            self.__url = str(v)
+    def url(self, val: Optional[str]):
+        self.__url.value = val
 
     @property
     def label(self) -> Optional[str]:
         """str or None: short descriptive label"""
-        return self.__label
+        return self.__label.value
     
     @label.setter
-    def label(self, v: Optional[str]):
-        if v is None:
-            self.__label = None
-        else:
-            self.__label = str(v)
+    def label(self, val: Optional[str]):
+        self.__label.value = val
     
     @property
     def linktext(self) -> Optional[str]:
         """str or None: text to show for the link"""
-        return self.__linktext
+        return self.__linktext.value
     
     @linktext.setter
-    def linktext(self, v: Optional[str]):
-        if v is None:
-            self.__linktext = None
-        else:
-            self.__linktext = str(v)
-
-    def set_values(self,
-                   name: Optional[str] = None,
-                   **kwargs):
-        """
-        Sets an Artifact object's attributes
-
-        Parameters
-        ----------
-        name : str, optional
-            The name to assign to the record.  Not used by this class.
-        url : str, optional
-            URL for the link.
-        label : str, optional
-            A short description label.
-        linktext : str, optional
-            The text for the link, i.e. what gets clicked on.
-        """
-        assert name is None, 'name is not used by this class'
-        self.linktext = kwargs.get('linktext', None)
-        self.label = kwargs.get('label', None)
-        self.url = kwargs.get('url', None)
-
-    def load_model(self,
-                   model: Union[str, io.IOBase, DM],
-                   name: Optional[str] = None):
-        """
-        Loads the object info from data model content
-        
-        Parameters
-        ----------
-        model : str, file-like object or DataModelDict
-            A JSON/XML data model for the content.
-        name : str, optional
-            The name to assign to the record.  Not used by this class.
-        """
-        assert name is None, 'name is not used by this class'
-        link = DM(model).find('link')
-        self.url = link['web-link'].get('URL', None)
-        self.label = link['web-link'].get('label', None)
-        self.linktext = link['web-link'].get('link-text', None)
-        
-    def build_model(self) -> DM:
-        """
-        Returns the object info as data model content
-        
-        Returns
-        ----------
-        DataModelDict: The data model content.
-        """
-        model = DM()
-        model['link'] = DM()
-        model['link']['web-link'] = DM()
-        if self.url is not None:
-            model['link']['web-link']['URL'] = self.url
-        if self.label is not None:
-            model['link']['web-link']['label'] = self.label
-        if self.linktext is not None:
-            model['link']['web-link']['link-text'] = self.linktext
-        
-        return model
-    
-    def metadata(self) -> dict:
-        """
-        Generates a dict of simple metadata values associated with the record.
-        Useful for quickly comparing records and for building pandas.DataFrames
-        for multiple records of the same style.
-        """
-        meta = {}
-        meta['linktext'] = self.linktext
-        meta['label'] = self.label
-        meta['url'] = self.url
-
-        return meta
+    def linktext(self, val: Optional[str]):
+        self.__linktext.value = val

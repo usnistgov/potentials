@@ -10,6 +10,7 @@ from DataModelDict import DataModelDict as DM
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
+from yabadaba import load_value
 
 # Local imports
 from ..tools import aslist
@@ -21,42 +22,12 @@ class Implementation(Record):
     Class for representing Implementation metadata records. . Note that this is
     meant as a component class for other record objects.
     """
-    def __init__(self,
-                 model: Union[str, io.IOBase, DM, None] = None,
-                 name: Optional[str] = None,
-                 database = None,
-                 **kwargs):
-        """
-        Parameters
-        ----------
-        model : str, file-like object or DataModelDict, optional
-            A JSON/XML data model for the content.
-        name : str, optional
-            The name to assign to the record.  Not used by this class.
-        database : yabadaba.Database, optional
-            Allows for a default database to be associated with the record.
-        type : str, optional
-            Describes the format for the implementation.
-        key : str, optional
-            The UUID4 key to assign to the implementation.
-        id : str, optional
-            The unique id to assign to the implementation.
-        status : str, optional
-            Specifies the current status of the implementation.
-        date : datetime.date, optional
-            A date associated with the implementation listing.
-        notes : str, optional
-            Any notes associated with the implementation.
-        artifacts : list, optional
-            Any Artifact objects or data to associate with the implementation.
-        parameters : list, optional
-            Any Parameter objects or data to associate with the implementation.
-        links : list, optional
-            Any Link objects or data to associate with the implementation.
-        """
-        assert name is None, 'name is not used by this class'
-        assert database is None, 'database is not used by this class'
-        super().__init__(model=model, name=name, database=database, **kwargs)
+    ########################## Basic metadata fields ##########################
+
+    @property
+    def style(self):
+        """str: The record style"""
+        return 'implementation'
 
     @property
     def modelroot(self) -> str:
@@ -73,241 +44,126 @@ class Implementation(Record):
         """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'implementation.xsd')
 
-    def set_values(self,
-                   name: Optional[str] = None,
-                   **kwargs):
+    ####################### Define Values and attributes #######################
+
+    def _init_value_objects(self) -> list:
         """
-        Sets an Implementation object's attributes
+        Method that defines the value objects for the Record.  This should
+        1. Call the method's super() to get default Value objects.
+        2. Use yabadaba.load_value() to build Value objects that are set to
+           private attributes of self.
+        3. Append the list returned by the super() with the new Value objects.
 
-        Parameters
-        ----------
-        name : str, optional
-            The name to assign to the record.  Not used by this class.
-        type : str, optional
-            Describes the format for the implementation.
-        key : str, optional
-            The UUID4 key to assign to the implementation.
-        id : str, optional
-            The unique id to assign to the implementation.
-        status : str, optional
-            Specifies the current status of the implementation.
-        date : datetime.date, optional
-            A date associated with the implementation listing.
-        notes : str, optional
-            Any notes associated with the implementation.
-        artifacts : list, optional
-            Any Artifact objects or data to associate with the implementation.
-        parameters : list, optional
-            Any Parameter objects or data to associate with the implementation.
-        links : list, optional
-            Any Link objects or data to associate with the implementation.
-        """    
-        assert name is None, 'name is not used by this class'
+        Returns
+        -------
+        value_objects: A list of all value objects.
+        """
+        value_objects = super()._init_value_objects()
         
-        # Build new record
-        self.type = kwargs.get('type', None)
-        self.key = kwargs.get('key', None)
-        self.id = kwargs.get('id', None)
-        self.status = kwargs.get('status', None)
-        self.date = kwargs.get('date', None)
-        self.notes = kwargs.get('notes', None)
+        self.__key = load_value('str', 'key', self,
+                                valuerequired=True)
+        self.__id = load_value('str', 'id', self)
+        self.__status = load_value('str', 'status', self,
+                                   valuerequired=True,
+                                   defaultvalue='active',
+                                   allowedvalues=['active', 'superseded', 'retracted'])
+        self.__date = load_value('date', 'date', self)
+        self.__type = load_value('str', 'type', self)
+        self.__notes = load_value('str', 'notes', self,
+                                  modelpath='notes.text')
+        self.__artifacts = load_value('record', 'artifacts', self, recordclass=Artifact,
+                                  modelpath='artifact')
+        self.__parameters = load_value('record', 'parameters', self, recordclass=Parameter,
+                                  modelpath='parameter')
+        self.__links = load_value('record', 'links', self, recordclass=Link,
+                                  modelpath='link')
         
-        self.artifacts = []
-        if 'artifacts' in kwargs:
-            for artifact in aslist(kwargs['artifacts']):
-                if isinstance(artifact, Artifact):
-                    self.artifacts.append(artifact)
-                else:
-                    self.add_artifact(**artifact)
-        
-        self.parameters = []
-        if 'parameters' in kwargs:
-            for parameter in aslist(kwargs['parameters']):
-                if isinstance(parameter, Parameter):
-                    self.parameters.append(parameter)
-                else:
-                    self.add_parameter(**parameter)
-        
-        self.links = []
-        if 'links' in kwargs:
-            for link in aslist(kwargs['links']):
-                if isinstance(link, Link):
-                    self.links.append(link)
-                else:
-                    self.add_link(**link)
+        value_objects.extend([self.__key, self.__id, self.__status, self.__date,
+                              self.__type, self.__notes, self.__artifacts,
+                              self.__parameters, self.__links])
 
-    @property
-    def type(self) -> Optional[str]:
-        """str : The format of the implementation."""
-        return self.__type
-    
-    @type.setter
-    def type(self, v: Optional[str]):
-        if v is None:
-            self.__type = None
-        else:
-            self.__type = str(v)
+        return value_objects
 
     @property
     def key(self) -> Optional[str]:
         """str : The UUID4 key assigned to the implementation."""
-        return self.__key
+        return self.__key.value
     
     @key.setter
-    def key(self, v: Optional[str]):
-        if v is None:
-            self.__key = str(uuid.uuid4())
-        else:
-            self.__key = str(v)
+    def key(self, val: Optional[str]):
+        self.__key.value = val
             
     @property
     def id(self) -> Optional[str]:
         """str : The unique id assigned to the implementation."""
-        return self.__id
+        return self.__id.value
     
     @id.setter
-    def id(self, v: Optional[str]):
-        if v is None:
-            self.__id = None
-        else:
-            self.__id = str(v)
+    def id(self, val: Optional[str]):
+        self.__id.value = val
 
     @property
     def status(self) -> str:
         """str : The current status of the implementation."""
-        return self.__status
+        return self.__status.value
     
     @status.setter
-    def status(self, v: Optional[str]):
-        if v is None:
-            self.__status = 'active'
-        else:
-            self.__status = str(v)
+    def status(self, val: Optional[str]):
+        self.__status.value = val
 
     @property
     def date(self) -> datetime.date:
         """datetime.date : The date associated with the implementation listing"""
-        return self.__date
+        return self.__date.value
     
     @date.setter
-    def date(self, v: Union[datetime.date, str, None]):
-        if v is None:
-            self.__date = datetime.date.today()
-        elif isinstance(v, datetime.date):
-            self.__date = v
-        elif isinstance(v, str):
-            self.__date = datetime.datetime.strptime(v, '%Y-%m-%d').date()
-        else:
-            raise TypeError('Invalid date type')
+    def date(self, val: Union[datetime.date, str, None]):
+        self.__date.value = val
+        
+    @property
+    def type(self) -> Optional[str]:
+        """str : The format of the implementation."""
+        return self.__type.value
+    
+    @type.setter
+    def type(self, val: Optional[str]):
+        self.__type.value = val
     
     @property
     def notes(self) -> Optional[str]:
         """str : Any additional notes that describe details about the implementation."""
-        return self.__notes
+        return self.__notes.value
 
     @notes.setter
-    def notes(self, v: Optional[str]):
-        if v is None:
-            self.__notes = None
-        else:
-            self.__notes = str(v)
+    def notes(self, val: Optional[str]):
+        self.__notes.value = val
 
-    def load_model(self,
-                   model: Union[str, io.IOBase, DM],
-                   name: Optional[str] = None):
-        """
-        Loads the object info from data model content
-        
-        Parameters
-        ----------
-        model : str, file-like object or DataModelDict
-            A JSON/XML data model for the content.
-        name : str, optional
-            The name to assign to the record.  Not used by this class.
-        """
-        assert name is None, 'name is not used by this class'
-        model = DM(model)
-        imp = model.find('implementation')
-        self.key = imp['key']
-        self.id = imp.get('id', None)
-        self.status = imp.get('status', None)
-        self.date = imp.get('date', None)
-        self.type = imp.get('type', None)
-        if 'notes' in imp:
-            self.notes = imp['notes']['text']
-        else:
-            self.notes = None
+    @property
+    def artifacts(self) -> list:
+        """list: The Artifact component objects associated with the implementation."""
+        return self.__artifacts.value
 
-        self.artifacts = []
-        for artifact in imp.iteraslist('artifact'):
-            self.add_artifact(model=DM([('artifact', artifact)]))
+    @artifacts.setter
+    def artifacts(self, val: Union[Record, list]):
+        self.__artifacts.value = val
 
-        self.parameters = []
-        for parameter in imp.iteraslist('parameter'):
-            self.add_parameter(model=DM([('parameter', parameter)]))
+    @property
+    def parameters(self) -> list:
+        """list: The Parameter component objects associated with the implementation."""
+        return self.__parameters.value
 
-        self.links = []
-        for link in imp.iteraslist('link'):
-            self.add_link(model=DM([('link', link)]))
+    @parameters.setter
+    def parameters(self, val: Union[Record, list]):
+        self.parameters.value = val
 
-    def metadata(self) -> dict:
-        """
-        Generates a dict of simple metadata values associated with the record.
-        Useful for quickly comparing records and for building pandas.DataFrames
-        for multiple records of the same style.
-        """
-        data = {}
-        
-        # Copy class attributes to dict
-        data['key'] = self.key
-        data['id'] = self.id
-        data['date'] = self.date.isoformat()
-        data['status'] = self.status
-        data['notes'] = self.notes
-        data['type'] = self.type
+    @property
+    def links(self) -> list:
+        """list: The Link component objects associated with the implementation."""
+        return self.__links.value
 
-        data['artifacts'] = []
-        for artifact in self.artifacts:
-            data['artifacts'].append(artifact.metadata())
-        
-        data['parameters'] = []
-        for parameter in self.parameters:
-            data['parameters'].append(parameter.metadata())
-        
-        data['links'] = []
-        for link in self.links:
-            data['links'].append(link.metadata())
-            
-        return data
-
-    def build_model(self) -> DM:
-        """
-        Returns the object info as data model content
-        
-        Returns
-        ----------
-        DataModelDict: The data model content.
-        """
-
-        model = DM()
-        model['implementation'] = imp = DM()
-        imp['key'] = self.key
-        if self.id is not None:
-            imp['id'] = self.id
-        imp['status'] = self.status
-        imp['date'] = str(self.date)
-        if self.type is not None:
-            imp['type'] = self.type
-        if self.notes is not None:
-            imp['notes'] = DM([('text', self.notes)])
-        for artifact in self.artifacts:
-            imp.append('artifact', artifact.build_model()['artifact'])
-        for parameter in self.parameters:
-            imp.append('parameter', parameter.build_model()['parameter'])
-        for link in self.links:
-            imp.append('link', link.build_model()['link'])
-        
-        return model
+    @links.setter
+    def links(self, val: Union[Record, list]):
+        self.__links.value = val
 
     def add_artifact(self,
                      model: Union[str, io.IOBase, DM, None] = None,
@@ -326,7 +182,7 @@ class Implementation(Record):
         url : str, optional
             URL for file where downloaded, if available.
         """
-        self.artifacts.append(Artifact(model=model, **kwargs))
+        self.__artifacts.append(model=model, **kwargs)
 
     def add_link(self,
                  model: Union[str, io.IOBase, DM, None] = None,
@@ -345,7 +201,7 @@ class Implementation(Record):
         linktext : str, optional
             The text for the link, i.e. what gets clicked on.
         """
-        self.links.append(Link(model=model, **kwargs))
+        self.__links.append(model=model, **kwargs)
 
     def add_parameter(self,
                       model: Union[str, io.IOBase, DM, None] = None,
@@ -364,4 +220,4 @@ class Implementation(Record):
         unit : str, optional
             Units associated with value.
         """
-        self.parameters.append(Parameter(model=model, **kwargs))
+        self.__parameters.append(model=model, **kwargs)

@@ -8,38 +8,19 @@ from DataModelDict import DataModelDict as DM
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
+from yabadaba import load_value
 
 class Parameter(Record):
     """
     Class for describing parameter values. Note that this is
     meant as a component class for other record objects.
     """
-    def __init__(self,
-                 model: Union[str, io.IOBase, DM, None] = None,
-                 name: Optional[str] = None,
-                 database = None,
-                 **kwargs):
-        """
-        Initializes a Parameter object to describe parameter values.
+    ########################## Basic metadata fields ##########################
 
-        Parameters
-        ----------
-        model : str, file-like object or DataModelDict, optional
-            A JSON/XML data model for the content.
-        name : str, optional
-            The name to assign to the record.  Not used by this class.
-        database : yabadaba.Database, optional
-            Allows for a default database to be associated with the record.
-        paramname : str, optional
-            The name of the parameter or string parameter line.
-        value : float, optional
-            The value of the parameter.
-        unit : str, optional
-            Units associated with value.
-        """
-        assert name is None, 'name is not used by this class'
-        assert database is None, 'database is not used by this class'
-        super().__init__(model=model, name=name, database=database, **kwargs)
+    @property
+    def style(self):
+        """str: The record style"""
+        return 'implementation_parameter'
 
     @property
     def modelroot(self) -> str:
@@ -56,112 +37,57 @@ class Parameter(Record):
         """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'parameter.xsd')
 
+    ####################### Define Values and attributes #######################
 
-    @property
-    def paramname(self) -> Optional[str]:
-        """str: The name of the parameter, or a string parameter line"""
-        return self.__paramname
-    
-    @paramname.setter
-    def paramname(self, v: Optional[str]):
-        if v is None:
-            self.__paramname = None
-        else:
-            self.__paramname = str(v)
+    def _init_value_objects(self) -> list:
+        """
+        Method that defines the value objects for the Record.  This should
+        1. Call the method's super() to get default Value objects.
+        2. Use yabadaba.load_value() to build Value objects that are set to
+           private attributes of self.
+        3. Append the list returned by the super() with the new Value objects.
+
+        Returns
+        -------
+        value_objects: A list of all value objects.
+        """
+        value_objects = super()._init_value_objects()
+        
+        
+        self.__value = load_value('str', 'value', self,
+                                  modelpath='value')
+        self.__unit = load_value('str', 'unit', self,
+                                     modelpath='unit')
+        self.__paramname = load_value('str', 'paramname', self,
+                                      modelpath='name')
+        
+        value_objects.extend([self.__value, self.__unit, self.__paramname])
+
+        return value_objects
     
     @property
     def value(self) -> Optional[str]:
         """str or None: The value of the parameter"""
-        return self.__value
+        return self.__value.value
     
     @value.setter
-    def value(self, v: Optional[str]):
-        if v is None:
-            self.__value = None
-        else:
-            self.__value = float(v)
+    def value(self, val: Optional[str]):
+        self.__value.value = val
 
     @property
     def unit(self) -> Optional[str]:
         """str or None: The unit that the value is in"""
-        return self.__unit
+        return self.__unit.value
     
     @unit.setter
-    def unit(self, v: Optional[str]):
-        if v is None:
-            self.__unit = None
-        else:
-            self.__unit = str(v)
+    def unit(self, val: Optional[str]):
+        self.__unit.value = val
 
-    def set_values(self,
-                   name: Optional[str] = None,
-                   **kwargs):
-        """
-        Sets a Parameter object's attributes
-
-        Parameters
-        ----------
-        name : str, optional
-            The name to assign to the record.  Not used by this class.
-        paramname : str, optional
-            The name of the parameter or string parameter line.
-        value : float, optional
-            The value of the parameter.
-        unit : str, optional
-            Units associated with value.
-        """
-        assert name is None, 'name is not used by this class'
-        self.paramname = kwargs.get('paramname', None)
-        self.value = kwargs.get('value', None)
-        self.unit = kwargs.get('unit', None)
-
-    def load_model(self,
-                   model: Union[str, io.IOBase, DM],
-                   name: Optional[str] = None):
-        """
-        Loads the object info from data model content
-        
-        Parameters
-        ----------
-        model : str, file-like object or DataModelDict
-            A JSON/XML data model for the content.
-        name : str, optional
-            The name to assign to the record.  Not used by this class.
-        """
-        assert name is None, 'name is not used by this class'
-        parameter = model.find('parameter')
-        self.value = parameter.get('value', None)
-        self.unit = parameter.get('unit', None)
-        self.paramname = parameter.get('name', None)
-        
-    def build_model(self) -> DM:
-        """
-        Returns the object info as data model content
-        
-        Returns
-        ----------
-        DataModelDict: The data model content.
-        """
-        model = DM()
-        model['parameter'] = DM()
-        if self.value is not None:
-            model['parameter']['value'] = self.value
-        if self.unit is not None:
-            model['parameter']['unit'] = self.unit
-        if self.name is not None:
-            model['parameter']['name'] = self.paramname
-        
-        return model
-
-    def metadata(self) -> dict:
-        """
-        Generates a dict of simple metadata values associated with the record.
-        Useful for quickly comparing records and for building pandas.DataFrames
-        for multiple records of the same style.
-        """
-        meta = {}
-        meta['value'] = self.value
-        meta['unit'] = self.unit
-        meta['paramname'] = self.paramname
-
-        return meta
+    @property
+    def paramname(self) -> Optional[str]:
+        """str or None: The name of the parameter, or a string parameter line"""
+        return self.__paramname.value
+    
+    @paramname.setter
+    def paramname(self, val: Optional[str]):
+        self.__paramname.value = val

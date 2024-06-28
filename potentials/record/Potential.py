@@ -10,7 +10,7 @@ from DataModelDict import DataModelDict as DM
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
-from yabadaba import load_query
+from yabadaba import load_value
 
 # Local imports
 from .Citation import Citation
@@ -21,7 +21,7 @@ class Potential(Record):
     """
     Class for representing Potential metadata records.
     """
-
+    ########################## Basic metadata fields ##########################
     def __init__(self,
                  model: Union[str, io.IOBase, DM, None] = None,
                  name: Optional[str] = None,
@@ -42,16 +42,10 @@ class Potential(Record):
             Allows for a default database to be associated with the record.
         """
         # Set default values
-        self.url = None
         self.elements = None
-        self.key = None
         self.othername = None
         self.fictional = False
         self.modelname = None
-        self.notes = None
-        self.recorddate = datetime.date.today()
-        self.__citations = []
-        self.__implementations = []
 
         super().__init__(model=model, name=name, database=database, **kwargs)
 
@@ -74,6 +68,63 @@ class Potential(Record):
     def modelroot(self) -> str:
         """str: The root element of the content"""
         return 'interatomic-potential'
+
+        
+        # Build implementations
+        for implementation in self.implementations:
+            potential.append('implementation', implementation.build_model()['implementation'])
+
+        # Build element information
+        if self.fictional:
+            for element in self.elements:
+                potential.append('fictional-element', element)
+        else:
+            for element in self.elements:
+                potential.append('element', element)
+        if self.othername is not None:
+            potential['other-element'] = self.othername
+
+    ####################### Define Values and attributes #######################
+
+    def _init_value_objects(self) -> list:
+        """
+        Method that defines the value objects for the Record.  This should
+        1. Call the method's super() to get default Value objects.
+        2. Use yabadaba.load_value() to build Value objects that are set to
+           private attributes of self.
+        3. Append the list returned by the super() with the new Value objects.
+
+        Returns
+        -------
+        value_objects: A list of all value objects.
+        """
+        value_objects = super()._init_value_objects()
+        
+        self.__key = load_value('str', 'key', self,
+                                valuerequired=True)
+        self.__id = load_value('str', 'id', self)
+        self.__url = load_value('str', 'url', self,
+                                modelpath='URL')
+        self.__recorddate = load_value('recorddate', 'date', self,
+                                       modelpath='record-version')
+        self.__citations = load_value('record', 'citations', self, recordclass='Citation',
+                                  modelpath='description.citation')
+        self.__notes = load_value('str', 'notes', self,
+                                  modelpath='description.notes.text')
+        self.__implementations = load_value('record', 'implementations', self,
+                                            recordclass=Implementation,
+                                            modelpath='implementation')
+        self.__fictional = load_value('list_contains', 'fictional', self,
+                                      modelpath='fictional-element')
+        self.__elements = load_value('list_contains', 'elements', self)
+        self.__othername = load_value('str_match', 'othername', self,
+                                      modelpath='other-element')
+        
+        value_objects.extend([self.__key, self.__id, self.__url, self.__recorddate,
+                              self.__citations, self.__notes, self.__implementations,
+                              self.__fictional, self.__elements, self.__othername])
+
+        return value_objects
 
     def load_model(self,
                    model: Union[str, io.IOBase, DM],
@@ -218,10 +269,7 @@ class Potential(Record):
     
     @key.setter
     def key(self, v: Optional[str]):
-        if v is None:
-            self.__key = str(uuid.uuid4())
-        else:
-            self.__key = str(v)
+        self.__key = str(v)
 
     @property
     def id(self) -> str:
@@ -255,10 +303,7 @@ class Potential(Record):
 
     @url.setter
     def url(self, v: Union[str, None]):
-        if v is None:
-            self.__url = None
-        else:
-            self.__url = str(v)
+        self.__url = str(v)
 
     @property
     def impid_prefix(self) -> str:
@@ -291,14 +336,7 @@ class Potential(Record):
     
     @recorddate.setter
     def recorddate(self, v: Union[datetime.date, str, None]):
-        if v is None:
-            self.__recorddate = datetime.date.today()
-        elif isinstance(v, datetime.date):
-            self.__recorddate = v
-        elif isinstance(v, str):
-            self.__recorddate = datetime.datetime.strptime(v, '%Y-%m-%d').date()
-        else:
-            raise TypeError('Invalid date type')
+        self.__recorddate = datetime.datetime.strptime(v, '%Y-%m-%d').date()
 
     @property
     def citations(self) -> list:
@@ -317,10 +355,7 @@ class Potential(Record):
 
     @elements.setter
     def elements(self, v: Union[str, list, None]):
-        if v is None:
-            self.__elements = None
-        else:
-            self.__elements = aslist(v)
+        self.__elements = aslist(v)
     
     @property
     def othername(self) -> Optional[str]:
@@ -329,10 +364,7 @@ class Potential(Record):
     
     @othername.setter
     def othername(self, v: Optional[str]):
-        if v is None:
-            self.__othername = None
-        else:
-            self.__othername = str(v)
+        self.__othername = str(v)
     
     @property
     def fictional(self) -> bool:
@@ -351,10 +383,7 @@ class Potential(Record):
     
     @modelname.setter
     def modelname(self, v: Optional[str]):
-        if v is None:
-            self.__modelname = None
-        else:
-            self.__modelname = str(v)
+        self.__modelname = str(v)
 
     @property
     def notes(self) -> Optional[str]:
@@ -363,85 +392,14 @@ class Potential(Record):
 
     @notes.setter
     def notes(self, v: Optional[str]):
-        if v is None:
-            self.__notes = None
-        else:
-            self.__notes = str(v)
+        self.__notes = str(v)
 
-    def metadata(self) -> dict:
-        """
-        Generates a dict of simple metadata values associated with the record.
-        Useful for quickly comparing records and for building pandas.DataFrames
-        for multiple records of the same style.
-        """
-        data = {}
-        
-        # Copy class attributes to dict
-        data['name'] = self.name
-        data['key'] = self.key
-        data['id'] = self.id
-        data['url'] = self.url
-        data['recorddate'] = self.recorddate
-        data['notes'] = self.notes
-        data['fictional'] = self.fictional
-        data['elements'] = self.elements
-        data['othername'] = self.othername
-        data['modelname'] = self.modelname
-        
-        data['citations'] = []
-        for citation in self.citations:
-            data['citations'].append(citation.metadata())
-
-        data['implementations'] = []
-        for implementation in self.implementations:
-            data['implementations'].append(implementation.metadata())
-
-        return data
-
-    def build_model(self) -> DM:
-        """
-        Generates and returns model content based on the values set to object.
-        """
-        # Initialize model
-        model = DM()
-        model['interatomic-potential'] = potential = DM()
-        
-        # Build identifiers
-        potential['key'] = self.key
-        potential['id'] = self.id
-        if self.url is not None:
-            potential['URL'] = self.url
-        potential['record-version'] = str(self.recorddate)
-        
-        # Build description
-        potential['description'] = description = DM()
-        for citation in self.citations:
-            description.append('citation', citation.build_model()['citation'])
-        if self.notes is not None:
-            description['notes'] = DM([('text', self.notes)])
-        
-        # Build implementations
-        for implementation in self.implementations:
-            potential.append('implementation', implementation.build_model()['implementation'])
-
-        # Build element information
-        if self.fictional:
-            for element in self.elements:
-                potential.append('fictional-element', element)
-        else:
-            for element in self.elements:
-                potential.append('element', element)
-        if self.othername is not None:
-            potential['other-element'] = self.othername
-
-        self._set_model(model)
-        return model
-        
+    
     def add_citation(self, **kwargs):
         """
         Initializes a new Citation object and appends it to the citations list.
         """
-        self.citations.append(Citation(**kwargs))
+        self.__citations.append(**kwargs)
 
     def add_implementation(self, **kwargs):
         """
@@ -453,53 +411,4 @@ class Potential(Record):
                 raise ValueError(f'Implementation with id {imp.id} already exists')
         self.implementations.append(implementation)
 
-    @property
-    def queries(self) -> dict:
-        """dict: Query objects and their associated parameter names."""
-        return {
-            'key': load_query(
-                style='str_match',
-                name='key', 
-                path=f'{self.modelroot}.key',
-                description="search based on potential UUID key"),
-            'id': load_query(
-                style='str_match',
-                name='id',
-                path=f'{self.modelroot}.id',
-                description="search based on potential id"),
-            'notes': load_query(
-                style='str_contains',
-                name='notes',
-                path=f'{self.modelroot}.notes',
-                description='search potential notes for contained strings'),
-            'fictional': load_query(
-                style='str_match',
-                name='fictional',
-                path=f'{self.modelroot}.fictional-element',
-                description='search for fictional potentials'),
-            'element': load_query(
-                style='list_contains',
-                name='elements',
-                path=f'{self.modelroot}.element',
-                description='search based on potential elements'),
-            'othername': load_query(
-                style='str_match',
-                name='othername',
-                path=f'{self.modelroot}.other-element',
-                description='search based on the othername field'),
-            'year': load_query(
-                style='int_match',
-                name='year', parent='citations',
-                path=f'{self.modelroot}.description.citation.publication-date.year',
-                description='search based on publication year'),
-            'author': load_query(
-                style='str_contains',
-                name='author', parent='citations',
-                path=f'{self.modelroot}.description.citation.author.surname',
-                description='search based on publication authors'),
-            'abstract': load_query(
-                style='str_contains',
-                name='abstract', parent='citations',
-                path=f'{self.modelroot}.description.citation.abstract',
-                description='search publication abstract for contained strings'),
-        }
+    
