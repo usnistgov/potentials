@@ -19,7 +19,7 @@ from yabadaba import load_value
 
 class Author(Record):
     """
-    Class for describing website link
+    Class for describing cited authors
     """
     ########################## Basic metadata fields ##########################
 
