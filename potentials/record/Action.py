@@ -59,18 +59,25 @@ class PotInfo(Record):
         """
         value_objects = super()._init_value_objects()
         
-        self.__key = load_value('str', 'potential_key', self,
+        self.__potential_key = load_value('str', 'potential_key', self,
                                 modelpath='key', metadatakey='key')
-        self.__id = load_value('str', 'potential_id', self,
+        self.__potential_id = load_value('str', 'potential_id', self,
                                modelpath='id', metadatakey='id')
-        self.__dois = load_value('strlist', 'dois', self)
-        self.__fictional = load_value('list_contains', 'fictional', self,
-                                      modelpath='fictional-element')
-        self.__elements = load_value('list_contains', 'elements', self)
+        self.__dois = load_value('strlist', 'dois', self,
+                                 #metadataparent='potential',
+                                 modelpath='doi')
+        self.__fictionalelements = load_value('strlist', 'fictionalelements', self,
+                                              #metadataparent='potential',
+                                              modelpath='fictional-element')
+        self.__elements = load_value('strlist', 'elements', self,
+                                     #metadataparent='potential',
+                                     modelpath='element')
         self.__othername = load_value('str', 'othername', self,
+                                      #metadataparent='potential',
                                       modelpath='other-element')
         
-        value_objects.extend([self.__key, self.__id, self.__dois, self.__fictional,
+        value_objects.extend([self.__potential_key, self.__potential_id, self.__dois,
+                              self.__fictionalelements,
                               self.__elements, self.__othername])
 
         return value_objects
@@ -92,38 +99,63 @@ class PotInfo(Record):
                 dois.append(citation.doi)
 
         return cls(key=potential.key, id=potential.id, dois=dois,
-                   fictional=potential.fictional, elements=potential.elements,
+                   fictionalelements=potential.fictionalelements,
+                   elements=potential.elements,
                    othername=potential.othername)
 
     @property
-    def key(self) -> str:
+    def potential_key(self) -> str:
         """str: The Potential's key"""
-        return self.__key.value
+        return self.__potential_key.value
+
+    @potential_key.setter
+    def potential_key(self, val:str):
+        self.__potential_key.value = val
     
     @property
-    def id(self) -> str:
+    def potential_id(self) -> str:
         """str: The Potential's id"""
-        return self.__id.value
+        return self.__potential_id.value
+
+    @potential_id.setter
+    def potential_id(self, val:str):
+        self.__potential_id.value = val
 
     @property
     def dois(self) -> list:
         """list: The Potential's DOIs"""
         return self.__dois.value
 
+    @dois.setter
+    def dois(self, val:str):
+        self.__dois.value = val
+
     @property
     def elements(self) -> list:
         """list: The elements modeled by the Potential"""
         return self.__elements.value
+
+    @elements.setter
+    def elements(self, val:str):
+        self.__elements.value = val
 
     @property
     def othername(self) -> Optional[str]:
         """str or None: The Potential's othername"""
         return self.__othername.value
 
+    @othername.setter
+    def othername(self, val:str):
+        self.__othername.value = val
+
     @property
-    def fictional(self) -> list:
+    def fictionalelements(self) -> list:
         """list: The fictional elements modeled by the Potential."""
-        return self.__fictional.value
+        return self.__fictionalelements.value
+
+    @fictionalelements.setter
+    def fictionalelements(self, val:str):
+        self.__fictionalelements.value = val
 
 class Action(Record):
     """
@@ -168,11 +200,13 @@ class Action(Record):
         """
         value_objects = super()._init_value_objects()
         
-        self.__date = load_value('date', 'date', self)
+        self.__date = load_value('date', 'date', self,
+                                 description='the date of the action')
         self.__type = load_value('str', 'type', self,
-                                 modelpath='given-name',
                                  allowedvalues=['new posting', 'updated posting',
-                                                'retraction', 'site change'])
+                                                'retraction', 'site change'],
+                                description='the website action type')
+
         self.__potentials = load_value('record', 'potentials', self,
                                        recordclass=PotInfo,
                                        modelpath='potential')
@@ -221,3 +255,10 @@ class Action(Record):
     @comment.setter
     def comment(self, val: Optional[str]):
         self.__comment.value = val
+
+
+    def add_potential(self, **kwargs):
+        """
+        Initializes a new PotInfo object and appends it to the potentials list.
+        """
+        self.potentials.append(PotInfo(noname=True, **kwargs))

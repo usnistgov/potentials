@@ -121,14 +121,22 @@ class Request(Record):
         value_objects = super()._init_value_objects()
         
         self.__date = load_value('date', 'date', self, valuerequired=True)
-        self.__comment = load_value('longstr', 'comment', self)
         self.__systems = load_value('record', 'systems', self, recordclass=ElementSystem,
                                     modelpath='system')
+        self.__comment = load_value('longstr', 'comment', self)
         
-        value_objects.extend([self.__date, self.__comment, self.__systems])
+        value_objects.extend([self.__date, self.__systems, self.__comment])
 
         return value_objects
 
+    @property
+    def defaultname(self) -> str:
+        name = str(self.date)
+        for system in self.systems:
+            for element in system.elements:
+                name += ' ' + element
+        return name
+        
     @property
     def date(self) -> datetime.date:
         """datetime.date : The date that the request was submitted."""

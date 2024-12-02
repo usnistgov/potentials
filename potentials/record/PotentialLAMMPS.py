@@ -4,6 +4,7 @@ import io
 from typing import Optional, Tuple, Union
 from pathlib import Path
 import datetime
+import uuid
 
 # https://numpy.org/
 import numpy as np
@@ -13,23 +14,27 @@ import numpy.typing as npt
 from DataModelDict import DataModelDict as DM
 
 # https://github.com/usnistgov/yabadaba
-from yabadaba import load_query
+from yabadaba.record import Record
+from yabadaba import load_value, load_query
+from yabadaba.tools import dict_insert
 
 # local imports
-from ..tools import aslist
-from .BasePotentialLAMMPS import BasePotentialLAMMPS
+from ..tools import aslist, atomic_mass
 from .Artifact import Artifact
+from .AtomInfo import AtomInfo
+from .CommandLine import CommandLine, PairCoeffLine
 
-class PotentialLAMMPS(BasePotentialLAMMPS):
+class PotentialLAMMPS(Record):
     """
     Class for building LAMMPS input lines from a potential-LAMMPS data model.
     """
-    
+
     def __init__(self,
                  model: Union[str, io.IOBase, DM, None] = None,
                  name: Optional[str] = None,
                  database = None,
-                 pot_dir: Optional[str] = None):
+                 pot_dir: Optional[str] = None,
+                 **kwargs):
         """
         Initializes an instance and loads content from a data model.
         
@@ -47,9 +52,74 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             the potential.  Default value is None, which assumes any required
             files will be in the working directory when LAMMPS is executed.
         """
-        super().__init__(model=model, name=name, database=database)
+        self.__pair_coeffs = []
+        self.__commands = []
+        self.__pair_style_terms = CommandLine()
+
+        super().__init__(model=model, name=name, database=database, **kwargs)
+
         if pot_dir is not None:
             self.pot_dir = pot_dir
+        else:
+            self.pot_dir = ''
+        
+    @classmethod
+    def paramfile(cls, paramfile, **kwargs):
+        """
+        Initializes a new PotentialsLAMMPS object for potentials that have
+        pair_coeff lines of the format
+
+            pair_coeff * * paramfile Sym1 Sym2
+        """
+        obj = cls(**kwargs)
+        obj.pair_coeff_paramfile(paramfile)
+
+        return obj
+
+    @classmethod
+    def eam(cls, paramfiles, **kwargs):
+        """
+        Initializes a new PotentialsLAMMPS object for potentials that have
+        pair_coeff lines like the eam pair_style
+
+            pair_coeff 1 1 paramfile1
+            pair_coeff 2 2 paramfile2
+        """
+        obj = cls(**kwargs)
+        obj.pair_coeff_eam(paramfiles)
+
+        return obj
+
+    @classmethod
+    def eim(cls, paramfile, **kwargs):
+        """
+        Initializes a new PotentialsLAMMPS object for potentials that have
+        pair_coeff lines like the eim pair_style
+
+            pair_coeff * * Sym1 Sym2 paramfile Sym1 Sym2
+        """
+        obj = cls(**kwargs)
+        obj.pair_coeff_eim(paramfile)
+
+        return obj
+
+    @classmethod
+    def meam(cls, libfile, paramfile=None, **kwargs):
+        """
+        Initializes a new PotentialsLAMMPS object for potentials that have
+        pair_coeff lines like the meam pair_style
+
+            pair_coeff * * libfile Sym1 Sym2 paramfile Sym1 Sym2
+        """
+        obj = cls(**kwargs)
+        obj.pair_coeff_meam(libfile, paramfile=paramfile)
+
+        return obj
+
+
+
+
+    ########################## Basic metadata fields ##########################
 
     @property
     def style(self) -> str:
@@ -71,6 +141,209 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'potential_LAMMPS.xsd')
 
+    ####################### Define Values and attributes #######################
+
+    def _init_value_objects(self) -> list:
+        """
+        Method that defines the value objects for the Record.  This should
+        1. Call the method's super() to get default Value objects.
+        2. Use yabadaba.load_value() to build Value objects that are set to
+           private attributes of self.
+        3. Append the list returned by the super() with the new Value objects.
+
+        Returns
+        -------
+        value_objects: A list of all value objects.
+        """
+        value_objects = super()._init_value_objects()
+        
+        self.__key = load_value('str', 'key', self)
+        self.__id = load_value('str', 'id', self)
+        self.__url = load_value('str', 'url', self,
+                                modelpath='URL')
+        self.__status = load_value('str', 'status', self,
+                                   allowedvalues=('superseded', 'retracted'))
+        self.__potkey = load_value('str', 'potkey', self,
+                                   modelpath='potential.key')
+        self.__potid = load_value('str', 'potid', self,
+                                  modelpath='potential.id')
+        self.__poturl = load_value('str', 'poturl', self,
+                                   modelpath='potential.URL')
+        self.__dois = load_value('strlist', 'dois', self,
+                                 modelpath='potential.doi')
+        self.__comments = load_value('longstr', 'comments', self)
+        self.__units = load_value('str', 'units', self, defaultvalue='metal')
+        self.__atom_style = load_value('str', 'atom_style', self,
+                                       defaultvalue='atomic')
+        self.__allsymbols = load_value('bool', 'allsymbols', self,
+                                       metadatakey=False)
+        self.__atoms = load_value('record', 'atoms', self, recordclass=AtomInfo,
+                                  modelpath='atom',
+                                  metadatakey=False)
+        self.__pair_style = load_value('str', 'pair_style', self,
+                                       modelpath='pair_style.type')
+        self.__artifacts = load_value('record', 'artifacts', self, recordclass=Artifact,
+                                      modelpath='artifact')
+        self.__artifacts.queries.pop('url')
+        self.__artifacts.queries.pop('label')
+        
+        value_objects.extend([self.__key, self.__id, self.__url, self.__status,
+                              self.__potkey, self.__potid, self.__poturl, self.__dois,
+                              self.__comments, self.__units, self.__atom_style,
+                              self.__allsymbols, self.__atoms, self.__pair_style,
+                              self.__artifacts])
+
+        return value_objects
+
+    @property
+    def key(self) -> str:
+        """str : The uuid hash-key for the LAMMPS implementation."""
+        return self.__key.value
+    
+    @key.setter
+    def key(self, val: Optional[str]):
+        self.__key.value = val
+
+    @property
+    def id(self) -> Optional[str]:
+        """str : Human-readable identifier for the LAMMPS implementation."""
+        return self.__id.value
+
+    @id.setter
+    def id(self, val: Optional[str]):
+        self.__id.value = val
+
+    @property
+    def url(self):
+        """str : URL for an online copy of the record."""
+        return self.__url.value
+
+    @url.setter
+    def url(self, val: Union[str, None]):
+        self.__url.value = val
+
+    @property
+    def status(self):
+        """str : Status of the potential version."""
+        return self.__status.value
+
+    @status.setter
+    def status(self, val: Union[str, None]):
+        self.__status.value = val
+    
+    @property
+    def potkey(self) -> str:
+        """str : uuid hash-key for the potential model."""
+        return self.__potkey.value
+
+    @potkey.setter
+    def potkey(self, val: Optional[str]):
+        self.__potkey.value = val
+
+    @property
+    def potid(self) -> str:
+        """str : Human-readable identifier for the potential model."""
+        return self.__potid.value
+
+    @potid.setter
+    def potid(self, val: Optional[str]):
+        self.__potid.value = val
+
+    @property
+    def poturl(self) -> Optional[str]:
+        """str : URL for an online copy of the potential model record."""
+        return self.__poturl.value
+    
+    @poturl.setter
+    def poturl(self, val: Optional[str]):
+        self.__poturl.value = val
+
+    @property
+    def dois(self) -> list:
+        """list: DOIs associated with the potential model."""
+        return self.__dois.value
+    
+    @dois.setter
+    def dois(self, val: Union[str, list, None]):
+        self.__dois.value = val
+
+    @property
+    def comments(self) -> str:
+        """str : Descriptive comments detailing the potential information"""
+        return self.__comments.value
+
+    @comments.setter
+    def comments(self, val: Optional[str]):
+        self.__comments.value = val
+
+    @property
+    def units(self) -> str:
+        """str : LAMMPS units option."""
+        return self.__units.value
+
+    @units.setter
+    def units(self, val: Optional[str]):
+        self.__units.value = val
+
+    @property
+    def atom_style(self) -> str:
+        """str : LAMMPS atom_style option."""
+        return self.__atom_style.value
+    
+    @atom_style.setter
+    def atom_style(self, val: Optional[str]):
+        self.__atom_style.value = val
+
+    @property
+    def allsymbols(self) -> bool:
+        """bool : indicates if all model symbols must be listed."""
+        return self.__allsymbols.value
+
+    @allsymbols.setter
+    def allsymbols(self, val: Optional[bool]):
+        self.__allsymbols.value = val
+
+    @property
+    def atoms(self) -> list:
+        """list : The list of atomic models represented by the potential."""
+        return self.__atoms.value
+
+    @property
+    def pair_style(self) -> str:
+        """str : LAMMPS pair_style option."""
+        return self.__pair_style.value
+    
+    @pair_style.setter
+    def pair_style(self, val: Optional[str]):
+        self.__pair_style.value = val
+
+    @property
+    def pair_coeffs(self) -> list:
+        return self.__pair_coeffs
+
+    @property
+    def commands(self) -> list:
+        return self.__commands
+
+    @property
+    def artifacts(self) -> list:
+        """list : The list of file artifacts for the potential including download URLs."""
+        return self.__artifacts.value
+
+    @property
+    def pair_style_terms(self) -> CommandLine:
+        """LAMMPSCommandLine : Any extra terms for the LAMMPS pair_style command line."""
+        return self.__pair_style_terms
+    
+    @property
+    def pot_dir(self):
+        """str : The directory containing files associated with a given potential."""
+        return self.__pot_dir
+
+    @pot_dir.setter
+    def pot_dir(self, value: str):
+        self.__pot_dir = str(value)
+
     @property
     def fileurls(self) -> list:
         """list : The URLs where the associated files can be downloaded"""
@@ -78,49 +351,195 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         for artifact in self.artifacts:
             urls.append(artifact.url)
         return urls
-    
-    @property
-    def dois(self) -> list:
-        """list : The publication DOIs associated with the potential"""
-        if self.model is None:
-            raise AttributeError('No model information loaded')
-        return self.__dois
 
     @property
-    def comments(self) -> str:
-        """str : Descriptive comments detailing the potential information"""
-        if self.model is None:
-            raise AttributeError('No model information loaded')
-        return self.__comments
+    def symbols(self) -> list:
+        """list of str : All atom-model symbols."""
+        symbols = []
+        for atom in self.atoms:
+            symbols.append(atom.symbol)
+        return symbols
+    
+
+    def set_values(self, **kwargs):
+        """
+        Set multiple object attributes at the same time.
+
+        Parameters
+        ----------
+        **kwargs: any
+            Any parameters for the record that you wish to set values for.
+        """
+        
+        if 'artifacts' in kwargs:
+            self.__artifacts.value = []
+            artifacts = kwargs.pop('artifacts')
+            for artifact in aslist(artifacts):
+                if isinstance(artifact, Artifact):
+                    self.artifacts.append(artifact)
+                else:
+                    raise TypeError('artifacts must be Artifact objects')
+        
+
+
+        super().set_values(**kwargs)
+
+        # Build atoms objects from symbols, elements, masses and charges fields
+        if 'elements' in kwargs or 'symbols' in kwargs:
+
+            # Handle elements            
+            if 'elements' in kwargs:
+                elements = aslist(kwargs['elements'])
+            else:
+                elements = [None] * len(aslist(kwargs['symbols']))
+
+            # Handle symbols
+            if 'symbols' in kwargs:
+                symbols = aslist(kwargs['symbols'])
+            else:
+                # Assume symbols=elements if not given
+                symbols = elements
+            
+            # Handle masses 
+            if 'masses' in kwargs:
+                masses = aslist(kwargs['masses'])
+            elif 'elements' not in kwargs:
+                raise ValueError('masses and/or elements must be given with symbols')
+            else:
+                masses = [None] * len(symbols)
+
+            # Handle charges
+            if 'charges' in kwargs:
+                charges = aslist(kwargs['charges'])
+            else:
+                charges = [None] * len(symbols)
+
+            # Check lengths of inputs
+            if (len(elements) != len(symbols) or 
+                len(elements) != len(masses) or 
+                len(elements) != len(charges)):
+                raise ValueError('Different number of values given for elements, symbols, masses, charges')
+
+            # Add atoms
+            for symbol, element, mass, charge in zip(symbols, elements, masses, charges):
+                self.add_atom(symbol=symbol, element=element, mass=mass, charge=charge)
+
+        # Throw error if masses or charges given without elements or symbols
+        elif 'masses' in kwargs or 'charges' in kwargs:
+            raise ValueError('masses and charges requires symbols and/or elements to be given')
+
+
+    def metadata(self) -> dict:
+        """
+        Generates a dict of simple metadata values associated with the record.
+        Useful for quickly comparing records and for building pandas.DataFrames
+        for multiple records of the same style.
+        """
+        meta = super().metadata()
+
+        meta['symbols'] = self.symbols
+        meta['elements'] = self.elements()
+
+        return meta
+
+
+    @property
+    def queries(self) -> dict:
+        """dict: Query objects and their associated parameter names."""
+        queries = super().queries
+        
+        queries.update({
+            'symbols': load_query(
+                style='list_contains',
+                name='symbols',
+                path=f'{self.modelroot}.atom.symbol',
+                description="search based on atomic model symbols"),
+            'elements': load_query(
+                style='list_contains',
+                name='elements',
+                path=f'{self.modelroot}.atom.element',
+                description="search based on atomic model elements"),
+        })
+
+        return queries
 
     @property
     def print_comments(self) -> str:
         """str : LAMMPS print commands of the potential comments"""
 
         # Split defined comments
-        lines = self.comments.split('\n')
+        if self.comments is None:
+            lines = ['']
+        else:
+            lines = self.comments.split('\n')
 
         out = ''
         for line in lines:
             if line != '':
                 out += f'print "{line}"\n'
         
-        if len(self.dois) > 0:
+        if self.dois is not None and len(self.dois) > 0:
             out += 'print "Publication(s) related to the potential:"\n'
             for doi in self.dois:
                 out += f'print "https://doi.org/{doi}"\n'
 
-        if len(self.fileurls) > 0:
+        if self.fileurls is not None and len(self.fileurls) > 0:
             out += 'print "Parameter file(s) can be downloaded at:"\n'
 
             for url in self.fileurls:
                 out += f'print "{url}"\n'
         return out
  
-    @property
-    def artifacts(self) -> list:
-        """list : The list of file artifacts for the potential including download URLs."""
-        return self.__artifacts
+    def add_atom(self, **kwargs):
+        """
+        Initializes a new AtomInfo object and appends it to the atoms list.
+        """
+        newatom = AtomInfo(**kwargs)
+        for atom in self.atoms:
+            if atom.symbol == newatom.symbol:
+                raise ValueError(f'AtomInfo with symbol {atom.symbol} already exists')
+        self.atoms.append(newatom)
+
+    def add_pair_coeff(self, **kwargs):
+        """
+        Initializes a new PairCoeffLine object and appends it to the pair_coeffs list.
+        """
+        self.pair_coeffs.append(PairCoeffLine(**kwargs))
+
+    def add_command(self, **kwargs):
+        """
+        Initializes a new CommandLine object and appends it to the commands list.
+        """
+        self.pair_coeffs.append(CommandLine(**kwargs))
+
+    def build_model(self) -> DM:
+        
+        # Build primary model content
+        model = super().build_model()
+        
+
+        # Insert pair_style terms content
+        if len(self.pair_style_terms.terms) > 0:
+            model[self.modelroot]['pair_style']['term'] = self.pair_style_terms.build_model()['term']
+
+        # Insert pair_coeff content
+        if len(self.pair_coeffs) > 0:
+            pcmodel = DM()
+            for pair_coeff in self.pair_coeffs:
+                pcmodel.append('pair_coeff', pair_coeff.build_model())
+            dict_insert(model[self.modelroot], 'pair_coeff', pcmodel['pair_coeff'],
+                        after='pair_style')
+        
+        # Insert extra command line content
+        if len(self.commands) > 0:
+            cmodel = DM()
+            for command in self.commands:
+                cmodel.append('command', command.build_model())
+            dict_insert(model[self.modelroot], 'command', cmodel['command'],
+                        after='pair_coeff')
+            
+        return model
+
 
     def load_model(self,
                    model: Union[str, io.IOBase, DM],
@@ -141,183 +560,238 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             the potential.  Default value is None, which assumes any required
             files will be in the working directory when LAMMPS is executed.
         """
-        # Call parent load to read model and some parameters
+        # Call parent load_model
         super().load_model(model, name=name)
-        pot = self.model[self.modelroot]
-        
+        model = self.model
+
+        # Set pot_dir if given
         if pot_dir is not None:
             self.pot_dir = pot_dir
         else:
             self.pot_dir = ''
-        
-        # Add artifacts
-        self.__artifacts = []
-        for artifact in pot.aslist('artifact'):
-            self.__artifacts.append(Artifact(model=DM([('artifact', artifact)])))
 
-        # Read comments, if present
-        self.__comments = pot.get('comments', '')
-        self.__dois = pot['potential'].aslist('doi')
-        
-        # Build lists of symbols, elements and masses
-        self._elements = []
-        self._symbols = []
-        self._masses = []
-        self._charges = []
-        for atom in pot.iteraslist('atom'):
-            element = atom.get('element', None)
-            symbol = str(atom.get('symbol', None))
-            mass = atom.get('mass', None)
-            charge = float(atom.get('charge', 0.0))
-            
-            # Check if element is listed
-            if element is None:
-                if mass is None:
-                    raise KeyError('mass is required for each atom if element is not listed')
-                if symbol is None:
-                    raise KeyError('symbol is required for each atom if element is not listed')
-                else:
-                    element = symbol
-            
-            # Check if symbol is listed.
-            if symbol is None:
-                symbol = element
-            
-            # Add values to the lists
-            self._elements.append(element)
-            self._symbols.append(symbol)
-            self._masses.append(mass)
-            self._charges.append(charge)
-    
-    @property
-    def queries(self) -> dict:
-        """dict: Query objects and their associated parameter names."""
-        return {
-            'key': load_query(
-                style='str_match',
-                name='key',
-                path=f'{self.modelroot}.key',
-                description="search based on the implementation's UUID key"),
-            'id': load_query(
-                style='str_match',
-                name='id',
-                path=f'{self.modelroot}.id',
-                description="search based on the implementation's id"),
-            'potkey': load_query(
-                style='str_match',
-                name='potkey',
-                path=f'{self.modelroot}.potential.key',
-                description="search based on the potential's UUID key"),
-            'potid': load_query(
-                style='str_match',
-                name='potid',
-                path=f'{self.modelroot}.potential.id',
-                description="search based on the potential's id"),
-            'units': load_query(
-                style='str_match',
-                name='units',
-                path=f'{self.modelroot}.units',
-                description="search based on LAMMPS units setting"),
-            'atom_style': load_query(
-                style='str_match',
-                name='atom_style',
-                path=f'{self.modelroot}.atom_style',
-                description="search based on LAMMPS atom_style setting"),
-            'pair_style': load_query(
-                style='str_match',
-                name='pair_style',
-                path=f'{self.modelroot}.pair_style.type',
-                description="search based on LAMMPS pair_style setting"),
-            'status': load_query(
-                style='str_match',
-                name='status',
-                path=f'{self.modelroot}.status',
-                description="search based on implementation status: active, superseded or retracted"),
-            'symbols': load_query(
-                style='list_contains',
-                name='symbols',
-                path=f'{self.modelroot}.atom.symbol',
-                description="search based on atomic model symbols"),
-            'elements': load_query(
-                style='list_contains',
-                name='elements',
-                path=f'{self.modelroot}.atom.element',
-                description="search based on atomic model elements"),
-        }
+        self.__pair_style_terms = CommandLine()
+        if 'term' in model[self.modelroot]['pair_style']:
+            self.pair_style_terms.load_model(model[self.modelroot]['pair_style'])
 
-    def mongoquery(self,
-                   name: Union[str, list, None] = None,
-                   **kwargs) -> dict:
-        """
-        Builds a Mongo-style query based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        name : str or list
-            The record name(s) to parse by.
-        **kwargs : any
-            Any of the record style-specific search parameters.
-        
-        Returns
-        -------
-        dict
-            The Mongo-style query
-        """
-        # Modify status
-        if 'status' in kwargs and kwargs['status'] is not None:
-            kwargs['status'] = aslist(kwargs['status'])
-            if 'active' in kwargs['status']:
-                kwargs['status'].append(None)
+        self.__pair_coeffs = []
+        for pair_coeff in model[self.modelroot].aslist('pair_coeff'):
+            self.add_pair_coeff()
+            line = self.pair_coeffs[-1]
+            line.load_model(pair_coeff)
 
-        mquery = super().mongoquery(name=name, **kwargs)
-
-        return mquery
-
-    def cdcsquery(self, **kwargs) -> dict:
-        """
-        Builds a CDCS-style query based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        **kwargs : any
-            Any of the record style-specific search parameters.
-        
-        Returns
-        -------
-        dict
-            The CDCS-style query
-        """
-        # Modify status
-        if 'status' in kwargs and kwargs['status'] is not None:
-            kwargs['status'] = aslist(kwargs['status'])
-            if 'active' in kwargs['status']:
-                kwargs['status'].append(None)
-
-        mquery = super().cdcsquery(**kwargs)
-
-        return mquery
-    
+        self.__commands = []
+        for command in model[self.modelroot].aslist('command'):
+            commandline = CommandLine()
+            commandline.load_model(command)
+            self.commands.append(commandline)
+   
     @property
     def symbolsets(self) -> list:
         """list : The sets of symbols that correspond to all related potentials"""
         return [self._symbols]
+    
+    def normalize_symbols(self,
+                          symbols: Union[str, list]) -> list:
+        """
+        Modifies a given list of symbols to be compatible with the potential.
+        Mostly, this converts symbols to a list if it is not already one, and
+        adds additional symbols if the potential's allsymbols setting is True.
 
-    def metadata(self) -> dict:
-        """Returns a flat dict of the metadata fields"""
+        Parameters
+        ----------
+        symbols : str or list-like object
+            The initial list of symbols
         
-        d = super().metadata()
-        d['artifacts'] = []
-        for artifact in self.artifacts:
-            d['artifacts'].append(artifact.metadata())
-        d['comments'] = self.comments
-        d['dois'] = self.dois
+        Returns
+        -------
+        list
+            The updated list.
+        """
+        # Convert symbols to a list if needed
+        symbols = aslist(symbols)
 
-        return d
+        # Check that all symbols are set
+        for symbol in symbols:
+            assert symbol is not None, 'symbols list incomplete: found None value'
 
+        # Add missing symbols if potential's allsymbols is True
+        if self.allsymbols:
+            for symbol in self.symbols:
+                if symbol not in symbols:
+                    symbols.append(symbol)
+
+        return symbols
+    
+    def elements(self,
+                 symbols: Union[str, list, None] = None) -> list:
+        """
+        Returns a list of element names associated with atom-model symbols.
+        
+        Parameters
+        ----------
+        symbols : list of str, optional
+            A list of atom-model symbols.  If None (default), will use all of
+            the potential's symbols.
+        
+        Returns
+        -------
+        list of str
+            The str element symbols corresponding to the atom-model symbols.
+        """
+        # Get full list of all symbols for the potential
+        fullsymbols = self.symbols
+
+        # Set default symbols to fullsymbols
+        if symbols is None:
+            symbols = fullsymbols
+
+        # Normalize symbols
+        symbols = self.normalize_symbols(symbols)
+
+        # Get all matching elements
+        elements = []
+        for symbol in symbols:
+            i = fullsymbols.index(symbol)
+            elements.append(self.atoms[i].element)
+
+        return elements
+
+    def masses(self,
+               symbols: Union[str, list, None] = None,
+               prompt: bool = False) -> list:
+        """
+        Returns a list of atomic/ionic masses associated with atom-model
+        symbols.
+        
+        Parameters
+        ----------
+        symbols : list of str, optional
+            A list of atom-model symbols.  If None (default), will use all of
+            the potential's symbols.
+        prompt : bool, optional
+            If True, then a screen prompt will appear for radioactive elements
+            with no standard mass to ask for the isotope to use. If False
+            (default), then the most stable isotope will be automatically used.
+        
+        Returns
+        -------
+        list of float
+            The atomic/ionic masses corresponding to the atom-model symbols.
+        """
+        # Get full list of all symbols for the potential
+        fullsymbols = self.symbols
+
+        # Set default symbols to fullsymbols
+        if symbols is None:
+            symbols = fullsymbols
+
+        # Normalize symbols
+        symbols = self.normalize_symbols(symbols)
+
+        # Get all matching masses
+        masses = []
+        for symbol in symbols:
+            i = fullsymbols.index(symbol)
+            atom = self.atoms[i]
+            if atom.mass is None:
+                masses.append(atomic_mass(atom.element, prompt=prompt))
+            else:
+                masses.append(atom.mass)
+
+        return masses
+
+    def charges(self,
+                symbols: Union[str, list, None] = None) -> list:
+        """
+        Returns a list of atomic charges associated with atom-model symbols.
+        Will have a None value if not assigned.
+        
+        Parameters
+        ----------
+        symbols : list of str, optional
+            A list of atom-model symbols.  If None (default), will use all of
+            the potential's symbols.
+        
+        Returns
+        -------
+        list of float
+            The atomic charges corresponding to the atom-model symbols.
+        """
+        # Get full list of all symbols for the potential
+        fullsymbols = self.symbols
+
+        # Set default symbols to fullsymbols
+        if symbols is None:
+            symbols = fullsymbols
+
+        # Normalize symbols
+        symbols = self.normalize_symbols(symbols)
+
+        # Get all matching charges
+        charges = []
+        for symbol in symbols:
+            i = fullsymbols.index(symbol)
+            atom = self.atoms[i]
+            if atom.charge is None:
+                charges.append(0.0)
+            else:
+                charges.append(atom.charge)
+
+        return charges
+
+    def download_files(self,
+                       pot_dir: Optional[str] = None,
+                       overwrite: bool = False,
+                       verbose: bool = False) -> Tuple[int, int]:
+        """
+        Downloads all artifact files associated with the potential.  The files
+        will be saved to the pot_dir directory.
+
+        Parameters
+        ----------
+        pot_dir : str, optional
+            The path to the directory where the files are to be saved.  If not
+            given, will use whatever pot_dir value was previously set.  If
+            given here, will change the pot_dir value so that the pair_info
+            lines properly point to the downloaded files.
+        overwrite : bool, optional
+            If False (default), then the files will not be downloaded if
+            similarly named files already exist in the pot_dir.
+        verbose : bool, optional
+            If True, info statements will be printed.  Default
+            value is False.
+        
+        Returns
+        -------
+        num_downloaded : int
+            The number of artifacts downloaded.
+        num_skipped : int
+            The number of artifacts not downloaded.
+        """
+
+        if pot_dir is not None:
+            self.pot_dir = pot_dir
+
+        num_downloaded = 0
+        num_skipped = 0
+        if len(self.artifacts) > 0:
+            if not Path(self.pot_dir).is_dir():
+                Path(self.pot_dir).mkdir(parents=True)
+
+            for artifact in self.artifacts:
+                success = artifact.download(self.pot_dir, overwrite=overwrite,
+                                            verbose=verbose)
+                if success:
+                    num_downloaded += 1
+                else:
+                    num_skipped += 1
+
+        return num_downloaded, num_skipped
+        
     def pair_info(self,
                   symbols: Union[str, list, None] = None,
                   masses: Union[float, list, None] = None,
-                  units: Optional[str] = None,
                   prompt: bool = False,
                   comments: bool = True,
                   lammpsdate: datetime.date = datetime.date(2020, 10, 29)
@@ -385,120 +859,27 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
         # Add comment prints
         if comments:
             info += self.print_comments
+            info += '\n'
 
         # Generate pair_style line
-        terms = self.model[self.modelroot]['pair_style'].aslist('term')
-        style_terms = self.__pair_terms(terms)
-        
-        info += f'pair_style {self.pair_style}{style_terms}\n'
+        info += f'pair_style {self.pair_style}{self.pair_style_terms.build_command(self.pot_dir)}'
         
         # Generate pair_coeff lines
-        for coeff_line in self.model[self.modelroot].iteraslist('pair_coeff'):
-            if 'interaction' in coeff_line:
-                interaction = coeff_line['interaction'].get('symbol', ['*', '*'])
-            else:
-                interaction = ['*', '*']
+        for pair_coeff in self.pair_coeffs:
+            info += pair_coeff.build_command(self.pot_dir, symbols,
+                                             is_eam = (self.pair_style == 'eam'))
+        info += '\n'
             
-            # Always include coeff lines that act on all atoms in the system
-            if interaction == ['*', '*']:
-                coeff_symbols = self.symbols
-                coeff_terms = self.__pair_terms(coeff_line.iteraslist('term'),
-                                                symbols, coeff_symbols)
-                
-                info += f'pair_coeff * *{coeff_terms}\n'
-                continue
-            
-            # Many-body potentials will contain a symbols term
-            if len(coeff_line.finds('symbols')) > 0:
-                many = True
-            else:
-                many = False
-            
-            # Treat as a many-body potential
-            if many:
-                coeff_symbols = interaction
-                coeff_terms = self.__pair_terms(coeff_line.iteraslist('term'),
-                                           symbols, coeff_symbols) + '\n'
-                
-                info += f'pair_coeff * *{coeff_terms}\n' 
-            
-            # Treat as pair potential
-            else:
-                coeff_symbols = interaction
-                if len(coeff_symbols) != 2:
-                    raise ValueError('Pair potential interactions need two listed elements')
-                
-                # Classic eam style is a special case
-                if self.pair_style == 'eam':
-                    if coeff_symbols[0] != coeff_symbols[1]:
-                        raise ValueError('Only i==j interactions allowed for eam style')
-                    for i in range(len(symbols)):
-                        if symbols[i] == coeff_symbols[0]:
-                            coeff_terms = self.__pair_terms(coeff_line.iteraslist('term'),
-                                                           symbols, coeff_symbols)
-                            
-                            info += f'pair_coeff {i+1} {i+1}{coeff_terms}\n'
-                
-                # All other pair potentials
-                else:
-                    for i in range(len(symbols)):
-                        for j in range(i, len(symbols)):
-                            if ((symbols[i] == coeff_symbols[0] and symbols[j] == coeff_symbols[1])
-                             or (symbols[i] == coeff_symbols[1] and symbols[j] == coeff_symbols[0])):
-                                coeff_terms = self.__pair_terms(coeff_line.iteraslist('term'),
-                                                                symbols, coeff_symbols)
-                                
-                                info += f'pair_coeff {i+1} {j+1}{coeff_terms}\n'
         # Generate mass lines
         for i in range(len(masses)):
             info += f'mass {i+1} {masses[i]}\n'
         info +='\n'
 
         # Generate additional command lines
-        for command_line in self.model[self.modelroot].iteraslist('command'):
-            info += self.__pair_terms(command_line.iteraslist('term'),
-                                         symbols, self.symbols).strip() + '\n'
+        for command_line in self.commands:
+            info += command_line.build_command(self.pot_dir)
         
         return info
-    
-    def __pair_terms(self,
-                     terms: list,
-                     system_symbols: Optional[list] = None,
-                     coeff_symbols: Optional[list ] = None) -> str:
-        """utility function used by self.pair_info() for composing lines from terms"""
-        if system_symbols is None:
-            system_symbols = []
-        if coeff_symbols is None:
-            coeff_symbols = []
-        
-        line = ''
-        
-        for term in terms:
-            for ttype, tval in term.items():
-                
-                # Print options and parameters as strings
-                if ttype == 'option' or ttype == 'parameter':
-                    line += ' ' + str(tval)
-                
-                # Print files with pot_dir prefixes
-                elif ttype == 'file':
-                    line += ' ' + str(Path(self.pot_dir, tval))
-                
-                # Print all symbols being used for symbolsList
-                elif ttype == 'symbolsList' and (tval is True or tval.lower() == 'true'):
-                    for coeff_symbol in coeff_symbols:
-                        if coeff_symbol in system_symbols:
-                            line += ' ' + coeff_symbol
-                
-                # Print symbols being used with model in appropriate order for symbols
-                elif ttype == 'symbols' and (tval is True or tval.lower() == 'true'):
-                    for system_symbol in system_symbols:
-                        if system_symbol in coeff_symbols:
-                            line += ' ' + system_symbol
-                        else:
-                            line += ' NULL'
-        
-        return line
     
     def pair_data_info(self,
                        filename: Union[str, Path],
@@ -673,3 +1054,212 @@ class PotentialLAMMPS(BasePotentialLAMMPS):
             localroot = self.pot_dir
 
         return super().get_file(filename, localroot)
+
+
+
+
+
+
+
+
+    def pair_coeff_paramfile(self,
+                             paramfile: Union[str, Path]):
+        """
+        Defines the LAMMPS pair_coeff lines for a potential that relies on a
+        single parameter file with the pair_coeff format:
+
+            pair_coeff * * paramfile Sym1 Sym2     
+        
+        Note that this is the most common pair_coeff format for potentials that
+        rely on a single parameter file.
+
+        Parameters
+        ----------
+        paramfile : str or Path
+            The file name or path to the potential's parameter file.  If a full path
+            is given, then the pot_dir will be set to the paramfile's parent directory.
+            If only the file name is given, then the pot_dir can be set separately.
+        """
+        if len(self.pair_coeffs) > 0:
+            raise ValueError('pair coeffs already set for this potential!')
+
+        pair_coeff = PairCoeffLine()
+
+        paramfile = Path(paramfile)
+        if paramfile.name != str(paramfile):
+            self.pot_dir = paramfile.parent
+            paramfile = paramfile.name
+        
+        pair_coeff.add_term('file', paramfile)
+        pair_coeff.add_term('symbols', True)
+
+        self.pair_coeffs.append(pair_coeff)
+
+    def pair_coeff_eam(self,
+                       paramfiles: Union[str, Path, list],
+                       symbols: Union[str, list, None] = None):
+        """
+        Defines the LAMMPS pair_coeff lines for potentials of the classic eam
+        pair_style only, which uses pair_coeff lines of the form:
+        
+            pair_coeff 1 1 paramfile1
+            pair_coeff 2 2 paramfile2
+
+        Note: This is only for pair_style eam!  Use pair_coeff_paramfile for
+        eam/alloy, eam/fs, eam/cd, etc.
+
+        Parameters
+        ----------
+        paramfiles : str, Path or list
+            The file name(s) or path(s) to the potential's parameter file(s).
+            There should be one parameter file for each symbol/element model.
+            If full paths are given, then the files should have the same parent
+            directory as it will be used to set the pot_dir.
+        symbols : str, list or None, optional
+            The list of symbol models to correspond to the parameter files.  If
+            None, then the symbols already set to the object will be used.
+        """
+        if len(self.pair_coeffs) > 0:
+            raise ValueError('pair coeffs already set for this potential!')
+        
+        paramfiles = aslist(paramfiles)
+
+        if symbols is None:
+            symbols = self.symbols
+        else:
+            symbols = aslist(symbols)
+
+        if len(symbols) != len(paramfiles):
+            raise ValueError('Number of paramfiles != number of symbols')
+
+        parent = None
+        for paramfile in paramfiles:
+            paramfile = Path(paramfile)
+            if paramfile.name != str(paramfile):
+                if parent is not None:
+                    if str(parent) != str(paramfile.parent):
+                        raise ValueError('Different paramfile parent directories!')
+                    parent = paramfile.parent
+                paramfile = paramfile.name
+        if parent is not None:
+            self.pot_dir = parent
+        
+        for symbol, paramfile in zip(symbols, paramfile):
+            pair_coeff = PairCoeffLine()
+            pair_coeff.interaction = (symbol, symbol)
+            pair_coeff.add_term('file', paramfile)
+            self.pair_coeffs.append(pair_coeff)
+
+
+
+    def pair_coeff_eim(self,
+                       paramfile,
+                       symbols: Union[str, list, None] = None):
+        """
+        Defines the LAMMPS pair_coeff lines for the eim pair_style which has the
+        form:
+        
+            pair_coeff * * Sym1 Sym2 paramfile Sym1 Sym2
+        
+        Where the first Sym list maps the symbols to the paramfile model types and
+        the second maps the symbols to the system's atom types.
+        
+        Parameters
+        ----------
+        paramfile : str or Path
+            The file name or path to the potential's parameter file.  If a full path
+            is given, then the pot_dir will be set to the paramfile's parent directory.
+            If only the file name is given, then the pot_dir can be set separately.
+        symbols : str, list or None, optional
+            The list of symbol models to map to the parameter file's models, i.e. the
+            first Sym list in the pair_coeff line.  If None, then it is assumed to
+            match the list of symbols already set to the object. Note that order matters! 
+        """
+        if len(self.pair_coeffs) > 0:
+            raise ValueError('pair coeffs already set for this potential!')
+
+        if symbols is None:
+            symbols = self.symbols
+        else:
+            symbols = aslist(symbols)
+        symbolslist = ' '.join(symbols)
+
+        pair_coeff = PairCoeffLine()
+
+        paramfile = Path(paramfile)
+        if paramfile.name != str(paramfile):
+            self.pot_dir = paramfile.parent
+            paramfile = paramfile.name
+        
+        pair_coeff.add_term('option', symbolslist)
+        pair_coeff.add_term('file', paramfile)
+        pair_coeff.add_term('symbols', True)
+
+        self.pair_coeffs.append(pair_coeff)
+
+
+    def pair_coeff_meam(self,
+                        libfile : Union[str, Path],
+                        paramfile: Union[str, Path, None] = None,
+                        symbols: Union[str, list, None] = None):
+        """
+        Defines the LAMMPS pair_coeff lines for the meam pair_style which has the
+        form:
+        
+            pair_coeff * * libfile Sym1 Sym2 paramfile Sym1 Sym2
+        
+        Where the first Sym list maps the symbols to the paramfile model types and
+        the second maps the symbols to the system's atom types.
+        
+        Parameters
+        ----------
+        libfile : str or Path
+            The file name or path to the potential's library file.  If a full path
+            is given, then the pot_dir will be set to the libfile's parent directory.
+            If only the file name is given, then the pot_dir can be set separately.
+        paramfile : str, Path or None
+            The file name or path to the potential's parameter file, if it has one.
+            If a full path is given, then the pot_dir will be set to the paramfile's
+            parent directory.  If only the file name is given, then the pot_dir can
+            be set separately. If None (default), then only the libfile will be used.
+        symbols : str, list or None, optional
+            The list of symbol models to map to the parameter file's models, i.e. the
+            first Sym list in the pair_coeff line.  If None, then it is assumed to
+            match the list of symbols already set to the object. Note that order matters! 
+        """
+        if len(self.pair_coeffs) > 0:
+            raise ValueError('pair coeffs already set for this potential!')
+
+        if symbols is None:
+            symbols = self.symbols
+        else:
+            symbols = aslist(symbols)
+        symbolslist = ' '.join(symbols)
+
+        pair_coeff = PairCoeffLine()
+
+        parent = None
+        libfile = Path(paramfile)
+        if libfile.name != str(libfile):
+            parent = libfile.parent
+            libfile = libfile.name
+
+        if paramfile is not None:
+            paramfile = Path(paramfile)
+            if paramfile.name != str(paramfile):
+                if parent != paramfile.name:
+                    raise ValueError('differet parent directories for libfile and paramfile')
+                paramfile = paramfile.name
+        
+        if parent is not None:
+            self.pot_dir = parent
+        
+        pair_coeff.add_term('file', libfile)
+        pair_coeff.add_term('option', symbolslist)
+        if paramfile is None:
+            pair_coeff.add_term('option', 'NULL')
+        else:
+            pair_coeff.add_term('file', paramfile)
+        pair_coeff.add_term('symbols', True)
+
+        self.pair_coeffs.append(pair_coeff)

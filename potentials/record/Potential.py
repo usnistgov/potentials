@@ -10,7 +10,7 @@ from DataModelDict import DataModelDict as DM
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
-from yabadaba import load_value
+from yabadaba import load_value, load_query
 
 # Local imports
 from .Citation import Citation
@@ -18,6 +18,16 @@ from .Implementation import Implementation
 from ..tools import aslist
 
 class Potential(Record):
+
+    def __init__(self,
+                 model: str | io.IOBase | DM | None = None,
+                 name: str | None = None,
+                 database=None,
+                 **kwargs: any):
+        
+        self.modelname = None
+        super().__init__(model, name, database, **kwargs)
+
     """
     Class for representing Potential metadata records.
     """
@@ -60,28 +70,50 @@ class Potential(Record):
         value_objects = super()._init_value_objects()
         
         self.__key = load_value('str', 'key', self,
-                                valuerequired=True)
+                                valuerequired=True,
+                                defaultvalue=str(uuid.uuid4()))
         self.__id = load_value('str', 'id', self)
         self.__url = load_value('str', 'url', self,
                                 modelpath='URL')
-        self.__recorddate = load_value('recorddate', 'date', self,
+        self.__recorddate = load_value('date', 'recorddate', self,
                                        modelpath='record-version')
-        self.__citations = load_value('record', 'citations', self, recordclass='Citation',
+        self.__citations = load_value('record', 'citations', self, recordclass=Citation,
                                       modelpath='description.citation')
         self.__notes = load_value('str', 'notes', self,
                                   modelpath='description.notes.text')
         self.__implementations = load_value('record', 'implementations', self,
-                                            recordclass='Implementation',
+                                            recordclass=Implementation,
                                             modelpath='implementation')
-        self.__fictional = load_value('list_contains', 'fictional', self,
+        self.__fictionalelements = load_value('strlist', 'fictionalelements', self,
                                       modelpath='fictional-element')
-        self.__elements = load_value('list_contains', 'elements', self)
+        self.__elements = load_value('strlist', 'elements', self,
+                                     modelpath='element')
         self.__othername = load_value('str', 'othername', self,
                                       modelpath='other-element')
         
+        # Modify citation queries
+        del self.__citations.queries['doctype']
+        del self.__citations.queries['title']
+        del self.__citations.queries['publication']
+        del self.__citations.queries['month']
+        del self.__citations.queries['volume']
+        del self.__citations.queries['issue']
+        del self.__citations.queries['pages']
+        del self.__citations.queries['doi']
+        del self.__citations.queries['url']
+        del self.__citations.queries['bibtex']
+
+        # Modify implemetation queries
+        self.__implementations.queries['imp_key'] = self.__implementations.queries.pop('key')
+        self.__implementations.queries['imp_id'] = self.__implementations.queries.pop('id')
+        self.__implementations.queries['imp_type'] = self.__implementations.queries.pop('type')
+        del self.__implementations.queries['status']
+        del self.__implementations.queries['date']
+        del self.__implementations.queries['notes']
+        
         value_objects.extend([self.__key, self.__id, self.__url, self.__recorddate,
                               self.__citations, self.__notes, self.__implementations,
-                              self.__fictional, self.__elements, self.__othername])
+                              self.__fictionalelements, self.__elements, self.__othername])
 
         return value_objects
 
@@ -101,27 +133,35 @@ class Potential(Record):
     @property
     def id(self) -> str:
         """str : The potential's unique id generated from citation info"""
-        # Check for a citation
-        if len(self.citations) > 0:
-            potential_id = self.citations[0].year_authors
-        else:
-            return None
+        if self.__id is None:
+            
+            # Check for a citation
+            if len(self.citations) > 0:
+                potential_id = self.citations[0].year_authors
+            else:
+                return None
+            
+            potential_id += '-'
+            
+            if self.fictional:
+                potential_id += '-fictional'
+            
+            if self.othername is not None:
+                potential_id += '-' + str(self.othername)
+            else:
+                for element in self.elements:
+                    potential_id += '-' + element
+            
+            if self.modelname is not None:
+                potential_id += '-' + str(self.modelname)
+            
+            self.id = potential_id
         
-        potential_id += '-'
-        
-        if self.fictional:
-            potential_id += '-fictional'
-        
-        if self.othername is not None:
-            potential_id += '-' + str(self.othername)
-        else:
-            for element in self.elements:
-                potential_id += '-' + element
-        
-        if self.modelname is not None:
-            potential_id += '-' + str(self.modelname)
-        
-        return potential_id
+        return self.__id.value
+
+    @id.setter
+    def id(self, val: Union[str, None]):
+        self.__id.value = val
 
     @property
     def url(self):
@@ -170,14 +210,21 @@ class Potential(Record):
         self.__othername.value = val
     
     @property
-    def fictional(self) -> list:
+    def fictionalelements(self) -> list:
         """list: fictional elements associated with the potential"""
-        return self.__fictional.value
+        return self.__fictionalelements.value
 
-    @fictional.setter
-    def fictional(self, val: Union[str, list, None]):
-        self.__fictional.value = val
+    @fictionalelements.setter
+    def fictionalelements(self, val: Union[str, list, None]):
+        self.__fictionalelements.value = val
     
+    @property
+    def fictional(self) -> bool:
+        """bool: Indicates if the potential includes fictional elements"""
+        if self.fictionalelements is None or len(self.fictionalelements) == 0:
+            return False
+        return True
+
     @property
     def notes(self) -> Optional[str]:
         """str or None: Any extra notes associated with the potential"""
@@ -193,8 +240,20 @@ class Potential(Record):
         return self.__modelname
     
     @modelname.setter
-    def modelname(self, v: Optional[str]):
-        self.__modelname = str(v)
+    def modelname(self, val: Optional[str]):
+        if val is None:
+            self.__modelname = None
+        else:
+            self.__modelname = str(val)
+
+    @property
+    def surnames(self) -> list:
+        """list: The author surnames pulled out to be queryable"""
+        surnames = []
+        for citation in self.citations:
+            for author in citation.authors:
+                surnames.append(author.surname)
+        return surnames
 
     @property
     def impid_prefix(self) -> str:
@@ -236,4 +295,39 @@ class Potential(Record):
                 raise ValueError(f'Implementation with id {imp.id} already exists')
         self.implementations.append(implementation)
 
+    def set_values(self, **kwargs):
+        if 'modelname' in kwargs:
+            self.modelname = kwargs['modelname']
+        super().set_values(**kwargs)
+
+    @property
+    def queries(self) -> dict:
+        """dict: Query objects and their associated parameter names."""
+        queries = super().queries
+        
+        queries.update({
+            'surnames': load_query(
+                style='list_contains',
+                name='surnames',
+                path=f'{self.modelroot}.description.citation.author.surname',
+                description="search based on citation author surnames"),
+            'author': load_query(
+                style='list_contains',
+                name='surnames',
+                path=f'{self.modelroot}.description.citation.author.surname',
+                description="search based on citation author surnames"),
+        })
+
+        return queries
     
+    def metadata(self) -> dict:
+        """
+        Generates a dict of simple metadata values associated with the record.
+        Useful for quickly comparing records and for building pandas.DataFrames
+        for multiple records of the same style.
+        """
+        meta = super().metadata()
+
+        meta['surnames'] = self.surnames
+
+        return meta

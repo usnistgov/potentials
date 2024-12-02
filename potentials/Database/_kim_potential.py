@@ -156,14 +156,14 @@ def get_kim_lammps_potentials(self,
                     record = load_record('potential_LAMMPS_KIM', model=dbrecord.model, id=fullid)
 
                     # Capture records as is if associated with one potential
-                    if len(record.potkeys) == 1:
+                    if len(record.potentials) == 1:
                         records2.append(record)
                         df2.append(record.metadata())
 
                     else:
                         # Loop over potential keys
-                        for pkey in record.potkeys:
-                            record.select_potential(potkey=pkey)
+                        for potential in record.potentials:
+                            record.select_potential(potkey=potential.key)
 
                             # Limit based on search parameters
                             if potkey is not None and record.potkey not in aslist(potkey):

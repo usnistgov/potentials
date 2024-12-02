@@ -22,7 +22,7 @@ class FAQ(Record):
     @property
     def style(self):
         """str: The record style"""
-        return 'faq'
+        return 'FAQ'
 
     @property
     def modelroot(self):

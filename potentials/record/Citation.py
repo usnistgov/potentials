@@ -147,7 +147,7 @@ class Citation(Record):
                                                 'thesis', 'conference proceedings',
                                                 'unspecified'])
         self.__title = load_value('longstr', 'title', self)
-        self.__authors = load_value('record', 'authors', self, recordclass=Author,
+        self.__authors = load_value('record', 'author', self, recordclass=Author,
                                     modelpath='author')
         self.__publication = load_value('longstr', 'publication', self,
                                         modelpath='publication-name')
@@ -304,6 +304,10 @@ class Citation(Record):
         """dict: dict representation of the bibtex, if parsed"""
         return self.__bibdict
 
+    @property
+    def author_string(self) -> str:
+        """str: single string """
+
     def add_author(self,
                    model: Union[str, io.IOBase, DM, None] = None,
                    **kwargs):
@@ -352,6 +356,7 @@ class Citation(Record):
             'thesis': 'phdthesis',
             'conference proceedings': 'inproceedings',
             'unspecified': 'unpublished',
+            None: 'misc'
         }
         return converter[doctype]
 
@@ -416,19 +421,26 @@ class Citation(Record):
                 
                 self.add_author(givenname=initials, surname=sur, suffix=suffix)
 
+    def load_model(self,
+                   model: str | io.IOBase | DM,
+                   name: str | None = None):
+        
+        super().load_model(model, name)
+        self.build_bibtex()
     
     def build_bibtex(self):
         """str : bibtex of citation"""
         
-        # Initialize bibdict if needed
-        if self.bibdict is None:
-            self.bibdict = {}
+        # Initialize/clear bibdict
+        self.__bibdict = {}
+
+        # Set ID
+        self.bibdict['ID'] = self.year_authors
 
         # Set entrytype
-        if 'ENTRYTYPE' not in self.bibdict:
-            self.bibdict['ENTRYTYPE'] = self.entrytype_from_doctype(self.doctype)
+        self.bibdict['ENTRYTYPE'] = self.entrytype_from_doctype(self.doctype)
 
-        # (Re)build bibdict fields
+        # Build bibdict fields
         if len(self.authors) > 0:
             authorfields = []
             for author in self.authors:
@@ -459,6 +471,34 @@ class Citation(Record):
         bib_database.entries = [self.bibdict]
         self.bibtex = bibtexparser.dumps(bib_database)
 
+    def build_model(self):
+        self.build_bibtex()
+        
+        try:
+            self.name
+        except:
+            self.name = self.defaultname
+
+        return super().build_model()
+
+    def metadata(self) -> dict:
+
+        meta = super().metadata()
+        meta['year_authors'] = self.year_authors
+
+        return meta
+
+    @property
+    def queries(self):
+        """dict: Query objects and their associated parameter names."""
+        queries = super().queries
+        
+        # Make author query an alias of surname
+        queries.update({
+            'author': queries['surname'],
+        })
+
+        return queries
 
     @property
     def year_authors(self) -> str:

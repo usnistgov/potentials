@@ -61,7 +61,8 @@ class Implementation(Record):
         value_objects = super()._init_value_objects()
         
         self.__key = load_value('str', 'key', self,
-                                valuerequired=True)
+                                valuerequired=True,
+                                defaultvalue=str(uuid.uuid4()))
         self.__id = load_value('str', 'id', self)
         self.__status = load_value('str', 'status', self,
                                    valuerequired=True,

@@ -20,13 +20,22 @@ from .. import load_record
 
 def get_citations(self, 
                   name: Union[str, list, None] = None,
-                  year: Union[int, list, None] = None,
-                  volume: Union[int, list, None] = None,
+                  doctype: Union[str, list, None] = None,
                   title: Union[str, list, None] = None,
-                  journal: Union[str, list, None] = None,
-                  doi: Union[str, list, None] = None,
-                  author: Union[str, list, None] = None,
+                  givenname: Union[str, list, None] = None,
+                  surname: Union[str, list, None] = None,
+                  suffix: Union[str, list, None] = None,
+                  publication: Union[str, list, None] = None,
+                  year: Union[str, list, None] = None,
+                  month: Union[str, list, None] = None,
+                  volume: Union[str, list, None] = None,
+                  issue: Union[str, list, None] = None,
                   abstract: Union[str, list, None] = None,
+                  pages: Union[str, list, None] = None,
+                  doi: Union[str, list, None] = None,
+                  url: Union[str, list, None] = None,
+                  bibtex: Union[str, list, None] = None,
+                  author: Union[str, list, None] = None,
                   local: Optional[bool] = None,
                   remote: Optional[bool] = None,
                   refresh_cache: bool = False,
@@ -46,8 +55,8 @@ def get_citations(self,
         Journal volume(s) to limit the search by.
     title : str or list, optional
         Word(s) to search for in the article titles.
-    journal : str or list, optional
-        Journal name(s) to limit the search by.
+    publication : str or list, optional
+        Publication name(s) to limit the search by.
     doi : str or list, optional
         Article DOI(s) to limit the search by. 
     author : str or list, optional
@@ -81,26 +90,39 @@ def get_citations(self,
     pandas.DataFrame
         A table of the records' metadata.  Returned if return_df = True.
     """
+    doi = lower_doi(doi)
+
     return self.get_records(
         style='Citation', name=name, local=local, remote=remote, 
         refresh_cache=refresh_cache, return_df=return_df, verbose=verbose,
-        year=year, volume=volume, title=title, journal=journal, doi=doi,
-        author=author, abstract=abstract)
+        doctype=doctype, title=title, givenname=givenname, surname=surname,
+        suffix=suffix, publication=publication, year=year, month=month,
+        volume=volume, issue=issue, abstract=abstract, pages=pages, doi=doi,
+        url=url, bibtex=bibtex, author=author)
 
 def get_citation(self, 
-                name: Union[str, list, None] = None,
-                  year: Union[int, list, None] = None,
-                  volume: Union[int, list, None] = None,
-                  title: Union[str, list, None] = None,
-                  journal: Union[str, list, None] = None,
-                  doi: Union[str, list, None] = None,
-                  author: Union[str, list, None] = None,
-                  abstract: Union[str, list, None] = None,
-                  local: Optional[bool] = None,
-                  remote: Optional[bool] = None, 
-                  prompt: bool = True,
-                  refresh_cache: bool = False,
-                  verbose: bool = False) -> Record:
+                 name: Union[str, list, None] = None,
+                 doctype: Union[str, list, None] = None,
+                 title: Union[str, list, None] = None,
+                 givenname: Union[str, list, None] = None,
+                 surname: Union[str, list, None] = None,
+                 suffix: Union[str, list, None] = None,
+                 publication: Union[str, list, None] = None,
+                 year: Union[str, list, None] = None,
+                 month: Union[str, list, None] = None,
+                 volume: Union[str, list, None] = None,
+                 issue: Union[str, list, None] = None,
+                 abstract: Union[str, list, None] = None,
+                 pages: Union[str, list, None] = None,
+                 doi: Union[str, list, None] = None,
+                 url: Union[str, list, None] = None,
+                 bibtex: Union[str, list, None] = None,
+                 author: Union[str, list, None] = None,
+                 local: Optional[bool] = None,
+                 remote: Optional[bool] = None, 
+                 prompt: bool = True,
+                 refresh_cache: bool = False,
+                 verbose: bool = False) -> Record:
     """
     Gets exactly one matching citation from the database.
 
@@ -114,8 +136,8 @@ def get_citation(self,
         Journal volume(s) to limit the search by.
     title : str or list, optional
         Word(s) to search for in the article titles.
-    journal : str or list, optional
-        Journal name(s) to limit the search by.
+    publication : str or list, optional
+        Publication name(s) to limit the search by.
     doi : str or list, optional
         Article DOI(s) to limit the search by. 
     author : str or list, optional
@@ -161,22 +183,35 @@ def get_citation(self,
 
         return js[i]
 
+    doi = lower_doi(doi)
+
     return self.get_record(
         style='Citation', name=name, local=local, remote=remote, prompt=prompt,
         promptfxn=promptfxn, refresh_cache=refresh_cache, verbose=verbose,
-        year=year, volume=volume, title=title, journal=journal, doi=doi,
-        author=author, abstract=abstract)
+        doctype=doctype, title=title, givenname=givenname, surname=surname,
+        suffix=suffix, publication=publication, year=year, month=month,
+        volume=volume, issue=issue, abstract=abstract, pages=pages, doi=doi,
+        url=url, bibtex=bibtex, author=author)
 
 def retrieve_citation(self,
                       name: Union[str, list, None] = None,
                       dest: Optional[Path] = None,
-                      year: Union[int, list, None] = None,
-                      volume: Union[int, list, None] = None,
+                      doctype: Union[str, list, None] = None,
                       title: Union[str, list, None] = None,
-                      journal: Union[str, list, None] = None,
-                      doi: Union[str, list, None] = None,
-                      author: Union[str, list, None] = None,
+                      givenname: Union[str, list, None] = None,
+                      surname: Union[str, list, None] = None,
+                      suffix: Union[str, list, None] = None,
+                      publication: Union[str, list, None] = None,
+                      year: Union[str, list, None] = None,
+                      month: Union[str, list, None] = None,
+                      volume: Union[str, list, None] = None,
+                      issue: Union[str, list, None] = None,
                       abstract: Union[str, list, None] = None,
+                      pages: Union[str, list, None] = None,
+                      doi: Union[str, list, None] = None,
+                      url: Union[str, list, None] = None,
+                      bibtex: Union[str, list, None] = None,
+                      author: Union[str, list, None] = None,
                       local: Optional[bool] = None,
                       remote: Optional[bool] = None, 
                       prompt: bool = True,
@@ -201,8 +236,8 @@ def retrieve_citation(self,
         Journal volume(s) to limit the search by.
     title : str or list, optional
         Word(s) to search for in the article titles.
-    journal : str or list, optional
-        Journal name(s) to limit the search by.
+    publication : str or list, optional
+        Publication name(s) to limit the search by.
     doi : str or list, optional
         Article DOI(s) to limit the search by. 
     author : str or list, optional
@@ -248,8 +283,10 @@ def retrieve_citation(self,
 
     # Get the record
     record = self.get_citation(
-        name=name, year=year, volume=volume, title=title, journal=journal,
-        doi=doi, author=author, abstract=abstract, local=local, remote=remote,
+        doctype=doctype, title=title, givenname=givenname, surname=surname,
+        suffix=suffix, publication=publication, year=year, month=month,
+        volume=volume, issue=issue, abstract=abstract, pages=pages, doi=doi,
+        url=url, bibtex=bibtex, author=author, local=local, remote=remote,
         prompt=prompt, refresh_cache=refresh_cache, verbose=verbose)
 
     # Save as json
@@ -308,31 +345,43 @@ def fetch_citation(self,
         # Try fetching based on doi
         try:
             return self.get_citation(doi=doi, local=local, remote=remote, verbose=verbose)
-        except:
+        except ValueError:
             pass
 
         # Try fetching based on name
         try:
             return self.get_citation(name=doi, local=local, remote=remote, verbose=True)
-        except:
+        except ValueError:
             pass
     
     # Fetch from CrossRef if database search failed/skipped
     bibtex = cn.content_negotiation(ids=doi, format="bibtex")
     if verbose:
         print('Citation retrieved from CrossRef')
-
-    return load_record('Citation', bibtex)
+    record = load_record('Citation')
+    record.load_bibtex(bibtex)
+    record.build_model()
+    
+    return record
 
 def download_citations(self,
                        name: Union[str, list, None] = None,
-                       year: Union[int, list, None] = None,
-                       volume: Union[int, list, None] = None,
+                       doctype: Union[str, list, None] = None,
                        title: Union[str, list, None] = None,
-                       journal: Union[str, list, None] = None,
-                       doi: Union[str, list, None] = None,
-                       author: Union[str, list, None] = None,
+                       givenname: Union[str, list, None] = None,
+                       surname: Union[str, list, None] = None,
+                       suffix: Union[str, list, None] = None,
+                       publication: Union[str, list, None] = None,
+                       year: Union[str, list, None] = None,
+                       month: Union[str, list, None] = None,
+                       volume: Union[str, list, None] = None,
+                       issue: Union[str, list, None] = None,
                        abstract: Union[str, list, None] = None,
+                       pages: Union[str, list, None] = None,
+                       doi: Union[str, list, None] = None,
+                       url: Union[str, list, None] = None,
+                       bibtex: Union[str, list, None] = None,
+                       author: Union[str, list, None] = None,
                        overwrite: bool = False,
                        return_records: bool = False,
                        verbose: bool = False) -> Optional[np.ndarray]:
@@ -349,8 +398,8 @@ def download_citations(self,
         Journal volume(s) to limit the search by.
     title : str or list, optional
         Word(s) to search for in the article titles.
-    journal : str or list, optional
-        Journal name(s) to limit the search by.
+    publication : str or list, optional
+        Publication name(s) to limit the search by.
     doi : str or list, optional
         Article DOI(s) to limit the search by. 
     author : str or list, optional
@@ -368,12 +417,15 @@ def download_citations(self,
         If True, info messages will be printed during operations.  Default
         value is False.
     """
+    doi = lower_doi(doi)
 
     return self.download_records(
         style='Citation', name=name, overwrite=overwrite,
         return_records=return_records, verbose=verbose,
-        year=year, volume=volume, title=title, journal=journal, doi=doi,
-        author=author, abstract=abstract)
+        doctype=doctype, title=title, givenname=givenname, surname=surname,
+        suffix=suffix, publication=publication, year=year, month=month,
+        volume=volume, issue=issue, abstract=abstract, pages=pages, doi=doi,
+        url=url, bibtex=bibtex, author=author)
 
 def save_citation(self,
                   citation: Record,
@@ -456,3 +508,16 @@ def delete_citation(self,
     """
     self.delete_record(record=citation, local=local, remote=remote,
                        verbose=verbose)
+    
+def lower_doi(doi):
+    """
+    Utility function to transform any doi values to lowercase.
+    """
+    if doi is None:
+        return None
+    elif isinstance(doi, str):
+        return doi.lower()
+    elif hasattr(doi, '__iter__'):
+        return [d.lower() for d in doi]
+    else:
+        raise(TypeError, 'doi must be None, str, or a list of str')
