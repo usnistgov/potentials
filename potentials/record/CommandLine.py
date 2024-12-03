@@ -79,13 +79,13 @@ class CommandLine():
                 
                 # Print options and parameters as strings
                 if ttype == 'option' or ttype == 'parameter':
-                    line += f' {tval}'
+                    line += f'{tval} '
                 
                 # Print files with pot_dir prefixes
                 elif ttype == 'file':
-                    line += f' {Path(pot_dir, tval)}'
+                    line += f'{Path(pot_dir, tval)} '
                 
-        return line + '\n'
+        return line.strip() + '\n'
 
     def build_model(self):
         model = DM()
@@ -166,7 +166,7 @@ class PairCoeffLine(CommandLine):
         across all pair_styles.
         """
         # Build line with * * wildcard types and all symbols (if needed)
-        return f'pair_coeff * *{self._build_terms(pot_dir, symbols, symbols)}'
+        return f'pair_coeff * * {self._build_terms(pot_dir, symbols, symbols)}'
 
     def _build_command_manybody(self,
                                 pot_dir: Path,
@@ -176,7 +176,7 @@ class PairCoeffLine(CommandLine):
         simulated species.
         """
         # Build line with * * wildcard types and only the used symbols
-        return f'pair_coeff * *{self._build_terms(pot_dir, symbols, self.interaction)}'
+        return f'pair_coeff * * {self._build_terms(pot_dir, symbols, self.interaction)}'
     
     def _build_command_pair(self,
                             pot_dir: Path,
@@ -197,7 +197,7 @@ class PairCoeffLine(CommandLine):
             for j in range(i, len(symbols)):
                 if ((symbols[i] == self.interaction[0] and symbols[j] == self.interaction[1]) or
                     (symbols[i] == self.interaction[1] and symbols[j] == self.interaction[0])):
-                    coeff_lines += f'pair_coeff {i+1} {j+1}{coeff_terms}'
+                    coeff_lines += f'pair_coeff {i+1} {j+1} {coeff_terms}'
 
         return coeff_lines
 
@@ -221,7 +221,7 @@ class PairCoeffLine(CommandLine):
 
         for i in range(len(symbols)):
             if symbols[i] == self.interaction[0]:
-                coeff_lines += f'pair_coeff {i+1} {i+1}{coeff_terms}'
+                coeff_lines += f'pair_coeff {i+1} {i+1} {coeff_terms}'
         
         return coeff_lines
 
@@ -239,26 +239,26 @@ class PairCoeffLine(CommandLine):
                 
                 # Print options and parameters as strings
                 if ttype == 'option' or ttype == 'parameter':
-                    line += f' {tval}'
+                    line += f'{tval} '
                 
                 # Print files with pot_dir prefixes
                 elif ttype == 'file':
-                    line += f' {Path(pot_dir, tval)}'
+                    line += f'{Path(pot_dir, tval)} '
                 
                 # Print all symbols being used for symbolsList
                 elif ttype == 'symbolsList' and tval is True:
                     for coeff_symbol in coeff_symbols:
                         if coeff_symbol in system_symbols:
-                            line += f' {coeff_symbol}'
+                            line += f'{coeff_symbol} '
                 
                 # Print symbols being used with model in appropriate order for symbols
                 elif ttype == 'symbols' and tval is True:
                     for system_symbol in system_symbols:
                         if system_symbol in coeff_symbols:
-                            line += f' {system_symbol}'
+                            line += f'{system_symbol} '
                         else:
-                            line += ' NULL'
-        return line + '\n'
+                            line += 'NULL '
+        return line.strip() + '\n'
 
     def build_model(self):
         model = super().build_model()

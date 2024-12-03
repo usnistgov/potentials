@@ -196,6 +196,10 @@ class PotentialLAMMPS(Record):
         return value_objects
 
     @property
+    def defaultname(self) -> str:
+        return self.id
+
+    @property
     def key(self) -> str:
         """str : The uuid hash-key for the LAMMPS implementation."""
         return self.__key.value
@@ -510,7 +514,7 @@ class PotentialLAMMPS(Record):
         """
         Initializes a new CommandLine object and appends it to the commands list.
         """
-        self.pair_coeffs.append(CommandLine(**kwargs))
+        self.commands.append(CommandLine(**kwargs))
 
     def build_model(self) -> DM:
         
@@ -862,7 +866,7 @@ class PotentialLAMMPS(Record):
             info += '\n'
 
         # Generate pair_style line
-        info += f'pair_style {self.pair_style}{self.pair_style_terms.build_command(self.pot_dir)}'
+        info += f'pair_style {self.pair_style} {self.pair_style_terms.build_command(self.pot_dir)}'
         
         # Generate pair_coeff lines
         for pair_coeff in self.pair_coeffs:
@@ -1144,7 +1148,7 @@ class PotentialLAMMPS(Record):
         if parent is not None:
             self.pot_dir = parent
         
-        for symbol, paramfile in zip(symbols, paramfile):
+        for symbol, paramfile in zip(symbols, paramfiles):
             pair_coeff = PairCoeffLine()
             pair_coeff.interaction = (symbol, symbol)
             pair_coeff.add_term('file', paramfile)
@@ -1239,7 +1243,7 @@ class PotentialLAMMPS(Record):
         pair_coeff = PairCoeffLine()
 
         parent = None
-        libfile = Path(paramfile)
+        libfile = Path(libfile)
         if libfile.name != str(libfile):
             parent = libfile.parent
             libfile = libfile.name
