@@ -8,7 +8,7 @@ from common_values import testdb_host, test_with_remote
 
 
 class TestAction():
-
+    
     potdb = potentials.Database(localpath=testdb_host, remote=test_with_remote)
 
 
@@ -25,7 +25,7 @@ class TestAction():
 
     def test_assign_init(self):
         """Test value assignment during init"""
-        
+
         record = potentials.load_record('Action', date='2019-09-12',
                                         type='retraction', comment='boo boo')
     

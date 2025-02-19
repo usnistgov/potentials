@@ -1,0 +1,12 @@
+{
+    "request": {
+        "date": "2021-03-04",
+        "system": {
+            "element": [
+                "Mg",
+                "Si"
+            ]
+        },
+        "comment": "Buckingham potential"
+    }
+}

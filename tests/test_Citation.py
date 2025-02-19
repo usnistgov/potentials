@@ -73,7 +73,7 @@ class TestCitation():
         assert meta['name'] == '12.3456_wwtk.0asf8.08asfgj9'
         assert meta['doctype'] == 'journal'
         assert meta['title'] == 'Something something something turn into a pumpkin'
-        assert len(meta['author']) == 0
+        assert len(meta['authors']) == 0
         assert meta['publication'] == 'Who Wants to Know'
         assert meta['year'] == 1650
         assert meta['month'] == 11

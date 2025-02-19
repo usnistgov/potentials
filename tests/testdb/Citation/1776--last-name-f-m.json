@@ -1,0 +1,14 @@
+{
+    "citation": {
+        "document-type": "unspecified",
+        "title": "to be published",
+        "author": {
+            "given-name": "F.M.",
+            "surname": "Last Name"
+        },
+        "publication-date": {
+            "year": 1776
+        },
+        "bibtex": "@unpublished{1776--Last-Name-F-M,\n author = {F.M. Last Name},\n note = {1776--Last-Name-F-M},\n title = {to be published},\n year = {1776}\n}\n\n"
+    }
+}

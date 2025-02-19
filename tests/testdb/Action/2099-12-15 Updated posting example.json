@@ -1,0 +1,20 @@
+{
+    "action": {
+        "date": "2099-12-15",
+        "type": "updated posting",
+        "potential": {
+            "key": "d71da5f1-db8a-46ad-a78d-c026768200af",
+            "id": "2009--Purja-Pun-G-P-Mishin-Y--Ni-Al",
+            "doi": [
+                "10.1080/14786430903258184",
+                "10.1080/14786430903252356"
+            ],
+            "fictional-element": [
+                "Ni",
+                "Al"
+            ],
+            "other-element": "NiAl3"
+        },
+        "comment": "Updated posting example"
+    }
+}
