@@ -192,9 +192,8 @@ def widget_lammps_potential(self,
     unique_pair_styles = [''] + list(np.unique(lammps_potentials_df.pair_style))
 
     # Build list of all unique elements
-    unique_elements = set()
-    for elements in lammps_potentials_df.elements.values:
-        unique_elements.update(elements)
+    unique_elements = set(lammps_potentials_df[lammps_potentials_df.elements.notna()].elements.values.sum())
+    unique_elements.remove(None)
     unique_elements = [''] + sorted(list(unique_elements))
     
     # Build list of all potential ids
