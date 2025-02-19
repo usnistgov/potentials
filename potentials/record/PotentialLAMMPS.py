@@ -143,183 +143,40 @@ class PotentialLAMMPS(Record):
 
     ####################### Define Values and attributes #######################
 
-    def _init_value_objects(self) -> list:
+    def _init_values(self):
         """
         Method that defines the value objects for the Record.  This should
-        1. Call the method's super() to get default Value objects.
-        2. Use yabadaba.load_value() to build Value objects that are set to
-           private attributes of self.
-        3. Append the list returned by the super() with the new Value objects.
-
-        Returns
-        -------
-        value_objects: A list of all value objects.
+        call the super of this method, then use self._add_value to create new Value objects.
+        Note that the order values are defined matters
+        when build_model is called!!!
         """
-        value_objects = super()._init_value_objects()
         
-        self.__key = load_value('str', 'key', self)
-        self.__id = load_value('str', 'id', self)
-        self.__url = load_value('str', 'url', self,
-                                modelpath='URL')
-        self.__status = load_value('str', 'status', self,
-                                   allowedvalues=('superseded', 'retracted'))
-        self.__potkey = load_value('str', 'potkey', self,
-                                   modelpath='potential.key')
-        self.__potid = load_value('str', 'potid', self,
-                                  modelpath='potential.id')
-        self.__poturl = load_value('str', 'poturl', self,
-                                   modelpath='potential.URL')
-        self.__dois = load_value('strlist', 'dois', self,
-                                 modelpath='potential.doi')
-        self.__comments = load_value('longstr', 'comments', self)
-        self.__units = load_value('str', 'units', self, defaultvalue='metal')
-        self.__atom_style = load_value('str', 'atom_style', self,
-                                       defaultvalue='atomic')
-        self.__allsymbols = load_value('bool', 'allsymbols', self,
-                                       metadatakey=False)
-        self.__atoms = load_value('record', 'atoms', self, recordclass=AtomInfo,
-                                  modelpath='atom',
-                                  metadatakey=False)
-        self.__pair_style = load_value('str', 'pair_style', self,
-                                       modelpath='pair_style.type')
-        self.__artifacts = load_value('record', 'artifacts', self, recordclass=Artifact,
-                                      modelpath='artifact')
-        self.__artifacts.queries.pop('url')
-        self.__artifacts.queries.pop('label')
+        self._add_value('str', 'key')
+        self._add_value('str', 'id')
+        self._add_value('str', 'url', modelpath='URL')
+        self._add_value('str', 'status', allowedvalues=('superseded', 'retracted'))
+        self._add_value('str', 'potkey', modelpath='potential.key')
+        self._add_value('str', 'potid', modelpath='potential.id')
+        self._add_value('str', 'poturl', modelpath='potential.URL')
+        self._add_value('strlist', 'dois', modelpath='potential.doi')
+        self._add_value('longstr', 'comments')
+        self._add_value('str', 'units', defaultvalue='metal')
+        self._add_value('str', 'atom_style', defaultvalue='atomic')
+        self._add_value('bool', 'allsymbols', metadatakey=False)
+        self._add_value('record', 'atoms', recordclass=AtomInfo,
+                        modelpath='atom', metadatakey=False)
+        self._add_value('str', 'pair_style', modelpath='pair_style.type')
+        self._add_value('record', 'artifacts', recordclass=Artifact,
+                        modelpath='artifact')
         
-        value_objects.extend([self.__key, self.__id, self.__url, self.__status,
-                              self.__potkey, self.__potid, self.__poturl, self.__dois,
-                              self.__comments, self.__units, self.__atom_style,
-                              self.__allsymbols, self.__atoms, self.__pair_style,
-                              self.__artifacts])
-
-        return value_objects
+        # Remove Artifact queries
+        self.get_value('artifacts').queries.pop('url')
+        self.get_value('artifacts').queries.pop('label')
+        
 
     @property
     def defaultname(self) -> str:
         return self.id
-
-    @property
-    def key(self) -> str:
-        """str : The uuid hash-key for the LAMMPS implementation."""
-        return self.__key.value
-    
-    @key.setter
-    def key(self, val: Optional[str]):
-        self.__key.value = val
-
-    @property
-    def id(self) -> Optional[str]:
-        """str : Human-readable identifier for the LAMMPS implementation."""
-        return self.__id.value
-
-    @id.setter
-    def id(self, val: Optional[str]):
-        self.__id.value = val
-
-    @property
-    def url(self):
-        """str : URL for an online copy of the record."""
-        return self.__url.value
-
-    @url.setter
-    def url(self, val: Union[str, None]):
-        self.__url.value = val
-
-    @property
-    def status(self):
-        """str : Status of the potential version."""
-        return self.__status.value
-
-    @status.setter
-    def status(self, val: Union[str, None]):
-        self.__status.value = val
-    
-    @property
-    def potkey(self) -> str:
-        """str : uuid hash-key for the potential model."""
-        return self.__potkey.value
-
-    @potkey.setter
-    def potkey(self, val: Optional[str]):
-        self.__potkey.value = val
-
-    @property
-    def potid(self) -> str:
-        """str : Human-readable identifier for the potential model."""
-        return self.__potid.value
-
-    @potid.setter
-    def potid(self, val: Optional[str]):
-        self.__potid.value = val
-
-    @property
-    def poturl(self) -> Optional[str]:
-        """str : URL for an online copy of the potential model record."""
-        return self.__poturl.value
-    
-    @poturl.setter
-    def poturl(self, val: Optional[str]):
-        self.__poturl.value = val
-
-    @property
-    def dois(self) -> list:
-        """list: DOIs associated with the potential model."""
-        return self.__dois.value
-    
-    @dois.setter
-    def dois(self, val: Union[str, list, None]):
-        self.__dois.value = val
-
-    @property
-    def comments(self) -> str:
-        """str : Descriptive comments detailing the potential information"""
-        return self.__comments.value
-
-    @comments.setter
-    def comments(self, val: Optional[str]):
-        self.__comments.value = val
-
-    @property
-    def units(self) -> str:
-        """str : LAMMPS units option."""
-        return self.__units.value
-
-    @units.setter
-    def units(self, val: Optional[str]):
-        self.__units.value = val
-
-    @property
-    def atom_style(self) -> str:
-        """str : LAMMPS atom_style option."""
-        return self.__atom_style.value
-    
-    @atom_style.setter
-    def atom_style(self, val: Optional[str]):
-        self.__atom_style.value = val
-
-    @property
-    def allsymbols(self) -> bool:
-        """bool : indicates if all model symbols must be listed."""
-        return self.__allsymbols.value
-
-    @allsymbols.setter
-    def allsymbols(self, val: Optional[bool]):
-        self.__allsymbols.value = val
-
-    @property
-    def atoms(self) -> list:
-        """list : The list of atomic models represented by the potential."""
-        return self.__atoms.value
-
-    @property
-    def pair_style(self) -> str:
-        """str : LAMMPS pair_style option."""
-        return self.__pair_style.value
-    
-    @pair_style.setter
-    def pair_style(self, val: Optional[str]):
-        self.__pair_style.value = val
 
     @property
     def pair_coeffs(self) -> list:
@@ -328,11 +185,6 @@ class PotentialLAMMPS(Record):
     @property
     def commands(self) -> list:
         return self.__commands
-
-    @property
-    def artifacts(self) -> list:
-        """list : The list of file artifacts for the potential including download URLs."""
-        return self.__artifacts.value
 
     @property
     def pair_style_terms(self) -> CommandLine:
@@ -376,11 +228,11 @@ class PotentialLAMMPS(Record):
         """
         
         if 'artifacts' in kwargs:
-            self.__artifacts.value = []
+            self.get_value('artifacts').value = []
             artifacts = kwargs.pop('artifacts')
             for artifact in aslist(artifacts):
                 if isinstance(artifact, Artifact):
-                    self.artifacts.append(artifact)
+                    self.get_value('artifacts').append(artifact)
                 else:
                     raise TypeError('artifacts must be Artifact objects')
         

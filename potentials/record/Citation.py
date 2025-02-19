@@ -1,7 +1,6 @@
 # coding: utf-8
 # Standard libraries
 import io
-import string
 from typing import Optional, Tuple, Union
 
 # https://github.com/avian2/unidecode
@@ -15,7 +14,6 @@ import bibtexparser
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
-from yabadaba import load_value
 
 class Author(Record):
     """
@@ -45,56 +43,17 @@ class Author(Record):
 
     ####################### Define Values and attributes #######################
 
-    def _init_value_objects(self) -> list:
+    def _init_values(self):
         """
         Method that defines the value objects for the Record.  This should
-        1. Call the method's super() to get default Value objects.
-        2. Use yabadaba.load_value() to build Value objects that are set to
-           private attributes of self.
-        3. Append the list returned by the super() with the new Value objects.
-
-        Returns
-        -------
-        value_objects: A list of all value objects.
+        call the super of this method, then use self._add_value to create new Value objects.
+        Note that the order values are defined matters
+        when build_model is called!!!
         """
-        value_objects = super()._init_value_objects()
         
-        self.__givenname = load_value('str', 'givenname', self,
-                                modelpath='given-name')
-        self.__surname = load_value('longstr', 'surname', self)
-        self.__suffix = load_value('str', 'suffix', self)
-        
-        value_objects.extend([self.__givenname, self.__surname, self.__suffix])
-
-        return value_objects
-
-    @property
-    def givenname(self) -> Optional[str]:
-        """str or None: initials of first (and middle) names"""
-        return self.__givenname.value
-    
-    @givenname.setter
-    def givenname(self, val: Optional[str]):
-        self.__givenname.value = val
-
-    @property
-    def surname(self) -> Optional[str]:
-        """str or None: last (sur)name"""
-        return self.__surname.value
-    
-    @surname.setter
-    def surname(self, val: Optional[str]):
-        self.__surname.value = val
-    
-    @property
-    def suffix(self) -> Optional[str]:
-        """str or None: name suffix"""
-        return self.__suffix.value
-    
-    @suffix.setter
-    def suffix(self, val: Optional[str]):
-        self.__suffix.value = val
-
+        self._add_value('str', 'givenname', modelpath='given-name')
+        self._add_value('longstr', 'surname')
+        self._add_value('str', 'suffix')
 
 class Citation(Record):
     """
@@ -125,51 +84,31 @@ class Citation(Record):
     
     ####################### Define Values and attributes #######################
 
-    def _init_value_objects(self) -> list:
+    def _init_values(self):
         """
         Method that defines the value objects for the Record.  This should
-        1. Call the method's super() to get default Value objects.
-        2. Use yabadaba.load_value() to build Value objects that are set to
-           private attributes of self.
-        3. Append the list returned by the super() with the new Value objects.
-
-        Returns
-        -------
-        value_objects: A list of all value objects.
+        call the super of this method, then use self._add_value to create new Value objects.
+        Note that the order values are defined matters
+        when build_model is called!!!
         """
+        # init bibdict
         self.__bibdict = None
-
-        value_objects = super()._init_value_objects()
         
-        self.__doctype = load_value('str', 'doctype', self,
-                                 modelpath='document-type', #valuerequired=True,
-                                 allowedvalues=['book', 'journal', 'report', 
-                                                'thesis', 'conference proceedings',
-                                                'unspecified'])
-        self.__title = load_value('longstr', 'title', self)
-        self.__authors = load_value('record', 'author', self, recordclass=Author,
-                                    modelpath='author')
-        self.__publication = load_value('longstr', 'publication', self,
-                                        modelpath='publication-name')
-        self.__year = load_value('int', 'year', self,
-                                 modelpath='publication-date.year')
-        self.__month = load_value('month', 'month', self,
-                                  modelpath='publication-date.month')
-        self.__volume = load_value('str', 'volume', self)
-        self.__issue = load_value('str', 'issue', self)
-        self.__abstract = load_value('longstr', 'abstract', self)
-        self.__pages = load_value('str', 'pages', self)
-        self.__doi = load_value('str', 'doi', self,
-                                modelpath='DOI')
-        self.__url = load_value('str', 'url', self)
-        self.__bibtex = load_value('longstr', 'bibtex', self)
-
-        value_objects.extend([self.__doctype, self.__title, self.__authors,
-                              self.__publication, self.__year, self.__month,
-                              self.__volume, self.__issue, self.__abstract,
-                              self.__pages, self.__doi, self.__url, self.__bibtex])
-
-        return value_objects
+        self._add_value('str', 'doctype', modelpath='document-type',
+                        allowedvalues=['book', 'journal', 'report', 'thesis',
+                                       'conference proceedings', 'unspecified'])
+        self._add_value('longstr', 'title')
+        self._add_value('record', 'authors', recordclass=Author, modelpath='author')
+        self._add_value('longstr', 'publication', modelpath='publication-name')
+        self._add_value('int', 'year', modelpath='publication-date.year')
+        self._add_value('month', 'month', modelpath='publication-date.month')
+        self._add_value('str', 'volume')
+        self._add_value('str', 'issue')
+        self._add_value('longstr', 'abstract')
+        self._add_value('citepage', 'pages')
+        self._add_value('str', 'doi', modelpath='DOI')
+        self._add_value('str', 'url')
+        self._add_value('longstr', 'bibtex')
 
     @property
     def defaultname(self) -> Optional[str]:
@@ -179,125 +118,6 @@ class Citation(Record):
             return self.doi.lower().replace('/', '_')
         else:
             return None
-
-    @property
-    def doctype(self) -> str:
-        """str: The type of document"""
-        return self.__doctype.value
-
-    @doctype.setter
-    def doctype(self, val: str):
-        self.__doctype.value = val
-
-    @property
-    def title(self) -> str:
-        """str: The title of the citation"""
-        return self.__title.value
-
-    @title.setter
-    def title(self, val: str):
-        self.__title.value = val
-
-    @property
-    def authors(self) -> list:
-        """list: The Author component objects associated with author names"""
-        return self.__authors.value
-
-    @authors.setter
-    def authors(self, val: str):
-        self.__authors.value = val
-
-    @property
-    def publication(self) -> str:
-        """str: The publication/journal name"""
-        return self.__publication.value
-
-    @publication.setter
-    def publication(self, val: str):
-        self.__publication.value = val
-
-    @property
-    def year(self) -> int:
-        """int: The year of publication/creation"""
-        return self.__year.value
-
-    @year.setter
-    def year(self, val: int):
-        self.__year.value = val
-
-    @property
-    def month(self) -> str:
-        """str: The month of publication/creation"""
-        return self.__month.value
-
-    @month.setter
-    def month(self, val: Union[str, int, None]):
-        self.__month.value = val
-
-    @property
-    def volume(self) -> str:
-        """str: The publication volume number"""
-        return self.__volume.value
-
-    @volume.setter
-    def volume(self, val: str):
-        self.__volume.value = val
-
-    @property
-    def issue(self) -> str:
-        """str: The publication issue number"""
-        return self.__issue.value
-
-    @issue.setter
-    def issue(self, val: str):
-        self.__issue.value = val
-
-    @property
-    def abstract(self) -> str:
-        """str: The publication's abstract"""
-        return self.__abstract.value
-
-    @abstract.setter
-    def abstract(self, val: Union[str, int, None]):
-        self.__abstract.value = val
-
-    @property
-    def pages(self) -> str:
-        """str: The publication's page numbers or article number"""
-        return self.__pages.value
-
-    @pages.setter
-    def pages(self, val: Union[str, int, None]):
-        if isinstance(val, str):
-            val = val.replace('--', '-')
-        self.__pages.value = val
-
-    @property
-    def doi(self) -> str:
-        """str: The publication's doi"""
-        return self.__doi.value
-
-    @doi.setter
-    def doi(self, val: Union[str, int, None]):
-        self.__doi.value = val
-
-    @property
-    def url(self) -> str:
-        """str: The publication's url"""
-        return self.__url.value
-
-    @url.setter
-    def url(self, val: Union[str, int, None]):
-        self.__url.value = val
-
-    @property
-    def bibtex(self) -> str:
-        """str : The bibtex version of the citation"""
-        return self.__bibtex.value
-
-    @bibtex.setter
-    def bibtex(self, val: str):
-        self.__bibtex.value = val
 
     @property
     def bibdict(self) -> Optional[dict]:
@@ -325,7 +145,7 @@ class Citation(Record):
         url : str, optional
             URL for file where downloaded, if available.
         """
-        self.__authors.append(model=model, **kwargs)
+        self.get_value('authors').append(model=model, **kwargs)
 
     @staticmethod
     def doctype_from_entrytype(entrytype):
@@ -391,7 +211,7 @@ class Citation(Record):
 
         # Split and parse author field
         if 'author' in bibdict:
-            self.__authors.value = []
+            self.get_value('authors').value = []
             for author in bibdict['author']:
                 authordict = bibtexparser.customization.splitname(author)
 
@@ -462,7 +282,7 @@ class Citation(Record):
         if self.pages is not None:
             self.bibdict['pages'] = self.pages
         if self.month is not None:
-            self.bibdict['month'] = self.__month.fullname
+            self.bibdict['month'] = self.get_value('month').fullname
         if self.doi is not None:
             self.bibdict['doi'] = self.doi
        

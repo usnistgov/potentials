@@ -2,17 +2,12 @@
 # Standard Python libraries
 import io
 from typing import Optional, Tuple, Union
-import datetime
 
 # https://github.com/usnistgov/DataModelDict
 from DataModelDict import DataModelDict as DM
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
-from yabadaba import load_query, load_value
-
-# local imports
-from ..tools import aslist
 
 class ElementSystem(Record):
     """
@@ -32,49 +27,16 @@ class ElementSystem(Record):
     
     ####################### Define Values and attributes #######################
 
-    def _init_value_objects(self) -> list:
+    def _init_values(self):
         """
         Method that defines the value objects for the Record.  This should
-        1. Call the method's super() to get default Value objects.
-        2. Use yabadaba.load_value() to build Value objects that are set to
-           private attributes of self.
-        3. Append the list returned by the super() with the new Value objects.
-
-        Returns
-        -------
-        value_objects: A list of all value objects.
+        call the super of this method, then use self._add_value to create new Value objects.
+        Note that the order values are defined matters
+        when build_model is called!!!
         """
-        value_objects = super()._init_value_objects()
         
-        self.__formula = load_value('str', 'formula', self,
-                                    modelpath='chemical-formula')
-        self.__elements = load_value('strlist', 'elements', self,
-                                    modelpath='element')
-        
-        value_objects.extend([self.__formula, self.__elements])
-
-        return value_objects
-
-    @property
-    def formula(self) -> Optional[str]:
-        """str : A specific chemical formula being requested."""
-        return self.__formula.value
-
-    @formula.setter
-    def formula(self, val: Optional[str]):
-        self.__formula.value = val
-
-    @property
-    def elements(self) -> Optional[list]:
-        """list : A combination of elements being requested."""
-        return self.__elements.value
-
-    @elements.setter
-    def elements(self, val: Union[str, list, None]):
-        self.__elements.value = val
-
-
-
+        self._add_value('str', 'formula', modelpath='chemical-formula')
+        self._add_value('strlist', 'elements', modelpath='element')
 
 class Request(Record):
     """
@@ -106,28 +68,18 @@ class Request(Record):
 
     ####################### Define Values and attributes #######################
 
-    def _init_value_objects(self) -> list:
+    def _init_values(self):
         """
         Method that defines the value objects for the Record.  This should
-        1. Call the method's super() to get default Value objects.
-        2. Use yabadaba.load_value() to build Value objects that are set to
-           private attributes of self.
-        3. Append the list returned by the super() with the new Value objects.
-
-        Returns
-        -------
-        value_objects: A list of all value objects.
+        call the super of this method, then use self._add_value to create new Value objects.
+        Note that the order values are defined matters
+        when build_model is called!!!
         """
-        value_objects = super()._init_value_objects()
         
-        self.__date = load_value('date', 'date', self, valuerequired=True)
-        self.__systems = load_value('record', 'systems', self, recordclass=ElementSystem,
-                                    modelpath='system')
-        self.__comment = load_value('longstr', 'comment', self)
-        
-        value_objects.extend([self.__date, self.__systems, self.__comment])
-
-        return value_objects
+        self._add_value('date', 'date', valuerequired=True)
+        self._add_value('record', 'systems', recordclass=ElementSystem,
+                        modelpath='system')
+        self._add_value('longstr', 'comment')
 
     @property
     def defaultname(self) -> str:
@@ -136,33 +88,6 @@ class Request(Record):
             for element in system.elements:
                 name += ' ' + element
         return name
-        
-    @property
-    def date(self) -> datetime.date:
-        """datetime.date : The date that the request was submitted."""
-        return self.__date.value
-
-    @date.setter
-    def date(self, val: Union[str, datetime.date]):
-        self.__date.value = val
-
-    @property
-    def comment(self) -> Optional[str]:
-        """str: Any additional comments associated with the request."""
-        return self.__comment.value
-
-    @comment.setter
-    def comment(self, val: Optional[str]):
-        self.__comment.value = val
-
-    @property
-    def systems(self) -> list:
-        """list: The System component objects associated with the request."""
-        return self.__systems.value
-
-    @systems.setter
-    def systems(self, val: Union[Record, list]):
-        self.__systems.value = val
 
     def add_system(self,
                    model: Union[str, io.IOBase, DM, None] = None,
@@ -180,4 +105,4 @@ class Request(Record):
         elements : str or list, optional
             A set of elements for the elemental system being requested.
         """
-        self.__systems.append(model=model, formula=formula, elements=elements)
+        self.get_value('systems').append(model=model, formula=formula, elements=elements)

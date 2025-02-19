@@ -1,18 +1,13 @@
 # coding: utf-8
 # Standard Python libraries
-import io
 from pathlib import Path
-from typing import Optional, Tuple, Union
+from typing import Tuple, Union
 
 # https://requests.readthedocs.io/en/master/
 import requests
 
-# https://github.com/usnistgov/DataModelDict
-from DataModelDict import DataModelDict as DM
-
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
-from yabadaba import load_value
 
 class Artifact(Record):
     """
@@ -43,57 +38,17 @@ class Artifact(Record):
 
     ####################### Define Values and attributes #######################
 
-    def _init_value_objects(self) -> list:
+    def _init_values(self):
         """
         Method that defines the value objects for the Record.  This should
-        1. Call the method's super() to get default Value objects.
-        2. Use yabadaba.load_value() to build Value objects that are set to
-           private attributes of self.
-        3. Append the list returned by the super() with the new Value objects.
-
-        Returns
-        -------
-        value_objects: A list of all value objects.
+        call the super of this method, then use self._add_value to create new Value objects.
+        Note that the order values are defined matters
+        when build_model is called!!!
         """
-        value_objects = super()._init_value_objects()
         
-        self.__url = load_value('str', 'url', self,
-                                modelpath='web-link.URL')
-        self.__label = load_value('longstr', 'label', self,
-                                  modelpath='web-link.label')
-        self.__filename = load_value('longstr', 'filename', self,
-                                     modelpath='web-link.link-text')
-        
-        value_objects.extend([self.__url, self.__label, self.__filename])
-
-        return value_objects
-
-    @property
-    def url(self) -> Optional[str]:
-        """str or None: URL where file can be downloaded"""
-        return self.__url.value
-    
-    @url.setter
-    def url(self, val: Optional[str]):
-        self.__url.value = val
-
-    @property
-    def label(self) -> Optional[str]:
-        """str or None: short descriptive label"""
-        return self.__label.value
-    
-    @label.setter
-    def label(self, val: Optional[str]):
-        self.__label.value = val
-    
-    @property
-    def filename(self) -> Optional[str]:
-        """str or None: name of the file"""
-        return self.__filename.value
-    
-    @filename.setter
-    def filename(self, val: Optional[str]):
-        self.__filename.value = val
+        self._add_value('str', 'url', modelpath='web-link.URL')
+        self._add_value('longstr', 'label', modelpath='web-link.label')
+        self._add_value('longstr', 'filename', modelpath='web-link.link-text')
 
     def download(self,
                  targetdir: Union[str, Path],

@@ -1,14 +1,9 @@
 # coding: utf-8
 # Standard Python libraries
-import io
-from typing import Optional, Tuple, Union
-
-# https://github.com/usnistgov/DataModelDict
-from DataModelDict import DataModelDict as DM
+from typing import Tuple
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
-from yabadaba import load_query, load_value
 
 __all__ = ['FAQ']
 
@@ -41,41 +36,13 @@ class FAQ(Record):
 
     ####################### Define Values and attributes #######################
 
-    def _init_value_objects(self) -> list:
+    def _init_values(self):
         """
         Method that defines the value objects for the Record.  This should
-        1. Call the method's super() to get default Value objects.
-        2. Use yabadaba.load_value() to build Value objects that are set to
-           private attributes of self.
-        3. Append the list returned by the super() with the new Value objects.
-
-        Returns
-        -------
-        value_objects: A list of all value objects.
+        call the super of this method, then use self._add_value to create new Value objects.
+        Note that the order values are defined matters
+        when build_model is called!!!
         """
-        value_objects = super()._init_value_objects()
         
-        self.__question = load_value('longstr', 'question', self)
-        self.__answer = load_value('longstr', 'answer', self)
-
-        value_objects.extend([self.__question, self.__answer])
-
-        return value_objects
-
-    @property
-    def question(self):
-        """str: The frequently asked question."""
-        return self.__question.value
-
-    @question.setter
-    def question(self, val):
-        self.__question.value = val
-
-    @property
-    def answer(self):
-        """str: The answer to the frequently asked question."""
-        return self.__answer.value
-
-    @answer.setter
-    def answer(self, val):
-        self.__answer.value = val
+        self._add_value('longstr', 'question')
+        self._add_value('longstr', 'answer')

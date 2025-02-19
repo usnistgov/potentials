@@ -1,14 +1,10 @@
 # coding: utf-8
 # Standard Python libraries
 import io
-from typing import Optional, Tuple, Union
-
-# https://github.com/usnistgov/DataModelDict
-from DataModelDict import DataModelDict as DM
+from typing import Tuple
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
-from yabadaba import load_value
 
 class Parameter(Record):
     """
@@ -39,55 +35,15 @@ class Parameter(Record):
 
     ####################### Define Values and attributes #######################
 
-    def _init_value_objects(self) -> list:
+    def _init_values(self):
         """
         Method that defines the value objects for the Record.  This should
-        1. Call the method's super() to get default Value objects.
-        2. Use yabadaba.load_value() to build Value objects that are set to
-           private attributes of self.
-        3. Append the list returned by the super() with the new Value objects.
-
-        Returns
-        -------
-        value_objects: A list of all value objects.
+        call the super of this method, then use self._add_value to create new Value objects.
+        Note that the order values are defined matters
+        when build_model is called!!!
         """
-        value_objects = super()._init_value_objects()
         
+        self._add_value('str', 'value', modelpath='value')
+        self._add_value('str', 'unit', modelpath='unit')
+        self._add_value('str', 'paramname', modelpath='name')
         
-        self.__value = load_value('str', 'value', self,
-                                  modelpath='value')
-        self.__unit = load_value('str', 'unit', self,
-                                     modelpath='unit')
-        self.__paramname = load_value('str', 'paramname', self,
-                                      modelpath='name')
-        
-        value_objects.extend([self.__value, self.__unit, self.__paramname])
-
-        return value_objects
-    
-    @property
-    def value(self) -> Optional[str]:
-        """str or None: The value of the parameter"""
-        return self.__value.value
-    
-    @value.setter
-    def value(self, val: Optional[str]):
-        self.__value.value = val
-
-    @property
-    def unit(self) -> Optional[str]:
-        """str or None: The unit that the value is in"""
-        return self.__unit.value
-    
-    @unit.setter
-    def unit(self, val: Optional[str]):
-        self.__unit.value = val
-
-    @property
-    def paramname(self) -> Optional[str]:
-        """str or None: The name of the parameter, or a string parameter line"""
-        return self.__paramname.value
-    
-    @paramname.setter
-    def paramname(self, val: Optional[str]):
-        self.__paramname.value = val

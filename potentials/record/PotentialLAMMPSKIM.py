@@ -2,8 +2,7 @@
 # Standard Python libraries
 import io
 from pathlib import Path
-from typing import Optional, Tuple, Union, List
-import warnings
+from typing import Optional, Tuple, Union
 import datetime
 
 # https://github.com/usnistgov/DataModelDict
@@ -15,8 +14,7 @@ import numpy.typing as npt
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
-from yabadaba import load_value, load_query
-from yabadaba.tools import dict_insert
+from yabadaba import load_query
 
 # local imports
 from ..tools import aslist, atomic_mass
@@ -104,85 +102,22 @@ class PotentialLAMMPSKIM(Record):
 
     ####################### Define Values and attributes #######################
 
-    def _init_value_objects(self) -> list:
+    def _init_values(self):
         """
         Method that defines the value objects for the Record.  This should
-        1. Call the method's super() to get default Value objects.
-        2. Use yabadaba.load_value() to build Value objects that are set to
-           private attributes of self.
-        3. Append the list returned by the super() with the new Value objects.
-
-        Returns
-        -------
-        value_objects: A list of all value objects.
+        call the super of this method, then use self._add_value to create new Value objects.
+        Note that the order values are defined matters
+        when build_model is called!!!
         """
-        value_objects = super()._init_value_objects()
         
-        self.__key = load_value('str', 'key', self)
-        self.__shortcode = load_value('str', 'shortcode', self,
-                                      modelpath='id')
-        self.__url = load_value('str', 'url', self,
-                                modelpath='URL')
-        self.__status = load_value('str', 'status', self,
-                                   allowedvalues=('superseded', 'retracted'))
-        self.__potentials = load_value('record', 'potentials', self,
-                                       recordclass=PotentialInfo,
-                                       modelpath='potential',
-                                       metadatakey=False)
-        self.__fullkimids = load_value('strlist', 'fullkimids', self,
-                                       modelpath='full-kim-id')
+        self._add_value('str', 'key')
+        self._add_value('str', 'shortcode', modelpath='id')
+        self._add_value('str', 'url', modelpath='URL')
+        self._add_value('str', 'status', allowedvalues=('superseded', 'retracted'))
+        self._add_value('record', 'potentials', recordclass=PotentialInfo,
+                        modelpath='potential', metadatakey=False)
+        self._add_value('strlist', 'fullkimids', modelpath='full-kim-id')
         
-        value_objects.extend([self.__key, self.__shortcode, self.__url,
-                              self.__status, self.__potentials,
-                              self.__fullkimids])
-
-        return value_objects
-
-    @property
-    def key(self) -> str:
-        """str : The uuid hash-key for the LAMMPS implementation."""
-        return self.__key.value
-    
-    @key.setter
-    def key(self, val: Optional[str]):
-        self.__key.value = val
-
-    @property
-    def shortcode(self) -> Optional[str]:
-        """str : The KIM model shortcode that identifies the model family."""
-        return self.__shortcode.value
-
-    @shortcode.setter
-    def shortcode(self, val: Optional[str]):
-        self.__shortcode.value = val
-
-    @property
-    def url(self):
-        """str : URL for an online copy of the record."""
-        return self.__url.value
-
-    @url.setter
-    def url(self, val: Union[str, None]):
-        self.__url.value = val
-
-    @property
-    def status(self):
-        """str : Status of the potential version."""
-        return self.__status.value
-
-    @status.setter
-    def status(self, val: Union[str, None]):
-        self.__status.value = val
-
-    @property
-    def potentials(self) -> List[PotentialInfo]:
-        """list : The list of potential models the KIM implementation represents."""
-        return self.__potentials.value
-
-    @property
-    def fullkimids(self) -> List[str]:
-        """list: Known full KIM IDs associated with the kim model family."""
-        return self.__fullkimids.value
 
     @property
     def defaultname(self) -> Optional[str]:
@@ -253,7 +188,7 @@ class PotentialLAMMPSKIM(Record):
         for pot in self.potentials:
             if pot.id == newpot.id:
                 raise ValueError(f'PotentialInfo with id {pot.id} already exists')
-        self.__potentials.append(newpot)
+        self.potentials.append(newpot)
 
 
     def metadata(self) -> dict:
