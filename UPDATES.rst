@@ -1,6 +1,24 @@
 Updates
 =======
 
+0.4.0
+-----
+
+- Major overhaul and reduction of the code due to the newest yabadaba updates.
+  This update changed how terms in records are recognized, interpreted,
+  transformed, and queried.  As such, there may be breaking changes requiring
+  updates to how queries are performed and record data is interacted with. NOTE:
+  these updates may have altered the terms that the different records recognize
+  for data transformations and queries.  If you have issues, check out the
+  new documentation for the records!
+- The PotentialLAMMPS class now has integrated support for users to build the
+  associated content making the potentials.buildrecord tools obsolete.  The old
+  builders will likely be removed in the next version.
+- Bug fix in potentials.paramfile.eam_to_eam_alloy() to ensure the correct max
+  cutoff is used.
+- New pytests for the various Record classes.
+- Preliminary support for building EAM-X potentials.
+
 0.3.8
 -----
 
