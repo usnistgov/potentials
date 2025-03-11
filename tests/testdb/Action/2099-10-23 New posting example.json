@@ -1,0 +1,21 @@
+{
+    "action": {
+        "date": "2099-10-23",
+        "type": "new posting",
+        "potential": [
+            {
+                "key": "3837b6da-05c4-4148-97cd-90b26a2092df",
+                "id": "2006--Chamati-H-Papanicolaou-N-I-Mishin-Y-Papaconstantopoulos-D-A--Fe",
+                "doi": "10.1016/j.susc.2006.02.010",
+                "element": "Fe"
+            },
+            {
+                "key": "5a94a06a-22c7-41e0-8593-ee42d4728018",
+                "id": "2001--Mishin-Y-Mehl-M-J-Papaconstantopoulos-D-A-et-al--Cu-2",
+                "doi": "10.1103/physrevb.63.224106",
+                "element": "Cu"
+            }
+        ],
+        "comment": "New posting example"
+    }
+}

@@ -88,9 +88,9 @@ def eam_to_eam_alloy(eam: Union[str, io.IOBase, EAM, list],
 
     # Set r
     if numr is None:
-        numr = 0
+        cutoffr = 0
         for eam in eams:
-            if eam.numr > numr:
+            if eam.cutoffr > cutoffr:
                 numr = eam.numr
                 cutoffr = eam.cutoffr
                 deltar = eam.deltar
@@ -98,9 +98,9 @@ def eam_to_eam_alloy(eam: Union[str, io.IOBase, EAM, list],
     
     # Set rho
     if numrho is None:
-        numrho = 0
+        cutoffrho = 0
         for eam in eams:
-            if eam.numrho > numrho:
+            if eam.cutoffrho > cutoffrho:
                 numrho = eam.numrho
                 cutoffrho = eam.cutoffrho
                 deltarho = eam.deltarho

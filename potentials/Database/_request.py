@@ -15,8 +15,9 @@ from yabadaba.record import Record
 def get_requests(self, 
                  name: Union[str, list, None] = None,
                  date: Union[str, list, None] = None,
-                 element: Union[str, list, None] = None,
                  comment: Union[str, list, None] = None,
+                 elements: Union[str, list, None] = None,
+                 formula: Union[str, list, None] = None,
                  local: Optional[bool] = None,
                  remote: Optional[bool] = None,
                  refresh_cache: bool = False,
@@ -32,10 +33,12 @@ def get_requests(self,
         The record name(s) to parse by.
     date : str or list
         The date associated with the record.
-    element : str or list
-        Element(s) to search for in the request.
     comment : str or list
         Term(s) to search for in the request's comment field.
+    elements : str or list
+        Element(s) to search for in the request.
+    formula : str or list
+        Chemical formula(s) to search for in the request.
     local : bool, optional
         Indicates if the local location is to be searched.  Default value
         matches the value set when the database was initialized.
@@ -66,13 +69,14 @@ def get_requests(self,
     return self.get_records(
         style='Request', name=name, local=local, remote=remote, 
         refresh_cache=refresh_cache, return_df=return_df, verbose=verbose,
-        date=date, element=element, comment=comment)
+        date=date, comment=comment, elements=elements, formula=formula)
 
 def get_request(self, 
                 name: Union[str, list, None] = None,
                 date: Union[str, list, None] = None,
-                element: Union[str, list, None] = None,
                 comment: Union[str, list, None] = None,
+                elements: Union[str, list, None] = None,
+                formula: Union[str, list, None] = None,
                 local: Optional[bool] = None,
                 remote: Optional[bool] = None, 
                 prompt: bool = True,
@@ -87,10 +91,12 @@ def get_request(self,
         The record name(s) to parse by.
     date : str or list
         The date associated with the record.
-    element : str or list
-        Element(s) to search for in the request.
     comment : str or list
         Term(s) to search for in the request's comment field.
+    elements : str or list
+        Element(s) to search for in the request.
+    formula : str or list
+        Chemical formula(s) to search for in the request.
     local : bool, optional
         Indicates if the local location is to be searched.  Default value
         matches the value set when the database was initialized.
@@ -115,14 +121,15 @@ def get_request(self,
     return self.get_record(
         style='Request', name=name, local=local, remote=remote, 
         prompt=prompt, refresh_cache=refresh_cache, verbose=verbose,
-        date=date, element=element, comment=comment)
+        date=date, comment=comment, elements=elements, formula=formula)
 
 def retrieve_request(self, 
                     name: Union[str, list, None] = None,
                     dest: Optional[Path] = None,
                     date: Union[str, list, None] = None,
-                    element: Union[str, list, None] = None,
-                    comment: Union[str, list, None] = None, 
+                    comment: Union[str, list, None] = None,
+                    elements: Union[str, list, None] = None,
+                    formula: Union[str, list, None] = None,
                     local: Optional[bool] = None,
                     remote: Optional[bool] = None, 
                     prompt: bool = True,
@@ -143,10 +150,12 @@ def retrieve_request(self,
         will use the current working directory.
     date : str or list
         The date associated with the record.
-    element : str or list
-        Element(s) to search for in the request.
     comment : str or list
         Term(s) to search for in the request's comment field.
+    elements : str or list
+        Element(s) to search for in the request.
+    formula : str or list
+        Chemical formula(s) to search for in the request.
     local : bool, optional
         Indicates if the local location is to be searched.  Default value
         matches the value set when the database was initialized.
@@ -187,13 +196,14 @@ def retrieve_request(self,
         style='Request', name=name, dest=dest, local=local, remote=remote,
         prompt=prompt, format=format, indent=indent,
         refresh_cache=refresh_cache, verbose=verbose,
-        date=date, element=element, comment=comment)
+        date=date, comment=comment, elements=elements, formula=formula)
 
 def download_requests(self, 
                       name: Union[str, list, None] = None,
                       date: Union[str, list, None] = None,
-                      element: Union[str, list, None] = None,
                       comment: Union[str, list, None] = None,
+                      elements: Union[str, list, None] = None,
+                      formula: Union[str, list, None] = None,
                       overwrite: bool = False,
                       return_records: bool = False,
                       verbose: bool = False) -> Optional[np.ndarray]:
@@ -206,10 +216,12 @@ def download_requests(self,
         The record name(s) to parse by.
     date : str or list
         The date associated with the record.
-    element : str or list
-        Element(s) to search for in the request.
     comment : str or list
         Term(s) to search for in the request's comment field.
+    elements : str or list
+        Element(s) to search for in the request.
+    formula : str or list
+        Chemical formula(s) to search for in the request.
     overwrite : bool, optional
         Flag indicating if any existing local records with names matching
         remote records are updated (True) or left unchanged (False).  Default
@@ -224,7 +236,7 @@ def download_requests(self,
     return self.download_records(
         style='Request', name=name, overwrite=overwrite,
         return_records=return_records, verbose=verbose,        
-        date=date, element=element, comment=comment)
+        date=date, comment=comment, elements=elements, formula=formula)
 
 def save_request(self,
                  request: Record,

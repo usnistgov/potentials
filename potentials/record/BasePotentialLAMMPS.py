@@ -13,6 +13,7 @@ from DataModelDict import DataModelDict as DM
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
+from yabadaba import load_value
 
 # atomman imports
 from ..tools import aslist, atomic_mass
@@ -21,6 +22,60 @@ class BasePotentialLAMMPS(Record):
     """
     Base parent class for PotentialLAMMPS objects
     """
+
+    ####################### Define Values and attributes #######################
+
+    def _init_value_objects(self) -> list:
+        """
+        Method that defines the value objects for the Record.  This should
+        1. Call the method's super() to get default Value objects.
+        2. Use yabadaba.load_value() to build Value objects that are set to
+           private attributes of self.
+        3. Append the list returned by the super() with the new Value objects.
+
+        Returns
+        -------
+        value_objects: A list of all value objects.
+        """
+        value_objects = super()._init_value_objects()
+        
+        self.__key = load_value('str', 'key', self,
+                                valuerequired=True)
+        self.__id = load_value('str', 'id', self)
+        self.__url = load_value('str', 'url', self,
+                                modelpath='URL')
+        self.__potkey = load_value('str', 'potkey', self,
+                                   modelpath='potential/key')
+        self.__potid = load_value('str', 'potid', self,
+                                  modelpath='potential/id')
+        self.__poturl = load_value('str', 'poturl', self,
+                                   modelpath='potential/URL')
+        self.__units = load_value('str', 'units', self, defaultvalue='metal')
+        self.__atom_style = load_value('str', 'atom_style', self,
+                                       defaultvalue='atomic')
+        self.__elements = []
+        self.__symbols = []
+        self.__masses = []
+        self.__charges = []
+        self.__pair_style = None
+        self.__allsymbols = False
+        self.__status = None
+
+
+
+
+
+        self.__artifacts = load_value('record', 'artifacts', self, recordclass='Artifact',
+                                      modelpath='artifact')
+        
+        
+        value_objects.extend([self.__key, self.__id, self.__url, self.__recorddate,
+                              self.__citations, self.__notes, self.__implementations,
+                              self.__fictional, self.__elements, self.__othername])
+
+        return value_objects
+
+
     def __init__(self,
                  model: Union[str, io.IOBase, DM, None] = None,
                  name: Optional[str] = None,

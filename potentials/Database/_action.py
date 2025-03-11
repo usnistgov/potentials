@@ -19,7 +19,10 @@ def get_actions(self,
                 type: Union[str, list, None] = None,
                 potential_id: Union[str, list, None] = None,
                 potential_key: Union[str, list, None] = None,
-                element: Union[str, list, None] = None,
+                dois: Union[str, list, None] = None,
+                elements: Union[str, list, None] = None,
+                fictionalelements: Union[str, list, None] = None,
+                othername: Union[str, list, None] = None,
                 comment: Union[str, list, None] = None,
                 local: Optional[bool] = None,
                 remote: Optional[bool] = None,
@@ -43,9 +46,17 @@ def get_actions(self,
         Limits results to entries related to the given potential id.
     potential_key : str or list
         Limits results to entries related to the given potential key.
-    element : str or list
+    dois : str or list
+        Limits results based on potential publication DOI(s).
+    elements : str or list
         Limits results to entries related to potentials with the given
         element(s).
+    fictionalelements : str or list
+        Limits results to entries related to potentials with the given
+        fictional element(s).
+    othername : str or list
+        Limits results to entries related to potentials with certain
+        other name label(s).
     comment : str or list
         Term(s) to search for in the action's comment field.
     local : bool, optional
@@ -79,7 +90,9 @@ def get_actions(self,
         style='Action', name=name, local=local, remote=remote,
         refresh_cache=refresh_cache, return_df=return_df, verbose=verbose,
         date=date, type=type, potential_id=potential_id,
-        potential_key=potential_key, element=element, comment=comment)
+        potential_key=potential_key, dois=dois, elements=elements,
+        fictionalelements=fictionalelements, othername=othername,
+        comment=comment)
 
 def get_action(self,
                name: Union[str, list, None] = None,
@@ -87,7 +100,10 @@ def get_action(self,
                type: Union[str, list, None] = None,
                potential_id: Union[str, list, None] = None,
                potential_key: Union[str, list, None] = None,
-               element: Union[str, list, None] = None,
+               dois: Union[str, list, None] = None,
+               elements: Union[str, list, None] = None,
+               fictionalelements: Union[str, list, None] = None,
+               othername: Union[str, list, None] = None,
                comment: Union[str, list, None] = None,
                local: Optional[bool] = None,
                remote: Optional[bool] = None, 
@@ -110,9 +126,17 @@ def get_action(self,
         Limits results to entries related to the given potential id.
     potential_key : str or list
         Limits results to entries related to the given potential key.
-    element : str or list
+    dois : str or list
+        Limits results based on potential publication DOI(s).
+    elements : str or list
         Limits results to entries related to potentials with the given
         element(s).
+    fictionalelements : str or list
+        Limits results to entries related to potentials with the given
+        fictional element(s).
+    othername : str or list
+        Limits results to entries related to potentials with certain
+        other name label(s).
     comment : str or list
         Term(s) to search for in the action's comment field.
     local : bool, optional
@@ -140,7 +164,7 @@ def get_action(self,
         style='Action', name=name, local=local, remote=remote,
         prompt=prompt, refresh_cache=refresh_cache, verbose=verbose,
         date=date, type=type, potential_id=potential_id,
-        potential_key=potential_key, element=element, comment=comment)
+        potential_key=potential_key, elements=elements, comment=comment)
 
 def retrieve_action(self,
                     name: Union[str, list, None] = None,
@@ -149,7 +173,10 @@ def retrieve_action(self,
                     type: Union[str, list, None] = None,
                     potential_id: Union[str, list, None] = None,
                     potential_key: Union[str, list, None] = None,
-                    element: Union[str, list, None] = None,
+                    dois: Union[str, list, None] = None,
+                    elements: Union[str, list, None] = None,
+                    fictionalelements: Union[str, list, None] = None,
+                    othername: Union[str, list, None] = None,
                     comment: Union[str, list, None] = None,
                     local: Optional[bool] = None,
                     remote: Optional[bool] = None, 
@@ -178,9 +205,17 @@ def retrieve_action(self,
         Limits results to entries related to the given potential id.
     potential_key : str or list
         Limits results to entries related to the given potential key.
-    element : str or list
+    dois : str or list
+        Limits results based on potential publication DOI(s).
+    elements : str or list
         Limits results to entries related to potentials with the given
         element(s).
+    fictionalelements : str or list
+        Limits results to entries related to potentials with the given
+        fictional element(s).
+    othername : str or list
+        Limits results to entries related to potentials with certain
+        other name label(s).
     comment : str or list
         Term(s) to search for in the action's comment field.
     local : bool, optional
@@ -224,7 +259,7 @@ def retrieve_action(self,
         prompt=prompt, format=format, indent=indent,
         refresh_cache=refresh_cache, verbose=verbose,
         date=date, type=type, potential_id=potential_id,
-        potential_key=potential_key, element=element, comment=comment)
+        potential_key=potential_key, elements=elements, comment=comment)
 
 def download_actions(self, 
                      name: Union[str, list, None] = None,
@@ -232,7 +267,10 @@ def download_actions(self,
                      type: Union[str, list, None] = None,
                      potential_id: Union[str, list, None] = None,
                      potential_key: Union[str, list, None] = None,
-                     element: Union[str, list, None] = None,
+                     dois: Union[str, list, None] = None,
+                     elements: Union[str, list, None] = None,
+                     fictionalelements: Union[str, list, None] = None,
+                     othername: Union[str, list, None] = None,
                      comment: Union[str, list, None] = None,
                      overwrite: bool = False,
                      return_records: bool = False,
@@ -253,9 +291,17 @@ def download_actions(self,
         Limits results to entries related to the given potential id.
     potential_key : str or list
         Limits results to entries related to the given potential key.
-    element : str or list
+    dois : str or list
+        Limits results based on potential publication DOI(s).
+    elements : str or list
         Limits results to entries related to potentials with the given
         element(s).
+    fictionalelements : str or list
+        Limits results to entries related to potentials with the given
+        fictional element(s).
+    othername : str or list
+        Limits results to entries related to potentials with certain
+        other name label(s).
     comment : str or list
         Term(s) to search for in the action's comment field.
     overwrite : bool, optional
@@ -273,7 +319,7 @@ def download_actions(self,
         style='Action', name=name, overwrite=overwrite,
         return_records=return_records, verbose=verbose,
         date=date, type=type, potential_id=potential_id,
-        potential_key=potential_key, element=element, comment=comment)
+        potential_key=potential_key, elements=elements, comment=comment)
 
 def save_action(self,
                 action: Record,

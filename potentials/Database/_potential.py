@@ -17,12 +17,13 @@ def get_potentials(self,
                    key: Union[str, list, None] = None,
                    id: Union[str, list, None] = None,
                    notes: Union[str, list, None] = None,
-                   fictional: Union[bool, list, None] = None,
-                   element: Union[str, list, None] = None,
+                   fictionalelements: Union[str, list, None] = None,
+                   elements: Union[str, list, None] = None,
                    othername: Union[str, list, None] = None,
                    year: Union[int, list, None] = None,
                    author: Union[str, list, None] = None,
                    abstract: Union[str, list, None] = None,
+                   recorddate: Union[str, list, None] = None,
                    local: Optional[bool] = None,
                    remote: Optional[bool] = None,
                    refresh_cache: bool = False,
@@ -43,9 +44,9 @@ def get_potentials(self,
         The unique record id(s) labeling the records to parse by.
     notes : str or list
         Term(s) to search for in the potential's notes field.
-    fictional : bool
-        Limits based on if the potential is labeled as fictional or not.
-    element : str or list
+    fictionalelements : str or list
+        Fictional element(s) in the model to parse by.
+    elements : str or list
         Element(s) in the model to parse by.
     othername : str or list
         Alternate system names (often compounds or molecules) to parse by. 
@@ -55,6 +56,8 @@ def get_potentials(self,
         Author name(s) to parse by.  This works best for last names only.
     abstract : str or list
         Term(s) to search for in the potential's citation's abstract field.
+    recorddate : str or list
+        The date the record was last updated.
     local : bool, optional
         Indicates if the local location is to be searched.  Default value
         matches the value set when the database was initialized.
@@ -82,24 +85,26 @@ def get_potentials(self,
     pandas.DataFrame
         A table of the records' metadata.  Returned if return_df = True.
     """
+    
     return self.get_records(
-        style='Potential', name=name, local=local, remote=remote,
-        refresh_cache=refresh_cache, return_df=return_df, verbose=verbose,
-        key=key, id=id, notes=notes, fictional=fictional, element=element,
-        othername=othername, year=year, author=author,
-        abstract=abstract)
+            style='Potential', name=name, local=local, remote=remote,
+            refresh_cache=refresh_cache, return_df=return_df, verbose=verbose,
+            key=key, id=id, notes=notes, fictionalelements=fictionalelements, elements=elements,
+            othername=othername, year=year, author=author,
+            abstract=abstract, recorddate=recorddate)
 
 def get_potential(self, 
                   name: Union[str, list, None] = None,
                   key: Union[str, list, None] = None,
                   id: Union[str, list, None] = None,
                   notes: Union[str, list, None] = None,
-                  fictional: Union[bool, list, None] = None,
-                  element: Union[str, list, None] = None,
+                  fictionalelements: Union[str, list, None] = None,
+                  elements: Union[str, list, None] = None,
                   othername: Union[str, list, None] = None,
                   year: Union[int, list, None] = None,
                   author: Union[str, list, None] = None,
                   abstract: Union[str, list, None] = None,
+                  recorddate: Union[str, list, None] = None,
                   local: Optional[bool] = None,
                   remote: Optional[bool] = None, 
                   prompt: bool = True,
@@ -119,9 +124,9 @@ def get_potential(self,
         The unique record id(s) labeling the records to parse by.
     notes : str or list
         Term(s) to search for in the potential's notes field.
-    fictional : bool
-        Limits based on if the potential is labeled as fictional or not.
-    element : str or list
+    fictionalelements : str or list
+        Fictional element(s) in the model to parse by.
+    elements : str or list
         Element(s) in the model to parse by.
     othername : str or list
         Alternate system names (often compounds or molecules) to parse by.
@@ -131,6 +136,8 @@ def get_potential(self,
         Author name(s) to parse by.  This works best for last names only.
     abstract : str or list
         Term(s) to search for in the potential's citation's abstract field.
+    recorddate : str or list
+        The date the record was last updated.
     local : bool, optional
         Indicates if the local location is to be searched.  Default value
         matches the value set when the database was initialized.
@@ -155,9 +162,9 @@ def get_potential(self,
     return self.get_record(
         style='Potential', name=name, local=local, remote=remote, 
         prompt=prompt, refresh_cache=refresh_cache, verbose=verbose,
-        key=key, id=id, notes=notes, fictional=fictional, element=element,
+        key=key, id=id, notes=notes, fictionalelements=fictionalelements, elements=elements,
         othername=othername, year=year, author=author,
-        abstract=abstract)
+        abstract=abstract, recorddate=recorddate)
 
 def retrieve_potential(self, 
                        name: Union[str, list, None] = None,
@@ -165,12 +172,13 @@ def retrieve_potential(self,
                        key: Union[str, list, None] = None,
                        id: Union[str, list, None] = None,
                        notes: Union[str, list, None] = None,
-                       fictional: Union[bool, list, None] = None,
-                       element: Union[str, list, None] = None,
+                       fictionalelements: Union[str, list, None] = None,
+                       elements: Union[str, list, None] = None,
                        othername: Union[str, list, None] = None,
                        year: Union[int, list, None] = None,
                        author: Union[str, list, None] = None,
                        abstract: Union[str, list, None] = None,
+                       recorddate: Union[str, list, None] = None,
                        local: Optional[bool] = None,
                        remote: Optional[bool] = None, 
                        prompt: bool = True,
@@ -195,9 +203,9 @@ def retrieve_potential(self,
         The unique record id(s) labeling the records to parse by.
     notes : str or list
         Term(s) to search for in the potential's notes field.
-    fictional : bool
-        Limits based on if the potential is labeled as fictional or not.
-    element : str or list
+    fictionalelements : str or list
+        Fictional element(s) in the model to parse by.
+    elements : str or list
         Element(s) in the model to parse by.
     othername : str or list
         Alternate system names (often compounds or molecules) to parse by.
@@ -207,6 +215,8 @@ def retrieve_potential(self,
         Author name(s) to parse by.  This works best for last names only.
     abstract : str or list
         Term(s) to search for in the potential's citation's abstract field.
+    recorddate : str or list
+        The date the record was last updated.
     local : bool, optional
         Indicates if the local location is to be searched.  Default value
         matches the value set when the database was initialized.
@@ -247,21 +257,22 @@ def retrieve_potential(self,
         style='Potential', name=name, dest=dest, local=local, remote=remote,
         prompt=prompt, format=format, indent=indent,
         refresh_cache=refresh_cache, verbose=verbose,
-        key=key, id=id, notes=notes, fictional=fictional, element=element,
+        key=key, id=id, notes=notes, fictionalelements=fictionalelements, elements=elements,
         othername=othername, year=year, author=author,
-        abstract=abstract)
+        abstract=abstract, recorddate=recorddate)
 
 def download_potentials(self, 
                         name: Union[str, list, None] = None,
                         key: Union[str, list, None] = None,
                         id: Union[str, list, None] = None,
                         notes: Union[str, list, None] = None,
-                        fictional: Union[bool, list, None] = None,
-                        element: Union[str, list, None] = None,
+                        fictionalelements: Union[str, list, None] = None,
+                        elements: Union[str, list, None] = None,
                         othername: Union[str, list, None] = None,
                         year: Union[int, list, None] = None,
                         author: Union[str, list, None] = None,
                         abstract: Union[str, list, None] = None,
+                        recorddate: Union[str, list, None] = None,
                         overwrite: bool = False,
                         return_records: bool = False,
                         verbose: bool = False) -> Optional[np.ndarray]:
@@ -279,9 +290,9 @@ def download_potentials(self,
         The unique record id(s) labeling the records to parse by.
     notes : str or list
         Term(s) to search for in the potential's notes field.
-    fictional : bool
-        Limits based on if the potential is labeled as fictional or not.
-    element : str or list
+    fictionalelements : str or list
+        Fictional element(s) in the model to parse by.
+    elements : str or list
         Element(s) in the model to parse by.
     othername : str or list
         Alternate system names (often compounds or molecules) to parse by.
@@ -291,6 +302,8 @@ def download_potentials(self,
         Author name(s) to parse by.  This works best for last names only.
     abstract : str or list
         Term(s) to search for in the potential's citation's abstract field.
+    recorddate : str or list
+        The date the record was last updated.
     overwrite : bool, optional
         Flag indicating if any existing local records with names matching
         remote records are updated (True) or left unchanged (False).  Default
@@ -306,9 +319,9 @@ def download_potentials(self,
     return self.download_records(
         style='Potential', name=name, overwrite=overwrite,
         return_records=return_records, verbose=verbose,
-        key=key, id=id, notes=notes, fictional=fictional, element=element,
+        key=key, id=id, notes=notes, fictionalelements=fictionalelements, elements=elements,
         othername=othername, year=year, author=author,
-        abstract=abstract)
+        abstract=abstract, recorddate=recorddate)
 
 def save_potential(self,
                    potential: Record,

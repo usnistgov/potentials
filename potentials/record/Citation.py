@@ -1,7 +1,6 @@
 # coding: utf-8
 # Standard libraries
 import io
-import string
 from typing import Optional, Tuple, Union
 
 # https://github.com/avian2/unidecode
@@ -12,43 +11,56 @@ from DataModelDict import DataModelDict as DM
 
 # https://bibtexparser.readthedocs.io/en/master/
 import bibtexparser
-from bibtexparser.bparser import BibTexParser
-from bibtexparser.customization import convert_to_unicode
-from bibtexparser.bibdatabase import BibDatabase
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
-from yabadaba import load_query
+
+class Author(Record):
+    """
+    Class for describing cited authors
+    """
+    ########################## Basic metadata fields ##########################
+
+    @property
+    def style(self):
+        """str: The record style"""
+        return 'author'
+
+    @property
+    def modelroot(self) -> str:
+        """str: The root element of the content"""
+        return 'author'
+
+    @property
+    def xsl_filename(self) -> Tuple[str, str]:
+        """tuple: The module path and file name of the record's xsl html transformer"""
+        return ('potentials.xsl', 'author.xsl')
+
+    @property
+    def xsd_filename(self) -> Tuple[str, str]:
+        """tuple: The module path and file name of the record's xsd schema"""
+        return ('potentials.xsd', 'author.xsd')
+
+    ####################### Define Values and attributes #######################
+
+    def _init_values(self):
+        """
+        Method that defines the value objects for the Record.  This should
+        call the super of this method, then use self._add_value to create new Value objects.
+        Note that the order values are defined matters
+        when build_model is called!!!
+        """
+        
+        self._add_value('str', 'givenname', modelpath='given-name')
+        self._add_value('longstr', 'surname')
+        self._add_value('str', 'suffix')
 
 class Citation(Record):
     """
     Class for representing Citation metadata records.
     """
 
-    def __init__(self,
-                 model: Union[str, io.IOBase, DM, None] = None,
-                 name: Optional[str] = None,
-                 database = None,
-                 **kwargs):
-        """
-        Initializes a Record object for a given style.
-        
-        Parameters
-        ----------
-        model : str, file-like object or DataModelDict, optional
-            A JSON/XML data model for the content.
-        name : str, optional
-            The unique name to assign to the record.  If model is a file
-            path, then the default record name is the file name without
-            extension.
-        database : yabadaba.Database, optional
-            Allows for a default database to be associated with the record.
-        """
-        # Set default values
-        self.__bib = {}
-        self.bib['note'] = ''
-
-        super().__init__(model=model, name=name, database=database, **kwargs)
+    ########################## Basic metadata fields ##########################
 
     @property
     def style(self) -> str:
@@ -69,202 +81,259 @@ class Citation(Record):
     def xsd_filename(self) -> Tuple[str, str]:
         """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'Citation.xsd')
+    
+    ####################### Define Values and attributes #######################
 
-    @property
-    def bib(self) -> dict:
-        """dict : Contains the bibtex fields"""
-        return self.__bib
-
-    @property
-    def doifname(self) -> str:
-        """str: file path compatible form of doi"""
-        try:
-            name = self.bib['doi']
-        except KeyError:
-            name = self.bib['note']
-        return name.lower().replace('/', '_')
-
-    def load_model(self,
-                   model: Union[str, io.IOBase, DM],
-                   name: Optional[str] = None):
+    def _init_values(self):
         """
-        Loads the object info from data model content
+        Method that defines the value objects for the Record.  This should
+        call the super of this method, then use self._add_value to create new Value objects.
+        Note that the order values are defined matters
+        when build_model is called!!!
+        """
+        # init bibdict
+        self.__bibdict = None
         
+        self._add_value('str', 'doctype', modelpath='document-type',
+                        allowedvalues=['book', 'journal', 'report', 'thesis',
+                                       'conference proceedings', 'unspecified'])
+        self._add_value('longstr', 'title')
+        self._add_value('record', 'authors', recordclass=Author, modelpath='author')
+        self._add_value('longstr', 'publication', modelpath='publication-name')
+        self._add_value('int', 'year', modelpath='publication-date.year')
+        self._add_value('month', 'month', modelpath='publication-date.month')
+        self._add_value('str', 'volume')
+        self._add_value('str', 'issue')
+        self._add_value('longstr', 'abstract')
+        self._add_value('citepage', 'pages')
+        self._add_value('str', 'doi', modelpath='DOI')
+        self._add_value('str', 'url')
+        self._add_value('longstr', 'bibtex')
+
+    @property
+    def defaultname(self) -> Optional[str]:
+        """str: The name to default to, usually based on other properties"""
+        if self.doi is not None:
+            # Filename compatible version of the doi
+            return self.doi.lower().replace('/', '_')
+        else:
+            return None
+
+    @property
+    def bibdict(self) -> Optional[dict]:
+        """dict: dict representation of the bibtex, if parsed"""
+        return self.__bibdict
+
+    @property
+    def author_string(self) -> str:
+        """str: single string """
+
+    def add_author(self,
+                   model: Union[str, io.IOBase, DM, None] = None,
+                   **kwargs):
+        """
+        Initializes an Artifact object and adds it to the artifacts list.
+
         Parameters
         ----------
-        model : str, file-like object or DataModelDict
-            A JSON/XML data model for the content.
-        name : str, optional
-            The name to use when saving the record.
+        model : str, file-like object or DataModelDict, optional
+            Model content or file path to model content.
+        filename : str, optional
+            The name of the file without path information.
+        label : str, optional
+            A short description label.
+        url : str, optional
+            URL for file where downloaded, if available.
         """
-        try:
-            super().load_model(model, name=name)
-        except:
-            bibtex = model
-        else:
-            bibtex = self.model.find('bibtex')
+        self.get_value('authors').append(model=model, **kwargs)
 
-        # Parse and extract content
-        parser = BibTexParser()
-        parser.customization = convert_to_unicode
-        bib_database = bibtexparser.loads(bibtex, parser=parser)
-        assert len(bib_database.entries) == 1, 'bibtex must be for a single reference'
+    @staticmethod
+    def doctype_from_entrytype(entrytype):
+        converter = {
+            'article': 'journal',
+            'book': 'book',
+            'booklet': 'book',
+            'conference': 'conference proceedings',
+            'inbook': 'book',
+            'incollection': 'book',
+            'inproceedings': 'conference proceedings',
+            'manual': 'report',
+            'mastersthesis': 'thesis',
+            'misc': 'unspecified',
+            'phdthesis': 'thesis',
+            'proceedings': 'conference proceedings',
+            'techreport': 'report',
+            'unpublished': 'unspecified',
+        }
+        return converter[entrytype]
+    
+    @staticmethod
+    def entrytype_from_doctype(doctype):
+        converter = {
+            'book': 'book',
+            'journal': 'article',
+            'report': 'techreport',
+            'thesis': 'phdthesis',
+            'conference proceedings': 'inproceedings',
+            'unspecified': 'unpublished',
+            None: 'misc'
+        }
+        return converter[doctype]
+
+    def load_bibtex(self,
+                    bibtex):
         
-        self.__bib = bib_database.entries[0]
+        # Define bibtexparser customization operations
+        def customizations(record):
+            record = bibtexparser.customization.author(record)
+            record = bibtexparser.customization.convert_to_unicode(record)
+            return record
+    
+        # Initialize parser and parse
+        parser = bibtexparser.bparser.BibTexParser()
+        parser.customization = customizations
+        bib_database = bibtexparser.loads(bibtex, parser=parser)   
+        assert len(bib_database.entries) == 1, 'bibtex must be for a single reference'
+        bibdict = bib_database.entries[0]
+
+        # Save values from bibdict to object attributes
+        self.bibtex = bibtex
+        self.__bibdict = bibdict
+        self.doctype = self.doctype_from_entrytype(bibdict['ENTRYTYPE'])
+        self.title = bibdict.get('title', None)
+        self.publication = bibdict.get('journal', None)
+        self.year = bibdict.get('year', None)
+        self.month = bibdict.get('month', None)
+        self.volume = bibdict.get('volume', None)
+        self.issue = bibdict.get('number', None)
+        self.pages = bibdict.get('pages', None)
+        self.doi = bibdict.get('doi', None)
+
+        # Split and parse author field
+        if 'author' in bibdict:
+            self.get_value('authors').value = []
+            for author in bibdict['author']:
+                authordict = bibtexparser.customization.splitname(author)
+
+                # Build given name as initials
+                initials = ''
+                for name in authordict['first']:
+                    for nname in name.split('.'):
+                        nname = nname.strip()
+                        if nname == '':
+                            continue
+                        if nname[0] == '-':
+                            initials += nname[:2] + '.'
+                        else:
+                            initials += nname[0] + '.'
+                    
+                        if '-' in nname[1:]:
+                            for nnname in nname.split('-')[1:]:
+                                initials += '-' + nnname[0] + '.'
+
+                # Build surname by joining von and last
+                sur = ' '.join(authordict['von'] + authordict['last'])
+                
+                # Check suffix value
+                suffix = ' '.join(authordict['jr'])
+                if suffix == '':
+                    suffix = None
+                
+                self.add_author(givenname=initials, surname=sur, suffix=suffix)
+
+    def load_model(self,
+                   model: str | io.IOBase | DM,
+                   name: str | None = None):
+        
+        super().load_model(model, name)
+        self.build_bibtex()
+    
+    def build_bibtex(self):
+        """str : bibtex of citation"""
+        
+        # Initialize/clear bibdict
+        self.__bibdict = {}
+
+        # Set ID
+        self.bibdict['ID'] = self.year_authors
+
+        # Set entrytype
+        self.bibdict['ENTRYTYPE'] = self.entrytype_from_doctype(self.doctype)
+
+        # Build bibdict fields
+        if len(self.authors) > 0:
+            authorfields = []
+            for author in self.authors:
+                if author.suffix is None:
+                    authorfields.append(f'{author.surname}, {author.givenname}')
+                else:
+                    authorfields.append(f'{author.surname}, {author.suffix}, {author.givenname}')
+            self.bibdict['author'] = ' and '.join(authorfields)
+        if self.title is not None:
+            self.bibdict['title'] = self.title
+        if self.publication is not None:
+            self.bibdict['journal'] = self.publication
+        if self.year is not None:
+            self.bibdict['year'] = str(self.year)
+        if self.volume is not None:
+            self.bibdict['volume'] = self.volume
+        if self.issue is not None:
+            self.bibdict['number'] = self.issue
+        if self.pages is not None:
+            self.bibdict['pages'] = self.pages
+        if self.month is not None:
+            self.bibdict['month'] = self.get_value('month').fullname
+        if self.doi is not None:
+            self.bibdict['doi'] = self.doi
+       
+        # Convert bibdict to bibtex
+        bib_database = bibtexparser.bibdatabase.BibDatabase()
+        bib_database.entries = [self.bibdict]
+        self.bibtex = bibtexparser.dumps(bib_database)
+
+    def build_model(self):
+        self.build_bibtex()
+        
         try:
             self.name
         except:
-            self.name = self.doifname
+            self.name = self.defaultname
 
-        try:
-            self.model
-        except:
-            self.build_model()
-    
-    def set_values(self,
-                   name: Optional[str] = None,
-                   **kwargs):
-        """
-        Set multiple object attributes at the same time.
-
-        Parameters
-        ----------
-        name : str, optional
-            The name to assign to the record.  Often inferred from other
-            attributes if not given.
-        **kwargs : any, ptional
-            Any other kwargs are set to the bibdict
-        """
-        # Set bib values
-        for key, value in kwargs.items():
-            self.bib[key] = str(value)
-
-        # Set record name
-        if name is None:
-            self.name = self.doifname
-        else:
-            self.name = name
-
-    def build_model(self) -> DM:
-        """
-        Returns the object info as data model content
-        
-        Returns
-        ----------
-        DataModelDict: The data model content.
-        """
-        citmodel = DM()
-        
-        def asint(val):
-            try:
-                return int(val)
-            except (TypeError, ValueError):
-                return val
-
-        if self.bib['ENTRYTYPE'] == 'article':
-            citmodel['document-type'] = 'journal'
-            citmodel['title'] = self.bib['title']
-            citmodel['author'] = self.parse_authors(self.bib['author'])
-            if 'journal' in self.bib:
-                citmodel['publication-name'] = self.bib['journal']
-            citmodel['publication-date'] = DM()
-            citmodel['publication-date']['year'] = asint(self.bib['year'])
-            if 'volume' in self.bib:
-                citmodel['volume'] = asint(self.bib['volume'])
-            if 'number' in self.bib:
-                citmodel['issue'] = asint(self.bib['number'])
-            elif 'issue' in self.bib:
-                citmodel['issue'] = asint(self.bib['issue'])
-            if 'abstract' in self.bib:
-                citmodel['abstract'] = self.bib['abstract']
-            if 'pages' in self.bib:
-                citmodel['pages'] = self.bib['pages'].replace('--', '-')
-            citmodel['DOI'] = self.bib['doi']
-        
-        elif self.bib['ENTRYTYPE'] == 'unpublished':
-            citmodel['document-type'] = 'unspecified'
-            citmodel['title'] = self.bib['title']
-            citmodel['author'] = self.parse_authors(self.bib['author'])
-            citmodel['publication-date'] = DM()
-            citmodel['publication-date']['year'] = self.bib['year']
-        
-        citmodel['bibtex'] = self.build_bibtex()
-        
-        model = DM([('citation', citmodel)])
-
-        self._set_model(model)
-        return model
-    
-    def build_bibtex(self) -> str:
-        """str : bibtex of citation"""
-        bib_database = BibDatabase()
-        bib_database.entries = [self.bib]
-        return bibtexparser.dumps(bib_database)
+        return super().build_model()
 
     def metadata(self) -> dict:
-        """Returns a flat dict representation of the object"""
-        meta = {}
-        meta['name'] = self.name
+
+        meta = super().metadata()
         meta['year_authors'] = self.year_authors
-        meta.update(self.bib)
+
         return meta
 
     @property
-    def queries(self) -> dict:
+    def queries(self):
         """dict: Query objects and their associated parameter names."""
-        return {
-            'year': load_query(
-                style='int_match',
-                name='year', 
-                path=f'{self.modelroot}.publication-date.year',
-                description="search based on publication year"),
-            'volume': load_query(
-                style='str_match',
-                name='volume',
-                path=f'{self.modelroot}.volume',
-                description="search based on volume number"),
-            'title': load_query(
-                style='str_contains',
-                name='title',
-                path=f'{self.modelroot}.title',
-                description="search article titles for contained strings"),
-            'journal': load_query(
-                style='str_match',
-                name='journal',
-                path=f'{self.modelroot}..publication-name',
-                description="search based on publication journal name"),
-            'doi': load_query(
-                style='str_match',
-                name='doi',
-                path=f'{self.modelroot}.DOI',
-                description="search based on publication DOI"),
-            'author': load_query(
-                style='str_contains',
-                name='author',
-                path=f'{self.modelroot}.author.surname',
-                description="search based on publication author"),
-            'abstract': load_query(
-                style='str_contains',
-                name='abstract',
-                path=f'{self.modelroot}.abstract',
-                description="search article abstract for contained strings"),
-        }
+        queries = super().queries
+        
+        # Make author query an alias of surname
+        queries.update({
+            'author': queries['surname'],
+        })
+
+        return queries
 
     @property
     def year_authors(self) -> str:
         """
         str: Partial id for potentials that uses YEAR--LAST-F-M with up to 4 authors.
         """
-        partialid = str(self.bib['year']) + '-'
-        authors = self.parse_authors(self.bib['author'])
-        if len(authors) <= 4:
-            for author in authors:
-                partialid += '-' + author['surname']
-                partialid += '-' + author['given-name'].replace('-', '').replace('.', '-').strip('-')
+        partialid = f'{self.year}-'
+        if len(self.authors) <= 4:
+            for author in self.authors:
+                partialid += f'-{author.surname}'
+                partialid += '-' + author.givenname.replace('-', '').replace('.', '-').strip('-')
         else:
-            for author in authors[:3]:
-                partialid += '-' + author['surname']
-                partialid += '-' + author['given-name'].replace('-', '').replace('.', '-').strip('-')
+            for author in self.authors[:3]:
+                partialid += f'-{author.surname}'
+                partialid += '-' + author.givenname.replace('-', '').replace('.', '-').strip('-')
             partialid += '-et-al'
 
         return unidecode(partialid.replace("'", '').replace(" ", '-'))
@@ -274,69 +343,9 @@ class Citation(Record):
         """
         str: Partial id for implementations that uses YEAR--LAST-F-M with only the first author.
         """
-        partialid = str(self.bib['year']) + '-'
-        author = self.parse_authors(self.bib['author'])[0]
-        partialid += '-' + author['surname']
-        partialid += '-' + author['given-name'].replace('-', '').replace('.', '-').strip('-')
+        partialid = f'{self.year}-'
+        author = self.authors[0]
+        partialid += f'-{author.surname}'
+        partialid += '-' + author.givenname.replace('-', '').replace('.', '-').strip('-')
         
         return unidecode(partialid.replace("'", '').replace(" ", '-'))
-    
-    @staticmethod
-    def parse_authors(authortex: str) -> DM:
-        """
-        Parse bibtex authors field.
-
-        Parameters
-        ----------
-        authortex : str
-            bibtex-formatted author field.
-
-        Returns
-        -------
-        DataModelDict
-            Data model of the parsed and separated names
-        """
-        author_dicts = []
-        
-        # Split up authors in authortex by ' and '
-        if ' and ' in authortex:
-            authors = authortex.split(' and ')
-        elif ' AND ' in authortex:
-            authors = authortex.split(' AND ')
-        else:
-            authors = [authortex]
-        
-        for author in authors:
-            author_dict = DM()
-            
-            if ', ' in author:
-                terms = author.split(', ')
-                if len(terms) == 2:
-                    author_dict['given-name'] = terms[1].strip()
-                    author_dict['surname'] = terms[0].strip()
-                elif len(terms) == 3:
-                    author_dict['given-name'] = terms[2].strip()
-                    author_dict['surname'] = ' '.join(terms[:2]).strip()
-                    
-            else:
-                # Split based on most-right . or space
-                if '.' in author:  
-                    l = author.rindex(".")
-                else: 
-                    l = author.rindex(" ")
-                
-                author_dict['given-name'] = author[:l+1].strip()
-                author_dict['surname'] = author[l+1:].strip()
-            
-            # Change given-name just into initials
-            given = ''
-            for letter in author_dict['given-name'].replace(' ', '').replace('.', ''):
-                if letter in string.ascii_uppercase:
-                    given += letter +'.'
-                elif letter in ['-']:
-                    given += letter
-            author_dict['given-name'] = given
-            
-            author_dicts.append(author_dict)
-            
-        return author_dicts

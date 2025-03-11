@@ -61,7 +61,7 @@ The scripts subfolder contains additional Notebooks that relate to managing
 the NIST database using the potentials package.  These are provided as examples
 of using the potentials package for various tasks to help more advanced users
 get started.  WARNING: The Notebooks in scripts are working documents and are not
-guaranteed to have 100% current code or data, and may have poor descriptions.   
+guaranteed to have 100% current code or data, and may have poor descriptions.
 
 
 .. _NIST Interatomic Potentials Repository: https://www.ctcms.nist.gov/potentials/

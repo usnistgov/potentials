@@ -3,7 +3,6 @@
 import io
 from pathlib import Path
 from typing import Optional, Tuple, Union
-import warnings
 import datetime
 
 # https://github.com/usnistgov/DataModelDict
@@ -14,12 +13,14 @@ import numpy as np
 import numpy.typing as npt
 
 # https://github.com/usnistgov/yabadaba
+from yabadaba.record import Record
 from yabadaba import load_query
 
 # local imports
-from ..tools import aslist
-from .BasePotentialLAMMPS import BasePotentialLAMMPS
-class PotentialLAMMPSKIM(BasePotentialLAMMPS):
+from ..tools import aslist, atomic_mass
+from .PotentialInfo import PotentialInfo
+
+class PotentialLAMMPSKIM(Record):
     """
     Class for building LAMMPS input lines from a potential-LAMMPS-KIM data model.
     """
@@ -31,7 +32,8 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
                  id: Optional[str] = None, 
                  potkey: Optional[str] = None,
                  potid: Optional[str] = None,
-                 symbolset: Union[str, list, None] = None):
+                 symbolset: Union[str, list, None] = None,
+                 units: str = 'metal'):
         """
         Initializes an instance and loads content from a data model.
         
@@ -63,36 +65,25 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         """
 
         # Call super with only name
-        super().__init__(model=None, name=name, database=database)
+        super().__init__(model=model, name=name, database=database)
 
-        # Call load_model if needed
-        if model is not None:
-            self.load_model(model=model, name=name, id=id, potkey=potkey,
-                            potid=potid, symbolset=symbolset)
-        
-        elif id is not None:
-            raise ValueError('model must be given with id')
-        elif potkey is not None:
-            raise ValueError('model must be given with potkey')
-        elif potid is not None:
-            raise ValueError('model must be given with potid')
-        elif symbolset is not None:
-            raise ValueError('model must be given with symbolset')
+        # Set default id as latest fullkimid if possible
+        if id is None and self.fullkimids is not None:
+            self.__id = self.fullkimids[-1]
+        else:
+            self.__id = id
 
-        # Explicitly set pair_style
-        self._pair_style = 'kim'
+        self.units = units
+
+        # Select the potential model information to use
+        self.select_potential(potkey=potkey, potid=potid, symbolset=symbolset)
+
+    ########################## Basic metadata fields ##########################
 
     @property
     def style(self) -> str:
         """str: The record style"""
         return 'potential_LAMMPS_KIM'
-
-    @property
-    def shortcode(self) -> str:
-        """str : The kim model shortcode"""
-        if self.model is None:
-            raise AttributeError('No model information loaded')
-        return self.__shortcode
 
     @property
     def modelroot(self) -> str:
@@ -108,6 +99,117 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
     def xsd_filename(self) -> Tuple[str, str]:
         """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'potential_LAMMPS_KIM.xsd')
+
+    ####################### Define Values and attributes #######################
+
+    def _init_values(self):
+        """
+        Method that defines the value objects for the Record.  This should
+        call the super of this method, then use self._add_value to create new Value objects.
+        Note that the order values are defined matters
+        when build_model is called!!!
+        """
+        
+        self._add_value('str', 'key')
+        self._add_value('str', 'shortcode', modelpath='id')
+        self._add_value('str', 'url', modelpath='URL')
+        self._add_value('str', 'status', allowedvalues=('superseded', 'retracted'))
+        self._add_value('record', 'potentials', recordclass=PotentialInfo,
+                        modelpath='potential', metadatakey=False)
+        self._add_value('strlist', 'fullkimids', modelpath='full-kim-id')
+        
+
+    @property
+    def defaultname(self) -> Optional[str]:
+        """str: The name to default to, usually based on other properties"""
+        return self.shortcode
+
+    @property
+    def id(self):
+        """str: The full kim model id for the potential implementation."""
+        return self.__id
+
+    @id.setter
+    def id(self, val: str):
+        self.__id = str(val)
+
+    @property
+    def potkey(self) -> Optional[str]:
+        """str : uuid hash-key for the potential model."""
+        return self.__potkey
+
+    @property
+    def potid(self) -> Optional[str]:
+        """str : Human-readable identifier for the potential model."""
+        return self.__potid
+
+    @property
+    def poturl(self) -> Optional[str]:
+        """str : URL for an online copy of the potential model record."""
+        return self.__poturl
+    
+    @property
+    def dois(self) -> list:
+        """list: DOIs associated with the potential model."""
+        return self.__dois
+    
+    @property
+    def units(self) -> str:
+        """str : LAMMPS units option."""
+        return self.__units
+
+    @units.setter
+    def units(self, val: Optional[str]):
+        self.__units = val
+
+    @property
+    def atoms(self) -> list:
+        """list : The list of atomic models represented by the potential."""
+        return self.__atoms
+
+    @property
+    def pair_style(self) -> str:
+        """str : LAMMPS pair_style option."""
+        return 'kim'
+
+    @property
+    def symbols(self) -> list:
+        """list of str : All atom-model symbols."""
+        symbols = []
+        for atom in self.atoms:
+            symbols.append(atom.symbol)
+        return symbols
+
+    def add_potential(self, **kwargs):
+        """
+        Initializes a new PotentialInfo object and appends it to the potentials list.
+        """
+        newpot = PotentialInfo(**kwargs)
+        for pot in self.potentials:
+            if pot.id == newpot.id:
+                raise ValueError(f'PotentialInfo with id {pot.id} already exists')
+        self.potentials.append(newpot)
+
+
+    def metadata(self) -> dict:
+        """
+        Generates a dict of simple metadata values associated with the record.
+        Useful for quickly comparing records and for building pandas.DataFrames
+        for multiple records of the same style.
+        """
+        meta = super().metadata()
+
+        meta['id'] = self.id
+        meta['potid'] = self.potid
+        meta['potkey'] = self.potkey
+        meta['poturl'] = self.poturl
+        meta['units'] = self.units
+        meta['pair_style'] = self.pair_style
+        meta['symbols'] = self.symbols
+        meta['elements'] = self.elements()
+
+        return meta
+
 
     def download_files(self,
                        pot_dir: Optional[str] = None,
@@ -150,7 +252,8 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
                    id: Optional[str] = None, 
                    potkey: Optional[str] = None,
                    potid: Optional[str] = None,
-                   symbolset: Union[str, list, None] = None):
+                   symbolset: Union[str, list, None] = None,
+                   units: str = 'metal'):
         """
         Loads data model info associated with a LAMMPS potential.
         
@@ -180,89 +283,14 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         """
         # Call parent load to read model and some parameters
         super().load_model(model, name=name)
-        kimpot = self.model[self.modelroot]
         
-        # Explicitly set pair_style
-        self._pair_style = 'kim'
-        
-        # Handle shortcode, id and name identifiers
-        self.__shortcode = kimpot['id']
-        if id is not None:
-            self._id = id
+        # Set default id as latest fullkimid if possible
+        if id is None and self.fullkimids is not None:
+            self.__id = self.fullkimids[-1]
         else:
-            # Get last known id
-            self._id = kimpot.aslist('full-kim-id')[-1]
-        
-        # Set key as shortcode plus version
-        self._key = self.id.split('__')[-1]
-        
-        # Set name as shortcode
-        if self.name is None:
-            self.name = self.shortcode
-        
-        # Initialize fields for atomic info
-        self._potkeys = []
-        self._potids = []
-        self._symbolsets = []
-        self._elementsets = []
-        self._masssets = []
-        self._chargesets = []
-        self._fullsymbols = []
-        self._fullelements = []
-        self._fullmasses = []
-        self._fullcharges = []
-        
-        # Loop over associated potentials
-        for pot in kimpot.aslist('potential'):
-            self._potkeys.append(pot['key'])
-            self._potids.append(pot['id'])
-            
-            # Loop over atomic info
-            symbols = []
-            elements = []
-            masses = []
-            charges = []
-            for atom in pot.aslist('atom'):
-                element = atom.get('element', None)
-                symbol = atom.get('symbol', None)
-                mass = atom.get('mass', None)
-                charge = float(atom.get('charge', 0.0))
-            
-                # Check if element is listed
-                if element is None:
-                    if mass is None:
-                        raise KeyError('mass is required for each atom if element is not listed')
-                    if symbol is None:
-                        raise KeyError('symbol is required for each atom if element is not listed')
-                    else:
-                        element = symbol
-                
-                # Check if symbol is listed.
-                if symbol is None:
-                    symbol = element
-                
-                # Add values to the subset lists
-                symbols.append(symbol)
-                elements.append(element)
-                masses.append(mass)
-                charges.append(charge)
+            self.__id = id
 
-                # Add values to the full lists
-                if symbol not in self._fullsymbols:
-                    self._fullsymbols.append(symbol)
-                    self._fullelements.append(element)
-                    self._fullmasses.append(mass)
-                    self._fullcharges.append(charge)
-            self._symbolsets.append(symbols)
-            self._elementsets.append(elements)
-            self._masssets.append(masses)
-            self._chargesets.append(charges)
-
-        # Set initial atomic infos to all values
-        self._symbols = self._fullsymbols
-        self._elements = self._fullelements
-        self._masses = self._fullmasses
-        self._charges = self._fullcharges
+        self.units = units
 
         # Select the potential model
         self.select_potential(potkey=potkey, potid=potid, symbolset=symbolset)
@@ -270,16 +298,13 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
     @property
     def queries(self) -> dict:
         """dict: Query objects and their associated parameter names."""
-        return {
-            'key': load_query(
-                style='str_match',
-                name='key',
-                path=f'{self.modelroot}.key',
-                description="search based on the implementation's UUID key"),
+        queries = super().queries
+
+        queries.update({
             'id': load_query(
-                style='str_match',
+                style='list_contains',
                 name='id',
-                path=f'{self.modelroot}.id',
+                path=f'{self.modelroot}.full-kim-id',
                 description="search based on the implementation's id (KIM ID)"),
             'potkey': load_query(
                 style='str_match',
@@ -292,25 +317,15 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
                 path=f'{self.modelroot}.potential.id',
                 description="search based on the potential's id"),
             'units': load_query(
-                style='str_match',
-                name='units',
-                path=None,
+                style='dummy',
                 description="search based on LAMMPS units setting"),
             'atom_style': load_query(
-                style='str_match',
-                name='atom_style',
-                path=None,
+                style='dummy',
                 description="search based on LAMMPS atom_style setting"),
             'pair_style': load_query(
-                style='str_match',
-                name='pair_style',
-                path=None,
+                style='dummy',
+                value='kim',
                 description="search based on LAMMPS pair_style setting"),
-            'status': load_query(
-                style='str_match',
-                name='status',
-                path=f'{self.modelroot}.status',
-                description="search based on implementation status: active, superseded or retracted"),
             'symbols': load_query(
                 style='list_contains',
                 name='symbols',
@@ -321,135 +336,11 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
                 name='elements',
                 path=f'{self.modelroot}.potential.atom.element',
                 description="search based on atomic model elements"),
-        }
+        })
 
-    def mongoquery(self,
-                   name: Union[str, list, None] = None,
-                   **kwargs) -> dict:
-        """
-        Builds a Mongo-style query based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        name : str or list
-            The record name(s) to parse by.
-        **kwargs : any
-            Any of the record style-specific search parameters.
-        
-        Returns
-        -------
-        dict
-            The Mongo-style query
-        """
+        return queries
 
-        # Return bad query if pair_style kim not included
-        if ('pair_style' in kwargs and
-            kwargs['pair_style'] is not None and 
-            'kim' not in aslist(kwargs['pair_style'])):
-            return {"not.kim.pair_style":"get nothing"}
-
-        # Modify status
-        if 'status' in kwargs and kwargs['status'] is not None:
-            kwargs['status'] = aslist(kwargs['status'])
-            if 'active' in kwargs['status']:
-                kwargs['status'].append(None)
-
-        # Transform id values into shortcodes for query
-        shortcodes = set()
-        if 'id' in kwargs and kwargs['id'] is not None:
-            for i in aslist(kwargs['id']):
-                k = i.split('__')[-1]
-                shortcode = '_'.join(k.split('_')[:-1])
-                shortcodes.add(shortcode)
-        if len(shortcodes) == 0:
-            shortcodes = None
-        else:
-            shortcodes = list(shortcodes)
-        kwargs['id'] = shortcodes
-
-        # Remove terms ignored by queries
-        if 'pair_style' in kwargs:
-            del kwargs['pair_style']
-        if 'units' in kwargs:
-            del kwargs['units']
-        if 'atom_style' in kwargs:
-            del kwargs['atom_style']
-
-        mquery = super().mongoquery(name=name, **kwargs)
-        
-        return mquery
-
-    def cdcsquery(self, **kwargs) -> dict:
-        """
-        Builds a CDCS-style query based on kwargs values for the record style.
-        
-        Parameters
-        ----------
-        **kwargs : any
-            Any of the record style-specific search parameters.
-        
-        Returns
-        -------
-        dict
-            The CDCS-style query
-        """
-        # Return bad query if pair_style kim not included
-        if ('pair_style' in kwargs and
-            kwargs['pair_style'] is not None and 
-            'kim' not in aslist(kwargs['pair_style'])):
-            return {"not.kim.pair_style":"get nothing"}
-
-        # Modify status
-        if 'status' in kwargs and kwargs['status'] is not None:
-            kwargs['status'] = aslist(kwargs['status'])
-            if 'active' in kwargs['status']:
-                kwargs['status'].append(None)
-
-        # Transform id values into shortcodes for query
-        shortcodes = set()
-        if 'id' in kwargs and kwargs['id'] is not None:
-            for i in aslist(kwargs['id']):
-                k = i.split('__')[-1]
-                shortcode = '_'.join(k.split('_')[:-1])
-                shortcodes.add(shortcode)
-        if len(shortcodes) == 0:
-            shortcodes = None
-        else:
-            shortcodes = list(shortcodes)
-        kwargs['id'] = shortcodes
-
-        # Remove terms ignored by queries
-        if 'pair_style' in kwargs:
-            del kwargs['pair_style']
-        if 'units' in kwargs:
-            del kwargs['units']
-        if 'atom_style' in kwargs:
-            del kwargs['atom_style']
-
-        mquery = super().cdcsquery(**kwargs)
-
-        return mquery
-
-    @property
-    def symbolsets(self) -> list:
-        """list : The sets of symbols that correspond to all related potentials"""
-        if self.model is None:
-            raise AttributeError('No model information loaded')
-        return self._symbolsets
-
-    @property
-    def potids(self) -> list:
-        """list : The ids of all related potentials"""
-        if self.model is None:
-            raise AttributeError('No model information loaded')
-        return self._potids
     
-    @property
-    def potkeys(self) -> list:
-        """list : The keys of all related potentials"""
-        if self.model is None:
-            raise AttributeError('No model information loaded')
-        return self._potkeys
 
     def select_potential(self,
                          potkey: Optional[str] = None,
@@ -477,110 +368,61 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
             If potkey or potid is not given, then the first potential entry
             found with all listed symbols will be selected.
         """
-        # If only one potential is associated with the model
-        if len(self.symbolsets) == 1:
-            # Set values
-            self._potid = self._potids[0]
-            self._potkey = self._potkeys[0]
-            self._symbols = self._symbolsets[0]
-            self._elements = self._elementsets[0]
-            self._masses = self._masssets[0]
-            self._charges = self._chargesets[0]
+        # Default cases
+        if symbolset is None and potid is None and potkey is None:
+            
+            if len(self.potentials) == 1:
 
-            if symbolset is not None:
-                # Check that symbols are in symbolset
-                for symbol in aslist(symbolset):
-                    if symbol not in self.symbols:
-                        raise ValueError('symbolset does not match potential')
-            if potkey is not None:
-                if potkey != self.potkey:
-                    raise ValueError('potkey does not match potential')
-            if potid is not None:
-                if potid != self.potid:
-                    raise ValueError('potid does not match potential')
-
-        # If multiple potentials are associated with the model
-        else:
-            if symbolset is None and potid is None and potkey is None:
-                # Set default values
-                self._potkey = None
-                self._potid = None
-                self._symbols = self._fullsymbols
-                self._elements = self._fullelements
-                self._masses = self._fullmasses
-                self._charges = self._fullcharges
-
-            elif potid is not None:
-                # Find match and set values
-                i = self.potids.index(potid)
-                self._potid = self._potids[i]
-                self._potkey = self._potkeys[i]
-                self._symbols = self._symbolsets[i]
-                self._elements = self._elementsets[i]
-                self._masses = self._masssets[i]
-                self._charges = self._chargesets[i]
-                
-                # Check that potkey is correct
-                if potkey is not None:
-                    if potkey != self.potkey:
-                        raise ValueError('potkey does not match potential given by potid')
-                
-                # Check that symbols are in symbolset
-                if symbolset is not None:
-                    for symbol in aslist(symbolset):
-                        if symbol not in self.symbols:
-                            raise ValueError('symbolset does not match potential given by potid')
-                
-            elif potkey is not None:
-                # Find match and set values
-                i = self.potkeys.index(potkey)
-                self._potid = self._potids[i]
-                self._potkey = self._potkeys[i]
-                self._symbols = self._symbolsets[i]
-                self._elements = self._elementsets[i]
-                self._masses = self._masssets[i]
-                self._charges = self._chargesets[i]
-                
-                # Check that symbols are in symbolset
-                if symbolset is not None:
-                    for symbol in aslist(symbolset):
-                        if symbol not in self.symbols:
-                            raise ValueError('symbolset does not match potential given by potkey')
-
+                # Point to single potential model
+                self.__potid = self.potentials[0].id
+                self.__potkey = self.potentials[0].key
+                self.__poturl = self.potentials[0].url
+                self.__dois = self.potentials[0].dois
+                self.__atoms = self.potentials[0].atoms
+            
             else:
-                # Search for first matching symbolset
-                for i, symbols in enumerate(self.symbolsets):
-                    match = True
+                
+                # Set empty or comprehensive values
+                self.__potkey = None
+                self.__potid = None
+                self.__poturl = None
+                self.__dois = None
+                self.__atoms = []
+                for potential in self.potentials:
+                    self.atoms.extend(potential.atoms)
+
+        else:
+            
+            # Loop over all potential models
+            idmatch = False
+            for potinfo in self.potentials:
+
+                # Check if potid, potkey and symbolset match with potinfo
+                idmatch = (potid is None or potinfo.id == potid)
+                keymatch = (potkey is None or potinfo.key == potkey)
+                symbolsmatch = True
+                if symbolset is not None:
+                    symbols = []
+                    for atom in potinfo.atoms:
+                        symbols.append(atom.symbol)
                     for symbol in aslist(symbolset):
                         if symbol not in symbols:
-                            match = False
-                            break
-                    if match:
-                        break
+                            symbolsmatch = False
                 
-                if match:
-                    # Set values
-                    self._potid = self._potids[i]
-                    self._potkey = self._potkeys[i]
-                    self._symbols = self._symbolsets[i]
-                    self._elements = self._elementsets[i]
-                    self._masses = self._masssets[i]
-                    self._charges = self._chargesets[i]
-                
-                else:
-                    # Check that symbols are in fullsymbols
-                    for symbol in aslist(symbolset):
-                        if symbol not in self._fullsymbols:
-                            raise ValueError(f'symbol {symbol} not in any symbolsets')
-                    
-                    warnings.warn('No single entry for all symbols - cross interactions not recommended')
-                    # Set default values
-                    self._potkey = None
-                    self._potid = None
-                    self._symbols = self._fullsymbols
-                    self._elements = self._fullelements
-                    self._masses = self._fullmasses
-                    self._charges = self._fullcharges
+                if idmatch and keymatch and symbolsmatch:
+                    break
+
+            # Point to the first matching potential model
+            if idmatch and keymatch and symbolsmatch:
+                self.__potid = potinfo.id
+                self.__potkey = potinfo.key
+                self.__poturl = potinfo.url
+                self.__dois = potinfo.dois
+                self.__atoms = potinfo.atoms
+            #else:
+            #    raise ValueError('No potential info matching the given potkey, potid, symbolset found!')
+
+
 
     def normalize_symbols(self,
                           symbols: Union[str, list]) -> list:
@@ -599,14 +441,136 @@ class PotentialLAMMPSKIM(BasePotentialLAMMPS):
         list
             The updated list.
         """
-        # Call parent method
-        symbols = super().normalize_symbols(symbols)
+        # Convert symbols to a list if needed
+        symbols = aslist(symbols)
+
+        # Check that all symbols are set
+        for symbol in symbols:
+            assert symbol is not None, 'symbols list incomplete: found None value'
         
         # Call select_potential if needed
         if self.potid is None:
             self.select_potential(symbols)
 
         return symbols
+
+    def elements(self,
+                 symbols: Union[str, list, None] = None) -> list:
+        """
+        Returns a list of element names associated with atom-model symbols.
+        
+        Parameters
+        ----------
+        symbols : list of str, optional
+            A list of atom-model symbols.  If None (default), will use all of
+            the potential's symbols.
+        
+        Returns
+        -------
+        list of str
+            The str element symbols corresponding to the atom-model symbols.
+        """
+        # Get full list of all symbols for the potential
+        fullsymbols = self.symbols
+
+        # Set default symbols to fullsymbols
+        if symbols is None:
+            symbols = fullsymbols
+
+        # Normalize symbols
+        symbols = self.normalize_symbols(symbols)
+
+        # Get all matching elements
+        elements = []
+        for symbol in symbols:
+            i = fullsymbols.index(symbol)
+            elements.append(self.atoms[i].element)
+
+        return elements
+
+    def masses(self,
+               symbols: Union[str, list, None] = None,
+               prompt: bool = False) -> list:
+        """
+        Returns a list of atomic/ionic masses associated with atom-model
+        symbols.
+        
+        Parameters
+        ----------
+        symbols : list of str, optional
+            A list of atom-model symbols.  If None (default), will use all of
+            the potential's symbols.
+        prompt : bool, optional
+            If True, then a screen prompt will appear for radioactive elements
+            with no standard mass to ask for the isotope to use. If False
+            (default), then the most stable isotope will be automatically used.
+        
+        Returns
+        -------
+        list of float
+            The atomic/ionic masses corresponding to the atom-model symbols.
+        """
+        # Get full list of all symbols for the potential
+        fullsymbols = self.symbols
+
+        # Set default symbols to fullsymbols
+        if symbols is None:
+            symbols = fullsymbols
+
+        # Normalize symbols
+        symbols = self.normalize_symbols(symbols)
+
+        # Get all matching masses
+        masses = []
+        for symbol in symbols:
+            i = fullsymbols.index(symbol)
+            atom = self.atoms[i]
+            if atom.mass is None:
+                masses.append(atomic_mass(atom.element, prompt=prompt))
+            else:
+                masses.append(atom.mass)
+
+        return masses
+
+    def charges(self,
+                symbols: Union[str, list, None] = None) -> list:
+        """
+        Returns a list of atomic charges associated with atom-model symbols.
+        Will have a None value if not assigned.
+        
+        Parameters
+        ----------
+        symbols : list of str, optional
+            A list of atom-model symbols.  If None (default), will use all of
+            the potential's symbols.
+        
+        Returns
+        -------
+        list of float
+            The atomic charges corresponding to the atom-model symbols.
+        """
+        # Get full list of all symbols for the potential
+        fullsymbols = self.symbols
+
+        # Set default symbols to fullsymbols
+        if symbols is None:
+            symbols = fullsymbols
+
+        # Normalize symbols
+        symbols = self.normalize_symbols(symbols)
+
+        # Get all matching charges
+        charges = []
+        for symbol in symbols:
+            i = fullsymbols.index(symbol)
+            atom = self.atoms[i]
+            if atom.charge is None:
+                charges.append(0.0)
+            else:
+                charges.append(atom.charge)
+
+        return charges
+
 
     def pair_info(self,
                   symbols: Union[str, list, None] = None,

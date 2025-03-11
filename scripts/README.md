@@ -1,5 +1,7 @@
 # Scripts
 
+**Caution**: These notebooks have not yet been tested with the 0.4.0 version update!!
+
 This directory collects various Python scripts and Jupyter Notebooks that are
 used to manage the potentials database content.  These scripts are not
 intended for people who simply want to find and use potentials already in the
@@ -15,7 +17,7 @@ potentials into other frameworks.
   to be executed and fields in many of the cells are meant to be changed as
   the records are generated.
 
-- The __Check data consistency__ Notebook provides checks for ensuring that
+- The __Record consistency checks__ Notebook provides checks for ensuring that
   the records in the different database locations (potentials.nist.gov,
   potentials-library) are the same and that content is consistent across
   records of different styles.  The content checks include both verifying

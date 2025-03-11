@@ -1,0 +1,68 @@
+{
+    "interatomic-potential": {
+        "key": "3434071f-959f-4276-bd0e-540ce9aeba99",
+        "id": "2016--Kim-Y-K-Kim-H-K-Jung-W-S-Lee-B-J--Al-Ti",
+        "record-version": "2020-10-13",
+        "description": {
+            "citation": {
+                "document-type": "journal",
+                "title": "Atomistic modeling of the Ti–Al binary system",
+                "author": [
+                    {
+                        "given-name": "Y.-K.",
+                        "surname": "Kim"
+                    },
+                    {
+                        "given-name": "H.-K.",
+                        "surname": "Kim"
+                    },
+                    {
+                        "given-name": "W.-S.",
+                        "surname": "Jung"
+                    },
+                    {
+                        "given-name": "B.-J.",
+                        "surname": "Lee"
+                    }
+                ],
+                "publication-name": "Computational Materials Science",
+                "publication-date": {
+                    "year": 2016
+                },
+                "volume": 119,
+                "abstract": "An interatomic potential for the Ti–Al binary system has been developed based on the second nearest-neighbor modified embedded-atom method (2NN MEAM) formalism. This potential describes fundamental materials properties (structural, thermodynamic, elastic, defect, deformation and thermal properties) of Ti–Al alloys in good agreements with experimental or first-principles data. The transferability and applicability of the present potential to atomic-scale investigations for Ni-based superalloys or Ti–Al based alloys are demonstrated.",
+                "pages": "1-8",
+                "DOI": "10.1016/j.commatsci.2016.03.038",
+                "bibtex": "@article{Kim_2016,\n abstract = {An interatomic potential for the Ti–Al binary system has been developed based on the second nearest-neighbor modified embedded-atom method (2NN MEAM) formalism. This potential describes fundamental materials properties (structural, thermodynamic, elastic, defect, deformation and thermal properties) of Ti–Al alloys in good agreements with experimental or first-principles data. The transferability and applicability of the present potential to atomic-scale investigations for Ni-based superalloys or Ti–Al based alloys are demonstrated.},\n author = {Young-Kwang Kim and Hong-Kyu Kim and Woo-Sang Jung and Byeong-Joo Lee},\n doi = {10.1016/j.commatsci.2016.03.038},\n journal = {Computational Materials Science},\n month = {jun},\n pages = {1--8},\n publisher = {Elsevier BV},\n title = {Atomistic modeling of the Ti–Al binary system},\n url = {https://doi.org/10.1016%2Fj.commatsci.2016.03.038},\n volume = {119},\n year = {2016}\n}\n\n"
+            }
+        },
+        "implementation": {
+            "key": "517c2a5c-3cec-47e5-91ee-56ae00cb7479",
+            "id": "2016--Kim-Y-K--Al-Ti--LAMMPS--ipr1",
+            "status": "active",
+            "date": "2020-10-13",
+            "type": "LAMMPS pair_style meam",
+            "notes": {
+                "text": "These potential files were obtained from http://cmse.postech.ac.kr/home_2nnmeam, accessed Nov 9, 2020."
+            },
+            "artifact": [
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Kim-Y-K-Kim-H-K-Jung-W-S-Lee-B-J--Al-Ti/1/library.meam",
+                        "link-text": "library.meam"
+                    }
+                },
+                {
+                    "web-link": {
+                        "URL": "https://www.ctcms.nist.gov/potentials/Download/2016--Kim-Y-K-Kim-H-K-Jung-W-S-Lee-B-J--Al-Ti/1/AlTi.meam",
+                        "link-text": "AlTi.meam"
+                    }
+                }
+            ]
+        },
+        "element": [
+            "Al",
+            "Ti"
+        ]
+    }
+}

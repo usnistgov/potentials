@@ -11,6 +11,8 @@ else:
 from . import tools
 from .Settings import settings
 
+from . import value
+
 # Import records and load local record styles
 from . import record
 from .record import recordmanager, load_record
@@ -23,7 +25,7 @@ from .buildrecord import build_lammps_potential
 
 from . import paramfile
 
-__all__ = ['__version__', 'tools', 'settings', 'paramfile',
+__all__ = ['__version__', 'tools', 'settings', 'paramfile', 'value',
            'record', 'load_record', 'recordmanager', 'buildrecord',
            'Database', 'load_database',  'build_lammps_potential',]
 __all__.sort()

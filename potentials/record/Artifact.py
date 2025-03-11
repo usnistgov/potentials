@@ -1,14 +1,10 @@
 # coding: utf-8
 # Standard Python libraries
-import io
 from pathlib import Path
-from typing import Optional, Tuple, Union
+from typing import Tuple, Union
 
 # https://requests.readthedocs.io/en/master/
 import requests
-
-# https://github.com/usnistgov/DataModelDict
-from DataModelDict import DataModelDict as DM
 
 # https://github.com/usnistgov/yabadaba
 from yabadaba.record import Record
@@ -18,33 +14,12 @@ class Artifact(Record):
     Class for describing artifacts (files accessible online). Note that this is
     meant as a component class for other record objects.
     """
-    def __init__(self,
-                 model: Union[str, io.IOBase, DM, None] = None,
-                 name: Optional[str] = None,
-                 database = None,
-                 **kwargs):
-        """
-        Initializes an Artifact object to describe a file accessible online
+    ########################## Basic metadata fields ##########################
 
-        Parameters
-        ----------
-        model : str, file-like object or DataModelDict, optional
-            A JSON/XML data model for the content.
-        name : str, optional
-            The name to assign to the record.  Not used by this class.
-        database : yabadaba.Database, optional
-            Allows for a default database to be associated with the record.
-            Not used by this class.
-        filename : str, optional
-            The name of the file without path information.
-        label : str, optional
-            A short description label.
-        url : str, optional
-            URL for file where downloaded, if available.
-        """
-        assert name is None, 'name is not used by this class'
-        assert database is None, 'database is not used by this class'
-        super().__init__(model=model, name=name, database=database, **kwargs)
+    @property
+    def style(self):
+        """str: The record style"""
+        return 'implementation_artifact'
 
     @property
     def modelroot(self) -> str:
@@ -61,118 +36,19 @@ class Artifact(Record):
         """tuple: The module path and file name of the record's xsd schema"""
         return ('potentials.xsd', 'artifact.xsd')
 
-    @property
-    def filename(self) -> Optional[str]:
-        """str or None: name of the file"""
-        return self.__filename
-    
-    @filename.setter
-    def filename(self, v: Optional[str]):
-        if v is None:
-            self.__filename = None
-        else:
-            self.__filename = str(v)
+    ####################### Define Values and attributes #######################
 
-    @property
-    def label(self) -> Optional[str]:
-        """str or None: short descriptive label"""
-        return self.__label
-    
-    @label.setter
-    def label(self, v: Optional[str]):
-        if v is None:
-            self.__label = None
-        else:
-            self.__label = str(v)
-    
-    @property
-    def url(self) -> Optional[str]:
-        """str or None: URL where file can be downloaded"""
-        return self.__url
-    
-    @url.setter
-    def url(self, v: Optional[str]):
-        if v is None:
-            self.__url = None
-        else:
-            self.__url = str(v)
-
-    def set_values(self,
-                   name: Optional[str] = None,
-                   **kwargs):
+    def _init_values(self):
         """
-        Sets an Artifact object's attributes
-
-        Parameters
-        ----------
-        name : str, optional
-            The name to assign to the record.  Not used by this class.
-        filename : str, optional
-            The name of the file without path information.
-        label : str, optional
-            A short description label.
-        url : str, optional
-            URL for file where downloaded, if available.
+        Method that defines the value objects for the Record.  This should
+        call the super of this method, then use self._add_value to create new Value objects.
+        Note that the order values are defined matters
+        when build_model is called!!!
         """
-        assert name is None, 'name is not used by this class'
-        self.filename = kwargs.get('filename', None)
-        self.label = kwargs.get('label', None)
-        self.url = kwargs.get('url', None)
-
-    def load_model(self,
-                   model: Union[str, io.IOBase, DM],
-                   name: Optional[str] = None):
-        """"
-        Loads the object info from data model content
         
-        Parameters
-        ----------
-        model : str or DataModelDict
-            Model content or file path to model content.
-        name : str, optional
-            The name to assign to the record.  Not used by this class.
-        """
-        assert name is None, 'name is not used by this class'
-        artifact = DM(model).find('artifact')
-        self.url = artifact['web-link'].get('URL', None)
-        self.label = artifact['web-link'].get('label', None)
-        self.filename = artifact['web-link'].get('link-text', None)
-    
-    def build_model(self) -> DM:
-        """
-        Returns the object info as data model content
-        
-        Returns
-        ----------
-        DataModelDict
-            The data model content.
-        """
-
-        model = DM()
-        model['artifact'] = DM()
-        model['artifact']['web-link'] = DM()
-        if self.url is not None:
-            model['artifact']['web-link']['URL'] = self.url
-        if self.label is not None:
-            model['artifact']['web-link']['label'] = self.label
-        if self.filename is not None:
-            model['artifact']['web-link']['link-text'] = self.filename
-        
-        self._set_model(model)
-        return model
-
-    def metadata(self) -> dict:
-        """
-        Generates a dict of simple metadata values associated with the record.
-        Useful for quickly comparing records and for building pandas.DataFrames
-        for multiple records of the same style.
-        """
-        meta = {}
-        meta['filename'] = self.filename
-        meta['label'] = self.label
-        meta['url'] = self.url
-
-        return meta
+        self._add_value('str', 'url', modelpath='web-link.URL')
+        self._add_value('longstr', 'label', modelpath='web-link.label')
+        self._add_value('longstr', 'filename', modelpath='web-link.link-text')
 
     def download(self,
                  targetdir: Union[str, Path],

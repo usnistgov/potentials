@@ -1,0 +1,42 @@
+{
+    "citation": {
+        "document-type": "journal",
+        "title": "Hybrid interatomic potential for Sn",
+        "author": [
+            {
+                "given-name": "M.S.",
+                "surname": "Nitol"
+            },
+            {
+                "given-name": "K.",
+                "surname": "Dang"
+            },
+            {
+                "given-name": "S.J.",
+                "surname": "Fensin"
+            },
+            {
+                "given-name": "M.I.",
+                "surname": "Baskes"
+            },
+            {
+                "given-name": "D.E.",
+                "surname": "Dickel"
+            },
+            {
+                "given-name": "C.D.",
+                "surname": "Barrett"
+            }
+        ],
+        "publication-name": "Physical Review Materials",
+        "publication-date": {
+            "year": 2023
+        },
+        "volume": 7,
+        "issue": 4,
+        "abstract": "To design materials for extreme applications, it is important to understand and predict phase transitions and their influence on material properties under high pressures and temperatures. Atomistic modeling can be a useful tool to assess these behaviors. However, this can be difficult due to the lack of fidelity of the interatomic potentials in reproducing this high pressure and temperature extreme behavior. Here, a hybrid EAM-R—which is the combination of embedded atom method (EAM) and rapid artificial neural network potential—for Tin (Sn) is described which is capable of accurately modeling the complex sequence of phase transitions between different metallic polymorphs as a function of pressure. This hybrid approach ensures that a basic empirical potential like EAM is used as a lower energy bound. By using the final activation function, the neural network contribution to energy must be positive, assuring stability over the whole configuration space. This implementation has the capacity to reproduce density functional theory results at 6 orders of magnitude slower than a pair potential for molecular dynamics simulation, including elastic and plastic characteristics and relative energies of each phase. Using calculations of the Gibbs free energy, it is demonstrated that the potential precisely predicts the experimentally observed phase changes at temperatures and pressures across the whole phase diagram. At 10.2 GPa, the present potential predicts a first-order phase transition between body-centered tetragonal (BCT) β-Sn and another polymorph of BCT-Sn. This structure transforms into body-centered cubic near the experimentally reported value at 33 GPa. Thus, the Sn potential developed in this paper can be used to study complex deformation mechanisms under extreme conditions of high pressure and strain rates unlike existing potentials. Moreover, the framework developed in this paper can be extended for different material systems with complex phase diagrams.",
+        "pages": "043601",
+        "DOI": "10.1103/physrevmaterials.7.043601",
+        "bibtex": "@article{Nitol_2023,\n abstract = {To design materials for extreme applications, it is important to understand and predict phase transitions and their influence on material properties under high pressures and temperatures. Atomistic modeling can be a useful tool to assess these behaviors. However, this can be difficult due to the lack of fidelity of the interatomic potentials in reproducing this high pressure and temperature extreme behavior. Here, a hybrid EAM-R—which is the combination of embedded atom method (EAM) and rapid artificial neural network potential—for Tin (Sn) is described which is capable of accurately modeling the complex sequence of phase transitions between different metallic polymorphs as a function of pressure. This hybrid approach ensures that a basic empirical potential like EAM is used as a lower energy bound. By using the final activation function, the neural network contribution to energy must be positive, assuring stability over the whole configuration space. This implementation has the capacity to reproduce density functional theory results at 6 orders of magnitude slower than a pair potential for molecular dynamics simulation, including elastic and plastic characteristics and relative energies of each phase. Using calculations of the Gibbs free energy, it is demonstrated that the potential precisely predicts the experimentally observed phase changes at temperatures and pressures across the whole phase diagram. At 10.2 GPa, the present potential predicts a first-order phase transition between body-centered tetragonal (BCT) β-Sn and another polymorph of BCT-Sn. This structure transforms into body-centered cubic near the experimentally reported value at 33 GPa. Thus, the Sn potential developed in this paper can be used to study complex deformation mechanisms under extreme conditions of high pressure and strain rates unlike existing potentials. Moreover, the framework developed in this paper can be extended for different material systems with complex phase diagrams.},\n author = {Mashroor S. Nitol and Khanh Dang and Saryu J. Fensin and Michael I. Baskes and Doyl E. Dickel and Christopher D. Barrett},\n doi = {10.1103/physrevmaterials.7.043601},\n journal = {Physical Review Materials},\n month = {apr},\n number = {4},\n pages = {043601},\n publisher = {American Physical Society (APS)},\n title = {Hybrid interatomic potential for Sn},\n url = {https://doi.org/10.1103%2Fphysrevmaterials.7.043601},\n volume = {7},\n year = {2023}\n}\n"
+    }
+}

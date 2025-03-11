@@ -1,0 +1,34 @@
+{
+    "citation": {
+        "document-type": "journal",
+        "title": "Development of interatomic potentials appropriate for simulation of solid-liquid interface properties in Al-Mg alloys",
+        "author": [
+            {
+                "given-name": "M.I.",
+                "surname": "Mendelev"
+            },
+            {
+                "given-name": "M.",
+                "surname": "Asta"
+            },
+            {
+                "given-name": "M.J.",
+                "surname": "Rahman"
+            },
+            {
+                "given-name": "J.J.",
+                "surname": "Hoyt"
+            }
+        ],
+        "publication-name": "Philosophical Magazine",
+        "publication-date": {
+            "year": 2009
+        },
+        "volume": 89,
+        "issue": "34-36",
+        "abstract": "Different approaches are analyzed for construction of semi-empirical potentials for binary alloys, focusing specifically on the capability of these potentials to describe solid–liquid phase equilibria, as a pre-requisite to studies of solidification phenomena. Fitting ab initio compound data does not ensure correct reproduction of the dilute solid-solution formation energy, and explicit inclusion of this quantity in the potential development procedure does not guarantee that the potential will predict the correct solid–liquid phase diagram. Therefore, we conclude that fitting only to solid phase properties, as is done in most potential development procedures, generally is not sufficient to develop a semi-empirical potential suitable for the simulation of solidification. A method is proposed for the incorporation of data for liquid solution energies in the potential development procedure, and a new semi-empirical potential developed suitable for simulations of dilute alloys of Mg in Al. The potential correctly reproduces both zero-temperature solid properties and solidus and liquid lines on the Al-rich part of the Al–Mg phase diagram.",
+        "pages": "3269-3285",
+        "DOI": "10.1080/14786430903260727",
+        "bibtex": "@article{Mendelev_2009,\n abstract = {Different approaches are analyzed for construction of semi-empirical potentials for binary alloys, focusing specifically on the capability of these potentials to describe solid–liquid phase equilibria, as a pre-requisite to studies of solidification phenomena. Fitting ab initio compound data does not ensure correct reproduction of the dilute solid-solution formation energy, and explicit inclusion of this quantity in the potential development procedure does not guarantee that the potential will predict the correct solid–liquid phase diagram. Therefore, we conclude that fitting only to solid phase properties, as is done in most potential development procedures, generally is not sufficient to develop a semi-empirical potential suitable for the simulation of solidification. A method is proposed for the incorporation of data for liquid solution energies in the potential development procedure, and a new semi-empirical potential developed suitable for simulations of dilute alloys of Mg in Al. The potential correctly reproduces both zero-temperature solid properties and solidus and liquid lines on the Al-rich part of the Al–Mg phase diagram.},\n author = {M.I. Mendelev and M. Asta and M.J. Rahman and J.J. Hoyt},\n doi = {10.1080/14786430903260727},\n journal = {Philosophical Magazine},\n month = {dec},\n number = {34-36},\n pages = {3269--3285},\n publisher = {Informa UK Limited},\n title = {Development of interatomic potentials appropriate for simulation of solid-liquid interface properties in Al-Mg alloys},\n url = {https://doi.org/10.1080%2F14786430903260727},\n volume = {89},\n year = {2009}\n}\n\n"
+    }
+}

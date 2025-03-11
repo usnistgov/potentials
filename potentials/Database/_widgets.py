@@ -46,7 +46,9 @@ def widget_search_potentials(self,
 
     # Build list of all unique elements
     unique_elements = set()
-    for elements in potentials_df.elements.values:
+    for elements in potentials_df[potentials_df.elements.notna()].elements.values:
+        unique_elements.update(elements)
+    for elements in potentials_df[potentials_df.fictionalelements.notna()].fictionalelements.values:
         unique_elements.update(elements)
     unique_elements = [''] + sorted(list(unique_elements))
     
@@ -54,7 +56,8 @@ def widget_search_potentials(self,
     def getyears(series):
         years = set()
         for citation in series.citations:
-            years.add(citation['year'])
+            if citation['year'] is not None:
+                years.add(citation['year'])
         return years
     unique_years = potentials_df.apply(getyears, axis=1)
     unique_years = [''] + sorted(list(set().union(*unique_years)))
@@ -110,7 +113,12 @@ def widget_search_potentials(self,
             author = None
 
         # Parse potentials using author, year, elements
-        matches = potentials_df[load_record('Potential').pandasfilter(potentials_df, author=author, year=year, element=elements)]
+        record =load_record('Potential')
+        matches = potentials_df[
+            record.pandasfilter(potentials_df, author=author, year=year)
+            & (record.pandasfilter(potentials_df, elements=elements) | 
+               record.pandasfilter(potentials_df, fictionalelements=elements))
+            ]
         
         # Update potential dropdown accordingly
         potential_dropdown.options = matches.id.tolist()
@@ -184,9 +192,8 @@ def widget_lammps_potential(self,
     unique_pair_styles = [''] + list(np.unique(lammps_potentials_df.pair_style))
 
     # Build list of all unique elements
-    unique_elements = set()
-    for elements in lammps_potentials_df.elements.values:
-        unique_elements.update(elements)
+    unique_elements = set(lammps_potentials_df[lammps_potentials_df.elements.notna()].elements.values.sum())
+    unique_elements.remove(None)
     unique_elements = [''] + sorted(list(unique_elements))
     
     # Build list of all potential ids
