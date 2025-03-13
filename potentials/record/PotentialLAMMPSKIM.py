@@ -110,7 +110,7 @@ class PotentialLAMMPSKIM(Record):
         when build_model is called!!!
         """
         
-        self._add_value('str', 'key')
+        self._add_value('str', 'modelkey', modelpath='key')
         self._add_value('str', 'shortcode', modelpath='id')
         self._add_value('str', 'url', modelpath='URL')
         self._add_value('str', 'status', allowedvalues=('superseded', 'retracted'))
@@ -132,6 +132,11 @@ class PotentialLAMMPSKIM(Record):
     @id.setter
     def id(self, val: str):
         self.__id = str(val)
+
+    @property
+    def key(self):
+        """str: The short kim model id (shortcode plus version)"""
+        return self.id[-19:]
 
     @property
     def potkey(self) -> Optional[str]:
@@ -200,6 +205,7 @@ class PotentialLAMMPSKIM(Record):
         meta = super().metadata()
 
         meta['id'] = self.id
+        meta['key'] = self.key
         meta['potid'] = self.potid
         meta['potkey'] = self.potkey
         meta['poturl'] = self.poturl
@@ -306,6 +312,9 @@ class PotentialLAMMPSKIM(Record):
                 name='id',
                 path=f'{self.modelroot}.full-kim-id',
                 description="search based on the implementation's id (KIM ID)"),
+            'key': load_query(
+                style='dummy',
+                description="search based on the implementation's key"),
             'potkey': load_query(
                 style='str_match',
                 name='potkey',
