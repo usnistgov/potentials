@@ -232,7 +232,7 @@ class PotentialLAMMPS(Record):
             artifacts = kwargs.pop('artifacts')
             for artifact in aslist(artifacts):
                 if isinstance(artifact, Artifact):
-                    self.get_value('artifacts').append(artifact)
+                    self.get_value('artifacts').value.append(artifact)
                 else:
                     raise TypeError('artifacts must be Artifact objects')
         

@@ -176,6 +176,11 @@ class PotentialLAMMPSKIM(Record):
     def pair_style(self) -> str:
         """str : LAMMPS pair_style option."""
         return 'kim'
+    
+    @property
+    def atom_style(self) -> str:
+        """str : LAMMPS atom_style option."""
+        return 'atomic'
 
     @property
     def symbols(self) -> list:

@@ -113,7 +113,7 @@ class Citation(Record):
     @property
     def defaultname(self) -> Optional[str]:
         """str: The name to default to, usually based on other properties"""
-        if self.doi is not None:
+        if self.noname is False and self.doi is not None:
             # Filename compatible version of the doi
             return self.doi.lower().replace('/', '_')
         else:
@@ -295,7 +295,7 @@ class Citation(Record):
         self.build_bibtex()
         
         try:
-            self.name
+            assert self.name is not None
         except:
             self.name = self.defaultname
 
