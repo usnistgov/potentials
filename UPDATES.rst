@@ -1,6 +1,14 @@
 Updates
 =======
 
+0.4.1
+-----
+
+- Bug fixes for Action, Citation, PotentialLAMMPS, and PotentialLAMMPSKIM
+  record styles that were identified when testing new content creation.
+- Content Manager script fully updated and tested to work properly.
+- A Tersoff parameter file builder was added to paramfile.
+
 0.4.0
 -----
 
