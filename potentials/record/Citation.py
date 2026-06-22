@@ -95,17 +95,35 @@ class Citation(Record):
         self.__bibdict = None
         
         self._add_value('str', 'doctype', modelpath='document-type',
-                        allowedvalues=['book', 'journal', 'report', 'thesis',
-                                       'conference proceedings', 'unspecified'])
+                        allowedvalues=('book', 'booklet', 'journal', 'report', 'manual',
+                                       'thesis', 'phd thesis', 'masters thesis',
+                                       'conference proceedings', 'unspecified',
+                                       'unpublished'))
+
         self._add_value('longstr', 'title')
+        
         self._add_value('record', 'authors', recordclass=Author, modelpath='author')
+        self._add_value('record', 'editors', recordclass=Author, modelpath='editor')
+        
         self._add_value('longstr', 'publication', modelpath='publication-name')
+        self._add_value('longstr', 'series')
+        self._add_value('longstr', 'chapter')
+        self._add_value('longstr', 'edition')
+        
+        
         self._add_value('int', 'year', modelpath='publication-date.year')
         self._add_value('month', 'month', modelpath='publication-date.month')
         self._add_value('str', 'volume')
         self._add_value('str', 'issue')
+
+        self._add_value('longstr', 'publisher', modelpath='publisher-name')
+        self._add_value('longstr', 'address', modelpath='publisher-address')
+        self._add_value('longstr', 'organization', modelpath='publisher-organization')
+
         self._add_value('longstr', 'abstract')
+
         self._add_value('citepage', 'pages')
+
         self._add_value('str', 'doi', modelpath='DOI')
         self._add_value('str', 'url')
         self._add_value('longstr', 'bibtex')
@@ -124,15 +142,11 @@ class Citation(Record):
         """dict: dict representation of the bibtex, if parsed"""
         return self.__bibdict
 
-    @property
-    def author_string(self) -> str:
-        """str: single string """
-
     def add_author(self,
                    model: Union[str, io.IOBase, DM, None] = None,
                    **kwargs):
         """
-        Initializes an Artifact object and adds it to the artifacts list.
+        Initializes an Author object and adds it to the authors list.
 
         Parameters
         ----------
@@ -147,38 +161,76 @@ class Citation(Record):
         """
         self.get_value('authors').append(model=model, **kwargs)
 
+    def add_editor(self,
+                   model: Union[str, io.IOBase, DM, None] = None,
+                   **kwargs):
+        """
+        Initializes an Author object and adds it to the editors list.
+
+        Parameters
+        ----------
+        model : str, file-like object or DataModelDict, optional
+            Model content or file path to model content.
+        filename : str, optional
+            The name of the file without path information.
+        label : str, optional
+            A short description label.
+        url : str, optional
+            URL for file where downloaded, if available.
+        """
+        self.get_value('editors').append(model=model, **kwargs)
+
     @staticmethod
     def doctype_from_entrytype(entrytype):
         converter = {
             'article': 'journal',
             'book': 'book',
-            'booklet': 'book',
+            'booklet': 'booklet',
             'conference': 'conference proceedings',
             'inbook': 'book',
             'incollection': 'book',
             'inproceedings': 'conference proceedings',
-            'manual': 'report',
-            'mastersthesis': 'thesis',
+            'manual': 'manual',
+            'mastersthesis': 'masters thesis',
             'misc': 'unspecified',
-            'phdthesis': 'thesis',
+            'thesis': 'phd thesis',
+            'phdthesis': 'phd thesis',
             'proceedings': 'conference proceedings',
             'techreport': 'report',
-            'unpublished': 'unspecified',
+            'unpublished': 'unpublished',
         }
         return converter[entrytype]
     
-    @staticmethod
-    def entrytype_from_doctype(doctype):
+
+    def entrytype_from_doctype(self):
         converter = {
             'book': 'book',
+            'booklet': 'booklet',
             'journal': 'article',
             'report': 'techreport',
-            'thesis': 'phdthesis',
+            'manual': 'manual',
+            'phd thesis': 'phdthesis',
+            'masters thesis': 'mastersthesis',
             'conference proceedings': 'inproceedings',
-            'unspecified': 'unpublished',
+            'unpublished': 'unpublished',
+            'unspecified': 'misc',
             None: 'misc'
         }
-        return converter[doctype]
+        entrytype = converter[self.doctype]
+
+        # Switch for the different book types
+        if entrytype == 'book':
+            if self.publication is not None:
+                entrytype = 'incollection'
+            elif self.chapter is not None or self.pages is not None:
+                entrytype = 'inbook'
+
+        # Switch for the different proceedings types
+        elif entrytype == 'inproceedings':
+            if len(self.authors) == 0 and self.pages is None:
+                entrytype = 'proceedings'
+
+        return entrytype
 
     def load_bibtex(self,
                     bibtex):
@@ -201,13 +253,32 @@ class Citation(Record):
         self.__bibdict = bibdict
         self.doctype = self.doctype_from_entrytype(bibdict['ENTRYTYPE'])
         self.title = bibdict.get('title', None)
-        self.publication = bibdict.get('journal', None)
+        self.series = bibdict.get('series', None)
+        self.organization = bibdict.get('organization', None)
         self.year = bibdict.get('year', None)
         self.month = bibdict.get('month', None)
         self.volume = bibdict.get('volume', None)
         self.issue = bibdict.get('number', None)
         self.pages = bibdict.get('pages', None)
+        self.chapter = bibdict.get('chapter', None)
+        self.edition = bibdict.get('edition', None)
         self.doi = bibdict.get('doi', None)
+
+        def multifieldmap(bibdict, fields):
+            """
+            Maps multiple bibtex fields to one parameter. Note first found field
+            is returned.
+            """
+            for field in fields:
+                if field in bibdict:
+                    return bibdict[field]
+            return None
+        
+        # Set publication value
+        self.publication = multifieldmap(bibdict, ['journal', 'booktitle',  'howpublished'])
+
+        # Set publisher value
+        self.publisher = multifieldmap(bibdict, ['publisher', 'institution', 'school'])
 
         # Split and parse author field
         if 'author' in bibdict:
@@ -241,6 +312,38 @@ class Citation(Record):
                 
                 self.add_author(givenname=initials, surname=sur, suffix=suffix)
 
+        # Split and parse editor field
+        if 'editor' in bibdict:
+            self.get_value('editors').value = []
+            for author in bibdict['editor']:
+                authordict = bibtexparser.customization.splitname(author)
+
+                # Build given name as initials
+                initials = ''
+                for name in authordict['first']:
+                    for nname in name.split('.'):
+                        nname = nname.strip()
+                        if nname == '':
+                            continue
+                        if nname[0] == '-':
+                            initials += nname[:2] + '.'
+                        else:
+                            initials += nname[0] + '.'
+                    
+                        if '-' in nname[1:]:
+                            for nnname in nname.split('-')[1:]:
+                                initials += '-' + nnname[0] + '.'
+
+                # Build surname by joining von and last
+                sur = ' '.join(authordict['von'] + authordict['last'])
+                
+                # Check suffix value
+                suffix = ' '.join(authordict['jr'])
+                if suffix == '':
+                    suffix = None
+                
+                self.add_editor(givenname=initials, surname=sur, suffix=suffix)
+
     def load_model(self,
                    model: str | io.IOBase | DM,
                    name: str | None = None):
@@ -258,7 +361,7 @@ class Citation(Record):
         self.bibdict['ID'] = self.year_authors
 
         # Set entrytype
-        self.bibdict['ENTRYTYPE'] = self.entrytype_from_doctype(self.doctype)
+        self.bibdict['ENTRYTYPE'] = entrytype = self.entrytype_from_doctype()
 
         # Build bibdict fields
         if len(self.authors) > 0:
@@ -269,10 +372,29 @@ class Citation(Record):
                 else:
                     authorfields.append(f'{author.surname}, {author.suffix}, {author.givenname}')
             self.bibdict['author'] = ' and '.join(authorfields)
+        
+        if len(self.editors) > 0:
+            authorfields = []
+            for author in self.editors:
+                if author.suffix is None:
+                    authorfields.append(f'{author.surname}, {author.givenname}')
+                else:
+                    authorfields.append(f'{author.surname}, {author.suffix}, {author.givenname}')
+            self.bibdict['editor'] = ' and '.join(authorfields)
+        
         if self.title is not None:
             self.bibdict['title'] = self.title
+        
         if self.publication is not None:
-            self.bibdict['journal'] = self.publication
+            if entrytype == 'article':
+                self.bibdict['journal'] = self.publication
+            elif entrytype in ['booklet', 'misc']:
+                self.bibdict['howpublished'] = self.publication
+            else:
+                self.bibdict['booktitle'] = self.publication
+        
+        if self.series is not None:
+            self.bibdict['series'] = self.series
         if self.year is not None:
             self.bibdict['year'] = str(self.year)
         if self.volume is not None:
@@ -283,6 +405,24 @@ class Citation(Record):
             self.bibdict['pages'] = self.pages
         if self.month is not None:
             self.bibdict['month'] = self.get_value('month').fullname
+        if self.chapter is not None:
+            self.bibdict['chapter'] = self.chapter
+        if self.edition is not None:
+            self.bibdict['edition'] = self.edition
+        if self.organization is not None:
+            self.bibdict['organization'] = self.organization
+
+        if self.publisher is not None:
+            if entrytype == 'techreport':
+                self.bibdict['institution'] = self.publisher
+            elif entrytype in ['phdthesis', 'mastersthesis']:
+                self.bibdict['school'] = self.publisher
+            else:
+                self.bibdict['publisher'] = self.publisher
+
+        if self.address is not None:
+            self.bibdict['address'] = self.address
+        
         if self.doi is not None:
             self.bibdict['doi'] = self.doi
        
