@@ -148,15 +148,20 @@
                 <xsd:simpleType>
                     <xsd:restriction base="xsd:string">
                         <xsd:enumeration value="book"/>
+                        <xsd:enumeration value="booklet"/>
                         <xsd:enumeration value="journal"/>
                         <xsd:enumeration value="report"/>
                         <xsd:enumeration value="patent"/>
+                        <xsd:enumeration value="manual"/>
                         <xsd:enumeration value="thesis"/>
+                        <xsd:enumeration value="masters thesis"/>
+                        <xsd:enumeration value="phd thesis"/>
                         <xsd:enumeration value="conference proceedings"/>
                         <xsd:enumeration value="archived document"/>
                         <xsd:enumeration value="personal correspondence"/>
                         <xsd:enumeration value="published translation"/>
                         <xsd:enumeration value="unspecified"/>
+                        <xsd:enumeration value="unpublished"/>
                     </xsd:restriction>
                 </xsd:simpleType>
             </xsd:element>
@@ -179,7 +184,24 @@
                     </xsd:sequence>
                 </xsd:complexType>
             </xsd:element>
+            <xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="0" name="editor">
+                <xsd:annotation>
+                    <xsd:documentation>Editor of publication</xsd:documentation>
+                </xsd:annotation>
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element form="unqualified" minOccurs="0" name="given-name" type="xsd:string"/>
+                        <xsd:element form="unqualified" minOccurs="0" name="surname" type="xsd:string"/>
+                        <xsd:element form="unqualified" minOccurs="0" name="suffix" type="xsd:string"/>
+                        <xsd:element form="unqualified" maxOccurs="unbounded" minOccurs="0" name="affiliation" type="xsd:string"/>
+                        <xsd:element form="unqualified" minOccurs="0" name="ORCID" type="xsd:string"/>
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
             <xsd:element form="unqualified" minOccurs="0" name="publication-name" type="xsd:string"/>
+            <xsd:element form="unqualified" minOccurs="0" name="series" type="xsd:string"/>
+            <xsd:element form="unqualified" minOccurs="0" name="chapter" type="xsd:string"/>
+            <xsd:element form="unqualified" minOccurs="0" name="edition" type="xsd:string"/>
             <xsd:element form="unqualified" minOccurs="0" name="publication-date">
                 <xsd:complexType>
                     <xsd:sequence>
@@ -191,6 +213,9 @@
             </xsd:element>
             <xsd:element form="unqualified" minOccurs="0" name="volume" type="xsd:string"/>
             <xsd:element form="unqualified" minOccurs="0" name="issue" type="xsd:string"/>
+            <xsd:element form="unqualified" minOccurs="0" name="publisher-name" type="xsd:string"/>
+            <xsd:element form="unqualified" minOccurs="0" name="publisher-address" type="xsd:string"/>
+            <xsd:element form="unqualified" minOccurs="0" name="publisher-organization" type="xsd:string"/>
             <xsd:element form="unqualified" minOccurs="0" name="abstract" type="xsd:string"/>
             <xsd:element form="unqualified" minOccurs="0" name="pages" type="xsd:string"/>
             <xsd:element form="unqualified" minOccurs="0" name="DOI" type="xsd:string"/>
