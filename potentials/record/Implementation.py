@@ -116,7 +116,7 @@ class Implementation(Record):
         ----------
         model : str, file-like object or DataModelDict, optional
             Data model content to load.
-        name : str, optional
+        paramname : str, optional
             The name of the parameter or string parameter line.
         value : float, optional
             The value of the parameter.
