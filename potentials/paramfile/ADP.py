@@ -1,4 +1,3 @@
-# coding: utf-8
 # Standard libraries
 from copy import deepcopy
 import io

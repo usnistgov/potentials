@@ -1,4 +1,4 @@
-# coding: utf-8
+from . import tools
 from .EAMAlloy import EAMAlloy
 from .EAMFS import EAMFS
 from .EAM import EAM

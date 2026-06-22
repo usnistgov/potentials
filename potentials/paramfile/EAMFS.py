@@ -1,4 +1,3 @@
-# coding: utf-8
 # Standard libraries
 from copy import deepcopy
 import io
@@ -8,6 +7,7 @@ from typing import Callable, Optional, Tuple, Union
 
 # https://scipy.org/
 from scipy.interpolate import CubicSpline
+from scipy.optimize import minimize
 
 # https://numpy.org/
 import numpy as np
@@ -17,6 +17,7 @@ import numpy.typing as npt
 import matplotlib.pyplot as plt
 
 # Local imports
+from .tools import IdealFCC
 from ..tools import aslist, numderivative
 
 class EAMFS():
@@ -1547,3 +1548,48 @@ class EAMFS():
         
         if matplotlib_axes is None:
             return fig
+        
+    def fcc_rhobar(self,
+                   alat: float,
+                   symbol: Union[str, list, None] = None):
+        """
+        Estimates the total embedding density (rhobar) for
+        an fcc crystal with a given lattice constant.
+
+        Parameters
+        ----------
+        alat : float
+            The fcc lattice constant to use for evaluating the rhobar embedding
+            density.
+        symbol : str, list or None
+            The model symbol(s) associated with the rho(r) function to use. Not
+            required if only one symbol has been set for the potential.
+        """
+        return IdealFCC().rhobar(self, alat, symbol=symbol)
+    
+    def fcc_min_alat(self,
+                     symbol: Union[str, list, None] = None,
+                     cutoffrho: Optional[float] = None):
+        """
+        Finds the minimum lattice parameter for an ideal fcc crystal that is
+        compatible with the rho cutoff used.
+
+        NOTE: alat values are also restricted to be >= cutoffr / 6 as the table
+        used here only goes to 6*alat.
+
+        Parameters
+        ----------
+        symbol : str, list or None
+            The model symbol(s) associated with the rho(r) function to use. Not
+            required if only one symbol has been set for the potential.
+        cutoffrho : float or None
+            Allows for the specification of a different cutoffrho value to use
+            instead of the one currently set to the eam builder object.
+        
+        Returns
+        -------
+        alat : float
+            The minimum fcc lattice parameter that the cutoffrho value supports.
+            Will either be alat for rhobar(alat) = cutoffrho or alat = cutoffr / 6.
+        """
+        return IdealFCC().min_alat(self, symbol=symbol, cutoffrho=cutoffrho)
