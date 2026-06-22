@@ -358,6 +358,44 @@ def fetch_citation(self,
     bibtex = cn.content_negotiation(ids=doi, format="bibtex")
     if verbose:
         print('Citation retrieved from CrossRef')
+
+
+    def fix_broken_crossref(bibtex):
+        """Fix for CrossRef not bracketing some bibtex fields..."""
+        i = 0
+        while True:
+            # Find the next equal sign
+            s = bibtex[i:].find('=')
+        
+            # Break if no more equal signs
+            if s == -1:
+                break
+            else:
+                s += i
+        
+            # Skip if value is already in brackets
+            if bibtex[s+1] == '{':
+                i = bibtex[s:].index('}') + s
+                continue
+        
+            # Search for end of un-bracketed term
+            endstrings = ' ,}'
+            ends = []
+            for endstring in endstrings:
+                end = bibtex[s:].find(endstring)
+                if end != -1:
+                    ends.append(end)
+            if len(ends) == 0:
+                raise ValueError('No ending delimiter found!')
+        
+            e = min(ends) + s
+            term = bibtex[s+1:e]
+            bibtex = bibtex.replace(term, f'{{{term}}}')
+            i = e + 2
+        return bibtex
+
+    bibtex = fix_broken_crossref(bibtex)
+
     record = load_record('Citation')
     record.load_bibtex(bibtex)
     record.build_model()
