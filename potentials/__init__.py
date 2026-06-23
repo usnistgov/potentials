@@ -8,7 +8,9 @@ if hasattr(resources, 'files'):
 else:
     __version__ = resources.read_text('potentials', 'VERSION', encoding='UTF-8').strip()
 
+from . import typing
 from . import tools
+
 from .Settings import settings
 
 from . import value
@@ -27,5 +29,6 @@ from . import paramfile
 
 __all__ = ['__version__', 'tools', 'settings', 'paramfile', 'value',
            'record', 'load_record', 'recordmanager', 'buildrecord',
-           'Database', 'load_database',  'build_lammps_potential',]
+           'Database', 'load_database',  'build_lammps_potential',
+           'typing']
 __all__.sort()
