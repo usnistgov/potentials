@@ -104,6 +104,10 @@ class Citation(Record):
         
         self._add_value('record', 'authors', recordclass=Author, modelpath='author')
         self._add_value('record', 'editors', recordclass=Author, modelpath='editor')
+        editors_queries = self.get_value('editors').queries
+        del editors_queries['givenname']
+        del editors_queries['surname']
+        del editors_queries['suffix']
         
         self._add_value('longstr', 'publication', modelpath='publication-name')
         self._add_value('longstr', 'series')
