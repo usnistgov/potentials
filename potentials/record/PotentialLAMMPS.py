@@ -19,7 +19,8 @@ from yabadaba import load_value, load_query
 from yabadaba.tools import dict_insert
 
 # local imports
-from ..tools import aslist, atomic_mass
+from ..typing import lammps
+from ..tools import aslist, atomic_mass, lammps_pair_styles
 from .Artifact import Artifact
 from .AtomInfo import AtomInfo
 from .CommandLine import CommandLine, PairCoeffLine
@@ -70,6 +71,13 @@ class PotentialLAMMPS(Record):
         pair_coeff lines of the format
 
             pair_coeff * * paramfile Sym1 Sym2
+        
+        Parameters
+        ----------
+        paramfile : str
+            The name of the parameter file.
+        **kwargs
+            Any other PotentialLAMMPS initialization keyword parameters to set.
         """
         obj = cls(**kwargs)
         obj.pair_coeff_paramfile(paramfile)
@@ -84,6 +92,13 @@ class PotentialLAMMPS(Record):
 
             pair_coeff 1 1 paramfile1
             pair_coeff 2 2 paramfile2
+        
+        Parameters
+        ----------
+        paramfiles : list
+            The names of the parameter files, one for each atomic model.
+        **kwargs
+            Any other PotentialLAMMPS initialization keyword parameters to set.
         """
         obj = cls(**kwargs)
         obj.pair_coeff_eam(paramfiles)
@@ -97,6 +112,13 @@ class PotentialLAMMPS(Record):
         pair_coeff lines like the eim pair_style
 
             pair_coeff * * Sym1 Sym2 paramfile Sym1 Sym2
+
+        Parameters
+        ----------
+        paramfile : str
+            The name of the parameter file.
+        **kwargs
+            Any other PotentialLAMMPS initialization keyword parameters to set.
         """
         obj = cls(**kwargs)
         obj.pair_coeff_eim(paramfile)
@@ -110,14 +132,178 @@ class PotentialLAMMPS(Record):
         pair_coeff lines like the meam pair_style
 
             pair_coeff * * libfile Sym1 Sym2 paramfile Sym1 Sym2
+
+        Parameters
+        ----------
+        libfile : str
+            The name of the primary library file.
+        paramfile : str or None, optional
+            The name of the additional parameter file, if there is one.
+        **kwargs
+            Any other PotentialLAMMPS initialization keyword parameters to set.
         """
         obj = cls(**kwargs)
         obj.pair_coeff_meam(libfile, paramfile=paramfile)
 
         return obj
 
+    @classmethod
+    def hybrid(cls, pots, scalars=None, **kwargs):
+        """
+        Initializes a new PotentialsLAMMPS object for potentials that have
+        pair_styles hybrid. hybrid/overlay or hybrid/scaled.
+        
+        Parameters
+        ----------
+        pots : list
+            A list of 2 or more PotentialLAMMPS objects to combine into a
+            hybrid style.
+        scalars : list or None
+            The scalars to use with hybrid/scaled for each of the input
+            potentials.  The values can be strings allowing for the
+            specification of LAMMPS variables e.g. "v_scalar1"
+        **kwargs
+            Any other PotentialLAMMPS initialization keyword parameters to set.
+            This method will try to detect values to use for those not given.
+        """
+        # Check pair_style and build list of incompatible component potentials
+        pair_style = kwargs['pair_style']
+        if pair_style == 'hybrid':
+            unsupported_styles = ['hybrid/overlay', 'hybrid/scaled', 'hybrid/molecule', 'kim']
+        elif pair_style == 'hybrid/overlay' or pair_style == 'hybrid/scaled':
+            unsupported_styles = ['hybrid', 'hybrid/scaled', 'hybrid/molecule', 'kim']
+        else:
+            raise ValueError('this method only works for hybrid, hybrid/overlay and hybrid/scaled potentials')
 
+        # Check number of pots
+        if len(pots) < 2:
+            raise ValueError('need at least 2 input potentials to build a hybrid potential')
 
+        # Check scalars
+        if pair_style == 'hybrid/scaled':
+            if len(pots) != len(scalars):
+                raise ValueError('hybrid/scaled requires a scalar for each potential')
+        else:
+            scalars = [None for i in range(len(pots))]
+        
+        # Initialize potential information
+        units = kwargs.get('units', pots[0].units)
+        atom_style = kwargs.get('atom_style', pots[0].atom_style)
+        dois = []
+        artifacts = []
+        commentslist = []
+        allsymbols = False
+        pot_dir = ''
+
+        # Check/combine each potential's information
+        for pot in pots:
+            if not isinstance(pot, cls):
+                raise TypeError(f'hybrid only supports combining PotentialLAMMPS objects')
+            if pot.pair_style in unsupported_styles:
+                raise ValueError(f'cannot create {pair_style} from {", ".join(unsupported_styles)}')
+            if pot.units != units:
+                raise ValueError('input potentials have different units settings!')
+            if 'atom_style' not in kwargs and pot.atom_style != atom_style:
+                raise ValueError('input potentials have different atom_style settings!')
+            if pot.dois is not None:
+                dois.extend(pot.dois)
+            if pot.artifacts is not None:
+                artifacts.extend(pot.artifacts)
+            if pot.comments is not None and pot.comments != '':
+                commentslist.append(pot.comments)
+            allsymbols = allsymbols or pot.allsymbols
+            if 'pot_dir' not in kwargs and pot.pot_dir != '':
+                if pot_dir != '' and pot_dir != pot.pot_dir:
+                    raise ValueError('input potentials have different pot_dir settings!')
+                pot_dir = pot.pot_dir
+        
+        # Build combined atoms list and search for hybrid styles
+        symbols = []
+        atoms = []
+        #hybrid_index = None
+        for i, pot in enumerate(pots):
+            for atom in pot.atoms:
+                if atom.symbol is not None:
+                    symbol = atom.symbol
+                elif atom.elemet is not None:
+                    symbol = atom.element
+                else:
+                    raise ValueError('atom found without symbol or element!')
+        
+                if symbol not in symbols:
+                    atoms.append(atom)
+                    symbols.append(symbol)
+
+        # Fill in missing kwarg values
+        kwargs['dois'] = kwargs.get('dois', dois)
+        kwargs['comments'] = kwargs.get('comments', '\n'.join(commentslist))
+        kwargs['units'] = kwargs.get('units', units)
+        kwargs['atom_style'] = kwargs.get('atom_style', atom_style)
+        kwargs['allsymbols'] = kwargs.get('allsymbols', allsymbols)
+        kwargs['atoms'] = kwargs.get('atoms', atoms)
+        kwargs['artifacts'] = kwargs.get('artifacts', artifacts)
+        kwargs['pot_dir'] = kwargs.get('pot_dir', pot_dir)
+
+        # Initialize the hybrid potential
+        newpot = cls(**kwargs)
+
+        # Loop over pots to build pair_style and pair_coeff lines
+        for pot, scalar in zip(pots, scalars):
+            
+            # For a non-hybrid component potential
+            if not pot.pair_style.startswith('hybrid'):
+                # Add scalar if hybrid/scalar
+                if pair_style == 'hybrid/scaled':
+                    newpot.pair_style_terms.add_term('option', scalar)
+
+                # Add pair_style as a term
+                newpot.pair_style_terms.add_term('option', pot.pair_style)
+            
+                # Copy any other pair_style terms from pot to newpot
+                for term in pot.pair_style_terms.terms:
+                    for k,v in term.items():
+                        newpot.pair_style_terms.add_term(k, v)
+            
+            # For a hybrid component potential
+            else:
+                # Copy pair_style terms from pot to newpot
+                for term in pot.pair_style_terms.terms:
+                    for k,v in term.items():
+                        # Insert scalar before any terms matching a known pair_style
+                        if pair_style == 'hybrid/scaled' and v in lammps_pair_styles:
+                            newpot.pair_style_terms.add_term('option', scalar)
+                        newpot.pair_style_terms.add_term(k, v)
+
+            # Loop over pot's pair_coeff lines.
+            for pair_coeff in pot.pair_coeffs:
+                
+                # Identify the interaction symbols for the pair_coeff line
+                interaction = pair_coeff.interaction
+                if interaction is None and len(pot.symbols) != len(newpot.symbols):
+                    interaction = pot.symbols
+                    
+                # Create new pair_coeff interaction
+                newpot.add_pair_coeff(interaction=interaction)
+                
+                # Add pot's pair_style to newpot's pair_style terms
+                if not pot.pair_style.startswith('hybrid'):
+                    newpot.pair_coeffs[-1].add_term('option', pot.pair_style)
+                
+                # Copy any other pair_coeff terms from pot to newpot
+                for term in pair_coeff.terms:
+                    for k,v in term.items():
+                        newpot.pair_coeffs[-1].add_term(k, v)
+
+            # Loop over pot's extra commands
+            for command in pot.commands:
+                # Create new command interaction
+                newpot.add_command()
+                # Copy command terms from pot to newpot
+                for term in command.terms:
+                    for k,v in term.items():
+                        newpot.commands[-1].add_term(k, v)
+
+        return newpot
 
     ########################## Basic metadata fields ##########################
 
@@ -479,6 +665,36 @@ class PotentialLAMMPS(Record):
 
         return symbols
     
+    def natypes(self,
+                symbols: Union[str, list, None] = None,
+                atypes: Optional[list] = None) -> int:
+        """
+        Returns the correct number of atom types to use when generating or
+        reading in atoms in LAMMPS.
+
+        Parameters
+        ----------
+        symbols : list of str, optional
+            A list of atom-model symbols.  If None (default), will use all of
+            the potential's symbols.
+        atypes : list of int, optional
+            The per-atom atom type numbers associated with a system.
+            If not given, will only consider symbols.
+
+        Returns
+        -------
+        int
+            The number of atom types to use in LAMMPS.
+        """
+        if symbols is None:
+            symbols = self.symbols
+        else:
+            symbols = self.normalize_symbols(symbols)
+        if atypes is None:
+            atypes = [1]
+
+        return max(max(atypes), len(symbols))
+
     def elements(self,
                  symbols: Union[str, list, None] = None) -> list:
         """
@@ -650,7 +866,7 @@ class PotentialLAMMPS(Record):
                   masses: Union[float, list, None] = None,
                   prompt: bool = False,
                   comments: bool = True,
-                  lammpsdate: datetime.date = datetime.date(2020, 10, 29)
+                  lammps_date: datetime.date = datetime.date(2020, 10, 29)
                   ) -> str:
         """
         Generates the LAMMPS input command lines associated with the Potential
@@ -677,7 +893,7 @@ class PotentialLAMMPS(Record):
         comments : bool, optional
             Indicates if print command lines detailing information on the potential
             are to be included.  Default value is True.
-        lammpsdate : datetime, optional
+        lammps_date : datetime, optional
             The LAMMPS version date that is to be used.  The generated commands
             may differ based on the version of LAMMPS used.
 
@@ -746,7 +962,8 @@ class PotentialLAMMPS(Record):
                        units: Optional[str] = None,
                        prompt: bool = False,
                        comments: bool = True,
-                       lammpsdate: datetime.date = datetime.date(2020, 10, 29)
+                       lammps_date: datetime.date = datetime.date(2020, 10, 29),
+                       tilt_large: bool = False
                        ) -> str:
         """
         Generates the LAMMPS command lines associated with both a potential
@@ -780,9 +997,13 @@ class PotentialLAMMPS(Record):
         comments : bool, optional
             Indicates if print command lines detailing information on the potential
             are to be included.  Default value is True.
-        lammpsdate : datetime, optional
+        lammps_date : datetime, optional
             The LAMMPS version date that is to be used.  The generated commands
             may differ based on the version of LAMMPS used.
+        tilt_large : bool, optional
+            If True, then the box command will include the tilt large option for
+            older LAMMPS versions to allow for larger tilt factors.  Default value
+            is False.
 
         Returns
         -------
@@ -798,6 +1019,10 @@ class PotentialLAMMPS(Record):
         # Initialize comment
         info = ''
 
+        # Add box tilt large command
+        if lammps_date < datetime.date(2022, 12, 22) and tilt_large:
+            info += 'box tilt large\n\n'
+
         # Add units and atom_style values
         info += f'units {units}\n'
         info += f'atom_style {atom_style}\n\n'
@@ -807,7 +1032,7 @@ class PotentialLAMMPS(Record):
         bflags[pbc] = 'p'
         info += f'boundary {bflags[0]} {bflags[1]} {bflags[2]}\n'
     
-        # Set read_data command       
+        # Set read_data command
         if isinstance(filename, str):
             info += f'read_data {filename}\n'
 
@@ -818,6 +1043,132 @@ class PotentialLAMMPS(Record):
 
         return info
 
+    def pair_lib_info(self,
+                      lmp: lammps.lammps,
+                      pbc: npt.ArrayLike,
+                      region_params: list,
+                      atype: list,
+                      x: list,
+                      natypes: Optional[int] = None,
+                      natoms: Optional[int] = None,
+                      v: Optional[list] = None,
+                      symbols: Union[str, list, None] = None,
+                      masses: Union[float, list, None] = None,
+                      atom_style: Optional[str] = None,
+                      units: Optional[str] = None,
+                      prompt: bool = False,
+                      comments: bool = True,
+                      lammps_date: Optional[datetime.date] = None,
+                      tilt_large: bool = False,
+                      clear: bool = True,
+                      ):
+        """
+        For interactive LAMMPS sessions, generates the LAMMPS command lines
+        associated with both a potential and system parameters.
+
+        Parameters
+        ----------
+        lmp: lammps.lammps
+            The lammps library object for the current session.
+        pbc : array-like object
+            The three boolean periodic boundary conditions, or three strings
+            giving the specific LAMMPS boundary settings.
+        region_params : list
+            The parameters for the LAMMPS region command to define the system:
+            [xlo, xhi, ylo, yhi, zlo, zhi, xy, xz, yz].
+        atype : list
+            The list of integer atom types for each atom in the system.
+        x : list
+            A flattened list of the positional coordinates for each atom in
+            the system.
+        natypes : int, optional
+            The number of atom types in the system.  If not given, will be
+            inferred from the atype list.
+        natoms : int, optional
+            The number of atoms in the system.  If not given, will be inferred
+            from the atype list.
+        v : list, optional
+            A flattened list of the velocity components for each atom in the
+            system.  If not given, then no velocity information will be
+            included in the generated commands.
+        symbols : str or list, optional
+            List of atom-model symbols corresponding to the atom types in a
+            system.  If None (default), then all atom-model symbols will
+            be included in the order that they are listed in the data model.
+        masses : float or list, optional
+            Can be given to override the default symbol-based masses for each
+            atom type.  Must be a list of the same length as symbols.  Any
+            values of None in the list indicate that the default value be used
+            for that atom type.
+        atom_style : str, optional
+            The LAMMPS atom_style setting to use for the output.  If not given,
+            will use the default value set for the potential.
+        units : str, optional
+            The LAMMPS unit setting to use for the output.  If not given,
+            will use the default value set for the potential.
+        prompt : bool, optional
+            If True, then a screen prompt will appear for radioactive elements
+            with no standard mass to ask for the isotope to use. If False
+            (default), then the most stable isotope will be automatically used.
+        comments : bool, optional
+            Indicates if print command lines detailing information on the potential
+            are to be included.  Default value is True.
+        lammps_date : datetime, optional
+            The LAMMPS version date that is to be used.  If not given, will check
+            the version date for the lmp object.
+        tilt_large : bool, optional
+            If True, then the box command will include the tilt large option for
+            older LAMMPS versions to allow for larger tilt factors.  Default value
+            is False.
+
+        Returns
+        -------
+        str
+            The LAMMPS input command lines that specifies the potential and a data
+            file to read.
+        """
+        # Set default values
+        if lammps_date is None:
+            lammps_date = datetime.date.fromisoformat(str(lmp.version()))
+        if units is None:
+            units = self.units
+        if atom_style is None:
+            atom_style = self.atom_style
+        if natoms is None:
+            natoms = len(atype)
+        if natypes is None:
+            natypes = self.natypes(symbols=symbols, atypes=atype)
+
+        # Change pbc booleans to LAMMPS boundary flags if needed
+        pbc = np.asarray(pbc)
+        if pbc.dtype == bool:
+            bflags = np.array(['m','m','m'])
+            bflags[pbc] = 'p'
+            pbc = bflags
+
+        # Base settings
+        if clear:
+            lmp.cmd.clear()
+        if lammps_date < datetime.date(2022, 12, 22) and tilt_large:
+            lmp.cmd.box('tilt', 'large')
+        lmp.cmd.units(units)
+        lmp.cmd.atom_style(atom_style)
+        
+        # Create box
+        lmp.cmd.boundary(*pbc)
+        lmp.cmd.region('box', 'prism', *region_params)
+        lmp.cmd.create_box(natypes, 'box')
+
+        # Create atoms
+        if natoms > 0:
+            lmp.create_atoms(natoms, atomid=None, atype=atype, x=x, v=v)
+
+        # Set pair_info
+        pair_info = self.pair_info(symbols=symbols, masses=masses, prompt=prompt,
+                                    comments=comments)
+        lmp.commands_string(pair_info)
+       
+
     def pair_restart_info(self,
                           filename: Union[str, Path],
                           symbols: Union[str, list, None] = None,
@@ -825,7 +1176,8 @@ class PotentialLAMMPS(Record):
                           units: Optional[str] = None,
                           prompt: bool = False,
                           comments: bool = True,
-                          lammpsdate: datetime.date = datetime.date(2020, 10, 29)
+                          lammps_date: datetime.date = datetime.date(2020, 10, 29),
+                          tilt_large: bool = False,
                           ) -> str:
         """
         Generates the LAMMPS command lines associated with both a potential
@@ -854,9 +1206,13 @@ class PotentialLAMMPS(Record):
         comments : bool, optional
             Indicates if print command lines detailing information on the potential
             are to be included.  Default value is True.
-        lammpsdate : datetime, optional
+        lammps_date : datetime, optional
             The LAMMPS version date that is to be used.  The generated commands
             may differ based on the version of LAMMPS used.
+        tilt_large : bool, optional
+            If True, then the box command will include the tilt large option for
+            older LAMMPS versions to allow for larger tilt factors.  Default value
+            is False.
 
         Returns
         -------
@@ -867,6 +1223,10 @@ class PotentialLAMMPS(Record):
         # Add comment line
         info = '# Script prepared using atomman Python package\n\n'
     
+        # Add box tilt large command
+        if lammps_date < datetime.date(2022, 12, 22) and tilt_large:
+            info += 'box tilt large\n\n'
+
         # Set read_data command 
         info += f'read_restart {filename}\n'
 

@@ -17,6 +17,7 @@ from yabadaba.record import Record
 from yabadaba import load_query
 
 # local imports
+from ..typing import lammps
 from ..tools import aslist, atomic_mass
 from .PotentialInfo import PotentialInfo
 
@@ -468,6 +469,36 @@ class PotentialLAMMPSKIM(Record):
 
         return symbols
 
+    def natypes(self,
+                symbols: Union[str, list, None] = None,
+                atypes: Optional[list] = None) -> int:
+        """
+        Returns the correct number of atom types to use when generating or
+        reading in atoms in LAMMPS.
+
+        Parameters
+        ----------
+        symbols : list of str, optional
+            A list of atom-model symbols.  If None (default), will use all of
+            the potential's symbols.
+        atypes : list of int, optional
+            The per-atom atom type numbers associated with a system.
+            If not given, will only consider symbols.
+
+        Returns
+        -------
+        int
+            The number of atom types to use in LAMMPS.
+        """
+        if symbols is None:
+            symbols = self.symbols
+        else:
+            symbols = self.normalize_symbols(symbols)
+        if atypes is None:
+            atypes = [1]
+
+        return max(max(atypes), len(symbols))
+
     def elements(self,
                  symbols: Union[str, list, None] = None) -> list:
         """
@@ -592,7 +623,7 @@ class PotentialLAMMPSKIM(Record):
                   units: Optional[str] = None,
                   prompt: bool = False,
                   comments: bool = True,
-                  lammpsdate: datetime.date = datetime.date(2020, 10, 29)
+                  lammps_date: datetime.date = datetime.date(2020, 10, 29)
                   ) -> str:
         """
         Generates the LAMMPS input command lines associated with a KIM
@@ -619,7 +650,7 @@ class PotentialLAMMPSKIM(Record):
         comments : bool, optional
             Indicates if print command lines detailing information on the potential
             are to be included.  Default value is True.
-        lammpsdate : datetime, optional
+        lammps_date : datetime, optional
             The LAMMPS version date that is to be used.  The generated commands
             may differ based on the version of LAMMPS used.
 
@@ -653,13 +684,13 @@ class PotentialLAMMPSKIM(Record):
             masses = self.masses(symbols, prompt=prompt)
         
         # Generate kim_init line
-        if lammpsdate >= datetime.date(2021, 3, 10):
+        if lammps_date >= datetime.date(2021, 3, 10):
             info = f'kim init {self.id} {units}\n'
         else:        
             info = f'kim_init {self.id} {units}\n'
 
         # Generate kim_interactions  line
-        if lammpsdate >= datetime.date(2021, 3, 10):
+        if lammps_date >= datetime.date(2021, 3, 10):
             info += f'kim interactions {" ".join(symbols)}\n'
         else:        
             info += f'kim_interactions {" ".join(symbols)}\n'
@@ -680,7 +711,8 @@ class PotentialLAMMPSKIM(Record):
                        units: Optional[str] = None,
                        prompt: bool = False,
                        comments: bool = True,
-                       lammpsdate: datetime.date = datetime.date(2020, 10, 29)
+                       lammps_date: datetime.date = datetime.date(2020, 10, 29),
+                       tilt_large: bool = False
                        ) -> str:
         """
         Generates the LAMMPS command lines associated with both a potential
@@ -714,7 +746,7 @@ class PotentialLAMMPSKIM(Record):
         comments : bool, optional
             Indicates if print command lines detailing information on the potential
             are to be included.  Default value is True.
-        lammpsdate : datetime, optional
+        lammps_date : datetime, optional
             The LAMMPS version date that is to be used.  The generated commands
             may differ based on the version of LAMMPS used.
 
@@ -751,11 +783,15 @@ class PotentialLAMMPSKIM(Record):
          # Add comment line
         info = '# Script and atom data file prepared using atomman Python package\n\n'
 
+        # Add box tilt large command
+        if lammps_date < datetime.date(2022, 12, 22) and tilt_large:
+            info += 'box tilt large\n\n'
+
         # Generate kim_init line
-        if lammpsdate >= datetime.date(2021, 3, 10):
-            info = f'kim init {self.id} {units}\n'
+        if lammps_date >= datetime.date(2021, 3, 10):
+            info += f'kim init {self.id} {units}\n'
         else:        
-            info = f'kim_init {self.id} {units}\n'
+            info += f'kim_init {self.id} {units}\n'
 
         # Change atom_style if needed
         if atom_style is not None:
@@ -770,7 +806,7 @@ class PotentialLAMMPSKIM(Record):
         info += f'read_data {filename}\n\n'
 
         # Generate kim_interactions  line
-        if lammpsdate >= datetime.date(2021, 3, 10):
+        if lammps_date >= datetime.date(2021, 3, 10):
             info += f'kim interactions {" ".join(symbols)}\n'
         else:        
             info += f'kim_interactions {" ".join(symbols)}\n'
@@ -782,6 +818,162 @@ class PotentialLAMMPSKIM(Record):
 
         return info
 
+    def pair_lib_info(self,
+                      lmp: lammps.lammps,
+                      pbc: npt.ArrayLike,
+                      region_params: list,
+                      atype: list,
+                      x: list,
+                      natypes: Optional[int] = None,
+                      natoms: Optional[int] = None,
+                      v: Optional[list] = None,
+                      symbols: Union[str, list, None] = None,
+                      masses: Union[float, list, None] = None,
+                      atom_style: Optional[str] = None,
+                      units: Optional[str] = None,
+                      prompt: bool = False,
+                      comments: bool = True,
+                      lammps_date: Optional[datetime.date] = None,
+                      tilt_large: bool = False,
+                      clear: bool = True,
+                      ):
+        """
+        For interactive LAMMPS sessions, generates the LAMMPS command lines
+        associated with both a potential and system parameters.
+
+        Parameters
+        ----------
+        lmp: lammps.lammps
+            The lammps library object for the current session.
+        pbc : array-like object
+            The three boolean periodic boundary conditions, or three strings
+            giving the specific LAMMPS boundary settings.
+        region_params : list
+            The parameters for the LAMMPS region command to define the system:
+            [xlo, xhi, ylo, yhi, zlo, zhi, xy, xz, yz].
+        atype : list
+            The list of integer atom types for each atom in the system.
+        x : list
+            A flattened list of the positional coordinates for each atom in
+            the system.
+        natypes : int, optional
+            The number of atom types in the system.  If not given, will be
+            inferred from the atype list.
+        natoms : int, optional
+            The number of atoms in the system.  If not given, will be inferred
+            from the atype list.
+        v : list, optional
+            A flattened list of the velocity components for each atom in the
+            system.  If not given, then no velocity information will be
+            included in the generated commands.
+        symbols : str or list, optional
+            List of atom-model symbols corresponding to the atom types in a
+            system.  If None (default), then all atom-model symbols will
+            be included in the order that they are listed in the data model.
+        masses : float or list, optional
+            Can be given to override the default symbol-based masses for each
+            atom type.  Must be a list of the same length as symbols.  Any
+            values of None in the list indicate that the default value be used
+            for that atom type.
+        atom_style : str, optional
+            The LAMMPS atom_style setting to use for the output.  If not given,
+            will use the default value set for the potential.
+        units : str, optional
+            The LAMMPS unit setting to use for the output.  If not given,
+            will use the default value set for the potential.
+        prompt : bool, optional
+            If True, then a screen prompt will appear for radioactive elements
+            with no standard mass to ask for the isotope to use. If False
+            (default), then the most stable isotope will be automatically used.
+        comments : bool, optional
+            Indicates if print command lines detailing information on the potential
+            are to be included.  Default value is True.
+        lammps_date : datetime, optional
+            The LAMMPS version date that is to be used.  If not given, will check
+            the version date for the lmp object.
+        tilt_large : bool, optional
+            If True, then the box command will include the tilt large option for
+            older LAMMPS versions to allow for larger tilt factors.  Default value
+            is False.
+
+        Returns
+        -------
+        str
+            The LAMMPS input command lines that specifies the potential and a data
+            file to read.
+        """
+        # Set default values
+        if lammps_date is None:
+            lammps_date = datetime.date.fromisoformat(str(lmp.version()))
+        if units is None:
+            units = self.units
+        if natoms is None:
+            natoms = len(atype)
+        if natypes is None:
+            natypes = self.natypes(symbols=symbols, atypes=atype)
+
+        # If no symbols supplied use all for potential
+        if symbols is None:
+            symbols = self.symbols
+        else:
+            symbols = self.normalize_symbols(symbols)
+
+        if masses is not None:
+            
+            # Check length of masses
+            masses = aslist(masses)
+            assert len(masses) == len(symbols), 'supplied masses must be same length as symbols'
+            
+            # Change None values to default values
+            defaultmasses = self.masses(symbols, prompt=prompt)
+            for i in range(len(masses)):
+                if masses[i] is None:
+                    masses[i] = defaultmasses[i]
+        else:
+            masses = self.masses(symbols, prompt=prompt)
+        
+        # Change pbc booleans to LAMMPS boundary flags if needed
+        pbc = np.asarray(pbc)
+        if pbc.dtype == bool:
+            bflags = np.array(['m','m','m'])
+            bflags[pbc] = 'p'
+            pbc = bflags
+
+        # Base settings
+        if clear:
+            lmp.cmd.clear()
+        if lammps_date < datetime.date(2022, 12, 22) and tilt_large:
+            lmp.cmd.box('tilt', 'large')
+
+        # Generate kim_init line
+        if lammps_date >= datetime.date(2021, 3, 10):
+            lmp.cmd.kim('init', self.id, units)
+        else:
+            lmp.cmd.kim_init(self.id, units)
+
+        # Change atom_style if needed
+        if atom_style is not None:
+            lmp.cmd.atom_style(atom_style)
+        
+        # Create box
+        lmp.cmd.boundary(*pbc)
+        lmp.cmd.region('box', 'prism', *region_params)
+        lmp.cmd.create_box(natypes, 'box')
+
+        # Create atoms
+        if natoms > 0:
+            lmp.create_atoms(natoms, atomid=None, atype=atype, x=x, v=v)
+
+        # Generate kim_interactions  line
+        if lammps_date >= datetime.date(2021, 3, 10):
+            lmp.cmd.kim('interactions', " ".join(symbols))
+        else:
+            lmp.cmd.kim_interactions(" ".join(symbols))
+        
+        # Generate mass lines
+        for i in range(len(masses)):
+            lmp.cmd.mass(i+1, masses[i])
+
     def pair_restart_info(self,
                           filename: Union[str, Path],
                           symbols: Union[str, list, None] = None,
@@ -789,7 +981,7 @@ class PotentialLAMMPSKIM(Record):
                           units: Optional[str] = None,
                           prompt: bool = False,
                           comments: bool = True,
-                          lammpsdate: datetime.date = datetime.date(2020, 10, 29)
+                          lammps_date: datetime.date = datetime.date(2020, 10, 29)
                           ) -> str:
         """
         Generates the LAMMPS command lines associated with both a potential
@@ -818,7 +1010,7 @@ class PotentialLAMMPSKIM(Record):
         comments : bool, optional
             Indicates if print command lines detailing information on the potential
             are to be included.  Default value is True.
-        lammpsdate : datetime, optional
+        lammps_date : datetime, optional
             The LAMMPS version date that is to be used.  The generated commands
             may differ based on the version of LAMMPS used.
 
@@ -856,7 +1048,7 @@ class PotentialLAMMPSKIM(Record):
         info = '# Script prepared using atomman Python package\n\n'
     
         # Generate kim_init line
-        if lammpsdate >= datetime.date(2021, 3, 10):
+        if lammps_date >= datetime.date(2021, 3, 10):
             info = f'kim init {self.id} {units}\n'
         else:        
             info = f'kim_init {self.id} {units}\n'
@@ -865,7 +1057,7 @@ class PotentialLAMMPSKIM(Record):
         info += f'read_restart {filename}\n'
 
         # Generate kim_interactions  line
-        if lammpsdate >= datetime.date(2021, 3, 10):
+        if lammps_date >= datetime.date(2021, 3, 10):
             info += f'kim interactions {" ".join(symbols)}\n'
         else:        
             info += f'kim_interactions {" ".join(symbols)}\n'

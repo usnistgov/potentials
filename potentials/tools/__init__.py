@@ -5,8 +5,9 @@ from .atomic_info import *
 from .atomic_info import __all__ as atomic_info_all
 from .parse_authors import parse_authors
 from .numderivative import numderivative
+from .lammps_pair_styles import lammps_pair_styles
 
 __all__ = ['aslist', 'iaslist', 'screen_input', 'uber_open_rmode', 'parse_authors',
-           'numderivative']
+           'numderivative', 'lammps_pair_styles']
 __all__.extend(atomic_info_all)
 __all__.sort()
