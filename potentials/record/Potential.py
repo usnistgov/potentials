@@ -17,7 +17,9 @@ from .Citation import Citation
 from .Implementation import Implementation
 
 class Potential(Record):
-
+    """
+    Class for representing Potential metadata records.
+    """
     def __init__(self,
                  model: str | io.IOBase | DM | None = None,
                  name: str | None = None,
@@ -27,9 +29,6 @@ class Potential(Record):
         self.modelname = None
         super().__init__(model, name, database, **kwargs)
 
-    """
-    Class for representing Potential metadata records.
-    """
     ########################## Basic metadata fields ##########################
 
     @property
