@@ -1,4 +1,3 @@
-# coding: utf-8
 from .PotentialLAMMPSBuilder import PotentialLAMMPSBuilder
 from .ParamFileBuilder import ParamFileBuilder
 from .LibParamBuilder import LibParamBuilder

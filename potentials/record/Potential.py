@@ -1,4 +1,3 @@
-# coding: utf-8
 # Standard Python libraries
 import io
 from typing import Optional, Tuple, Union

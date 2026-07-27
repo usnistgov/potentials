@@ -1,4 +1,3 @@
-# coding: utf-8
 from yabadaba.tools import aslist, iaslist, screen_input
 from DataModelDict import uber_open_rmode
 from .atomic_info import *

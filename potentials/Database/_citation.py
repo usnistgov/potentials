@@ -1,4 +1,3 @@
-# coding: utf-8
 # Standard libraries
 from pathlib import Path
 from typing import Optional, Tuple, Union

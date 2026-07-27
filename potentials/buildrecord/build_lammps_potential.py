@@ -1,4 +1,3 @@
-# coding: utf-8
 
 # Local imports
 from .potential_LAMMPS import (EamBuilder, EimBuilder, LibParamBuilder,

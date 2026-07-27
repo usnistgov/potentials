@@ -1,4 +1,3 @@
-# coding: utf-8
 # Standard Python libraries
 from typing import Optional
 

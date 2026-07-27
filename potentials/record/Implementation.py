@@ -1,4 +1,3 @@
-# coding: utf-8
 # Standard libraries
 import io
 import uuid

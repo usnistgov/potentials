@@ -1,4 +1,3 @@
-# coding: utf-8
 
 __all__ = ['load_record', 'Record',  'recordmanager']
 __all__.sort()

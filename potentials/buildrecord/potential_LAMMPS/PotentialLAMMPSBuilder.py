@@ -1,4 +1,3 @@
-# coding: utf-8
 # Standard libraries
 import uuid
 from typing import Generator, Optional, Union

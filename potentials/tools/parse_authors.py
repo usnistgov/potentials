@@ -1,4 +1,3 @@
-# coding: utf-8
 import string
 
 def parse_authors(authors: str,

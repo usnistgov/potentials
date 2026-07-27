@@ -1,4 +1,3 @@
-# coding: utf-8
 # Standard libraries
 from typing import Optional, Union
 

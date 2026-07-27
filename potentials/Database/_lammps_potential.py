@@ -1,4 +1,3 @@
-# coding: utf-8
 # Standard libraries
 from pathlib import Path
 import shutil
