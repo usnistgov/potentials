@@ -1,6 +1,6 @@
 [project]
 name = "potentials"
-version = "0.4.2a"
+version = "0.4.2"
 description = "API database tools for accessing the NIST Interatomic Potentials Repository: explore and download interatomic potentials and computed properties."
 readme = "README.rst"
 requires-python = ">=3.8"

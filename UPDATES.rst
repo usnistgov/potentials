@@ -1,6 +1,23 @@
 Updates
 =======
 
+0.4.2
+-----
+
+- Citation class updated to better support non-journal citations.
+- Methods added to PotentialLAMMPS and PotentialLAMMPSKIM that support
+  interacting with LAMMPS using a LAMMPS library interface.
+- PotentialLAMMPS now has a hybrid() class method that takes two or more
+  other PotentialLAMMPS records as inputs and builds a new record that
+  properly generates a hybrid-style potential.  
+- In the paramfile sub-package, new tools were added to help evaluate rhobar
+  values for ideal fcc crystals.  This helps in determining what max rhobar
+  value to use when developing new potentials.
+- typing sub-package added for typing hints and to provide a dummy LAMMPS
+  library interface when a real one is not available.
+- Hopefully, a temporary fix for building new citations from CrossRef as newer
+  downloads are broken with bad month abbreviations and missing curly brackets.
+
 0.4.1
 -----
 
