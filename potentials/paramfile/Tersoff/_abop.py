@@ -142,12 +142,12 @@ def read_abop(fname):
         table2 = ''
     
     # Read in 2-body parameter table, transform and convert to numeric values
-    read_kwargs = dict(sep='\s+', comment='#', header=None, index_col=0)
+    read_kwargs = dict(sep=r'\s+', comment='#', header=None, index_col=0)
     abop = pd.read_csv(StringIO(table1), **read_kwargs).T.reset_index(drop=True)
     abop = abop.apply(to_numeric_ignore, axis=0)
 
     try:
-        mods = pd.read_csv(StringIO(table2), sep='\s+', comment='#', header=None)
+        mods = pd.read_csv(StringIO(table2), sep=r'\s+', comment='#', header=None)
     except pd.errors.EmptyDataError:
         mods = pd.DataFrame()
     
