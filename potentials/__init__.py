@@ -1,12 +1,5 @@
-# coding: utf-8
-# Standard Python libraries
-from importlib import resources
-
-# Read version from VERSION file
-if hasattr(resources, 'files'):
-    __version__ = resources.files('potentials').joinpath('VERSION').read_text(encoding='UTF-8')
-else:
-    __version__ = resources.read_text('potentials', 'VERSION', encoding='UTF-8').strip()
+from importlib.metadata import version
+__version__ = version('yabadaba')
 
 from . import typing
 from . import tools

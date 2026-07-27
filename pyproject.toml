@@ -1,6 +1,71 @@
-[build-system]
-requires = [
-    "setuptools>=42",
-    "wheel"
+[project]
+name = "potentials"
+version = "0.4.2a"
+description = "API database tools for accessing the NIST Interatomic Potentials Repository: explore and download interatomic potentials and computed properties."
+readme = "README.rst"
+requires-python = ">=3.8"
+dependencies = [
+    'xmltodict',
+    'DataModelDict',
+    'unidecode',
+    'numpy',
+    'scipy',
+    'matplotlib',
+    'pandas',
+    'requests',
+    'habanero',
+    'bibtexparser',
+    'ipywidgets',
+    'cdcs',
+    'yabadaba>=0.3.1'
 ]
-build-backend = "setuptools.build_meta"
+authors = [
+  {name = "Lucas Hale", email = "lucas.hale@nist.gov"}
+]
+license = "NIST-Software"
+keywords = [
+    'atom',
+    'atomic',
+    'atomistic',
+    'molecular dynamics',
+    'interatomic potential',
+    'force field',
+    'database',
+]
+classifiers = [
+    'Development Status :: 4 - Beta',
+    'Intended Audience :: Science/Research',
+    'Natural Language :: English',
+    'Operating System :: OS Independent',
+    'Programming Language :: Python :: 3',
+    'Programming Language :: Python :: 3.8',
+    'Programming Language :: Python :: 3.9',
+    'Programming Language :: Python :: 3.10',
+    'Programming Language :: Python :: 3.11',
+    'Programming Language :: Python :: 3.12',
+    'Programming Language :: Python :: 3.13',
+    'Programming Language :: Python :: 3.14',
+    'Topic :: Scientific/Engineering :: Physics'
+]
+      
+[project.urls]
+Homepage = "https://github.com/usnistgov/potentials/"
+Repository = "https://github.com/usnistgov/potentials.git"
+
+[tool.uv.sources]
+DataModelDict = { path = "../DataModelDict", editable = true }
+cdcs = { path = "../pycdcs", editable = true }
+yabadaba = { path = "../yabadaba", editable = true }
+
+[build-system]
+requires = ["uv_build>=0.11.26,<0.12"]
+build-backend = "uv_build"
+
+[tool.uv.build-backend]
+module-name = "potentials"
+module-root = ""
+
+[dependency-groups]
+dev = [
+    "pytest>=7.4.4",
+]

@@ -14,6 +14,8 @@ upload_package.bash
 # Virtual Studio Code metadata
 .vscode/
 
-
+# uv
+uv.lock
+.venv/
 
 test/
