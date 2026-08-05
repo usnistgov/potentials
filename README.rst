@@ -74,10 +74,10 @@ guaranteed to have 100% current code or data, and may have poor descriptions.
 .. |colab1| image:: https://colab.research.google.com/assets/colab-badge.svg
  #
  :alt: colab logo
- :target: https://colab.research.google.com/github/usnistgov/potentials/blob/master/0.%20Search%20Potential%20Entries.ipynb
+ :target: https://colab.research.google.com/github/usnistgov/potentials/blob/master/doc/0.%20Search%20Potential%20Entries.ipynb
 
 .. _0. Search LAMMPS Potentials.ipynb: https://colab.research.google.com/github/usnistgov/potentials/blob/master/doc/0.%20Search%20LAMMPS%20Potentials.ipynb
 .. |colab2| image:: https://colab.research.google.com/assets/colab-badge.svg
  #
  :alt: colab logo
- :target: https://colab.research.google.com/github/usnistgov/potentials/blob/master/0.%20Search%20LAMMPS%20Potentials.ipynb
+ :target: https://colab.research.google.com/github/usnistgov/potentials/blob/master/doc/0.%20Search%20LAMMPS%20Potentials.ipynb
