@@ -51,21 +51,47 @@ class Implementation(Record):
         when build_model is called!!!
         """
         
-        self._add_value('str', 'key', valuerequired=True,
-                        defaultvalue=str(uuid.uuid4()))
-        self._add_value('str', 'id')
-        self._add_value('str', 'status', valuerequired=True,
-                        defaultvalue='active',
-                        allowedvalues=['active', 'superseded', 'retracted'])
-        self._add_value('date', 'date')
-        self._add_value('str', 'type')
-        self._add_value('str', 'notes', modelpath='notes.text')
-        self._add_value('record', 'artifacts', recordclass=Artifact,
-                        modelpath='artifact')
-        self._add_value('record', 'parameters', recordclass=Parameter,
-                        modelpath='parameter')
-        self._add_value('record', 'links', recordclass=Link,
-                        modelpath='link')
+        self._add_value('str', 'key',
+                        valuerequired = True,
+                        defaultvalue = str(uuid.uuid4()),
+                        description = 'the UUID4 key associated with the implementation')
+
+        self._add_value('str', 'id',
+                        description = 'the unique id associated with the implementation')
+
+        self._add_value('str', 'status',
+                        valuerequired = True,
+                        defaultvalue = 'active',
+                        allowedvalues = (
+                            'active',
+                            'superseded',
+                            'retracted'),
+                        description = 'the status of the implementation: active, superseded or retracted')
+
+        self._add_value('date', 'date',
+                        description = 'the date the implementation was created')
+
+        self._add_value('str', 'type',
+                        description = 'the implementation type')
+
+        self._add_value('str', 'notes',
+                        modelpath = 'notes.text',
+                        description = 'any notes about the implementation files and usage')
+
+        self._add_value('record', 'artifacts',
+                        recordclass = Artifact,
+                        modelpath = 'artifact',
+                        description = 'the files associated with the implementation')
+
+        self._add_value('record', 'parameters',
+                        recordclass = Parameter,
+                        modelpath = 'parameter',
+                        description = 'the list of parameters associated with the implementation')
+
+        self._add_value('record', 'links',
+                        recordclass = Link,
+                        modelpath = 'link',
+                        description = 'the web links to additional content associated with the implementation')
 
     def add_artifact(self,
                      model: Union[str, io.IOBase, DM, None] = None,

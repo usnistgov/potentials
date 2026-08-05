@@ -43,5 +43,8 @@ class FAQ(Record):
         when build_model is called!!!
         """
         
-        self._add_value('longstr', 'question')
-        self._add_value('longstr', 'answer')
+        self._add_value('longstr', 'question',
+                        description = 'the frequently asked question')
+        
+        self._add_value('longstr', 'answer',
+                        description = 'the answer to the frequently asked question')

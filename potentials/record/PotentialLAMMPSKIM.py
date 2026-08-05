@@ -110,13 +110,33 @@ class PotentialLAMMPSKIM(Record):
         when build_model is called!!!
         """
         
-        self._add_value('str', 'modelkey', modelpath='key')
-        self._add_value('str', 'shortcode', modelpath='id')
-        self._add_value('str', 'url', modelpath='URL')
-        self._add_value('str', 'status', allowedvalues=('superseded', 'retracted'))
-        self._add_value('record', 'potentials', recordclass=PotentialInfo,
-                        modelpath='potential', metadatakey=False)
-        self._add_value('strlist', 'fullkimids', modelpath='full-kim-id')
+        self._add_value('str', 'modelkey',
+                        modelpath = 'key',
+                        description = 'the KIM model key for the potential implementation')
+
+        self._add_value('str', 'shortcode',
+                        modelpath = 'id',
+                        description = 'the KIM short code id for the potential implementation')
+
+        self._add_value('str', 'url',
+                        modelpath = 'URL',
+                        description = 'a URL where the potential implementation can be found')
+
+        self._add_value('str', 'status',
+                        allowedvalues = (
+                            'superseded',
+                            'retracted'),
+                        description = 'status of the implementation: active is implied unless set to superseded or retracted')
+
+        self._add_value('record', 'potentials',
+                        recordclass = PotentialInfo,
+                        modelpath = 'potential',
+                        metadatakey = False,
+                        description = 'the potential listings associated with the implementation')
+        
+        self._add_value('strlist', 'fullkimids',
+                        modelpath = 'full-kim-id',
+                        description = 'the known full KIM model IDs for the implementation')
         
 
     @property

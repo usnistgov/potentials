@@ -41,17 +41,30 @@ class PotInfo(Record):
         """
         
         self._add_value('str', 'potential_key',
-                        modelpath='key', metadatakey='key')
+                        modelpath = 'key',
+                        metadatakey = 'key',
+                        description = 'UUID4 key associated with a Potential entry')
+        
         self._add_value('str', 'potential_id',
-                        modelpath='id', metadatakey='id')
+                        modelpath = 'id',
+                        metadatakey = 'id',
+                        description = 'unique id associated with a Potential entry')
+        
         self._add_value('strlist', 'dois',
-                        modelpath='doi')
+                        modelpath = 'doi',
+                        description = 'any DOIs associated with a Potential entry')
+
         self._add_value('strlist', 'fictionalelements',
-                        modelpath='fictional-element')
+                        modelpath = 'fictional-element',
+                        description = 'the list of fictional elements associated with a Potential entry')
+
         self._add_value('strlist', 'elements',
-                        modelpath='element')
+                        modelpath = 'element',
+                        description = 'the list of elements associated with a Potential entry')
+
         self._add_value('str', 'othername',
-                        modelpath='other-element')
+                        modelpath = 'other-element',
+                        description = 'the alternate descriptor (compound, meta atom, etc.) to use instead of elements for a Potential entry')
         
     
     @classmethod
@@ -115,14 +128,23 @@ class Action(Record):
         """
         
         self._add_value('date', 'date',
-                        description='the date of the action')
+                        description = 'the date of the action')
+        
         self._add_value('str', 'type',
-                        allowedvalues=['new posting', 'updated posting',
-                                       'retraction', 'site change'],
-                        description='the website action type')
+                        allowedvalues = (
+                            'new posting',
+                            'updated posting',
+                            'retraction',
+                            'site change'),
+                        description = 'the type of action resulting in a website change')
+        
         self._add_value('record', 'potentials',
-                        recordclass=PotInfo, modelpath='potential')
-        self._add_value('longstr', 'comment')
+                        recordclass = PotInfo,
+                        modelpath = 'potential',
+                        description = 'the Potential records associated with the action')
+        
+        self._add_value('longstr', 'comment',
+                        description = 'any additional comments associated with the action')
 
     @property
     def defaultname(self) -> str:

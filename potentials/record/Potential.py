@@ -17,13 +17,14 @@ from .Implementation import Implementation
 
 class Potential(Record):
     """
-    Class for representing Potential metadata records.
+    Class for representing Potential entry records (listings on the Interatomic
+    Potential Repository).
     """
     def __init__(self,
                  model: str | io.IOBase | DM | None = None,
                  name: str | None = None,
-                 database=None,
-                 **kwargs: any):
+                 database = None,
+                 **kwargs):
         
         self.modelname = None
         super().__init__(model, name, database, **kwargs)
@@ -60,19 +61,47 @@ class Potential(Record):
         when build_model is called!!!
         """
         
-        self._add_value('str', 'key', valuerequired=True,
-                        defaultvalue=str(uuid.uuid4()))
-        self._add_value('str', 'id')
-        self._add_value('str', 'url', modelpath='URL')
-        self._add_value('date', 'recorddate', modelpath='record-version')
-        self._add_value('record', 'citations', recordclass=Citation,
-                        modelpath='description.citation')
-        self._add_value('str', 'notes', modelpath='description.notes.text')
-        self._add_value('record', 'implementations', recordclass=Implementation,
-                        modelpath='implementation')
-        self._add_value('strlist', 'fictionalelements', modelpath='fictional-element')
-        self._add_value('strlist', 'elements', modelpath='element')
-        self._add_value('str', 'othername', modelpath='other-element')
+        self._add_value('str', 'key',
+                        valuerequired = True,
+                        defaultvalue = str(uuid.uuid4()),
+                        description = 'the UUID4 key for the Potential entry')
+        
+        self._add_value('str', 'id',
+                        description = 'the unique id for the Potential entry')
+
+        self._add_value('str', 'url',
+                        modelpath = 'URL',
+                        description = 'a URL where the Potential entry can be found')
+
+        self._add_value('date', 'recorddate',
+                        modelpath = 'record-version',
+                        description = 'the date the Potential entry was created')
+
+        self._add_value('record', 'citations',
+                        recordclass = Citation,
+                        modelpath = 'description.citation',
+                        description = 'citations associated with the Potential entry')
+        
+        self._add_value('str', 'notes',
+                        modelpath = 'description.notes.text',
+                        description = 'comments about the suggested use cases of the potential')
+
+        self._add_value('record', 'implementations',
+                        recordclass = Implementation,
+                        modelpath = 'implementation',
+                        description = 'the known implementations and versions of the potential')
+        
+        self._add_value('strlist', 'fictionalelements',
+                        modelpath = 'fictional-element',
+                        description = 'the list of fictional elements modeled by the potential')
+
+        self._add_value('strlist', 'elements',
+                        modelpath = 'element',
+                        description = 'the list of elements modeled by the potential')
+
+        self._add_value('str', 'othername',
+                        modelpath = 'other-element',
+                        description = 'the alternate descriptor (compound, meta atom, etc.) to describe the model instead of elements')
         
         # Modify citation queries
         citations_queries = self.get_value('citations').queries

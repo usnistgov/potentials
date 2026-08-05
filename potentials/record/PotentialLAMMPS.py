@@ -336,23 +336,67 @@ class PotentialLAMMPS(Record):
         when build_model is called!!!
         """
         
-        self._add_value('str', 'key')
-        self._add_value('str', 'id')
-        self._add_value('str', 'url', modelpath='URL')
-        self._add_value('str', 'status', allowedvalues=('superseded', 'retracted'))
-        self._add_value('str', 'potkey', modelpath='potential.key')
-        self._add_value('str', 'potid', modelpath='potential.id')
-        self._add_value('str', 'poturl', modelpath='potential.URL')
-        self._add_value('strlist', 'dois', modelpath='potential.doi')
-        self._add_value('longstr', 'comments')
-        self._add_value('str', 'units', defaultvalue='metal')
-        self._add_value('str', 'atom_style', defaultvalue='atomic')
-        self._add_value('bool', 'allsymbols', metadatakey=False)
-        self._add_value('record', 'atoms', recordclass=AtomInfo,
-                        modelpath='atom', metadatakey=False)
-        self._add_value('str', 'pair_style', modelpath='pair_style.type')
-        self._add_value('record', 'artifacts', recordclass=Artifact,
-                        modelpath='artifact')
+        self._add_value('str', 'key',
+                        description = 'the UUID4 key for the potential implementation')
+
+        self._add_value('str', 'id',
+                        description = 'the unique id for the potential implementation')
+
+        self._add_value('str', 'url',
+                        modelpath = 'URL',
+                        description = 'a URL where the potential implementation can be found')
+
+        self._add_value('str', 'status',
+                        allowedvalues = (
+                            'superseded',
+                            'retracted'),
+                        description = 'status of the implementation: active is implied unless set to superseded or retracted')
+
+        self._add_value('str', 'potkey',
+                        modelpath = 'potential.key',
+                        description = 'the UUID4 key for the associated potential entry')
+
+        self._add_value('str', 'potid',
+                        modelpath = 'potential.id',
+                        description = 'the unique id for the associated potential entry')
+
+        self._add_value('str', 'poturl',
+                        modelpath = 'potential.URL',
+                        description = 'a URL where the potential entry can be found')
+
+        self._add_value('strlist', 'dois',
+                        modelpath = 'potential.doi',
+                        description = 'the citation DOIs associated with the potential entry')
+        
+        self._add_value('longstr', 'comments',
+                        description = 'any comments about the potential implementation')
+
+        self._add_value('str', 'units',
+                        defaultvalue='metal',
+                        description = 'the LAMMPS units option for the implementation')
+
+        self._add_value('str', 'atom_style',
+                        defaultvalue = 'atomic',
+                        description = 'the LAMMPS atom_style option for the implementation')
+        
+        self._add_value('bool', 'allsymbols',
+                        metadatakey = False,
+                        description = 'indicates if all atom model symbols must be associated with at least one atom type')
+        
+        self._add_value('record', 'atoms',
+                        recordclass = AtomInfo,
+                        modelpath = 'atom',
+                        metadatakey = False,
+                        description = 'the atom models represented by the potential')
+        
+        self._add_value('str', 'pair_style',
+                        modelpath = 'pair_style.type',
+                        description = 'the LAMMPS pair_style option for the implementation')
+
+        self._add_value('record', 'artifacts',
+                        recordclass = Artifact,
+                        modelpath = 'artifact',
+                        description = 'the files associated with the implementation')
         
         # Remove Artifact queries
         self.get_value('artifacts').queries.pop('url')

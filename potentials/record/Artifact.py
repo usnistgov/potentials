@@ -45,9 +45,17 @@ class Artifact(Record):
         when build_model is called!!!
         """
         
-        self._add_value('str', 'url', modelpath='web-link.URL')
-        self._add_value('longstr', 'label', modelpath='web-link.label')
-        self._add_value('longstr', 'filename', modelpath='web-link.link-text')
+        self._add_value('str', 'url',
+                        modelpath = 'web-link.URL',
+                        description = 'the URL where the artifact can be found')
+        
+        self._add_value('longstr', 'label',
+                        modelpath = 'web-link.label',
+                        description = 'the label describing the artifact')
+        
+        self._add_value('longstr', 'filename',
+                        modelpath = 'web-link.link-text',
+                        description = "the artifact's file name")
 
     def download(self,
                  targetdir: Union[str, Path],

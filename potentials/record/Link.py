@@ -40,6 +40,14 @@ class Link(Record):
         when build_model is called!!!
         """
         
-        self._add_value('str', 'url', modelpath='web-link.URL')
-        self._add_value('longstr', 'label', modelpath='web-link.label')
-        self._add_value('longstr', 'linktext', modelpath='web-link.link-text')
+        self._add_value('str', 'url',
+                        modelpath = 'web-link.URL',
+                        description = 'the URL for the web link')
+        
+        self._add_value('longstr', 'label',
+                        modelpath = 'web-link.label',
+                        description = 'the label describing the web link')
+        
+        self._add_value('longstr', 'linktext',
+                        modelpath = 'web-link.link-text',
+                        description = 'the text for the web link')

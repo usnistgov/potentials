@@ -34,8 +34,13 @@ class ElementSystem(Record):
         when build_model is called!!!
         """
         
-        self._add_value('str', 'formula', modelpath='chemical-formula')
-        self._add_value('strlist', 'elements', modelpath='element')
+        self._add_value('str', 'formula',
+                        modelpath = 'chemical-formula',
+                        description = 'a chemical formula wanted in a potential')
+        
+        self._add_value('strlist', 'elements',
+                        modelpath = 'element',
+                        description = 'a list of elements wanted in a potential')
 
 class Request(Record):
     """
@@ -75,10 +80,17 @@ class Request(Record):
         when build_model is called!!!
         """
         
-        self._add_value('date', 'date', valuerequired=True)
-        self._add_value('record', 'systems', recordclass=ElementSystem,
-                        modelpath='system')
-        self._add_value('longstr', 'comment')
+        self._add_value('date', 'date',
+                        valuerequired = True,
+                        description = 'the date of the request')
+        
+        self._add_value('record', 'systems',
+                        recordclass = ElementSystem,
+                        modelpath = 'system',
+                        description = 'the elements or compounds that are requested for a potential to model')
+        
+        self._add_value('longstr', 'comment',
+                        description = 'any extra comments about the intended use case for the requested potential')
 
     @property
     def defaultname(self) -> str:

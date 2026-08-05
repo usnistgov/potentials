@@ -29,8 +29,15 @@ class AtomInfo(Record):
         when build_model is called!!!
         """
         
-        self._add_value('str', 'symbol')
-        self._add_value('str', 'element')
-        self._add_value('float', 'mass')
-        self._add_value('float', 'charge')
+        self._add_value('str', 'symbol',
+                        description = 'the atomic model symbol')
+
+        self._add_value('str', 'element',
+                        description = 'the element associated with the atomic model')
+
+        self._add_value('float', 'mass',
+                        description = 'the mass of the atomic model')
+        
+        self._add_value('float', 'charge',
+                        description = 'the charge of the atomic model')
         

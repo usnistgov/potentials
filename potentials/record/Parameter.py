@@ -42,7 +42,15 @@ class Parameter(Record):
         when build_model is called!!!
         """
         
-        self._add_value('str', 'value', modelpath='value')
-        self._add_value('str', 'unit', modelpath='unit')
-        self._add_value('str', 'paramname', modelpath='name')
+        self._add_value('str', 'value',
+                        modelpath = 'value',
+                        description = 'the value of the parameter')
+        
+        self._add_value('str', 'unit',
+                        modelpath = 'unit',
+                        description = 'the unit of the parameter value')
+        
+        self._add_value('str', 'paramname',
+                        modelpath = 'name',
+                        description = 'the name of the parameter')
         

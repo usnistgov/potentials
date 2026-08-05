@@ -50,9 +50,15 @@ class Author(Record):
         when build_model is called!!!
         """
         
-        self._add_value('str', 'givenname', modelpath='given-name')
-        self._add_value('longstr', 'surname')
-        self._add_value('str', 'suffix')
+        self._add_value('str', 'givenname',
+                        modelpath = 'given-name',
+                        description = "the author's first (i.e. given) name")
+
+        self._add_value('longstr', 'surname',
+                        description = "the author's last (i.e. sur) name")
+
+        self._add_value('str', 'suffix',
+                        description = "a name suffix, e.g. Jr.")
 
 class Citation(Record):
     """
@@ -93,43 +99,93 @@ class Citation(Record):
         # init bibdict
         self.__bibdict = None
         
-        self._add_value('str', 'doctype', modelpath='document-type',
-                        allowedvalues=('book', 'booklet', 'journal', 'report', 'manual',
-                                       'thesis', 'phd thesis', 'masters thesis',
-                                       'conference proceedings', 'unspecified',
-                                       'unpublished'))
+        self._add_value('str', 'doctype',
+                        modelpath = 'document-type',
+                        allowedvalues = (
+                            'book',
+                            'booklet',
+                            'journal',
+                            'report',
+                            'manual',
+                            'thesis',
+                            'phd thesis',
+                            'masters thesis',
+                            'conference proceedings',
+                            'unspecified',
+                            'unpublished'),
+                        description = 'the type of citation')
 
-        self._add_value('longstr', 'title')
+        self._add_value('longstr', 'title',
+                        description = 'the title of the citation')
         
-        self._add_value('record', 'authors', recordclass=Author, modelpath='author')
-        self._add_value('record', 'editors', recordclass=Author, modelpath='editor')
+        self._add_value('record', 'authors',
+                        recordclass = Author,
+                        modelpath = 'author',
+                        description = 'the authors of the citation')
+        
+        self._add_value('record', 'editors',
+                        recordclass = Author,
+                        modelpath = 'editor',
+                        description = 'the editors for the citation')
         editors_queries = self.get_value('editors').queries
         del editors_queries['givenname']
         del editors_queries['surname']
         del editors_queries['suffix']
         
-        self._add_value('longstr', 'publication', modelpath='publication-name')
-        self._add_value('longstr', 'series')
-        self._add_value('longstr', 'chapter')
-        self._add_value('longstr', 'edition')
+        self._add_value('longstr', 'publication',
+                        modelpath = 'publication-name',
+                        description = 'the name of the publication')
         
+        self._add_value('longstr', 'series',
+                        description = 'the publication series')
+
+        self._add_value('longstr', 'chapter',
+                        description = 'the publication chapter')
+
+        self._add_value('longstr', 'edition',
+                        description = 'the publication edition')
         
-        self._add_value('int', 'year', modelpath='publication-date.year')
-        self._add_value('month', 'month', modelpath='publication-date.month')
-        self._add_value('str', 'volume')
-        self._add_value('str', 'issue')
+        self._add_value('int', 'year',
+                        modelpath = 'publication-date.year',
+                        description = 'the year of publication')
+        
+        self._add_value('month', 'month',
+                        modelpath = 'publication-date.month',
+                        description = 'the month of publication')
+        
+        self._add_value('str', 'volume',
+                        description = 'the publication volume')
+        
+        self._add_value('str', 'issue',
+                        description = 'the publication issue')
 
-        self._add_value('longstr', 'publisher', modelpath='publisher-name')
-        self._add_value('longstr', 'address', modelpath='publisher-address')
-        self._add_value('longstr', 'organization', modelpath='publisher-organization')
+        self._add_value('longstr', 'publisher',
+                        modelpath = 'publisher-name',
+                        description = "the publisher's name")
+        
+        self._add_value('longstr', 'address',
+                        modelpath = 'publisher-address',
+                        description = "the publisher's address")
+        
+        self._add_value('longstr', 'organization',
+                        modelpath = 'publisher-organization',
+                        description = "the publisher's organization")
 
-        self._add_value('longstr', 'abstract')
+        self._add_value('longstr', 'abstract',
+                        description = 'the abstract for the citation')
 
-        self._add_value('citepage', 'pages')
+        self._add_value('citepage', 'pages',
+                        description = 'the page numbers for the citation')
 
-        self._add_value('str', 'doi', modelpath='DOI')
-        self._add_value('str', 'url')
-        self._add_value('longstr', 'bibtex')
+        self._add_value('str', 'doi',
+                        modelpath = 'DOI',
+                        description = 'the DOI for the citation')
+        
+        self._add_value('str', 'url',
+                        description = 'a URL where the citation record can be found')
+        
+        self._add_value('longstr', 'bibtex',
+                        description = 'the citation information as a bibtex formatted string')
 
     @property
     def defaultname(self) -> Optional[str]:
